@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react"
 import {Modal} from "antd"
 import EditorCategory from "./editor-category/EditorCategory";
-import { SubCategory } from "../../../../../../../lib/types/Category";
+import { SubCategory } from "../../../types/Category";
 
 interface EditorCategoryActionProps {
     sub?: boolean

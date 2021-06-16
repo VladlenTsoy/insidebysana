@@ -1,13 +1,11 @@
 import React from "react"
 import {Form, Input, Select} from "antd"
-import {useSelectAllCategories} from "store/common/category/categorySelectors"
-import {useAdminDispatch} from "../../../../../../../../store/admin/store"
-import {createCategory} from "../../../../../../../../store/admin/category/createCategory"
-import {SubCategory} from "../../../../../../../../lib/types/Category"
-import {editCategory} from "../../../../../../../../store/admin/category/editCategory"
-// @ts-ignore
-import transliterate from "transliterate-cyrillic-text-to-latin-url"
+import {useAdminDispatch} from "../../../../../store/admin/store"
+import {SubCategory} from "../../../../types/Category"
 import {useForm} from "antd/es/form/Form"
+import {editPrintCategory} from "store/admin/print-category/editPrintCategory"
+import {createPrintCategory} from "store/admin/print-category/createPrintCategory"
+import {useSelectAllPrintCategories} from "store/admin/print-category/printCategorySelectors"
 
 const {Option} = Select
 
@@ -18,19 +16,15 @@ interface EditorCategoryProps {
     close: any
 }
 
-const EditorCategory: React.FC<EditorCategoryProps> = ({sub, setLoading, close, category}) => {
-    const categories = useSelectAllCategories()
+const EditorPrintCategory: React.FC<EditorCategoryProps> = ({sub, setLoading, close, category}) => {
+    const categories = useSelectAllPrintCategories()
     const dispatch = useAdminDispatch()
     const [form] = useForm()
 
-    const onChangeTitleHandler = (e: any) => {
-        if (e.currentTarget.value) form.setFieldsValue({url: transliterate(e.currentTarget.value)})
-    }
-
     const onFinish = async (values: any) => {
         setLoading(true)
-        if (category) await dispatch(editCategory({id: category.id, data: values}))
-        else await dispatch(createCategory(values))
+        if (category) await dispatch(editPrintCategory({id: category.id, data: values}))
+        else await dispatch(createPrintCategory(values))
         setLoading(false)
         close()
     }
@@ -40,7 +34,7 @@ const EditorCategory: React.FC<EditorCategoryProps> = ({sub, setLoading, close, 
             initialValues={category}
             form={form}
             layout="vertical"
-            id="editor-category"
+            id="editor-print-category"
             size="large"
             onFinish={onFinish}
         >
@@ -60,22 +54,10 @@ const EditorCategory: React.FC<EditorCategoryProps> = ({sub, setLoading, close, 
                 </Form.Item>
             )}
             <Form.Item name="title" label="Название" rules={[{required: true, message: "Введите название!"}]}>
-                <Input onChange={onChangeTitleHandler} />
-            </Form.Item>
-            <Form.Item
-                name="url"
-                label="URL"
-                rules={[
-                    {
-                        required: true,
-                        message: "Введите url!"
-                    }
-                ]}
-            >
                 <Input />
             </Form.Item>
         </Form>
     )
 }
 
-export default EditorCategory
+export default EditorPrintCategory

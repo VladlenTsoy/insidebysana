@@ -3,6 +3,7 @@ const LoginController = require("../app/http/controllers/crm/auth/LoginControlle
 const ProductColorController = require("controllers/client/ProductColorController")
 const MeasurementController = require("controllers/client/MeasurementController")
 const CategoryController = require("controllers/client/CategoryController")
+const PrintCategoryController = require("controllers/crm/common/PrintCategoryController")
 const BannerController = require("controllers/client/BannerController")
 const WishlistController = require("controllers/client/WishlistController")
 const CartController = require("controllers/client/CartController")
@@ -23,6 +24,7 @@ const router = express.Router()
 router.get("/banners", BannerController.GetAll)
 // Вывод категорий (Главная)
 router.get("/categories", CategoryController.GetAll)
+
 // Вывод новых продуктов (Главная)
 router.get("/new-products", ProductColorController.GetNew)
 
@@ -86,5 +88,8 @@ router.get("/cities", CityController.GetAll)
 
 //
 router.get("/additional-services", AdditionalServicesController.GetAll)
+
+//
+router.get("/print-categories", PrintCategoryController.GetAll)
 
 module.exports = router

@@ -242,6 +242,12 @@ const GetForEditById = async (req, res) => {
     }
 }
 
+/**
+ * Вывод архива по дате
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 const GetArchiveByDates = async (req, res) => {
     try {
         const {dateFrom, dateTo} = req.body
@@ -252,11 +258,11 @@ const GetArchiveByDates = async (req, res) => {
                 "id",
                 "total_price",
                 "promo_code",
-                "status_id",
-                "position",
                 "created_at",
                 "discount",
-                "payment_state"
+                "payment_state",
+                "processing",
+                "source_id"
             )
             .orderBy("created_at", "desc")
 

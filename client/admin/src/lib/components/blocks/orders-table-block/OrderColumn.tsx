@@ -1,23 +1,40 @@
-import {CheckCircleFilled} from "@ant-design/icons"
+import {CheckCircleFilled, LinkOutlined, UserOutlined} from "@ant-design/icons"
+import {Button} from "antd"
 import PriceBlock from "lib/components/blocks/price-block/PriceBlock"
-import {OrderPos} from "lib/types/Order"
+import ClientMoreAction from "lib/components/more/client-more-action/ClientMoreAction"
+import OrderMoreAction from "lib/components/more/order-more-action/OrderMoreAction"
+import {User} from "lib/types/User"
 import React from "react"
 import {formatDate} from "utils/formatDate"
 import {formatPrice} from "utils/formatPrice"
+import PaymentStateBlock from "../payment-state-block/PaymentStateBlock"
+import {OrderTableColumn} from "./OrderTableColumn"
+import SourceRowBlock from "./SourceRowBlock"
 
 interface OrderColumnProps {
-    order: OrderPos
+    order: OrderTableColumn
+    access: User["access"]
 }
 
-const OrderColumn: React.FC<OrderColumnProps> = ({order}) => {
+const OrderColumn: React.FC<OrderColumnProps> = ({order, access}) => {
     const rowSpanMain = Number(order.productColors.length) + Number(order.additionalServices.length)
+
     return (
         <>
             {[
                 <tr key={`basic-${order.id}`}>
                     <td rowSpan={rowSpanMain}>
-                        {order.id}
-                        {!!order.processing && <CheckCircleFilled className="order_processing" />}
+                        <span style={{marginRight: ".5rem"}}>
+                            {order.id}
+                            {!!order.processing && <CheckCircleFilled className="order_processing" />}
+                        </span>
+                        {access !== "cashier" && (
+                            <OrderMoreAction orderId={order.id}>
+                                <Button size="small" icon={<LinkOutlined />}>
+                                    Подробнее
+                                </Button>
+                            </OrderMoreAction>
+                        )}
                     </td>
                     <td rowSpan={rowSpanMain}>
                         {formatDate(order.created_at, "HH:mm DD MMM", "HH:mm DD/MM/YY")}
@@ -27,7 +44,28 @@ const OrderColumn: React.FC<OrderColumnProps> = ({order}) => {
                             <div key={payment.payment_id}>{payment.title}</div>
                         ))}
                     </td>
-                    <td rowSpan={rowSpanMain}>{order?.client?.full_name}</td>
+                    {access !== "cashier" && (
+                        <>
+                            <td rowSpan={rowSpanMain}>
+                                <SourceRowBlock sourdeId={order.source_id} />
+                            </td>
+                            <td rowSpan={rowSpanMain}>
+                                <PaymentStateBlock paymentState={order.payment_state} orderId={order.id} />
+                            </td>
+                        </>
+                    )}
+                    <td rowSpan={rowSpanMain}>
+                        {order.client &&
+                            (access !== "cashier" ? (
+                                <ClientMoreAction clientId={order.client.id}>
+                                    <Button icon={<UserOutlined />} size="small">
+                                        {order.client.full_name}
+                                    </Button>
+                                </ClientMoreAction>
+                            ) : (
+                                order.client.full_name
+                            ))}
+                    </td>
                     <td>{order.productColors[0]?.title}</td>
                     <td>{order.productColors[0]?.color_title}</td>
                     <td>{order.productColors[0]?.size_title}</td>
@@ -62,19 +100,16 @@ const OrderColumn: React.FC<OrderColumnProps> = ({order}) => {
                 order.additionalServices.length > 0 &&
                     order.additionalServices.map(additionalService => (
                         <tr key={`${order.id}-${additionalService.id}`}>
-                            <td colSpan={3}>{additionalService.title}</td>
+                            <td colSpan={3} style={{color: "#ff9758"}}>
+                                {additionalService.title}
+                            </td>
                             <td colSpan={2}>{additionalService.qty}</td>
                             <td>{formatPrice(additionalService.price)} сум</td>
                             <td>{formatPrice(additionalService.price * additionalService.qty)} сум</td>
                         </tr>
                     )),
                 <tr key={`total-${order.id}`} className="total-row">
-                    <td />
-                    <td />
-                    <td />
-                    <td />
-                    <td />
-                    <td />
+                    <td colSpan={access !== "cashier" ? 8 : 6} />
                     <td>Итого</td>
                     <td>{order.productColors.reduce((acc, product) => (acc += product.qty), 0)}</td>
                     <td />

@@ -3,6 +3,7 @@ import LogoPng from "assets/images/logo.png"
 import QRPng from "assets/images/qr.png"
 import "./print.css"
 import {formatPrice} from "utils/formatPrice"
+import {OrderPayment} from "lib/types/Order"
 
 interface PrintProps {
     order: any
@@ -10,8 +11,11 @@ interface PrintProps {
     additionalServices: any[]
     totalPrice: any
     sizes: any
-    cashTotal: any
-    cardTotal: any
+    discount: {
+        type: string
+        discount: number
+    } | null
+    payments: OrderPayment[]
     payChange: any
 }
 
@@ -21,8 +25,8 @@ const Print: React.FC<PrintProps> = ({
     additionalServices,
     order,
     sizes,
-    cardTotal,
-    cashTotal,
+    payments,
+    discount,
     payChange
 }) => {
     return (
@@ -92,30 +96,26 @@ const Print: React.FC<PrintProps> = ({
                 </tbody>
             </table>
             <div className="total-block">
+                {discount && (
+                    <div className="discount">
+                        <div>Скидка:</div>
+                        <div>
+                            {discount.type === "fixed"
+                                ? `${formatPrice(discount.discount)} сум`
+                                : `${discount.discount}%`}
+                        </div>
+                    </div>
+                )}
                 <div className="total">
                     <div>ИТОГО К ОПЛАТЕ:</div>
                     <div>{formatPrice(totalPrice)} сум</div>
                 </div>
-                {cardTotal > 0 && (
-                    <div className="sub">
-                        <div>КАРТА:</div>
-                        <div>{formatPrice(cardTotal)} сум</div>
+                {payments.map(payment => (
+                    <div className="sub" key={payment.payment_id}>
+                        <div>{payment.label}:</div>
+                        <div>{formatPrice(payment.price)} сум</div>
                     </div>
-                )}
-                {cashTotal > 0 && (
-                    <>
-                        <div className="sub">
-                            <div>НАЛИЧНЫМИ:</div>
-                            <div>{formatPrice(cashTotal)} сум</div>
-                        </div>
-                        {payChange > 0 && (
-                            <div className="sub">
-                                <div>СДАЧА:</div>
-                                <div>{formatPrice(payChange)} сум</div>
-                            </div>
-                        )}
-                    </>
-                )}
+                ))}
             </div>
             <div className="information">
                 <div className="">ПОСЕТИТЕ НАШ САЙТ</div>

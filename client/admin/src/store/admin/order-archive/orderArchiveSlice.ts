@@ -1,10 +1,10 @@
 import {createEntityAdapter, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import moment from "moment"
-import {Order} from "../../../lib/types/Order"
+import {ArchiveOrder} from "../../../lib/types/Order"
 import {AdminState} from "../store"
 import {fetchOrdersArchive} from "./fetchOrdersArchive"
 
-export const orderArchiveAdapter = createEntityAdapter<Order>({
+export const orderArchiveAdapter = createEntityAdapter<ArchiveOrder>({
     sortComparer: (a, b) => (a.id < b.id ? 1 : -1)
 })
 

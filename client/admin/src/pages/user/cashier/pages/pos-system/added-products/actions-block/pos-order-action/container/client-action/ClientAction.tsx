@@ -58,7 +58,6 @@ const ClientAction: React.FC<ClientActionProps> = ({updateSelectClient, selectCl
                 visible={visible}
                 title="Клиент"
                 onCancel={close}
-                maskClosable={false}
                 destroyOnClose
                 cancelButtonProps={{size: "large"}}
                 okButtonProps={{

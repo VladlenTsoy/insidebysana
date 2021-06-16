@@ -1,4 +1,4 @@
-import {Button, DatePicker, Typography} from "antd"
+import {DatePicker, Typography} from "antd"
 import {RangePickerProps} from "antd/lib/date-picker/generatePicker"
 import {PaymentMethod} from "lib/types/payment/PaymentMethod"
 import {User} from "lib/types/User"

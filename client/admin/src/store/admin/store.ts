@@ -22,6 +22,7 @@ import orderArchive from "./order-archive/orderArchiveSlice"
 import newsletter from "./newsletter/newsletterSlice"
 import promoCode from "./promo-code/promoCodeSlice"
 import printCategory from "./print-category/printCategorySlice"
+import printImage from "./print-image/printImageSlice"
 import productColorImage from "./product-color-image/productColorImageSlice"
 import trashProductColor from "lib/components/trash-products/trashProductColorSlice"
 
@@ -53,7 +54,8 @@ export const adminReducer = combineReducers({
     productColorImage,
     trashProductColor,
     orderArchive,
-    printCategory
+    printCategory,
+    printImage
 })
 
 export type AppDispatch = typeof store.dispatch

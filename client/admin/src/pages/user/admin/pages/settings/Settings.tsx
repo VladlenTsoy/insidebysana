@@ -13,6 +13,7 @@ const Sizes = React.lazy(() => import("./sizes/Sizes"))
 const Tags = React.lazy(() => import("./tags/Tags"))
 const Colors = React.lazy(() => import("./colors/Colors"))
 const PromoCodes = React.lazy(() => import("./promo-codes/PromoCodes"))
+const PrintCategories = React.lazy(() => import("./print-categories/PrintCategories"))
 const AdditionalServices = React.lazy(() => import("./additional-services/AdditionalServices"))
 
 const Settings = () => {
@@ -72,6 +73,11 @@ const Settings = () => {
                                 <Link to="/settings/click">Click</Link>
                             </Menu.Item>
                         </Menu.ItemGroup>
+                        <Menu.ItemGroup title="Печать">
+                            <Menu.Item key="print-categories">
+                                <Link to="/settings/print-categories">Категории</Link>
+                            </Menu.Item>
+                        </Menu.ItemGroup>
                         <Menu.ItemGroup title="Интеграции">
                             <Menu.Item key="facebook">
                                 <Link to="/settings/facebook">Facebook</Link>
@@ -100,6 +106,7 @@ const Settings = () => {
                         <Route path="/settings/tags" component={Tags} />
                         <Route path="/settings/colors" component={Colors} />
                         <Route path="/settings/promo-codes" component={PromoCodes} />
+                        <Route path="/settings/print-categories" component={PrintCategories} />
                         <Route path="/settings/additional-services" component={AdditionalServices} />
                     </React.Suspense>
                 </Col>

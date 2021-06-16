@@ -20,6 +20,7 @@ const PromoCodeController = require("controllers/crm/admin/settings/PromoCodeCon
 const DeliveryController = require("controllers/crm/admin/settings/DeliveryController")
 const SizeController = require("controllers/crm/admin/settings/SizeController")
 const AdditionalServiceController = require("controllers/crm/admin/settings/AdditionalServiceController")
+const PrintCategoryController = require("controllers/crm/admin/settings/print/PrintCategoryController")
 const router = express.Router()
 const multer = require("multer")
 const upload = multer()
@@ -195,5 +196,12 @@ router.post("/additional-service", AdditionalServiceController.Create)
 router.patch("/additional-service/:id", AdditionalServiceController.Edit)
 // Удаление дополнительной услуги
 router.delete("/additional-service/:id", AdditionalServiceController.Delete)
+
+// Создание печать-категории
+router.post("/print-category", PrintCategoryController.Create)
+// Редактирование печать-категории
+router.patch("/print-category/:id", PrintCategoryController.Edit)
+// Удалить печать-категорию
+router.delete("/print-category/:id", PrintCategoryController.Delete)
 
 module.exports = router

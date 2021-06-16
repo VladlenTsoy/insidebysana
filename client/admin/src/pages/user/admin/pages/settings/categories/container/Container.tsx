@@ -2,10 +2,10 @@ import React from "react"
 import {useLoadingCategory, useSelectAllCategories} from "store/common/category/categorySelectors"
 import {Menu, Table} from "antd"
 import {EditOutlined, DeleteOutlined} from "@ant-design/icons"
-import EditorCategoryAction from "../editor-category-action/EditorCategoryAction"
-import {SubCategory} from "../../../../../../../lib/types/Category"
+import EditorCategoryAction from "lib/components/editors/editor-category-action/EditorCategoryAction"
+import {SubCategory} from "lib/types/Category"
 import DeleteCategoryAction from "./delete-category-action/DeleteCategoryAction"
-import MenuButton from "../../../../../../../lib/components/menu-button/MenuButton"
+import MenuButton from "lib/components/menu-button/MenuButton"
 import HideItem from "./hide-action/HideItem"
 
 const menu = (record: SubCategory) => (

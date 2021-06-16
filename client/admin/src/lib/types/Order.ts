@@ -1,18 +1,10 @@
-// import {Client} from "./Client"
-// import {PaymentMethod} from "./payment/PaymentMethod"
-// import {Product} from "./product/Product"
 import {ProductColor} from "./product/ProductColor"
 import {PromoCode} from "./PromoCode"
 import {Source} from "./Source"
 import {Status} from "./Status"
-// import {User} from "./User"
 
 export interface Order {
     id: number
-    // products_id: Product["id"][]
-    // client_id: Client["id"]
-    // payment_id: PaymentMethod["id"]
-    // user_id: User["id"]
     source_id: Source["id"]
     total_price: number
     discount: OrderDiscount
@@ -25,19 +17,29 @@ export interface Order {
     position: number
     payment_state: number
     payments: {
-        id: number
+        payment_id: number
         title: string
+        price: number
     }[]
     loading?: boolean
     next_status_id?: Status["id"]
-
     client: {
         id: number
         full_name: string
         phone: string
     }
+    processing: 0 | 1
+    productColors: OrderProductColor[]
+    additionalServices: {
+        id: number
+        title: string
+        price: number
+        qty: number
+    }[]
     created_at: string
 }
+
+export interface ArchiveOrder extends OrderPos {}
 
 export interface OrderAddress {
     id: number
@@ -86,14 +88,14 @@ export interface OrderPos {
     payments: {
         payment_id: number
         title: string
-        price: string
+        price: number
     }[]
     client: {
         id: number
         full_name: string
         phone: string
     }
-    processing: boolean
+    processing: 0 | 1
     created_at: string
     productColors: OrderProductColor[]
     additionalServices: {
@@ -120,6 +122,7 @@ export interface OrderProductColor {
 export interface OrderPayment {
     payment_id: number
     price: number
+    label: string
 }
 
 export type OrderProduct = {

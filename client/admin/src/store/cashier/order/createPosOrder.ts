@@ -18,9 +18,9 @@ interface AgrProps {
         qty: number
     }[]
     payments: {
-        cash: number
-        card: number
-    }
+        payment_id: number
+        price: number
+    }[]
     discount?: any
     client: Client | null
     products: {

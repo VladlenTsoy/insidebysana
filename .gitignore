@@ -1,6 +1,5 @@
 .idea/
 api/node_modules/
-api/package-lock.json
 api/.env
 api/public/images/additional-services/*
 api/public/images/banners/*

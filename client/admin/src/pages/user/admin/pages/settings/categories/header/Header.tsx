@@ -1,7 +1,7 @@
 import React from "react"
 import {Dropdown, Button, Menu} from "antd"
 import {PlusOutlined, DownOutlined} from "@ant-design/icons"
-import EditorCategoryAction from "../editor-category-action/EditorCategoryAction"
+import EditorCategoryAction from "lib/components/editors/editor-category-action/EditorCategoryAction"
 
 const menu = (
     <Menu>

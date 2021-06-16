@@ -27,7 +27,21 @@ export interface StateProps {
         price: number
         qty: number
     }[]
-    paymentType: "3" | "5"
+    payments: {
+        payment_id: number
+        label: string
+        price: number
+    }[]
+    payChange: number
+    leftToPay: number
+    processing: boolean
+    drawer: {
+        visible: boolean
+    }
+    buttonSubmit: {
+        loading: boolean
+        disabled: boolean
+    }
 }
 
 const initialState = posAdapter.getInitialState<StateProps>({
@@ -38,16 +52,27 @@ const initialState = posAdapter.getInitialState<StateProps>({
     productsFound: [],
     discount: null,
     addtionalServices: [],
-    paymentType: "3"
+    payments: [{payment_id: 3, label: "Наличные", price: 0}],
+    payChange: 0,
+    leftToPay: 0,
+    processing: false,
+    drawer: {
+        visible: false
+    },
+    buttonSubmit: {
+        loading: false,
+        disabled: true
+    }
 })
 
+// Обновить итоговую стоимость
 const updateTotal = (state: CashierState["pos"]) => {
     const {discount, addtionalServices} = state
     const products = Object.values(state.entities)
-    let total = 0
+    let totalPrice = 0
 
     if (products.length) {
-        total += products.reduce((acc, {product, qty}: any) => {
+        totalPrice += products.reduce((acc, {product, qty}: any) => {
             const price = product.discount
                 ? (product.details.price - (product.details.price / 100) * product.discount.discount).toFixed(
                       0
@@ -57,24 +82,30 @@ const updateTotal = (state: CashierState["pos"]) => {
         }, 0)
     }
 
-    if (discount && total > 0) {
-        if (discount.type === "percent") total = total - (total / 100) * discount.discount
-        else total = total - discount.discount
+    if (discount && totalPrice > 0) {
+        if (discount.type === "percent") totalPrice = totalPrice - (totalPrice / 100) * discount.discount
+        else totalPrice = totalPrice - discount.discount
     }
 
     if (addtionalServices.length)
-        total += addtionalServices.reduce(
+        totalPrice += addtionalServices.reduce(
             (acc, addtionalService) => (acc += addtionalService.price * addtionalService.qty),
             0
         )
 
-    return total
+    const totalPricePayments = state.payments.reduce((acc, payment) => (acc += payment.price), 0)
+
+    // Осталось оплатить
+    const leftToPay = totalPrice - totalPricePayments
+
+    return [totalPrice, leftToPay]
 }
 
 const posSlice = createSlice({
     name: "pos",
     initialState,
     reducers: {
+        // Добавить доп. услугу
         addAdditionalService: (state, action: PayloadAction<AdditionalService>) => {
             const checkAdditionalService = state.addtionalServices.find(
                 additionalService => additionalService.id === action.payload.id
@@ -85,14 +116,22 @@ const posSlice = createSlice({
                     return additionalService
                 })
             else state.addtionalServices = [...state.addtionalServices, {...action.payload, qty: 1}]
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
+        // Удалить доп. услугу
         removeAdditionalService: (state, action: PayloadAction<AdditionalService["id"]>) => {
             state.addtionalServices = state.addtionalServices.filter(
                 additionalService => additionalService.id !== action.payload
             )
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
+        // Обновить кол-во доп. улуг
         updateQtyAdditionalService: (
             state,
             action: PayloadAction<{id: AdditionalService["id"]; qty: number}>
@@ -101,12 +140,20 @@ const posSlice = createSlice({
                 if (additionalService.id === action.payload.id) additionalService.qty = action.payload.qty
                 return additionalService
             })
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
+        // Доавить в корзину
         addToCart: (state, action: PayloadAction<ProductColorCart>) => {
             posAdapter.addOne(state, action.payload)
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
+        // Удалить с корзины
         removeFromCart: (
             state,
             action: PayloadAction<{
@@ -116,8 +163,12 @@ const posSlice = createSlice({
         ) => {
             const {product_color_id, size_id} = action.payload
             posAdapter.removeOne(state, `${product_color_id}${size_id}`)
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
+        // Обновить кол-во продукта
         updateQty: (
             state,
             action: PayloadAction<{
@@ -128,27 +179,92 @@ const posSlice = createSlice({
         ) => {
             const {product_color_id, size_id, qty} = action.payload
             posAdapter.updateOne(state, {id: `${product_color_id}${size_id}`, changes: {qty}})
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
+        // Очистить корзину
         clearCart: state => {
+            posAdapter.removeAll(state)
             // state.productsFound = []
             state.discount = null
             state.addtionalServices = []
-            posAdapter.removeAll(state)
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            state.totalPrice = 0
+            state.leftToPay = 0
+            state.processing = false
+            state.payChange = 0
+            state.drawer = {visible: false}
+            state.buttonSubmit = {loading: false, disabled: true}
+            state.payments = [{payment_id: 3, label: "Наличные", price: 0}]
         },
+        // Задать скидку
         setDiscount: (state, action: PayloadAction<StateProps["discount"]>) => {
             state.discount = action.payload
-            state.totalPrice = updateTotal(state)
+            // Сумма
+            const [totalPrice, leftToPay] = updateTotal(state)
+            state.totalPrice = totalPrice
+            state.leftToPay = leftToPay
         },
-        changePaymentType: (state, action: PayloadAction<StateProps["paymentType"]>) => {
-            state.paymentType = action.payload
+        // Добавить или удалить вид оплаты
+        addOrDeletePayment: (state, action: PayloadAction<StateProps["payments"][0]>) => {
+            const {payment_id} = action.payload
+
+            if (!!state.payments.find(payment => payment.payment_id === payment_id))
+                state.payments = state.payments.filter(payment => payment.payment_id !== payment_id)
+            else state.payments = [...state.payments, action.payload]
+
+            const totalPricePayments = state.payments.reduce((acc, payment) => (acc += payment.price), 0)
+            // Осталось оплатить
+            state.leftToPay = state.totalPrice - totalPricePayments
+            // Сдачи
+            state.payChange =
+                totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
+            // Блокировка кнопки
+            state.buttonSubmit.disabled = state.totalPrice > totalPricePayments
         },
+        // Обновить оплату
+        changePriceToPayment: (
+            state,
+            action: PayloadAction<{
+                payment_id: StateProps["payments"][0]["payment_id"]
+                price: StateProps["payments"][0]["price"]
+            }>
+        ) => {
+            const {payment_id, price} = action.payload
+            state.payments = state.payments.map(payment => {
+                if (payment.payment_id === payment_id) payment.price = price
+                return payment
+            })
+            const totalPricePayments = state.payments.reduce((acc, payment) => (acc += payment.price), 0)
+            // Осталось оплатить
+            state.leftToPay = state.totalPrice - totalPricePayments
+            // Сдачи
+            state.payChange =
+                totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
+            // Блокировка кнопки
+            state.buttonSubmit.disabled = state.totalPrice > totalPricePayments
+        },
+        // Изменить Категорию для фильтации
         changeCategoryId: (state, action: PayloadAction<StateProps["category_id"]>) => {
             state.category_id = action.payload
         },
+        // Изменить Размер для фильтрации
         changeSizeId: (state, action: PayloadAction<StateProps["size_id"]>) => {
             state.size_id = action.payload
+        },
+        // Изменить состояния на обработку
+        changeProcessing: (state, action: PayloadAction<StateProps["processing"]>) => {
+            state.processing = action.payload
+        },
+        // Изменения состояние окна
+        changeDrawer: (state, action: PayloadAction<StateProps["drawer"]>) => {
+            state.drawer = action.payload
+        },
+        // Изменеия состояние кнопки
+        changeButtonSubmit: (state, action: PayloadAction<{loading?: boolean; disabled?: boolean}>) => {
+            state.buttonSubmit = {...state.buttonSubmit, ...action.payload}
         }
     },
     extraReducers: builder => {
@@ -170,7 +286,10 @@ const posSlice = createSlice({
                         changes: {qty: qty + 1}
                     })
                 } else posAdapter.addOne(state, action.payload)
-                state.totalPrice = updateTotal(state)
+                // Сумма
+                const [totalPrice, leftToPay] = updateTotal(state)
+                state.totalPrice = totalPrice
+                state.leftToPay = leftToPay
             }
         })
     }
@@ -182,12 +301,16 @@ export const {
     clearCart,
     updateQty,
     setDiscount,
-    changePaymentType,
+    addOrDeletePayment,
     changeCategoryId,
     changeSizeId,
     addAdditionalService,
     removeAdditionalService,
-    updateQtyAdditionalService
+    updateQtyAdditionalService,
+    changeProcessing,
+    changePriceToPayment,
+    changeDrawer,
+    changeButtonSubmit
 } = posSlice.actions
 
 export const {selectAll: selectAllPosProductColors} = posAdapter.getSelectors<CashierState>(

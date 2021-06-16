@@ -23,16 +23,9 @@ const Create = async (req, res) => {
             .findOne(raw(`JSON_CONTAINS(conditions, '6', '$.source_ids') > 0`))
             .findOne(raw(`JSON_EXTRACT(conditions, '$.processing') = ${processing}`))
 
-        const updatePayments = []
-
-        if (payments) {
-            if (payments.cash) updatePayments.push({payment_id: 3, price: payments.cash})
-            if (payments.card) updatePayments.push({payment_id: 5, price: payments.card})
-        }
-
         // Создание сделки
         const order = await OrderService.Create({
-            payments: updatePayments,
+            payments,
             additionalServices,
             client,
             discount,

@@ -7,6 +7,7 @@ import size from "../common/size/sizeSlice"
 import additionalService from "../common/additional-service/additionalServiceSlice"
 import order from "./order/orderSlice"
 import pos from "./pos/posSlice"
+import paymentMethod from "./payment-method/paymentMethodSlice"
 
 export type CashierState = ReturnType<typeof cashierReducer>
 
@@ -19,7 +20,8 @@ export const cashierReducer = combineReducers({
     additionalService,
     // Cashier
     order,
-    pos
+    pos,
+    paymentMethod
 })
 
 export type AppDispatch = typeof store.dispatch

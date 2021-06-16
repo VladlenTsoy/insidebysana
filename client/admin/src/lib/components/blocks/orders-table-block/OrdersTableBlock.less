@@ -1,0 +1,71 @@
+.header {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 1rem;
+
+    .download-table-xls-button {
+        background: red;
+    }
+}
+
+.table-orders {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    th {
+        padding: 0.5rem;
+        white-space: nowrap;
+        border: 1px solid @border-color-base;
+        font-weight: bold;
+    }
+
+    td {
+        padding: 0.5rem;
+        border: 1px solid @border-color-base;
+        white-space: nowrap;
+    }
+
+    .order_processing {
+        margin-left: 0.25rem;
+        color: @success-color;
+    }
+
+    .total-row {
+        font-size: 16px;
+        background-color: @border-color-base;
+    }
+}
+
+.orders-totals {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    .margin-column {
+        width: 600px;
+        border: 0;
+    }
+
+    .total-title {
+        text-align: center;
+    }
+
+    thead {
+        background-color: @border-color-base;
+
+        th {
+            font-size: 16px;
+            font-weight: bolder;
+            padding: 0.5rem;
+            border: 1px solid @border-color-base;
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                border: 1px solid @border-color-base;
+                padding: 0.5rem;
+            }
+        }
+    }
+}

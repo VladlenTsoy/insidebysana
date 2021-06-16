@@ -12,9 +12,11 @@ api/logs/*
 # dependencies
 client/site/node_modules
 client/admin/node_modules
+client/print/node_modules
 # production
 client/site/build
 client/admin/build
+client/print/build
 
 # misc
 .DS_Store
@@ -28,5 +30,9 @@ client/site/yarn-debug.log*
 client/site/yarn-error.log*
 
 client/admin/npm-debug.log*
-client/adminyarn-debug.log*
+client/admin/yarn-debug.log*
 client/admin/yarn-error.log*
+
+client/print/npm-debug.log*
+client/print/yarn-debug.log*
+client/print/yarn-error.log*

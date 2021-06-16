@@ -33,6 +33,7 @@ const GetBySearch = async (req, res) => {
                 "product_colors.product_id",
                 "product_colors.sizes"
             )
+            .whereNotIn("id", ids)
             .withGraphFetched(`[color, details, discount]`)
             .modify("filterSubCategory", categoryId)
             .modify("filterSizes", sizeId === 0 ? [] : [sizeId])

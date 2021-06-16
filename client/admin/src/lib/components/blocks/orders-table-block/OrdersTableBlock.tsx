@@ -1,4 +1,4 @@
-import {DatePicker, Typography} from "antd"
+import {Button, DatePicker, Typography} from "antd"
 import {RangePickerProps} from "antd/lib/date-picker/generatePicker"
 import {PaymentMethod} from "lib/types/payment/PaymentMethod"
 import {User} from "lib/types/User"
@@ -9,6 +9,8 @@ import {formatPrice} from "utils/formatPrice"
 import OrderColumn from "./OrderColumn"
 import "./OrdersTableBlock.less"
 import {OrderTableColumn} from "./OrderTableColumn"
+//@ts-ignore
+import ReactHTMLTableToExcel from "react-html-table-to-excel"
 
 const {Text} = Typography
 const {RangePicker} = DatePicker
@@ -52,13 +54,20 @@ const OrdersTableBlock: React.FC<OrdersTableBlockProps> = ({
                         defaultValue={[moment(), moment()]}
                         format="DD-MM-YYYY"
                     />
+                    <ReactHTMLTableToExcel
+                        className="ant-btn ant-btn-lg"
+                        table="table-to-xls"
+                        filename="Заказы"
+                        sheet="Заказы"
+                        buttonText="Скачать в XSL"
+                    />
                 </div>
             )}
             {loading ? (
                 <LoadingBlock />
             ) : (
                 <>
-                    <table className="table-orders">
+                    <table className="table-orders" id="table-to-xls">
                         <thead>
                             <tr>
                                 <th>ID Заказа</th>

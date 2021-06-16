@@ -1,0 +1,18 @@
+.contact {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.formItem {
+
+}
+
+.formItem.error {
+    border-color: var(--danger);
+}
+
+.actions button {
+    margin-left: auto;
+}

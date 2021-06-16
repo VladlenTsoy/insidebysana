@@ -1,0 +1,33 @@
+.idea/
+api/node_modules/
+api/package-lock.json
+api/.env
+api/public/images/additional-services/*
+api/public/images/banners/*
+api/public/images/products/*
+api/public/images/lookbook/*
+api/logs/*
+.vscode/
+.eslintcache
+
+# dependencies
+client/site/node_modules
+client/admin/node_modules
+# production
+client/site/build
+client/admin/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+client/site/npm-debug.log*
+client/site/yarn-debug.log*
+client/site/yarn-error.log*
+
+client/admin/npm-debug.log*
+client/adminyarn-debug.log*
+client/admin/yarn-error.log*

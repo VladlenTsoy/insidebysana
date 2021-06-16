@@ -1,0 +1,38 @@
+.newsletter p {
+    margin-bottom: 1rem;
+}
+
+
+.newsletterInput {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.newsletterSubTitle {
+    color: var(--secondary-text);
+}
+
+.newsletterInput input {
+    height: 42px;
+    border: 1px solid var(--secondary);
+    border-right: 0;
+    border-radius: 0;
+    padding: 0 0.5rem;
+    width: 100%;
+}
+
+.accept {
+    display: inline-block;
+    font-size: var(--small-font-size);
+    vertical-align: center;
+    user-select: none;
+}
+
+.checkbox {
+    margin-right: 0.25rem;
+}
+
+.accept span {
+    margin-right: 0.25rem;
+}

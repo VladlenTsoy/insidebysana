@@ -1,0 +1,44 @@
+.editor-order-drawer-footer {
+    text-align: right;
+}
+
+.total-price-block {
+    .total-price-paid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .title {
+        font-size: @font-size-lg;
+        font-weight: bold;
+    }
+
+    .price {
+        font-size: @font-size-lg;
+
+        &.success {
+            color: @success-color;
+        }
+
+        &.danger {
+            color: @error-color;
+        }
+    }
+}
+
+.processing {
+    display: flex;
+    background: @border-color-base;
+    border-radius: @border-radius-base;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    margin-bottom: 1rem;
+
+    span {
+        font-size: 20px;
+        margin-right: 1rem;
+    }
+}

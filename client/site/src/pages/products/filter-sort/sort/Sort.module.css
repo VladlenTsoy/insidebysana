@@ -1,0 +1,34 @@
+.sort {
+    /*margin-right: -1.5rem;*/
+}
+
+@media (max-width: 1416px) {
+    .sort {
+        /*margin-right: -0.5rem;*/
+    }
+}
+
+@media (max-width: 767px) {
+    .sort {
+        margin-right: 0;
+    }
+}
+
+.sortMenu {
+
+}
+
+.sortMenu .item {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    text-align: right;
+}
+
+.sortMenu .item.active {
+    color: var(--primary);
+}
+
+.sortMenu .item:hover {
+    color: var(--primary);
+}

@@ -1,0 +1,16 @@
+.filter {
+    padding: 1.5rem 1rem;
+    text-transform: uppercase;
+    color: var(--default);
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+    font-size: var(--small-font-size);
+}
+
+.filter:hover {
+    color: var(--primary);
+}
+
+.filter span {
+    margin-right: 0.5rem;
+}

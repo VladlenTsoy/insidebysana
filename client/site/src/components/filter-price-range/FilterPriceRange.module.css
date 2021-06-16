@@ -1,0 +1,36 @@
+.price {
+    padding-bottom: 1rem;
+    user-select: none;
+}
+
+.inputs {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.inputs input {
+    border-radius: 0;
+    border: 1px solid var(--secondary);
+    padding: .25rem .5rem;
+    height: 30px;
+    font-size: var(--large-font-size);
+    min-width: 100px;
+    color: var(--default-text);
+    width: 100%;
+}
+
+.inputs:after {
+    content: "-";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 35px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}

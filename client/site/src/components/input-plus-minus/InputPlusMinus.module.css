@@ -1,0 +1,34 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--secondary);
+    width: 105px;
+}
+
+.wrapper button {
+    border: 0;
+    background: none;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.wrapper button:hover:not([disabled]) {
+    color: var(--primary);
+}
+
+.wrapper input {
+    border: 0;
+    width: 30px;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .wrapper {
+        width: 105px;
+    }
+
+    .wrapper button {
+        padding: .75rem;
+    }
+}

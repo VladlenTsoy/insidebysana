@@ -1,0 +1,77 @@
+.filterWrapper {
+    --distance: 1.5rem;
+
+    position: relative;
+    display: inline-block;
+}
+
+.filterButton {
+    display: flex;
+    padding: var(--distance);
+    background: var(--white);
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: var(--small-font-size);
+}
+
+.filterButton .title {
+    margin-right: 7px;
+    color: var(--default);
+}
+
+.filterButton .icon {
+    width: 12px;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+}
+
+.filterButton.open .title {
+    color: var(--primary);
+}
+
+.filterButton.open .icon {
+    transform: rotate(180deg);
+}
+
+.dropdown {
+    position: relative;
+    z-index: 55;
+}
+
+.dropdownCard {
+    position: absolute;
+    max-height: 250px;
+    min-width: 200px;
+    background: var(--white);
+    top: 0;
+    z-index: 5;
+    box-shadow: var(--dropdown-box-shadow);
+    overflow: auto;
+    overflow-x: hidden;
+    padding: 0.9rem 1.2rem;
+}
+
+.dropdownClose {
+    display: none;
+}
+
+.dropdownOpen {
+    display: block;
+}
+
+.dropdownLeft {
+    left: var(--distance);
+}
+
+.dropdownRight {
+    right: var(--distance);
+}
+
+
+@media (max-width: 767px) {
+    .filterButton {
+        padding: 1.5rem 1rem;
+    }
+}

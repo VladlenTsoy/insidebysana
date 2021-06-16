@@ -1,0 +1,66 @@
+.imageDetails {
+    display: flex;
+    align-items: center;
+}
+
+.details {
+
+}
+
+.details .title {
+    font-size: var(--large-font-size);
+    margin-bottom: 1rem;
+    display: inline-block;
+    color: var(--default-text);
+    transition: color .2s ease-in-out;
+}
+
+.details .title:hover {
+    color: var(--primary);
+}
+
+.details .size {
+    margin-bottom: .5rem;
+}
+
+.details .price {
+}
+
+.details .discount {
+    color: var(--primary);
+}
+
+.details .prevPrice {
+    margin-bottom: .25rem;
+    font-size: var(--small-font-size);
+    color: var(--secondary-text);
+    margin-top: 1rem;
+}
+
+.details .mainPrice {
+}
+
+.total {
+    text-align: right;
+}
+
+.qty {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+@media (max-width: 767px) {
+    .image {
+        max-width: 120px;
+    }
+
+    .details .price {
+        margin-bottom: 1rem;
+    }
+
+    .totalPrice {
+        margin-bottom: 1rem;
+        white-space: nowrap;
+    }
+}

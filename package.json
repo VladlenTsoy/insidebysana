@@ -1,0 +1,11 @@
+{
+    "name": "insidebysana",
+    "version": "1.0.0",
+    "author": "Tsoy Vladlen <vladlengg@gmail.com>",
+    "private": true,
+    "license": "MIT",
+    "scripts": {
+      "install-dependencies": "cd api && npm install && cd ../client/admin && yarn install && cd ../site && yarn install",
+      "build": "cd client/site && npm run build && cd ../admin && npm run build"
+    }
+  }

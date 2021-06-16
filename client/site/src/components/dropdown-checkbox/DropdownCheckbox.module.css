@@ -1,0 +1,34 @@
+.labelOption {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    padding: 0.33rem 0;
+}
+
+.label {
+    margin-right: 1rem;
+    text-transform: uppercase;
+    font-size: var(--small-font-size);
+    display: flex;
+    align-items: center;
+}
+
+.checkbox {
+    margin-right: 0.5rem;
+    transform: scale(1.05);
+}
+
+.count {
+    font-size: var(--small-font-size);
+    color: var(--secondary-text);
+}
+
+.color {
+    width: 18px;
+    height: 18px;
+    box-shadow: var(--dropdown-box-shadow);
+    margin-right: 0.5rem;
+    border-radius: 50%;
+}

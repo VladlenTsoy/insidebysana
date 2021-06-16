@@ -1,0 +1,16 @@
+.socials {
+    text-align: center;
+    margin-top: auto;
+}
+
+.socials a {
+    display: inline-block;
+    padding: 1rem;
+    color: var(--secondary-text);
+    font-size: 22px;
+    transition: color 0.3s ease-in-out;
+}
+
+.socials a:hover {
+    color: var(--primary);
+}

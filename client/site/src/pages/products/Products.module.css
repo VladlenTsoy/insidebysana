@@ -1,0 +1,10 @@
+.products {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+    overflow: hidden;
+    position: relative;
+    min-height: 500px;
+    height: 100%;
+}

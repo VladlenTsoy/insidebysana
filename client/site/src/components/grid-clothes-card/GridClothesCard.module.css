@@ -1,0 +1,26 @@
+.gridClothes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: var(--max-width-container);
+    margin: 0 auto;
+}
+
+@media (max-width: 992px) {
+    .gridClothes {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .gridClothes {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 576px) {
+    .gridClothes {
+        grid-template-columns: 1fr 1fr;
+    }
+}

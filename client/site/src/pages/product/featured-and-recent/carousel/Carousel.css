@@ -1,0 +1,21 @@
+#recent-products div.carousel__inner-slide,
+#featured-products div.carousel__inner-slide {
+    width: calc(100% - 1.5rem);
+    transform: translateX(0.75rem);
+}
+
+@media (max-width: 767px) {
+    #recent-products div.carousel__inner-slide,
+    #featured-products div.carousel__inner-slide {
+        width: calc(100% - 1.5rem);
+        transform: translateX(0.75rem);
+    }
+}
+
+@media (max-width: 576px) {
+    #recent-products div.carousel__inner-slide,
+    #featured-products div.carousel__inner-slide {
+        width: calc(100% - 1rem);
+        transform: translateX(0.5rem);
+    }
+}

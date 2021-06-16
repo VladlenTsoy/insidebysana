@@ -1,0 +1,120 @@
+
+.for-print {
+    width: 100%;
+    overflow: hidden;
+    font-family: Jost, sans-serif;
+    color: black;
+    font-size: 2mm;
+    page-break: avoid;
+}
+
+.for-print .header {
+    white-space: nowrap;
+    margin-bottom: 1mm;
+    width: 100%;
+}
+
+.for-print .header .logo {
+    text-align: center;
+}
+
+.for-print .header .logo img {
+    width: 60%;
+    margin: 0 auto 1mm;
+}
+
+.for-print .header .company {
+    text-align: center;
+}
+
+.for-print .products {
+    width: 100%;
+    margin-bottom: 0.5mm;
+    border-collapse: collapse;
+}
+
+.for-print .products th {
+    border: 1px solid black;
+    text-align: center;
+    font-weight: normal;
+}
+
+.for-print .products th,
+.for-print .products td {
+    padding: 0.5mm;
+    white-space: nowrap;
+}
+
+.for-print .products .product {
+    border: 1px solid black;
+}
+
+.for-print .products .product .title {
+    line-height: 1.2;
+    white-space: normal;
+}
+
+.for-print .products .product .size,
+.for-print .products .product .qty {
+    text-align: center;
+}
+
+.for-print .products .margin-no-border {
+    padding: 1mm;
+}
+
+.for-print .total-block {
+    width: 70%;
+    margin: 0 auto;
+    margin-bottom: 3mm;
+}
+
+.for-print .total {
+    font-size: 3mm;
+    margin-bottom: 1mm;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-between;
+}
+
+.for-print .total div {
+    display: inline-block;
+}
+
+.for-print .total div:first-child {
+    margin-right: 1mm;
+}
+
+.for-print .sub {
+    text-align: left;
+    font-size: 2mm;
+    margin-bottom: .5mm;
+    display: flex;
+    justify-content: space-between;
+}
+
+.for-print .sub div {
+    display: inline-block;
+}
+
+.for-print .sub div:first-child {
+    margin-right: 1mm;
+}
+
+.for-print .information {
+    text-align: center;
+}
+
+.for-print .information > div {
+    margin-bottom: .5mm;
+    font-size: 2mm;
+}
+
+.for-print .information .qr-image {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.for-print .information .qr-image img {
+    width: 100%;
+}

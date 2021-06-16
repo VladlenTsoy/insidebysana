@@ -1,0 +1,26 @@
+.measurements {
+    margin-bottom: 2rem;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.measurements table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.measurements table td {
+    padding: 1rem 0.5rem;
+    border-bottom: 1px solid var(--secondary);
+    cursor: var(--default-text);
+    font-size: var(--small-font-size);
+}
+
+.measurements table td:first-child {
+    padding-left: 0.25rem;
+    color: var(--primary);
+}
+
+.measurements table td:last-child {
+    padding-right: 0.25rem;
+}

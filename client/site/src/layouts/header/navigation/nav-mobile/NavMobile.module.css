@@ -1,0 +1,58 @@
+header .buttonMenu {
+    background: none;
+    border: 0;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+header .buttonMenu img {
+    width: 22px;
+}
+
+header[data-mode="static"] .buttonMenu {
+    filter: invert(100%);
+}
+
+@media (max-width: 1200px) {
+    header .navigation {
+        order: 0;
+    }
+}
+
+.close {
+    padding: 2rem 1.5rem;
+    font-size: 20px;
+    transition: color 0.3s ease-in-out;
+}
+
+.close:hover {
+    color: var(--primary);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.account {
+    padding: 2rem 1.5rem;
+    transition: color 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.account .icon {
+    font-size: 20px;
+}
+
+.account .text {
+    margin-right: .5rem;
+}

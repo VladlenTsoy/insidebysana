@@ -1,0 +1,89 @@
+.icon {
+    position: absolute;
+    right: 0;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+    color: var(--secondary-text);
+}
+
+.active {
+    transform: rotate(-90deg);
+}
+
+.cardOrder {
+    width: 100%;
+    padding-right: 1.5rem;
+}
+
+.cardOrderHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5rem;
+    color: var(--secondary-text);
+}
+
+.cardOrderHeader .id {
+    font-size: var(--large-font-size);
+    color: var(--default);
+}
+
+.cardOrderHeader .created {
+    color: var(--secondary-text);
+}
+
+.cardOrderBody {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardOrderBody .rightBlock {
+    text-align: right;
+}
+
+.cardOrderBody .details {
+    color: var(--secondary-text);
+}
+
+.cardOrderBody .details span {
+    color: var(--default-text);
+}
+
+.cardOrderBody .discount {
+    color: var(--secondary-text);
+}
+
+.cardOrderBody .discount span {
+    color: var(--default-text);
+}
+
+.cardOrderBody .total_price {
+    font-size: var(--large-font-size);
+    color: var(--default);
+}
+
+.wrapperTable {
+    overflow: hidden;
+    overflow-x: auto;
+    width: 100%;
+}
+
+.tableProducts {
+    width: 100%;
+}
+
+.tableProducts th,
+.tableProducts td {
+    text-align: left;
+    padding: 0.5rem;
+    white-space: nowrap;
+}
+
+.image {
+    width: 100px;
+}
+
+@media (max-width: 767px) {
+    .image {
+        width: 60px;
+    }
+}

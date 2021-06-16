@@ -1,0 +1,30 @@
+.search-list-products {
+    margin-top: 1.5rem;
+}
+
+.search-list-products .search-product-item{
+    display: grid;
+    grid-template-columns: calc(20px + 1rem) calc(60px + 1rem) 200px calc(100px + 1rem) 1fr calc(50px + 1rem);
+}
+
+.search-list-products .search-product-item:not(:last-child) {
+    border-bottom: 1px solid @layout-body-background;
+}
+
+.search-list-products .search-product-item > div {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-list-products .search-product-item .image img{
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: @layout-body-background;
+}
+
+.search-list-products .search-product-item .sizes .ant-radio-button-wrapper.added {
+    background: @text-color-secondary;
+    color: @white;
+}

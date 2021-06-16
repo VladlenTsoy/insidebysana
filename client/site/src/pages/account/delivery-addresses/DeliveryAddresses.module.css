@@ -1,0 +1,39 @@
+.delivery {
+    overflow: hidden;
+}
+
+.wrapper {
+    padding: 2rem 1rem;
+    width: 100%;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+.wrapperTable {
+    width: 100%;
+    overflow: auto;
+}
+
+.tableDeliveries {
+    width: 100%;
+    margin: 2rem 0;
+    border-collapse: collapse;
+}
+
+.tableDeliveries td, .tableDeliveries th {
+    padding: .75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--secondary);
+}
+
+.action {
+    font-size: 18px;
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.action:hover {
+    color: var(--danger);
+}

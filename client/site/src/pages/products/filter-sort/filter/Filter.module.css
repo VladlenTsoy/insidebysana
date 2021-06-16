@@ -1,0 +1,9 @@
+.filter {
+    /*margin-left: -1.5rem;*/
+}
+
+@media (max-width: 1416px) {
+    .filter {
+        /*margin-left: -0.5rem;*/
+    }
+}

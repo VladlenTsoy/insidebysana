@@ -1,0 +1,28 @@
+# Перенапраление на https
+RewriteEngine on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+
+# Для роутеров React
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-l
+  RewriteRule . /index.html [L]
+</IfModule>
+
+<ifModule mod_headers.c>
+  <FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|js|css|pdf|otf|mp3|wav|svg|txt|ogg)$">
+    Header set Cache-Control "max-age=31536000"
+  </FilesMatch>
+</ifModule>
+
+# Source Files
+#<ifModule mod_headers.c>
+#    <FilesMatch ".(flv|gif|jpg|jpeg|png|ico|swf|pdf|otf|mp3|wav|svg|txt|ogg)$">
+#        Header set Cache-Control "max-age=31536000"
+#    </FilesMatch>
+#</ifModule>

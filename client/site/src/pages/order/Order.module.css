@@ -1,0 +1,14 @@
+.wrapper {
+    padding-bottom: 2rem;
+}
+
+
+.notFound {
+    text-align: center;
+    font-size: var(--big-font-size);
+    margin-bottom: 5rem;
+}
+
+.notFound p {
+    margin-bottom: .5rem;
+}

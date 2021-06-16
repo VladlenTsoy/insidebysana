@@ -1,0 +1,9 @@
+.option {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 20px;
+    margin-right: .5rem;
+}

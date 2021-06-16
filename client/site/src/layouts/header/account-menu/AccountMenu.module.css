@@ -1,0 +1,85 @@
+header[data-mode="static"] .accountMenu li a {
+    color: var(--white);
+}
+
+header .accountMenu {
+    height: 100%;
+    margin-left: auto;
+    order: 2;
+    white-space: nowrap;
+}
+
+header .accountMenu menu {
+    height: 100%;
+    width: 100%;
+    text-align: right;
+}
+
+header .accountMenu li {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    list-style: none;
+}
+
+header .accountMenu li a {
+    display: inline-block;
+    padding: 1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 22px;
+    color: var(--default-text);
+    transition: color 0.2s ease-in-out;
+}
+
+header .accountMenu li:last-child a {
+    padding-right: 0;
+}
+
+header .accountMenu li a:hover {
+    color: var(--primary);
+}
+
+@media (max-width: 767px) {
+    header .accountMenu li a {
+        padding: 0.75rem;
+    }
+
+    header .accountMenu li a img {
+    }
+}
+
+@media (max-width: 576px) {
+    header .accountMenu li:first-child {
+        display: none;
+    }
+}
+
+
+.cart {
+    position: relative;
+}
+
+.wishlist {
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: -5px;
+    bottom: 15px;
+}
+
+.wishlist .badge {
+    right: 10px;
+}

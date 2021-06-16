@@ -1,0 +1,51 @@
+.type {
+    margin-bottom: .25rem;
+    display: block;
+}
+
+.type input {
+    display: none;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--secondary);
+}
+
+.check {
+    font-size: var(--big-font-size);
+    color: var(--default);
+    margin-right: 1rem;
+    line-height: 0;
+}
+
+.emptyIcon {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--secondary);
+    border-radius: 50%;
+}
+
+.info {
+    margin-right: auto;
+}
+
+.title {
+
+}
+
+.description {
+    color: var(--secondary-text);
+    font-size: var(--small-font-size);
+    margin-top: .25rem;
+}
+
+.price {
+    font-weight: bold;
+    color: var(--default);
+    margin-left: .5rem;
+    white-space: nowrap;
+}

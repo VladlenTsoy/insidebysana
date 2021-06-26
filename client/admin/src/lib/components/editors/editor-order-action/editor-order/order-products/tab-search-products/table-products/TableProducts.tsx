@@ -17,14 +17,17 @@ const columns = ({addProduct, deleteProduct, addedProducts}: any) => {
             title: "Фото",
             dataIndex: ["url_thumbnail"],
             key: "url_thumbnail",
-            render: (image: string, record: any) => <div style={{width: "70px"}}>
-                <ImageBlock image={image} title={record.details.title} />
-            </div>
+            render: (image: string, record: any) => (
+                <div style={{width: "70px"}}>
+                    <ImageBlock image={image} title={record.details.title} />
+                </div>
+            )
         },
         {
             title: "Название",
             dataIndex: ["details", "title"],
-            key: "title"
+            key: "title",
+            render: (title: string, record: any) => `${title} (${record.color.title})`
         },
         {
             title: "Цена",

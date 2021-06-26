@@ -15,6 +15,7 @@ import AddAdditionalServiceBlock, {
 const {Title} = Typography
 
 interface InformationProps {
+    created_at?: string
     additionalServices: SelectAdditionalService[]
     client: Client | null
     delivery: Delivery | null
@@ -31,6 +32,7 @@ interface InformationProps {
 }
 
 const Information: React.FC<InformationProps> = ({
+    created_at,
     onSubmitHandler,
     additionalServices,
     client,
@@ -54,7 +56,7 @@ const Information: React.FC<InformationProps> = ({
                 onFinish={onSubmitHandler}
                 layout="vertical"
                 initialValues={{
-                    created_at: moment()
+                    created_at: created_at ? moment(created_at) : moment()
                 }}
             >
                 <Form.Item

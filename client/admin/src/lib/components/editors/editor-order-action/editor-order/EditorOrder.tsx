@@ -24,6 +24,7 @@ interface EditorOrderProps {
         discount?: OrderDiscount
         address?: OrderAddress
         payments?: OrderPayment[]
+        created_at: string
     }
 }
 
@@ -166,6 +167,7 @@ const EditorOrder: React.FC<EditorOrderProps> = ({close, setLoadingFinish, order
             </Col>
             <Col xl={7} md={8}>
                 <Information
+                    created_at={order?.created_at}
                     additionalServices={additionalServices}
                     client={client}
                     delivery={delivery}

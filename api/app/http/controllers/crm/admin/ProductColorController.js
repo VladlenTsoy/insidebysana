@@ -124,6 +124,7 @@ const GetBySearch = async (req, res) => {
                 `[
                 details(),
                 discount(),
+                color
             ]`
             )
             .modify("search", search)

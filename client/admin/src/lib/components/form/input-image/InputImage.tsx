@@ -29,6 +29,7 @@ const InputImage: React.FC<InputImageProps> = ({
                         setImage(imageUrl)
                     })
                 else message.error("Данный формат изображения не поддерживается!")
+                return null
             })
         } else setImage(null)
     }

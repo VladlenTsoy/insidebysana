@@ -85,23 +85,23 @@ class ProductColor extends Model {
              * @param builder
              * @param search
              */
-            search(builder, search, isHide = false) {
+            search(builder, search, isHide = false, ids) {
                 if (search.trim() !== "") {
                     builder.whereRaw(
                         `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
                     )
                     if (isHide) builder.whereNotNull("hide_id")
-                    else builder.where("hide_id", null)
-
-                    builder.orWhere("product_colors.id", "LIKE", `%${search}%`)
-                    if (isHide) builder.whereNotNull("hide_id")
-                    else builder.where("hide_id", null)
+                    else builder.where("hide_id", null).whereNotIn("id", ids)
 
                     builder.orWhereRaw(
                         `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
                     )
                     if (isHide) builder.whereNotNull("hide_id")
-                    else builder.where("hide_id", null)
+                    else builder.where("hide_id", null).whereNotIn("id", ids)
+
+                    builder.orWhere("product_colors.id", "LIKE", `%${search}%`)
+                    if (isHide) builder.whereNotNull("hide_id")
+                    else builder.where("hide_id", null).whereNotIn("id", ids)
                 }
             },
 

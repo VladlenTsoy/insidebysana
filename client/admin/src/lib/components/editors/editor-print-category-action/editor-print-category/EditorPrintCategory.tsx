@@ -6,6 +6,7 @@ import {useForm} from "antd/es/form/Form"
 import {editPrintCategory} from "store/admin/print-category/editPrintCategory"
 import {createPrintCategory} from "store/admin/print-category/createPrintCategory"
 import {useSelectAllPrintCategories} from "store/admin/print-category/printCategorySelectors"
+import InputImage from "../../../form/input-image/InputImage"
 
 const {Option} = Select
 
@@ -38,6 +39,13 @@ const EditorPrintCategory: React.FC<EditorCategoryProps> = ({sub, setLoading, cl
             size="large"
             onFinish={onFinish}
         >
+            {!sub && (
+                <InputImage
+                    name="url_image"
+                    form={form}
+                    rules={[{required: true, message: "Выберите картинку!"}]}
+                />
+            )}
             {sub && (
                 <Form.Item
                     name="category_id"

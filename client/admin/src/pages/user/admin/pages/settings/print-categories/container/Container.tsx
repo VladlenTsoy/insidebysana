@@ -9,6 +9,7 @@ import {
     useLoadingPrintCategories,
     useSelectAllPrintCategories
 } from "store/admin/print-category/printCategorySelectors"
+import ImageBlock from "lib/components/blocks/image-block/ImageBlock"
 
 const menu = (record: SubCategory) => (
     <Menu>
@@ -36,6 +37,31 @@ const columns = [
         key: "id"
     },
     {
+        title: "Картинка",
+        dataIndex: "url_image",
+        render: (image: string) => (
+            <div style={{width: "40px"}}>
+                <ImageBlock image={image} title={""} />
+            </div>
+        )
+    },
+    {
+        title: "Название",
+        dataIndex: "title",
+        key: "title"
+    },
+    {
+        render: (_: undefined, record: any) => <MenuButton overlay={menu(record)} />
+    }
+]
+
+const _columns = [
+    {
+        title: "ID",
+        dataIndex: "id",
+        key: "id"
+    },
+    {
         title: "Название",
         dataIndex: "title",
         key: "title"
@@ -50,7 +76,7 @@ const Container = () => {
     const categories = useSelectAllPrintCategories()
 
     const expandedRowRender = (column: any) => {
-        return <Table columns={columns} rowKey="id" dataSource={column.sub_categories} pagination={false} />
+        return <Table columns={_columns} rowKey="id" dataSource={column.sub_categories} pagination={false} />
     }
 
     return (

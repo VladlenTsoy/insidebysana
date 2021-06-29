@@ -22,14 +22,20 @@ const EditorPrint: React.FC<EditorPrintProps> = ({productColor}) => {
     const fetchLoading = useLoadingPrints()
 
     // Удаление картинки
-    const removeHandler = useCallback((file: any) => {
-        dispatch(deletePrintImage(file.id))
-    }, [dispatch])
+    const removeHandler = useCallback(
+        (file: any) => {
+            dispatch(deletePrintImage(file.id))
+        },
+        [dispatch]
+    )
 
     // Загрузка картинка
-    const requestHandler = useCallback(async (form: any) => {
-        await dispatch(uploadPrintImage({productColorId: productColor.id, data: form}))
-    }, [dispatch, productColor])
+    const requestHandler = useCallback(
+        async (form: any) => {
+            await dispatch(uploadPrintImage({productColorId: productColor.id, data: form}))
+        },
+        [dispatch, productColor]
+    )
 
     useEffect(() => {
         const promise = dispatch(fetchPrintImage(productColor.id))
@@ -38,8 +44,7 @@ const EditorPrint: React.FC<EditorPrintProps> = ({productColor}) => {
         }
     }, [productColor, dispatch])
 
-    if (fetchLoading)
-        return <LoadingBlock />
+    if (fetchLoading) return <LoadingBlock />
 
     return (
         <UploadImages

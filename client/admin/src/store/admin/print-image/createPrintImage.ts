@@ -8,6 +8,9 @@ type ReturnedType = PrintImage
 
 interface AgrProps {
     title: PrintImage["title"]
+    price: PrintImage["price"]
+    category_id: PrintImage["category"]["id"]
+    url_image: PrintImage["url_image"]
 }
 
 export const createPrintImage = createAsyncThunk<ReturnedType, AgrProps, AdminThunkProps>(

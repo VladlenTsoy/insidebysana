@@ -10,6 +10,9 @@ interface AgrProps {
     id: PrintImage["id"]
     data: {
         title: PrintImage["title"]
+        price: PrintImage["price"]
+        category_id: PrintImage["category"]["id"]
+        url_image: PrintImage["url_image"]
     }
 }
 

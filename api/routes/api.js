@@ -4,6 +4,7 @@ const ProductColorController = require("controllers/client/ProductColorControlle
 const MeasurementController = require("controllers/client/MeasurementController")
 const CategoryController = require("controllers/client/CategoryController")
 const PrintCategoryController = require("controllers/crm/common/PrintCategoryController")
+const PrintImageController = require("controllers/crm/common/PrintImageController")
 const BannerController = require("controllers/client/BannerController")
 const WishlistController = require("controllers/client/WishlistController")
 const CartController = require("controllers/client/CartController")
@@ -91,5 +92,8 @@ router.get("/additional-services", AdditionalServicesController.GetAll)
 
 //
 router.get("/print-categories", PrintCategoryController.GetAll)
+
+//
+router.get("/print-images", PrintImageController.GetAll)
 
 module.exports = router

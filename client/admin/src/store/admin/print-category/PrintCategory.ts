@@ -2,6 +2,7 @@ export interface PrintCategory {
     id: number
     title: string
     hide_id?: number
+    sub_categories: PrintSubCategory[]
 }
 
 export interface PrintSubCategory {

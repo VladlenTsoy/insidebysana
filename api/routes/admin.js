@@ -21,6 +21,8 @@ const DeliveryController = require("controllers/crm/admin/settings/DeliveryContr
 const SizeController = require("controllers/crm/admin/settings/SizeController")
 const AdditionalServiceController = require("controllers/crm/admin/settings/AdditionalServiceController")
 const PrintCategoryController = require("controllers/crm/admin/settings/print/PrintCategoryController")
+const PrintImageController = require("controllers/crm/admin/settings/print/PrintImageController")
+const PrintProductController = require("controllers/crm/admin/settings/print/PrintProductController")
 const router = express.Router()
 const multer = require("multer")
 const upload = multer()
@@ -203,5 +205,17 @@ router.post("/print-category", PrintCategoryController.Create)
 router.patch("/print-category/:id", PrintCategoryController.Edit)
 // Удалить печать-категорию
 router.delete("/print-category/:id", PrintCategoryController.Delete)
+
+// Добавление изображения для печати
+router.post("/print-image", PrintImageController.Create)
+// Редактирование печать картинки
+router.patch("/print-image/:id", PrintImageController.Edit)
+
+// Вывод всех продуктов по ID картинки для печати
+router.get("/print-products/:print_image_id", PrintProductController.GetByPrintImageId)
+// Добавление изображения для печати
+router.post("/print-product", PrintProductController.Create)
+// Редактирование печать картинки
+router.patch("/print-product/:id", PrintProductController.Edit)
 
 module.exports = router

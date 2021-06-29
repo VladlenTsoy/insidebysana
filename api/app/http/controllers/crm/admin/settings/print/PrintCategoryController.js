@@ -68,6 +68,7 @@ const Edit = async (req, res) => {
                 fileImage: url_image
             })
             data.image = imagePath
+            await ImageService.DeleteImagesExceptCurrent(`${PATH_TO_FOLDER_IMAGES}/${id}`, imagePath)
         }
         await PrintCategory.query().updateAndFetchById(id, data)
 

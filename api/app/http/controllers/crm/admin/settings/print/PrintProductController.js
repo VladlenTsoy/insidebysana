@@ -127,4 +127,16 @@ const Edit = async (req, res) => {
     }
 }
 
-module.exports = {Create, GetByPrintImageId, Edit}
+const Delete = async (req, res) => {
+    try {
+        const {id} = req.params
+        await ImageService.DeleteFolder(`${PATH_TO_FOLDER_IMAGES}/${id}`)
+        await PrintProduct.query().deleteById(id)
+        return res.send(id)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+module.exports = {Create, GetByPrintImageId, Edit, Delete}

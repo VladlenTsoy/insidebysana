@@ -1,4 +1,5 @@
 const {PrintImage} = require("models/print/PrintImage")
+const {PrintProduct} = require("models/print/PrintProduct")
 const {logger} = require("config/logger.config")
 const ImageService = require("services/image/ImageService")
 
@@ -60,7 +61,7 @@ const Edit = async (req, res) => {
         const {id} = req.params
         const {title, url_image, category_id, price} = req.body
         const data = {title, category_id, price}
-        if (!url_image.includes("http")) {
+        if (url_image && !url_image.includes("http")) {
             // Загрузка картинки
             const [imagePath] = await ImageService.UploadImage({
                 folderPath: `${PATH_TO_FOLDER_IMAGES}/${id}`,
@@ -84,4 +85,25 @@ const Edit = async (req, res) => {
     }
 }
 
-module.exports = {Create, Edit}
+const Delete = async (req, res) => {
+    try {
+        const {id} = req.params
+
+        const printImage = await PrintImage.query().findById(id)
+        if (!printImage) return res.status(500).send({message: "Ошибка! Картинка не найдена!"})
+
+        const printProducts = await PrintProduct.query().where({print_image_id: id})
+        if (printProducts.length)
+            return res.status(500).send({message: "Ошибка! Удалите товары связанные с картинкой!"})
+
+        if (printImage.image) await ImageService.DeleteFolder(`${PATH_TO_FOLDER_IMAGES}/${id}`)
+        await PrintImage.query().deleteById(id)
+
+        return res.send(id)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+module.exports = {Create, Edit, Delete}

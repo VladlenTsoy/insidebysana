@@ -210,6 +210,8 @@ router.delete("/print-category/:id", PrintCategoryController.Delete)
 router.post("/print-image", PrintImageController.Create)
 // Редактирование печать картинки
 router.patch("/print-image/:id", PrintImageController.Edit)
+// Удаление картинки для печати
+router.delete("/print-image/:id", PrintImageController.Delete)
 
 // Вывод всех продуктов по ID картинки для печати
 router.get("/print-products/:print_image_id", PrintProductController.GetByPrintImageId)
@@ -217,5 +219,7 @@ router.get("/print-products/:print_image_id", PrintProductController.GetByPrintI
 router.post("/print-product", PrintProductController.Create)
 // Редактирование печать картинки
 router.patch("/print-product/:id", PrintProductController.Edit)
+// Удалить товар печати
+router.delete("/print-product/:id", PrintProductController.Delete)
 
 module.exports = router

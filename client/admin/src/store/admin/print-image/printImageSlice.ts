@@ -21,19 +21,19 @@ const printImageSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-        // Создание баннера
+        // Создание
         builder.addCase(createPrintImage.fulfilled, (state, action) => {
             printImageAdapter.addOne(state, action.payload)
         })
-        // Редактирование баннера
+        // Редактирование
         builder.addCase(editPrintImage.fulfilled, (state, action) => {
             printImageAdapter.upsertOne(state, action.payload)
         })
-        // Удаление баннера
+        // Удаление
         builder.addCase(deletePrintImage.fulfilled, (state, action) => {
-            printImageAdapter.setAll(state, action.payload)
+            printImageAdapter.removeOne(state, action.payload)
         })
-        // Вывод всех баннеров
+        // Вывод всех
         builder.addCase(fetchPrintImages.pending, state => {
             state.loading = true
         })

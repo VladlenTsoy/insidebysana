@@ -13,7 +13,7 @@ export interface StateProps {
 }
 
 const initialState = printProductAdapter.getInitialState<StateProps>({
-    loading: true
+    loading: false
 })
 
 const printProductSlice = createSlice({
@@ -21,19 +21,19 @@ const printProductSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-        // Создание баннера
+        // Создание
         builder.addCase(createPrintProduct.fulfilled, (state, action) => {
             printProductAdapter.addOne(state, action.payload)
         })
-        // Редактирование баннера
+        // Редактирование
         builder.addCase(editPrintProduct.fulfilled, (state, action) => {
             printProductAdapter.upsertOne(state, action.payload)
         })
-        // Удаление баннера
+        // Удаление
         builder.addCase(deletePrintProduct.fulfilled, (state, action) => {
-            printProductAdapter.setAll(state, action.payload)
+            printProductAdapter.removeOne(state, action.payload)
         })
-        // Вывод всех баннеров
+        // Вывод всех
         builder.addCase(fetchPrintProductsByImageId.pending, state => {
             state.loading = true
         })

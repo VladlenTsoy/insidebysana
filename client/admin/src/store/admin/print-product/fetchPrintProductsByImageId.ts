@@ -14,10 +14,10 @@ export const fetchPrintProductsByImageId = createAsyncThunk<ReturnedType, AgrPro
     async ({imageId}, {signal}) => {
         return await apiRequest("get", `admin/print-products/${imageId}`, {signal})
     },
-    {
-        condition(_, {getState}) {
-            const {printProduct} = getState()
-            return !printProduct.ids.length
-        }
-    }
+    // {
+    //     condition(_, {getState}) {
+    //         const {printProduct} = getState()
+    //         return !printProduct.ids.length
+    //     }
+    // }
 )

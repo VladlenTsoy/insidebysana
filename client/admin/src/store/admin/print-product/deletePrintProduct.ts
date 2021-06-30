@@ -4,7 +4,7 @@ import {apiRequest} from "../../../utils/api"
 import {message} from "../../../lib/ui"
 import {PrintProduct} from "./PrintProduct"
 
-type ReturnedType = PrintProduct[]
+type ReturnedType = PrintProduct["id"]
 
 type AgrProps = PrintProduct["id"]
 

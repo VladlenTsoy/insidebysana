@@ -3,7 +3,7 @@ import {Space, Table, Menu, Button} from "antd"
 import {useLoadingPrintImages, useSelectAllPrintImages} from "store/admin/print-image/printImageSelectors"
 import ImageBlock from "lib/components/blocks/image-block/ImageBlock"
 import {formatPrice} from "utils/formatPrice"
-import {EditOutlined, PlusOutlined} from "@ant-design/icons"
+import {DeleteOutlined, EditOutlined, PlusOutlined} from "@ant-design/icons"
 import {PrintImage} from "store/admin/print-image/PrintImage"
 import EditorPrintImageAction from "lib/components/editors/editor-print-image-action/EditorPrintImageAction"
 import MenuButton from "lib/components/menu-button/MenuButton"
@@ -16,6 +16,8 @@ import {
     useSelectPrintProductsByImageId
 } from "store/admin/print-product/printProductSelectors"
 import {PrintProduct} from "store/admin/print-product/PrintProduct"
+import DeletePrintImageAction from "./DeletePrintImageAction"
+import DeletePrintProductAction from "./DeletePrintProductAction"
 
 const menu = (record: PrintImage) => (
     <Menu>
@@ -25,6 +27,13 @@ const menu = (record: PrintImage) => (
                     <EditOutlined /> Редактировать
                 </span>
             </EditorPrintImageAction>
+        </Menu.Item>
+        <Menu.Item>
+            <DeletePrintImageAction printImage={record}>
+                <span>
+                    <DeleteOutlined /> Удалить
+                </span>
+            </DeletePrintImageAction>
         </Menu.Item>
     </Menu>
 )
@@ -37,6 +46,13 @@ const _menu = (record: PrintProduct) => (
                     <EditOutlined /> Редактировать
                 </span>
             </EditorPrintProductAction>
+        </Menu.Item>
+        <Menu.Item>
+            <DeletePrintProductAction printProduct={record}>
+                <span>
+                    <DeleteOutlined /> Удалить
+                </span>
+            </DeletePrintProductAction>
         </Menu.Item>
     </Menu>
 )

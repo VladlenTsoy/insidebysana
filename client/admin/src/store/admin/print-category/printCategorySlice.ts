@@ -23,7 +23,7 @@ const printCategorySlice = createSlice({
     extraReducers: builder => {
         // Создание баннера
         builder.addCase(createPrintCategory.fulfilled, (state, action) => {
-            printCategoryAdapter.addOne(state, action.payload)
+            printCategoryAdapter.upsertOne(state, action.payload)
         })
         // Редактирование баннера
         builder.addCase(editPrintCategory.fulfilled, (state, action) => {

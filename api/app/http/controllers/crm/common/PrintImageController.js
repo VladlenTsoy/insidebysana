@@ -21,4 +21,25 @@ const GetAll = async (req, res) => {
     }
 }
 
-module.exports = {GetAll}
+/**
+ * Вывод
+ * @param req
+ * @param res
+ * @return {Promise<*>}
+ * @constructor
+ */
+const GetByCategoryID = async (req, res) => {
+    try {
+        const {category_id} = req.params
+        const printImages = await PrintImage.query()
+            .where({hide_id: null, category_id})
+            .withGraphFetched("[category]")
+            .select("id", "title", "hide_id", "image", "price")
+        return res.send(printImages)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+module.exports = {GetAll, GetByCategoryID}

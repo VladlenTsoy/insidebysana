@@ -2,13 +2,15 @@ import React, {useEffect, useState} from "react"
 import "./ImageBlock.less"
 import LoadingOutlined from "@ant-design/icons/LoadingOutlined"
 import WarningOutlined from "@ant-design/icons/WarningOutlined"
+import {Image as AntImage} from "antd"
 
 interface ImageBlockProps {
     src: string
     alt?: string
+    zoom?: boolean
 }
 
-const ImageBlock: React.FC<ImageBlockProps> = ({src, alt}) => {
+const ImageBlock: React.FC<ImageBlockProps> = ({src, alt, zoom}) => {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(false)
 
@@ -38,7 +40,7 @@ const ImageBlock: React.FC<ImageBlockProps> = ({src, alt}) => {
                     </div>
                 ) : (
                     <div className="image">
-                        <img src={src} alt={alt} />
+                        {zoom ? <AntImage src={src} alt={alt} /> : <img src={src} alt={alt} />}
                     </div>
                 )
             ) : (

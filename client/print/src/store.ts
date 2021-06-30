@@ -1,12 +1,24 @@
 import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit"
 import {useDispatch as useDefaultDispatch} from "react-redux"
-import {productApi} from "./print-product/productApi"
+import {productApi} from "./print-products/productApi"
+import {categoryApi} from "./layout/categoryApi"
+import {printImageApi} from "./print-images/printImageApi"
+import {homeApi} from "./home/homeApi"
 
 export const store = configureStore({
     reducer: {
-        [productApi.reducerPath]: productApi.reducer
+        [homeApi.reducerPath]: homeApi.reducer,
+        [productApi.reducerPath]: productApi.reducer,
+        [printImageApi.reducerPath]: printImageApi.reducer,
+        [categoryApi.reducerPath]: categoryApi.reducer
     },
-    middleware: [...getDefaultMiddleware({immutableCheck: false}).concat(productApi.middleware)]
+    middleware: [
+        ...getDefaultMiddleware({immutableCheck: false})
+            .concat(homeApi.middleware)
+            .concat(productApi.middleware)
+            .concat(printImageApi.middleware)
+            .concat(categoryApi.middleware)
+    ]
 })
 
 export const useDispatch = () => useDefaultDispatch<AppDispatch>()

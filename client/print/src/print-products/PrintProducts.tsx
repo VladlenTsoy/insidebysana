@@ -2,11 +2,18 @@ import {Card, Row, Col, Result, Button, Typography} from "antd"
 import React from "react"
 import {useGetProductsByPrintIdQuery} from "./productApi"
 import {CloseCircleOutlined} from "@ant-design/icons"
+import {useParams} from "react-router-dom"
+import CardProduct from "components/card-product/CardProduct"
 
 const {Paragraph, Text} = Typography
 
+interface ParamsProps {
+    id: string
+}
+
 const Products = () => {
-    const {data, error, isLoading} = useGetProductsByPrintIdQuery(1)
+    const {id} = useParams<ParamsProps>()
+    const {data, error, isLoading} = useGetProductsByPrintIdQuery(id)
 
     if (isLoading) return <div>Loading...</div>
 
@@ -50,19 +57,14 @@ const Products = () => {
         <>
             <Row gutter={16}>
                 {!!data &&
-                    data.map((_, key) => (
+                    data.map((product, key) => (
                         <Col xxl={4} xl={4} lg={6} md={8} sm={12} xs={24} key={key}>
-                            <Card
-                                className="card-print-product"
-                                cover={
-                                    <img
-                                        alt="example"
-                                        src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                                    />
-                                }
-                            >
-                                <Card.Meta title="Europe Street beat" />
-                            </Card>
+                            <CardProduct
+                                title={product.title}
+                                price={222222}
+                                image={product.url_thumbnail}
+                                link={`/product/${product.id}`}
+                            />
                         </Col>
                     ))}
             </Row>
@@ -70,7 +72,7 @@ const Products = () => {
     )
 }
 
-const PrintProduct: React.FC = () => {
+const PrintProducts: React.FC = () => {
     return (
         <>
             <Card>1231231</Card>
@@ -78,4 +80,4 @@ const PrintProduct: React.FC = () => {
         </>
     )
 }
-export default PrintProduct
+export default PrintProducts

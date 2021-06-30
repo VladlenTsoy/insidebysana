@@ -1,33 +1,23 @@
 import React from "react"
 import "./Home.less"
-import {Row, Col, Card} from "antd"
-import {useHistory} from "react-router"
+import {Row, Col} from "antd"
+import CardProduct from "components/card-product/CardProduct"
+import {useGetProductsLatestQuery} from "./homeApi"
 
 const Home: React.FC = () => {
-    const history = useHistory()
-
-    const clickHandler = () => {
-        history.push("/print-product")
-    }
+    const {data} = useGetProductsLatestQuery()
 
     return (
         <Row gutter={16}>
-            {Array(20)
-                .fill(1)
-                .map((_, key) => (
+            {data &&
+                data.map((product, key) => (
                     <Col xxl={4} xl={4} lg={6} md={8} sm={12} xs={24} key={key}>
-                        <Card
-                            onClick={clickHandler}
-                            className="card-print-product"
-                            cover={
-                                <img
-                                    alt="example"
-                                    src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-                                />
-                            }
-                        >
-                            <Card.Meta title="Europe Street beat" />
-                        </Card>
+                        <CardProduct
+                            title={product.title}
+                            image={product.url_thumbnail}
+                            price={99999}
+                            link={`/product/${product.id}`}
+                        />
                     </Col>
                 ))}
         </Row>

@@ -1,0 +1,36 @@
+.card-product {
+    user-select: none;
+
+    .card-product-image {
+        width: 100%;
+        margin-bottom: 0.5rem;
+        position: relative;
+        background: @border-color-base;
+        display: block;
+
+        &::before {
+            content: "";
+            display: block;
+            padding-bottom: 125%;
+        }
+
+        .image-block {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;
+            cursor: pointer;
+            font-size: 30px;
+        }
+    }
+
+    .card-product-title {
+        text-align: center;
+    }
+
+    .card-product-price {
+        text-align: center;
+    }
+}

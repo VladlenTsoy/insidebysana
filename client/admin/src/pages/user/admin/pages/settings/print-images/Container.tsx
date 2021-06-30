@@ -68,7 +68,7 @@ const columns = [
     },
     {
         title: "Картинка",
-        dataIndex: "url_image",
+        dataIndex: "url_thumbnail",
         render: (image: string) => (
             <div style={{width: "90px"}}>
                 <ImageBlock image={image} title={""} />

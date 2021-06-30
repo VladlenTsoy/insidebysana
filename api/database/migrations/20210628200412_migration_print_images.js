@@ -3,6 +3,7 @@ exports.up = function (knex) {
         table.increments("id").notNullable()
         table.string("title").notNullable()
         table.string("image").notNullable()
+        table.string("thumbnail").notNullable()
         table.integer("category_id").notNullable()
         table.integer("price").notNullable()
         table.integer("hide_id")

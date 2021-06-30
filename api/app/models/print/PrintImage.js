@@ -3,11 +3,15 @@ const moment = require("moment")
 
 class PrintImage extends Model {
     static tableName = "print_images"
-    static hidden = ["image"]
-    static virtualAttributes = ["url_image"]
+    static hidden = ["image", "thumbnail"]
+    static virtualAttributes = ["url_image", "url_thumbnail"]
 
     url_image() {
         if (this.image) return `${process.env.APP_URL}/${this.image}`
+    }
+
+    url_thumbnail() {
+        if (this.thumbnail) return `${process.env.APP_URL}/${this.thumbnail}`
     }
 
     static get relationMappings() {

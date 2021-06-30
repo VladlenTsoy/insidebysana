@@ -36,9 +36,11 @@ const ActionsBlock: React.FC = () => {
                     <div>
                         <span className="discount-value">
                             {discount
-                                ? `${formatPrice(discount.discount)}${
-                                      discount.type === "percent" ? "%" : " сум"
-                                  }`
+                                ? `${
+                                      discount.type === "percent"
+                                          ? discount.discount
+                                          : formatPrice(discount.discount)
+                                  }${discount.type === "percent" ? "%" : " сум"}`
                                 : 0}
                         </span>
                         {discount && (

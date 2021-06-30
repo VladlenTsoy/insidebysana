@@ -70,6 +70,10 @@ const styled = (h: number) => `
     white-space: normal;
 }
 
+.for-print .products .product .discount-small {
+    font-size: 1.7mm;
+}
+
 .for-print .products .product .size,
 .for-print .products .product .qty {
     text-align: center;

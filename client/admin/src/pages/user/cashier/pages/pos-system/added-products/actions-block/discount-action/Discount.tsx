@@ -6,6 +6,7 @@ import {useCashierDispatch} from "store/cashier/store"
 import {useDiscountPos} from "store/cashier/pos/posSelectors"
 import "./Discount.less"
 import {formatPrice} from "utils/formatPrice"
+import {useState} from "react"
 
 interface DiscountProps {
     close: any
@@ -14,6 +15,9 @@ interface DiscountProps {
 const Discount: React.FC<DiscountProps> = ({close}) => {
     const dispatch = useCashierDispatch()
     const discount = useDiscountPos()
+    const [typeDiscount, setTypeDiscound] = useState<string>(discount ? discount.type : "fixed")
+
+    const onChangeHandler = (e: any) => setTypeDiscound(e.target.value)
 
     const onFinishHandler = (values: any) => {
         dispatch(setDiscount(values))
@@ -30,7 +34,7 @@ const Discount: React.FC<DiscountProps> = ({close}) => {
                 initialValues={discount || {type: "fixed", discount: 0}}
             >
                 <Form.Item name="type">
-                    <Radio.Group buttonStyle="solid" className="discount-type">
+                    <Radio.Group buttonStyle="solid" className="discount-type" onChange={onChangeHandler}>
                         <Radio.Button value="fixed">
                             <DollarOutlined /> Фиксированная
                         </Radio.Button>
@@ -43,7 +47,7 @@ const Discount: React.FC<DiscountProps> = ({close}) => {
                     <InputNumber
                         className="discount-value"
                         min={0}
-                        formatter={val => formatPrice(Number(val))}
+                        {...(typeDiscount === "fixed" ? {formatter: val => formatPrice(Number(val))} : {})}
                     />
                 </Form.Item>
             </Form>

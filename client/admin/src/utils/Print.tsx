@@ -29,6 +29,38 @@ const Print: React.FC<PrintProps> = ({
     discount,
     payChange
 }) => {
+    const allDiscount = () => {
+        let _discount = 0
+        const discountProducts = products.reduce(
+            (acc: number, {size_id, product, product_color_id, qty}: any) => {
+                if (product.discount)
+                    acc += Math.round((product.details.price / 100) * product.discount.discount)
+                return acc
+            },
+            0
+        )
+        if (discountProducts) _discount += discountProducts
+        if (discount) {
+            if (discount.type === "fixed") _discount += discount.discount
+            if (discount.type === "percent") {
+                const _totalPrice = products.reduce(
+                    (acc: number, {size_id, product, product_color_id, qty}: any) => {
+                        const price = product.discount
+                            ? (
+                                  product.details.price -
+                                  (product.details.price / 100) * product.discount.discount
+                              ).toFixed(0)
+                            : product.details.price
+                        return acc + Number(price) * qty
+                    },
+                    0
+                )
+                _discount += (_totalPrice / 100) * discount.discount
+            }
+        }
+        return _discount
+    }
+
     return (
         <div id="check-print" className="for-print">
             <table className="header">
@@ -75,8 +107,8 @@ const Print: React.FC<PrintProps> = ({
                                 {sizes.find((size: any) => Number(size.id) === Number(size_id))?.title}
                             </td>
                             <td className="qty">{qty}</td>
-                            <td>{formatPrice(product.details.price, product.discount)}</td>
-                            <td>{formatPrice(product.details.price * qty, product.discount)}</td>
+                            <td>{formatPrice(product.details.price)}</td>
+                            <td>{formatPrice(product.details.price * qty)}</td>
                         </tr>,
                         <tr key={`border-${product_color_id}${size_id}`}>
                             <td className="margin-no-border" colSpan={6} />
@@ -96,14 +128,10 @@ const Print: React.FC<PrintProps> = ({
                 </tbody>
             </table>
             <div className="total-block">
-                {discount && (
+                {!!allDiscount() && (
                     <div className="discount">
                         <div>Скидка:</div>
-                        <div>
-                            {discount.type === "fixed"
-                                ? `${formatPrice(discount.discount)} сум`
-                                : `${discount.discount}%`}
-                        </div>
+                        <div>{formatPrice(allDiscount())} сум</div>
                     </div>
                 )}
                 <div className="total">
@@ -116,6 +144,12 @@ const Print: React.FC<PrintProps> = ({
                         <div>{formatPrice(payment.price)} сум</div>
                     </div>
                 ))}
+                {payChange > 0 && (
+                    <div className="sub">
+                        <div>Сдача:</div>
+                        <div>{formatPrice(payChange)} сум</div>
+                    </div>
+                )}
             </div>
             <div className="information">
                 <div className="">ПОСЕТИТЕ НАШ САЙТ</div>

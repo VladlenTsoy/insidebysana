@@ -4,7 +4,7 @@ import {apiRequest} from "../../../utils/api"
 import {message} from "../../../lib/ui"
 import {PrintCategory} from "./PrintCategory"
 
-type ReturnedType = PrintCategory
+type ReturnedType = PrintCategory[]
 
 interface AgrProps {
     id: PrintCategory["id"]

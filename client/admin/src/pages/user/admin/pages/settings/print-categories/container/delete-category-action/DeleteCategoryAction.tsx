@@ -1,7 +1,7 @@
 import React from "react"
 import {Category} from "../../../../../../../../lib/types/Category"
 import {useDispatch} from "react-redux"
-import {deleteCategory} from "../../../../../../../../store/admin/category/deleteCategory"
+import {deletePrintCategory} from "../../../../../../../../store/admin/print-category/deletePrintCategory"
 import {Modal} from "antd"
 
 interface DeleteCategoryActionProps {
@@ -18,7 +18,7 @@ const DeleteCategoryAction: React.FC<DeleteCategoryActionProps> = ({children, ca
             type: "warning",
             title: `Удалить категорию (${category.title})?`,
             async onOk() {
-                await dispatch(deleteCategory(category.id))
+                await dispatch(deletePrintCategory(category.id))
             }
         })
     }

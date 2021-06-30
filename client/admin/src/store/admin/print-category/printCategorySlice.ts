@@ -4,7 +4,7 @@ import {AdminState} from "../store"
 import {fetchPrintCategories} from "./fetchPrintCategories"
 import {createPrintCategory} from "./createPrintCategory"
 import {editPrintCategory} from "./editPrintCategory"
-import {deletePrintCategory} from "./deleteCategory"
+import {deletePrintCategory} from "./deletePrintCategory"
 
 export const printCategoryAdapter = createEntityAdapter<PrintCategory>()
 
@@ -27,7 +27,7 @@ const printCategorySlice = createSlice({
         })
         // Редактирование баннера
         builder.addCase(editPrintCategory.fulfilled, (state, action) => {
-            printCategoryAdapter.upsertOne(state, action.payload)
+            printCategoryAdapter.setAll(state, action.payload)
         })
         // Удаление баннера
         builder.addCase(deletePrintCategory.fulfilled, (state, action) => {

@@ -1,26 +1,31 @@
 import React from "react"
-import "./Home.less"
-import {Row, Col} from "antd"
-import CardProduct from "components/card-product/CardProduct"
+import ClothesCard from "components/clothes-card/ClothesCard"
+import ErrorBlock from "components/error-block/ErrorBlock"
 import {useGetProductsLatestQuery} from "./homeApi"
+import LoaderBlock from "components/loader-block/LoaderBlock"
+import GridMotion from "components/grid-motion/GridMotion"
 
 const Home: React.FC = () => {
-    const {data} = useGetProductsLatestQuery()
+    const {data, isLoading, isError} = useGetProductsLatestQuery()
+
+    if (isLoading) return <LoaderBlock />
+    if (isError) return <ErrorBlock />
 
     return (
-        <Row gutter={16}>
+        <GridMotion>
             {data &&
-                data.map((product, key) => (
-                    <Col xxl={4} xl={4} lg={6} md={8} sm={12} xs={24} key={key}>
-                        <CardProduct
-                            title={product.title}
-                            image={product.url_thumbnail}
-                            price={99999}
-                            link={`/product/${product.id}`}
-                        />
-                    </Col>
+                [...data, ...data, ...data, ...data, ...data].map((product, key) => (
+                    <ClothesCard
+                        link={`/product/${product.id}`}
+                        title={product.title}
+                        image={product.url_thumbnail}
+                        price={product.price}
+                        discount={product.discount}
+                        priceVisible
+                        key={key}
+                    />
                 ))}
-        </Row>
+        </GridMotion>
     )
 }
 export default Home

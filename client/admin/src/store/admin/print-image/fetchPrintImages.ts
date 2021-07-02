@@ -8,7 +8,7 @@ type ReturnedType = PrintImage[]
 export const fetchPrintImages = createAsyncThunk<ReturnedType, undefined, AdminThunkProps>(
     "admin/print-images/fetch",
     async (_, {signal}) => {
-        return await apiRequest("get", `print-images`, {signal, type: "guest"})
+        return await apiRequest("get", `admin/print-images`, {signal})
     },
     {
         condition(_, {getState}) {

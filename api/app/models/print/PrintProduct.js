@@ -18,7 +18,7 @@ class PrintProduct extends Model {
         const {ProductColor} = require("../products/ProductColor")
 
         return {
-            // Категория
+            //
             product_color: {
                 filter: query =>
                     query

@@ -1,8 +1,10 @@
-import CardProduct from "components/card-product/CardProduct"
+import ClothesCard from "components/clothes-card/ClothesCard"
+import LoaderBlock from "components/loader-block/LoaderBlock"
+import ErrorBlock from "components/error-block/ErrorBlock"
 import React from "react"
 import {useParams} from "react-router-dom"
 import {useGetPrintImagesByCategoryIdQuery} from "./printImageApi"
-import "./PrintImages.less"
+import GridMotion from "components/grid-motion/GridMotion"
 
 interface ParamsProps {
     id: string
@@ -10,21 +12,25 @@ interface ParamsProps {
 
 const PrintImages: React.FC = () => {
     const {id} = useParams<ParamsProps>()
-    const {data, isLoading} = useGetPrintImagesByCategoryIdQuery(id)
+    const {data, isLoading, isError} = useGetPrintImagesByCategoryIdQuery(id)
+
+    if (isLoading) return <LoaderBlock />
+    if (isError) return <ErrorBlock />
 
     return (
-        <div className="images-grid">
+        <GridMotion>
             {data &&
                 data.map(printImage => (
-                    <CardProduct
+                    <ClothesCard
                         title={printImage.title}
                         image={printImage.url_image}
                         price={printImage.price}
                         key={printImage.id}
                         link={`/image/${printImage.id}`}
+                        priceVisible
                     />
                 ))}
-        </div>
+        </GridMotion>
     )
 }
 export default PrintImages

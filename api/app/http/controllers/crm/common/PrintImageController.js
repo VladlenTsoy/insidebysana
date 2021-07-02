@@ -13,7 +13,7 @@ const GetAll = async (req, res) => {
         const printImages = await PrintImage.query()
             .where({hide_id: null})
             .withGraphFetched("[category]")
-            .select("id", "title", "hide_id", "image", "price")
+            .select("id", "title", "hide_id", "image", "price", "thumbnail")
         return res.send(printImages)
     } catch (e) {
         logger.error(e.stack)
@@ -34,7 +34,7 @@ const GetByCategoryID = async (req, res) => {
         const printImages = await PrintImage.query()
             .where({hide_id: null, category_id})
             .withGraphFetched("[category]")
-            .select("id", "title", "hide_id", "image", "price")
+            .select("id", "title", "hide_id", "image", "price", "thumbnail")
         return res.send(printImages)
     } catch (e) {
         logger.error(e.stack)

@@ -20,6 +20,10 @@
             }
         }
 
+        .back-button {
+            float: left;
+        }
+
         .ant-menu.ant-menu-dark,
         .ant-menu-dark .ant-menu-sub,
         .ant-menu.ant-menu-dark .ant-menu-sub {
@@ -34,10 +38,22 @@
 
                 li {
                     list-style: none;
-                    font-size: 20px;
 
-                    .anticon {
-                        margin-right: 0.5rem;
+                    .ant-badge {
+                        .ant-badge-count {
+                            background: @primary-color;
+                            top: -3px;
+                            right: -3px;
+                        }
+                    }
+
+                    a {
+                        font-size: 20px;
+                        color: @black;
+
+                        .anticon {
+                            margin-right: 0.5rem;
+                        }
                     }
                 }
             }

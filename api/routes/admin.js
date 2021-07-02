@@ -206,6 +206,8 @@ router.patch("/print-category/:id", PrintCategoryController.Edit)
 // Удалить печать-категорию
 router.delete("/print-category/:id", PrintCategoryController.Delete)
 
+// Вывод всех изображений для печати
+router.get("/print-images", PrintImageController.GetAll)
 // Добавление изображения для печати
 router.post("/print-image", PrintImageController.Create)
 // Редактирование печать картинки

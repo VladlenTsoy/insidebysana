@@ -1,0 +1,19 @@
+.sizes {
+    margin-bottom: 2rem;
+}
+
+.title {
+    color: var(--secondary-text);
+    font-size: var(--small-font-size);
+    margin-bottom: 0.75rem;
+}
+
+.sizesAction {
+
+}
+
+.error {
+    color: var(--danger);
+    font-size: var(--small-font-size);
+    margin-left: 0.5rem;
+}

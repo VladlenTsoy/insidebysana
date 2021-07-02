@@ -7,6 +7,19 @@ const ImageService = require("services/image/ImageService")
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/print-images"
 const PATH_TO_IMAGE = "images/print-images"
 
+const GetAll = async (req, res) => {
+    try {
+        const printImages = await PrintImage.query()
+            .where({hide_id: null})
+            .withGraphFetched("[category]")
+            .select("id", "title", "hide_id", "image", "price", "thumbnail")
+        return res.send(printImages)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
 /**
  * Добавить картинку для принта
  * @param req
@@ -130,4 +143,4 @@ const Delete = async (req, res) => {
     }
 }
 
-module.exports = {Create, Edit, Delete}
+module.exports = {Create, Edit, Delete, GetAll}

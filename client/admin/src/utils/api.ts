@@ -4,7 +4,7 @@ import {getCookie, removeCookie, setCookie} from "./cookie"
 
 const CancelToken = axios.CancelToken
 const DOMAIN_API =
-    process.env.NODE_ENV === "production" ? "https://api.testinsidebysana.uz/api" : "http://localhost:8000/api"
+    process.env.NODE_ENV === "production" ? "https://api.insidebysana.uz/api" : "http://localhost:8000/api"
 
 const TOKEN = getCookie("crm_token_access")
 

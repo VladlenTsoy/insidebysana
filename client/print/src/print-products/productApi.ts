@@ -1,4 +1,5 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+import {createApi} from "@reduxjs/toolkit/query/react"
+import baseQuery from "utils/apiConfig"
 
 export interface PrintProductCard {
     id: number
@@ -25,7 +26,7 @@ export interface PrintProduct {
 
 export const productApi = createApi({
     reducerPath: "productApi",
-    baseQuery: fetchBaseQuery({baseUrl: "http://localhost:8000/api"}),
+    baseQuery,
     endpoints: build => ({
         getProductsByPrintId: build.query<PrintProductCard[], string>({
             query: printId => `print-image/${printId}/products`

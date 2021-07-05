@@ -6,7 +6,7 @@
     display: grid;
     grid-template-columns: 50px 3fr 1.5fr;
     gap: 1rem;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     align-items: center;
 }
 
@@ -20,7 +20,7 @@
 
 .info .title {
     color: var(--default);
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
     font-weight: 600;
 }
 
@@ -35,7 +35,11 @@
 
 .price .discount {
     font-size: var(--small-font-size);
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
+}
+
+.price .oldPrice {
+    text-decoration: line-through;
 }
 
 .price .priceDiscount {
@@ -45,7 +49,7 @@
 .price .totalPrice {
     font-weight: bold;
     color: var(--default);
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
 }
 
 .price .qty span {

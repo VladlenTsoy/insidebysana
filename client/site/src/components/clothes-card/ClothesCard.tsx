@@ -15,23 +15,18 @@ const ClothesCard: React.FC<ClothesCardProps> = ({product, priceVisible = false}
         <div className={`${styled.clothesCard} ${priceVisible && styled.visiblePrice}`}>
             <Link className={styled.imageBlock} to={`/product/${product.id}`}>
                 <div className={styled.image}>
-                    {product.discount && <div className={styled.discount}>{product.discount.discount}%</div>}
+                    {product.discount && (
+                        <div className={styled.discount}>{Math.ceil(product.discount.discount)}%</div>
+                    )}
                     <ImageBlock src={product.url_thumbnail} alt={product.title} />
                 </div>
             </Link>
-            <Link
-                to={`/product/${product.id}`}
-                className={styled.title}
-            >
+            <Link to={`/product/${product.id}`} className={styled.title}>
                 {product.title} ({product.color.title})
             </Link>
             <div className={styled.price}>
-                {product.discount && <div className={styled.prevPrice}>
-                    {formatPrice(product.price)} сум
-                </div>}
-                <div className={styled.mainPrice}>
-                    {formatPrice(product.price, product.discount)} сум
-                </div>
+                {product.discount && <div className={styled.prevPrice}>{formatPrice(product.price)} сум</div>}
+                <div className={styled.mainPrice}>{formatPrice(product.price, product.discount)} сум</div>
             </div>
         </div>
     )

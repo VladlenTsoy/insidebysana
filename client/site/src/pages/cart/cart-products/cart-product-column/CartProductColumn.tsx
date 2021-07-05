@@ -54,8 +54,8 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
                     <div className={styled.price}>
                         {product.discount && (
                             <div className={styled.prevPrice}>
-                                {formatPrice(product.price)} -{" "}
-                                <span className={styled.discount}>{product.discount.discount}%</span>
+                                <span className={styled.oldPrice}>{formatPrice(product.price)}</span> -{" "}
+                                <span className={styled.discount}>{Math.ceil(product.discount.discount)}%</span>
                             </div>
                         )}
                         <div className={styled.mainPrice}>

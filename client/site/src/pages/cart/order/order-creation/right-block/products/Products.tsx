@@ -27,8 +27,8 @@ const Products = () => {
                             {
                                 product.discount &&
                                 <div className={styled.discount}>
-                                    {formatPrice(product.price * product.qty)} - <span
-                                    className={styled.priceDiscount}>{product.discount.discount}%</span>
+                                    <span className={styled.oldPrice}>{formatPrice(product.price * product.qty)}</span> - <span
+                                    className={styled.priceDiscount}>{Math.ceil(product.discount.discount)}%</span>
                                 </div>
                             }
                             <div className={styled.totalPrice}>

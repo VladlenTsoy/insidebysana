@@ -137,13 +137,15 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                             city_id={values.city}
                             position={values.position}
                         />
-                        {/* <GoogleMapSelectAction>
-                            <p>Указать на карте?</p>
-                        </GoogleMapSelectAction> */}
                         <div className={styled.actions}>
-                            <Button type="default" typeHtml="submit" disabled={isSubmitting}>
-                                Продолжить покупку
-                            </Button>
+                            <div className={styled.actionsContent}>
+                                {!!Object.values(errors).length && (
+                                    <span className={styled.errorMessage}>Заполните все поля!</span>
+                                )}
+                                <Button type="default" typeHtml="submit" disabled={isSubmitting}>
+                                    Продолжить покупку
+                                </Button>
+                            </div>
                         </div>
                     </form>
                 )}

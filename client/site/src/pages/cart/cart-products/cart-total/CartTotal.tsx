@@ -13,7 +13,7 @@ const CartTotal: React.FC<CartTotalProps> = ({totalPrice, openOrder}) => {
     return (
         <div className={styled.total}>
             <div className={styled.totalTitlePrice}>
-                <div className={styled.totalTitle}>Итог:</div>
+                <div className={styled.totalTitle}>Итого:</div>
                 <div className={styled.totalPrice}>
                     {formatPrice(totalPrice.reduce((acc, curr) => acc + curr.price, 0))} сум
                 </div>

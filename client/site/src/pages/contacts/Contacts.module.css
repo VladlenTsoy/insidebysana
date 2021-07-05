@@ -18,7 +18,7 @@
 }
 
 .infoBlock {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 }
 
 .title {
@@ -32,6 +32,13 @@
     font-size: 20px;
     margin-left: 2rem;
     font-weight: 300;
+}
+
+.icons {
+    display: flex;
+    margin-left: 2rem;
+    font-size: 40px;
+    gap: 1rem;
 }
 
 @media (max-width: 767px) {

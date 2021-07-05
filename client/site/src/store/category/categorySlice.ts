@@ -32,6 +32,6 @@ const categorySlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllCategories} = categoryAdapter.getSelectors<StoreState>(state => state.category)
+export const {selectAll: selectAllCategories, selectById} = categoryAdapter.getSelectors<StoreState>(state => state.category)
 
 export default categorySlice.reducer

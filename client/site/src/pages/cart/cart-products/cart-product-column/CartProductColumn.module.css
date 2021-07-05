@@ -30,6 +30,10 @@
     color: var(--primary);
 }
 
+.details .oldPrice {
+    text-decoration: line-through;
+}
+
 .details .prevPrice {
     margin-bottom: .25rem;
     font-size: var(--small-font-size);

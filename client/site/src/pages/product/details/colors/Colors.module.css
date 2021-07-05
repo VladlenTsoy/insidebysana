@@ -9,10 +9,11 @@
 }
 
 .colorsAction {
-    display: flex;
 }
 
 .color {
+    display: inline-block;
+    margin-bottom: .25rem;
     cursor: pointer;
     height: 40px;
     width: 40px;

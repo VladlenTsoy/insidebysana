@@ -9,6 +9,8 @@ import {userSelector} from "store/user/userSlice"
 import {useDispatch} from "store/store"
 import CountrySelect from "../../../cart/order/order-creation/left-block/information/country-select/CountrySelect"
 import {createAddress} from "store/address/createAddress"
+import MapBlock from "../../../cart/order/order-creation/left-block/information/map-block/MapBlock"
+import CitySelect from "../../../cart/order/order-creation/left-block/information/city-select/CitySelect"
 
 interface FormProps {
     close: any
@@ -20,9 +22,11 @@ const Form: React.FC<FormProps> = ({close}) => {
         title: "",
         full_name: detail?.full_name,
         phone: detail?.phone,
-        country: "uz",
+        country: 0,
         city: "",
-        address: ""
+        address: "",
+        position: "",
+        location: ""
     }
     const dispatch = useDispatch()
 
@@ -60,7 +64,7 @@ const Form: React.FC<FormProps> = ({close}) => {
                 <form onSubmit={handleSubmit}>
                     <div className={styled.contact}>
                         <Input
-                            placeholder="Введите название"
+                            placeholder="Введите название точки (Дом) или (Работа)"
                             name="title"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -93,23 +97,30 @@ const Form: React.FC<FormProps> = ({close}) => {
                                 errors.country && touched.country && styled.error
                             }`}
                         />
-                        <Input
-                            placeholder="Введите город"
+                        <CitySelect
+                            country_id={values.country}
                             name="city"
-                            onChange={handleChange}
+                            onChange={setFieldValue}
                             onBlur={handleBlur}
                             value={values.city}
-                            className={`${styled.formItem} ${errors.city && touched.city && styled.error}`}
+                            className={`${errors.city && touched.city && styled.error}`}
                         />
                         <Input
                             placeholder="Введите адрес"
                             name="address"
+                            id="address"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.address}
                             className={`${styled.formItem} ${
                                 errors.address && touched.address && styled.error
                             }`}
+                        />
+                        <MapBlock
+                            setFieldValue={setFieldValue}
+                            country_id={values.country}
+                            city_id={values.city}
+                            position={values.position}
                         />
                         <div className={styled.actions}>
                             <Button type="default" typeHtml="submit" disabled={isSubmitting}>

@@ -39,7 +39,11 @@
 
 .prevPrice {
     color: var(--secondary-text);
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
+}
+
+.prevPrice .oldPrice {
+    text-decoration: line-through;
 }
 
 .discount {

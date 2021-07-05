@@ -10,42 +10,36 @@ import {useHistory} from "react-router-dom"
 import {useDispatch} from "../../../../store/store"
 import {appSelector, changeMobileMenuVisible} from "store/app/appSlice"
 import {useSelector} from "react-redux"
+import {userSelector} from "store/user/userSlice"
 
 const NavMobile = () => {
     const {mobileDrawerVisible} = useSelector(appSelector)
     const history = useHistory()
     const dispatch = useDispatch()
+    const {detail} = useSelector(userSelector)
 
     // Открыть
-    const onOpenHandler = () =>
-        dispatch(changeMobileMenuVisible(true))
+    const onOpenHandler = () => dispatch(changeMobileMenuVisible(true))
 
     // Закрыть
-    const onCloseHandler = () =>
-        dispatch(changeMobileMenuVisible(false))
+    const onCloseHandler = () => dispatch(changeMobileMenuVisible(false))
 
     // Переход на аккаунт
-    const onAccountHandler = () =>
-        history.push("/account")
+    const onAccountHandler = () => history.push("/account")
 
     return (
         <div>
             <button className={styled.buttonMenu} onClick={onOpenHandler}>
                 <img src={MenuIcon} alt="" />
             </button>
-            <Drawer
-                width={350}
-                visible={mobileDrawerVisible}
-                maskClosable
-                onClose={onCloseHandler}
-            >
+            <Drawer width={350} visible={mobileDrawerVisible} maskClosable onClose={onCloseHandler}>
                 <div className={styled.container}>
                     <div className={styled.header}>
                         <div className={styled.close} onClick={onCloseHandler}>
                             <CloseOutlined />
                         </div>
                         <div className={styled.account} onClick={onAccountHandler}>
-                            <span className={styled.text}>Войти</span>
+                            <span className={styled.text}>{detail ? "Кабинет" : "Войти"}</span>
                             <UserOutlined className={styled.icon} />
                         </div>
                     </div>

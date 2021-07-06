@@ -14,7 +14,7 @@ const Home: React.FC = () => {
     return (
         <GridMotion>
             {data &&
-                [...data, ...data, ...data, ...data, ...data].map((product, key) => (
+                data.map((product, key) => (
                     <ClothesCard
                         link={`/product/${product.id}`}
                         title={product.title}

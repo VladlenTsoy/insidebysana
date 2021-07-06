@@ -2,13 +2,11 @@ const CracoLessPlugin = require("craco-less")
 const rewireBabelLoader = require("craco-babel-loader")
 const BabelRcPlugin = require("@jackwilsdon/craco-use-babelrc")
 const {BundleAnalyzerPlugin} = require("webpack-bundle-analyzer")
-const CompressionPlugin = require("compression-webpack-plugin")
 const {getThemeVariables} = require("antd/dist/theme")
 
 const isEnvProduction = process.env.NODE_ENV === "production"
 // process.env.GENERATE_SOURCEMAP = !isEnvProduction
 process.env.GENERATE_SOURCEMAP = true
-
 
 module.exports = {
     webpack: {
@@ -36,16 +34,7 @@ module.exports = {
             }
             return webpackConfig
         },
-        plugins: isEnvProduction
-            ? [
-                  new CompressionPlugin({
-                      filename: "[path].gz[query]",
-                      algorithm: "gzip",
-                      test: /\.(js|css)$/
-                  }),
-                  new BundleAnalyzerPlugin()
-              ]
-            : []
+        plugins: isEnvProduction ? [new BundleAnalyzerPlugin()] : []
     },
     plugins: [
         {

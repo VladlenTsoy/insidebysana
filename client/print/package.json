@@ -26,7 +26,6 @@
     "antd": "^4.16.3",
     "babel-loader": "8.1.0",
     "babel-plugin-import": "1.13.1",
-    "compression-webpack-plugin": "^8.0.0",
     "craco-babel-loader": "^0.1.4",
     "craco-less": "^1.17.1",
     "framer-motion": "^4.1.17",

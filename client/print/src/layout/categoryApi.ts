@@ -1,4 +1,5 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react"
+import {createApi} from "@reduxjs/toolkit/query/react"
+import baseQuery from "utils/apiConfig"
 
 interface CategoryResponse {
     id: number
@@ -12,7 +13,7 @@ interface CategoryResponse {
 
 export const categoryApi = createApi({
     reducerPath: "categoryApi",
-    baseQuery: fetchBaseQuery({baseUrl: "http://localhost:8000/api"}),
+    baseQuery,
     endpoints: build => ({
         getCategories: build.query<CategoryResponse[], void>({
             query: () => `print-categories`

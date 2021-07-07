@@ -1,8 +1,0 @@
-.auth {
-    min-height: calc(100vh - calc(150px + 2rem));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 400px;
-    margin: 2rem auto;
-}

@@ -12,14 +12,12 @@ api/logs/*
 .vscode/
 .eslintcache
 
+old/
+
 # dependencies
-client/site/node_modules
-client/admin/node_modules
-client/print/node_modules
+client/node_modules/
 # production
-client/site/build
-client/admin/build
-client/print/build
+client/build
 
 # misc
 .DS_Store
@@ -28,14 +26,6 @@ client/print/build
 .env.test.local
 .env.production.local
 
-client/site/npm-debug.log*
-client/site/yarn-debug.log*
-client/site/yarn-error.log*
-
-client/admin/npm-debug.log*
-client/admin/yarn-debug.log*
-client/admin/yarn-error.log*
-
-client/print/npm-debug.log*
-client/print/yarn-debug.log*
-client/print/yarn-error.log*
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*

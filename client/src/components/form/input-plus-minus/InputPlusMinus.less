@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    border: 1px solid @border-color-base;
+    width: 105px;
+    border-radius: @border-radius-base;
+}
+
+.wrapper button {
+    border: 0;
+    background: none;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.wrapper button:hover:not([disabled]) {
+    color: @primary-color;
+}
+
+.wrapper input {
+    border: 0;
+    width: 30px;
+    text-align: center;
+    pointer-events: none;
+}
+
+@media (max-width: 767px) {
+    .wrapper {
+        width: 105px;
+    }
+
+    .wrapper button {
+        padding: 0.75rem;
+    }
+}

@@ -1,15 +1,15 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import reportWebVitals from "./reportWebVitals"
-declare const ENTRY_POINT: String
+import "./index.css"
 
 function importBuildTarget() {
     if (process.env.REACT_APP_BUILD_TARGET === "pos") {
-        return import("./pos/Pos")
+        return import("./pos/App")
     } else if (process.env.REACT_APP_BUILD_TARGET === "print") {
         return import("./print/App")
     } else {
-        return Promise.reject(new Error("No such build target: " + ENTRY_POINT))
+        return Promise.reject(new Error("No such build target: " + process.env.REACT_APP_BUILD_TARGET))
     }
 }
 

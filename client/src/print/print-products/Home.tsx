@@ -1,7 +1,7 @@
 import React from "react"
 import ClothesCard from "print/components/clothes-card/ClothesCard"
 import ErrorBlock from "print/components/error-block/ErrorBlock"
-import {useGetProductsLatestQuery} from "./homeApi"
+import {useGetProductsLatestQuery} from "./productApi"
 import LoaderBlock from "print/components/loader-block/LoaderBlock"
 import GridMotion from "print/components/grid-motion/GridMotion"
 

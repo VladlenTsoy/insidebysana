@@ -28,6 +28,9 @@ export const productApi = createApi({
     reducerPath: "productApi",
     baseQuery,
     endpoints: build => ({
+        getProductsLatest: build.query<PrintProductCard[], void>({
+            query: () => `print-image/products/latest`
+        }),
         getProductsByPrintId: build.query<PrintProductCard[], string>({
             query: printId => `print-image/${printId}/products`
         }),
@@ -37,4 +40,4 @@ export const productApi = createApi({
     })
 })
 
-export const {useGetProductsByPrintIdQuery, useGetProductByIdQuery} = productApi
+export const {useGetProductsByPrintIdQuery, useGetProductByIdQuery, useGetProductsLatestQuery} = productApi

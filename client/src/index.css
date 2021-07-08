@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300;1,400;1,500;1,600&display=swap");
+
+:root {
+    --primary: #bb9196;
+    --secondary: #ededed;
+    --default: black;
+    --white: white;
+    --danger: red;
+    --secondary-text: #848484;
+    --default-text: #5c5c5c;
+    --small-font-size: 12px;
+    --default-font-size: 14px;
+    --large-font-size: 16px;
+    --big-font-size: 20px;
+    --nav-box-shadow: 0 -1px var(--secondary) inset;
+    --dropdown-box-shadow: 0 4px 11px hsla(0, 0%, 0%, 0.1);
+    --title-font-size: 40px;
+    --empty-font-size: 40px;
+    --max-width-container: 1400px;
+    --max-width-mini-container: 1200px;
+    --max-width-macro-container: 800px;
+}

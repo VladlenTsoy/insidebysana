@@ -1,0 +1,55 @@
+.menuProducts {
+    position: absolute;
+    background: var(--white);
+    padding: 1.5rem 1.5rem;
+    box-shadow: var(--dropdown-box-shadow);
+    min-width: 175px;
+    opacity: 0;
+}
+
+.menuEnterActive {
+}
+
+.menuEnterDone {
+    animation: fadeIn 2s forwards;
+}
+
+.menuExit {
+}
+
+.menuExitActive {
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.menuProducts .menuLeft {
+}
+
+.menuProducts .menuLeft small {
+    display: block;
+    color: var(--secondary-text);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+}
+
+.menuProducts .menuLeft a:not(:last-child) {
+    margin-bottom: 0.75rem;
+}
+
+.menuProducts .menuLeft a {
+    display: block;
+    color: var(--default);
+    text-decoration: none;
+}
+
+.menuProducts .menuLeft a:hover {
+    color: var(--primary)
+}

@@ -1,0 +1,50 @@
+.type {
+    margin-bottom: .25rem;
+    display: block;
+}
+
+.type input {
+    display: none;
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    border: 1px solid var(--secondary);
+}
+
+.check {
+    font-size: var(--big-font-size);
+    color: var(--default);
+    margin-right: 1rem;
+    line-height: 0;
+}
+
+.emptyIcon {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--secondary);
+    border-radius: 50%;
+}
+
+.image {
+    width: 50px;
+    margin-right: 1rem;
+}
+
+.image img {
+    width: 100%;
+}
+
+.info {
+    margin-right: auto;
+}
+
+.price {
+    font-weight: bold;
+    color: var(--default);
+    margin-left: .5rem;
+    white-space: nowrap;
+}

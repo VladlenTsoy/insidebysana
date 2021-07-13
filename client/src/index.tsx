@@ -8,6 +8,8 @@ function importBuildTarget() {
         return import("./pos/App")
     } else if (process.env.REACT_APP_BUILD_TARGET === "print") {
         return import("./print/App")
+    } else if (process.env.REACT_APP_BUILD_TARGET === "site") {
+        return import("./site/App")
     } else {
         return Promise.reject(new Error("No such build target: " + process.env.REACT_APP_BUILD_TARGET))
     }

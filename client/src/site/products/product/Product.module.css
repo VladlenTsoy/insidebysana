@@ -1,0 +1,11 @@
+.product {
+    display: flex;
+    max-width: var(--max-width-mini-container);
+    margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+    .product {
+        display: block;
+    }
+}

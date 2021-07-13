@@ -1,0 +1,12 @@
+.filterAction {
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--secondary);
+    border-bottom: 1px solid var(--secondary);
+}
+
+.filterActionContainer {
+    display: flex;
+    justify-content: space-between;
+    max-width: var(--max-width-container);
+    margin: 0 auto;
+}

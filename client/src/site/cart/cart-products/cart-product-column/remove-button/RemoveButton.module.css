@@ -1,0 +1,10 @@
+.remove {
+    color: var(--secondary-text);
+    padding: .5rem;
+    cursor: pointer;
+    transition: color 0.3s ease-in-out;
+}
+
+.remove:hover {
+    color: var(--danger);
+}

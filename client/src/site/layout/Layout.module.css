@@ -1,0 +1,54 @@
+.layout {
+    position: relative;
+}
+
+.wrapper {
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 22;
+}
+
+.cartWrapper {
+    position: relative;
+    margin: 0 auto;
+    max-width: var(--max-width-container);
+    width: 100%;
+}
+
+.cart {
+    position: absolute;
+    top: 41vh;
+    right: 1rem;
+    z-index: 20;
+    background: #fff;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--big-font-size);
+    box-shadow: var(--dropdown-box-shadow);
+    cursor: pointer;
+    color: var(--default-text);
+}
+
+.cart:hover {
+    color: var(--primary);
+}
+
+.badge {
+    position: absolute;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 5px;
+    bottom: 10px;
+}

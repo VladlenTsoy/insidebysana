@@ -27,5 +27,5 @@
     "src/print",
     "src/admin",
     "src/site"
-  ]
+, "configs"  ]
 }

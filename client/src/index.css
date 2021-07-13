@@ -20,3 +20,9 @@
     --max-width-mini-container: 1200px;
     --max-width-macro-container: 800px;
 }
+
+@media (max-width: 767px) {
+    :root {
+        --title-font-size: 30px;
+    }
+}

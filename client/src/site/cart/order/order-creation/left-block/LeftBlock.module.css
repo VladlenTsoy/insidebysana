@@ -1,0 +1,18 @@
+.leftBlock {
+    padding: 2rem 2rem;
+}
+
+.leftBlock h2 {
+    font-weight: 200;
+    font-size: var(--big-font-size);
+}
+
+@media (max-width: 992px) {
+    .leftBlock {
+        padding: 2rem 1rem;
+    }
+
+    .header {
+        display: none;
+    }
+}

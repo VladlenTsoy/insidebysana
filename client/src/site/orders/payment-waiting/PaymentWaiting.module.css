@@ -1,0 +1,56 @@
+.order {
+    max-width: var(--max-width-macro-container);
+    margin: 0 auto;
+}
+
+.order .message {
+    text-align: center;
+    font-size: var(--large-font-size);
+    margin-bottom: 3rem;
+}
+
+.order .message p {
+    margin-bottom: 0.5rem;
+}
+
+.order .products {
+    padding-bottom: 2rem;
+}
+
+.order .total {
+    display: flex;
+    margin-left: auto;
+    justify-content: flex-end;
+    font-size: var(--big-font-size);
+    font-weight: 300;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--secondary);
+    padding-top: 2rem;
+}
+
+.order .subInfo {
+    border-top: 1px solid var(--secondary);
+    padding: 1rem 0;
+}
+
+.order .subInfo .subInfoItem {
+    text-align: right;
+}
+
+.order .subInfo .subInfoItem:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.order .subInfo .subInfoItem .title {
+    margin-right: 0.5rem;
+    color: var(--secondary-text);
+}
+
+.order .total span {
+    margin-right: 0.5rem;
+    color: var(--secondary-text);
+}
+
+.order .action button {
+    margin-left: auto;
+}

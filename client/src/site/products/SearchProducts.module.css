@@ -1,0 +1,15 @@
+.searchInput {
+    display: flex;
+    padding: 1rem;
+    max-width: var(--max-width-container);
+    margin: 0 auto;
+    position: relative;
+}
+
+.searchInput span {
+    position: absolute;
+    right: 27px;
+    font-size: 21px;
+    top: 27px;
+    color: var(--secondary-text);
+}

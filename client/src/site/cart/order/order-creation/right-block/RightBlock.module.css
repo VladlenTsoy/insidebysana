@@ -1,0 +1,119 @@
+.rightBlock {
+    padding: 5rem 2rem 0 2rem;
+    background: #f5f5f5;
+    position: relative;
+}
+
+/* .rightBlock:after {
+    content: "";
+    display: block;
+    width: 300%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: #f5f5f5;
+    z-index: -1;
+} */
+
+@media (max-width: 992px) {
+    .rightBlock {
+        padding: 0;
+    }
+
+    .rightBlock:after {
+        left: -100%;
+        background-position: left top;
+    }
+}
+
+.prices {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--secondary);
+}
+
+.price {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.price div:first-child {
+    /*color: var(--secondary-text);*/
+}
+
+.price div:last-child {
+    color: var(--default);
+    font-weight: bold;
+}
+
+.total {
+    padding: 1rem 0;
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--big-font-size);
+}
+
+.total .title {
+    font-size: var(--large-font-size);
+}
+
+.total div:last-child {
+    color: var(--default);
+    font-weight: bold;
+}
+
+/**/
+
+.collapse {
+    border: none;
+    background: none;
+    border-radius: 0;
+}
+
+.collapseHeader {
+    color: var(--default);
+    font-size: var(--large-font-size);
+    padding: 1.2rem 1rem !important;
+}
+
+.collapseHeaderContent {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.collapseHeaderTitle {
+    color: var(--default);
+}
+
+.collapseHeaderTitle span {
+    margin-right: 0.5rem;
+    margin-left: 1rem;
+}
+
+.collapseHeaderPrice {
+    color: var(--default);
+    font-weight: bold;
+    font-size: var(--large-font-size);
+}
+
+.collapsePanel {
+    background: none;
+}
+
+.icon {
+    /*position: absolute;*/
+    /*left: 0;*/
+    /*margin-left: 0.5rem;*/
+    transition: transform 0.2s ease-in-out;
+    color: var(--secondary-text);
+    transform: rotate(180deg);
+}
+
+.active {
+    transform: rotate(270deg);
+}

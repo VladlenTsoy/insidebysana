@@ -1,0 +1,58 @@
+.products {
+    border-bottom: 1px solid var(--secondary);
+}
+
+.product {
+    display: grid;
+    grid-template-columns: 50px 3fr 1.5fr;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+
+.image img {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.info {
+}
+
+.info .title {
+    color: var(--default);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.info .size {
+    font-size: var(--small-font-size);
+}
+
+.price {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.price .discount {
+    font-size: var(--small-font-size);
+    margin-bottom: 0.25rem;
+}
+
+.price .oldPrice {
+    text-decoration: line-through;
+}
+
+.price .priceDiscount {
+    color: var(--primary);
+}
+
+.price .totalPrice {
+    font-weight: bold;
+    color: var(--default);
+    margin-bottom: 0.25rem;
+}
+
+.price .qty span {
+    font-size: var(--small-font-size);
+    color: var(--secondary-text);
+}

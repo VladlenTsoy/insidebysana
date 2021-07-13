@@ -1,0 +1,48 @@
+.properties {
+}
+
+.property {
+    border-top: 1px solid var(--secondary);
+    border-bottom: 1px solid var(--secondary);
+}
+
+.titleCollapse {
+    padding: 2rem 0;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--large-font-size);
+}
+
+.title {
+}
+
+.icon {
+    transform: scale(1.2);
+    color: var(--secondary-text);
+}
+
+.collapse {
+    display: block;
+    transition: height 0.35s ease-in-out, visibility 0s ease-in-out 0.35s;
+    overflow: hidden;
+    visibility: hidden;
+}
+
+.open {
+    overflow: visible;
+    height: auto;
+    transition: height 0.35s ease-in-out;
+    visibility: visible;
+}
+
+.close {
+    overflow: hidden;
+    height: 0;
+}
+
+.description {
+    padding: 1rem 0 2rem 0;
+}

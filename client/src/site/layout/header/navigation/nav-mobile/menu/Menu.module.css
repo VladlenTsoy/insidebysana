@@ -1,0 +1,50 @@
+.menu {
+    padding-bottom: 4rem;
+}
+
+.menu ul {
+    width: 100%;
+    overflow: hidden;
+}
+
+.menu ul > li > a {
+    display: block;
+    color: var(--default-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 1.25rem 1.5rem;
+    transition: color 0.3s ease-in-out;
+}
+
+.menu ul > li:not(:last-child) > a {
+    border-bottom: 1px solid var(--secondary);
+}
+
+.menu ul > li > a:hover {
+    color: var(--primary);
+}
+
+
+.icon {
+    position: absolute;
+    right: 1.25rem;
+    margin-left: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+    color: var(--secondary-text);
+}
+
+.active {
+    transform: rotate(-90deg)
+}
+
+.categories > a {
+    display: block;
+    padding: 1rem;
+    text-decoration: none;
+    color: var(--default-text);
+    text-transform: uppercase;
+}
+
+.categories > a:not(:last-child) {
+    border-bottom: 1px solid var(--secondary);
+}

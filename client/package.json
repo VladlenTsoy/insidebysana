@@ -79,11 +79,12 @@
     "webpack-bundle-analyzer": "^4.4.2"
   },
   "scripts": {
-    "start:pos": "export REACT_APP_BUILD_TARGET=pos && craco start --config pos.config.js",
-    "start:print": "export REACT_APP_BUILD_TARGET=print PORT=3001 && craco start --config print.config.js",
-    "start:site": "react-app-rewired start",
-    "build:pos": "export REACT_APP_BUILD_TARGET=pos && craco build --config pos.config.js",
-    "build:print": "export REACT_APP_BUILD_TARGET=print && craco build --config print.config.js"
+    "start:pos": "export REACT_APP_BUILD_TARGET=pos && craco start --config configs/pos.config.js",
+    "start:print": "export REACT_APP_BUILD_TARGET=print PORT=3001 && craco start --config configs/print.config.js",
+    "start:site": "export REACT_APP_BUILD_TARGET=site PORT=3002 && craco start --config configs/site.config.js",
+    "build:pos": "export REACT_APP_BUILD_TARGET=pos && craco build --config configs/pos.config.js",
+    "build:print": "export REACT_APP_BUILD_TARGET=print && craco build --config configs/print.config.js",
+    "build:site": "export REACT_APP_BUILD_TARGET=site && craco build --config configs/site.config.js"
   },
   "eslintConfig": {
     "extends": [

@@ -7,15 +7,13 @@ import ShoppingOutlined from "@ant-design/icons/ShoppingOutlined"
 import ShoppingFilled from "@ant-design/icons/ShoppingFilled"
 import HeartOutlined from "@ant-design/icons/HeartOutlined"
 import HeartFilled from "@ant-design/icons/HeartFilled"
-// import {useSelector} from "react-redux"
-// import {wishlistSelector} from "../../../store/wishlist/wishlistSlice"
-// import {useSelectAllSkuCart} from "../../../store/cart/cartSelector"
+import {useSelector} from "react-redux"
+import {wishlistSelector} from "../../../wishlist/wishlistSlice"
+import {useSelectAllSkuCart} from "../../../cart/cartSlice"
 
 const AccountMenu = () => {
-    // const cartSkus = useSelectAllSkuCart()
-    const cartSkus = []
-    // const wishlist = useSelector(wishlistSelector)
-    const wishlist = {items: []}
+    const cartSkus = useSelectAllSkuCart()
+    const wishlist = useSelector(wishlistSelector)
 
     return (
         <div className={styled.accountMenu}>

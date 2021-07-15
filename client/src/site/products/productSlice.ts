@@ -57,6 +57,12 @@ const productSlice = createSlice({
         },
         changeCurrentFilterPrice: (state, action: PayloadAction<StateProps["currentFilterPrice"]>) => {
             state.currentFilterPrice = action.payload
+        },
+        resetFilter: state => {
+            state.currentFilterCategories = []
+            state.currentFilterSizes = []
+            state.currentFilterColors = []
+            state.currentFilterPrice = {min: 0, max: 0}
         }
     },
     extraReducers: builder => {
@@ -81,7 +87,8 @@ export const {
     changeCurrentFilterCategories,
     changeCurrentFilterColors,
     changeCurrentFilterPrice,
-    changeCurrentFilterSizes
+    changeCurrentFilterSizes,
+    resetFilter
 } = productSlice.actions
 
 export const {selectAll: selectAllProducts} = productAdapter.getSelectors<StoreState>(state => state.product)

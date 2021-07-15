@@ -39,6 +39,7 @@
     "babel-plugin-import": "1.13.1",
     "compression-webpack-plugin": "6.0.4",
     "craco-babel-loader": "^0.1.4",
+    "craco-interpolate-html-plugin": "^0.0.5",
     "craco-less": "^1.17.1",
     "formik": "^2.2.6",
     "framer-motion": "^4.1.17",

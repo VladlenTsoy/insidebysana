@@ -4072,6 +4072,11 @@ craco-babel-loader@^0.1.4:
   dependencies:
     "@craco/craco" "^5.0.0"
 
+craco-interpolate-html-plugin@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/craco-interpolate-html-plugin/-/craco-interpolate-html-plugin-0.0.5.tgz#1820652a6d95abd9c33110a892aea813c6594edc"
+  integrity sha512-vtuCn736z/ZzgbGLwMKaIbrka2cGK+1CGvbLkSDoLZH+P9UGQyDENvJ26UpIM9JHixNN9Z5jCn52hRYZnRYWMg==
+
 craco-less@^1.17.1:
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/craco-less/-/craco-less-1.18.0.tgz#6952adc93ea597c37ef2b6977593e0ac66a4069f"

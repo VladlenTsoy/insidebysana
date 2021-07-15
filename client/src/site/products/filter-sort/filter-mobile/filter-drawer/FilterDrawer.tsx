@@ -8,6 +8,8 @@ import Categories from "./categories/Categories"
 import Sizes from "./sizes/Sizes"
 import Colors from "./colors/Colors"
 import Price from "./price/Price"
+import {useDispatch} from "site/store"
+import {resetFilter} from "site/products/productSlice"
 
 interface FilterDrawerProps {
     onClose: any
@@ -16,8 +18,10 @@ interface FilterDrawerProps {
 const FilterDrawer: React.FC<FilterDrawerProps> = ({onClose}) => {
     const [page, setPage] = useState("menu")
     const [pageName, setPageName] = useState("Фильрация")
+    const dispatch = useDispatch()
 
     const onClickBackHandler = () => setPage("menu")
+    const onResetFilter = () => dispatch(resetFilter())
 
     useEffect(() => {
         setPageName(() => {
@@ -39,13 +43,13 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({onClose}) => {
     return (
         <div className={styled.filter}>
             <div className={styled.header}>
-                {
-                    page !== "menu" ?
-                        <div className={styled.back} onClick={onClickBackHandler}>
-                            <LeftOutlined />
-                        </div> :
-                        <div />
-                }
+                {page !== "menu" ? (
+                    <div className={styled.back} onClick={onClickBackHandler}>
+                        <LeftOutlined />
+                    </div>
+                ) : (
+                    <div />
+                )}
                 <div className={styled.title}>{pageName}</div>
                 <div className={styled.close} onClick={onClose}>
                     <CloseOutlined />
@@ -58,9 +62,16 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({onClose}) => {
                 {page === "colors" && <Colors />}
                 {page === "price" && <Price />}
             </div>
-            {page === "menu" && <div className={styled.footer}>
-                <Button block filled onClick={onClose}>Показать</Button>
-            </div>}
+            {page === "menu" && (
+                <div className={styled.footer}>
+                    <Button block filled onClick={onClose} className={styled.btnSee}>
+                        Показать
+                    </Button>
+                    <Button block link size="small" onClick={onResetFilter}>
+                        Сбросить фильтр
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }

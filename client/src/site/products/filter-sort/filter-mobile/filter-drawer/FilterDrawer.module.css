@@ -22,7 +22,8 @@
     font-size: var(--large-font-size);
 }
 
-.back, .close {
+.back,
+.close {
     padding: 1rem;
     cursor: pointer;
     transition: color 0.2s ease-in-out;
@@ -36,7 +37,8 @@
     border-right: 1px solid var(--secondary);
 }
 
-.back:hover, .close:hover {
+.back:hover,
+.close:hover {
     color: var(--primary);
 }
 
@@ -75,4 +77,8 @@
 .footer {
     padding: 1rem;
     background: var(--white);
+}
+
+.footer .btnSee {
+    margin-bottom: 0.5rem;
 }

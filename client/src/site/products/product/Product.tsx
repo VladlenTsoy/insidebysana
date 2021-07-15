@@ -4,8 +4,8 @@ import {useParams} from "react-router-dom"
 import LoaderBlock from "components/loader-block/LoaderBlock"
 import Details from "./details/Details"
 import SlidersProperties from "./sliders-properties/SlidersProperties"
-import FeaturedProducts from "./featured-and-recent/featured-products/FeaturedProducts"
-import RecentProducts from "./featured-and-recent/recent-products/RecentProducts"
+import FeaturedProducts from "./featured-and-recent/FeaturedProducts"
+import RecentProducts from "./featured-and-recent/RecentProducts"
 import {useGetProductByIdQuery} from "../productApi"
 
 export interface ProductParamsProps {
@@ -14,9 +14,9 @@ export interface ProductParamsProps {
 
 const Product: React.FC = () => {
     const params = useParams<ProductParamsProps>()
-    const {data: product, isLoading} = useGetProductByIdQuery(params.id)
+    const {data: product, isLoading, isFetching} = useGetProductByIdQuery(params.id)
 
-    if (isLoading || !product) return <LoaderBlock />
+    if (isLoading || !product || isFetching) return <LoaderBlock />
 
     return (
         <>

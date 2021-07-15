@@ -50,7 +50,7 @@ const FilterPriceRange: React.FC<FilterPriceRangeProps> = ({max, min, onChange, 
             <Range
                 max={max}
                 min={min}
-                marks={calcMerge(min, max, 4)}
+                marks={calcMerge(min, max, 5)}
                 onAfterChange={onAfterChangeHandler}
                 onChange={onChangeHandler}
                 value={[minValue, maxValue]}

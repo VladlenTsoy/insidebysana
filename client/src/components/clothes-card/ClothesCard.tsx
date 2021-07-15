@@ -22,7 +22,7 @@ const ClothesCard: React.FC<ClothesCardProps> = ({product, priceVisible = false}
                 </div>
             </Link>
             <Link to={`/product/${product.id}`} className={styled.title}>
-                {product.title} ({product.color.title})
+                {product.title}
             </Link>
             <div className={styled.price}>
                 {product.discount && <div className={styled.prevPrice}>{formatPrice(product.price)} сум</div>}

@@ -16,7 +16,7 @@ const Products = () => {
                     </div>
                     <div className={styled.info}>
                         <div className={styled.title}>
-                            {product.title} ({product.color.title})
+                            {product.title}
                         </div>
                         <div className={styled.size}>{product.size.title}</div>
                     </div>

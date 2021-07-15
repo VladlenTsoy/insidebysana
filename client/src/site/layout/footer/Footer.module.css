@@ -9,8 +9,16 @@
     border-bottom: 1px solid var(--secondary);
 }
 
-.footerColumn {
+.footerColumn:nth-of-type(1) {
+    order: 1;
+}
 
+.footerColumn:nth-of-type(2) {
+    order: 2;
+}
+
+.footerColumn:nth-of-type(3) {
+    order: 2;
 }
 
 .footerColumn h4 {
@@ -80,5 +88,17 @@
     .footer > div:last-child {
         grid-column-start: auto;
         grid-column-end: auto;
+    }
+
+    .footerColumn:nth-of-type(1) {
+        order: 2;
+    }
+    
+    .footerColumn:nth-of-type(2) {
+        order: 1;
+    }
+    
+    .footerColumn:nth-of-type(3) {
+        order: 2;
     }
 }

@@ -9,6 +9,7 @@ import CarOutlined from "@ant-design/icons/CarOutlined"
 import IdcardOutlined from "@ant-design/icons/IdcardOutlined"
 import KeyOutlined from "@ant-design/icons/KeyOutlined"
 import styled from "./Account.module.css"
+import {useUser} from "site/auth/authSlice"
 
 const Profile = React.lazy(() => import("./profile/Profile"))
 const OrderHistory = React.lazy(() => import("./order-history/OrderHistory"))
@@ -17,7 +18,7 @@ const ChangePassword = React.lazy(() => import("./change-password/ChangePassword
 
 const Account = () => {
     const dispatch = useDispatch()
-    const {detail} = useDispatch()
+    const {detail} = useUser()
 
     const logout = () => {
         dispatch(logoutUser())

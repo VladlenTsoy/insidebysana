@@ -19,7 +19,7 @@ const Details: React.FC<DetailsProps> = ({product}) => {
     const [size, setSize] = useState<Size["id"] | null>(null)
     const [requireSize, setRequireSize] = useState(false)
 
-    const selectSizeHandler = useCallback((sizeId) => {
+    const selectSizeHandler = useCallback(sizeId => {
         setSize(sizeId)
     }, [])
 
@@ -28,28 +28,37 @@ const Details: React.FC<DetailsProps> = ({product}) => {
     }, [])
 
     useEffect(() => {
-        if (size)
-            setRequireSize(false)
+        if (size) setRequireSize(false)
     }, [size])
 
     return (
         <div className={styled.details}>
             <div className={styled.info} ref={ref} id="product-details-info">
-                <h1 className={styled.title}>{product.title} ({product.color.title})</h1>
-                <div className={styled.tagId}>ID: PC{product.id}{size ? `S${size}` : null}</div>
-                <div className={styled.price}>
-                    {product.discount && <div className={styled.prevPrice}>
-                        <span className={styled.oldPrice}>{formatPrice(product.price)}</span> - <span className={styled.discount}>{Math.ceil(product.discount.discount)}%</span>
-                    </div>}
-                    <div className={styled.mainPrice}>
-                        {formatPrice(product.price, product.discount)} сум
-                    </div>
+                <h1 className={styled.title}>
+                    {product.title}
+                </h1>
+                <div className={styled.tagId}>
+                    ID: PC{product.id}
+                    {size ? `S${size}` : null}
                 </div>
-                <Colors colors={product.colors} />
-                <Sizes sizes={product.sizes_props} requireSize={requireSize} selectSizeHandler={selectSizeHandler} />
+                <div className={styled.price}>
+                    {product.discount && (
+                        <div className={styled.prevPrice}>
+                            <span className={styled.oldPrice}>{formatPrice(product.price)}</span> -{" "}
+                            <span className={styled.discount}>{Math.ceil(product.discount.discount)}%</span>
+                        </div>
+                    )}
+                    <div className={styled.mainPrice}>{formatPrice(product.price, product.discount)} сум</div>
+                </div>
+                <Colors colors={product.colors} color={product.color} />
+                <Sizes
+                    sizes={product.sizes_props}
+                    requireSize={requireSize}
+                    selectSizeHandler={selectSizeHandler}
+                />
                 <CartButton product={product} sizeId={size} outputErrorSizeHandler={outputErrorSizeHandler} />
                 {/* <div className={styled.buyNow}> */}
-                    {/* <Button type="primary" filled block>Купить сейчас</Button> */}
+                {/* <Button type="primary" filled block>Купить сейчас</Button> */}
                 {/* </div> */}
                 <WishlistButton productId={product.id} />
                 <Properties properties={product.properties} productId={product.product_id}>

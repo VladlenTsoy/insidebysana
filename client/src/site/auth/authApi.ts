@@ -15,20 +15,20 @@ export const authUser = createAsyncThunk<
     },
     ThunkProps
 >("user/auth", async (data, {signal}) => {
-    return await apiRequest("post", `login`, {data: {...data}, signal, type: "guest"})
+    return await apiRequest("post", `client/login`, {data: {...data}, signal, type: "guest"})
 })
 
 // Вывод пользователя
 export const fetchUser = createAsyncThunk<User, undefined, ThunkProps>(
     "user/fetch",
     async (_, {signal}) => {
-        return (await apiRequest("get", `/`, {signal}).catch(e => {
-            if (e.message === "error_token") removeCookie("crm_token_access")
+        return (await apiRequest("get", `/`, {signal, type: "user"}).catch(e => {
+            if (e.message === "error_token") removeCookie("site_token_access")
         })) as User
     },
     {
         condition(_) {
-            if (!getCookie("crm_token_access")) return false
+            if (!getCookie("site_token_access")) return false
         },
         dispatchConditionRejection: true
     }

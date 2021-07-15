@@ -48,7 +48,7 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
                 <ImageLink id={product.id} image={product.url_thumbnail} />
                 <div className={styled.details}>
                     <Link to={`/product/${product.id}`} className={styled.title}>
-                        {product.title} ({product.color.title})
+                        {product.title}
                     </Link>
                     <div className={styled.size}>{product.size.title}</div>
                     <div className={styled.price}>

@@ -15,10 +15,10 @@ interface Order {
         title: string
     }
     discount: number | null
-    payment: {
+    payments: {
         id: number
         title: string
-    }
+    }[]
     payment_id: number
     payment_state: number
     productColors: {
@@ -69,7 +69,7 @@ export const orderApi = createApi({
     baseQuery,
     endpoints: build => ({
         getOrders: build.query<Order[], void>({
-            query: () => `new-products`
+            query: () => `client/orders`
         })
     })
 })

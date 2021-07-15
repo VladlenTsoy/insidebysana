@@ -6,7 +6,9 @@ const CancelToken = axios.CancelToken
 const DOMAIN_API =
     process.env.NODE_ENV === "production" ? "https://api.insidebysana.uz/api" : "http://localhost:8000/api"
 
-const TOKEN = getCookie("crm_token_access")
+const isSite = process.env.REACT_APP_BUILD_TARGET === "site"
+const TOKEN_NAME = isSite ? "site_token_access" : "crm_token_access"
+const TOKEN = getCookie(TOKEN_NAME)
 
 export const api = {
     token: TOKEN || null,
@@ -16,23 +18,19 @@ export const api = {
         withCredentials: true
     }),
     user: axios.create({
-        baseURL: DOMAIN_API + "/user",
+        baseURL: DOMAIN_API + (isSite ? "/client" : "/user"),
         headers: {common: {Authorization: "Bearer " + TOKEN}},
         withCredentials: true
-    }),
-    teacher: axios.create({
-        baseURL: DOMAIN_API + "/user/teacher/1",
-        headers: {common: {Authorization: "Bearer " + TOKEN}}
     })
 }
 
 export const updateToken = (token: string | null) => {
     api.token = token
-    if (token) setCookie("crm_token_access", token, {expires: 30})
-    else removeCookie("crm_token_access")
+
+    if (token) setCookie(TOKEN_NAME, token, {expires: 30})
+    else removeCookie(TOKEN_NAME)
 
     api.user.defaults.headers.common["Authorization"] = "Bearer " + token
-    api.teacher.defaults.headers.common["Authorization"] = "Bearer " + token
 }
 
 type MethodProps = "get" | "delete" | "post" | "put" | "patch"

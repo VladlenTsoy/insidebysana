@@ -3,7 +3,7 @@ import styled from "./Header.module.css"
 import {useHistory, useLocation} from "react-router-dom"
 import {useScreenSize} from "hooks/useScreenSize"
 import {useDispatch} from "../../store"
-// import {changeMobileMenuVisible} from "store/app/appSlice"
+import {changeMobileMenuVisible} from "../appSlice"
 
 const HeaderAnimation: React.FC = ({children}) => {
     const location = useLocation()
@@ -14,21 +14,17 @@ const HeaderAnimation: React.FC = ({children}) => {
     const dispatch = useDispatch()
 
     // Анимация при наведении
-    const onMouseEnterHandler = () =>
-        window.pageYOffset === 0 && width > 1200 && setIsFixed(true)
+    const onMouseEnterHandler = () => window.pageYOffset === 0 && width > 1200 && setIsFixed(true)
 
     // Анимация при отводе
-    const onMouseLeaveHandler = () =>
-        window.pageYOffset === 0 && width > 1200 && setIsFixed(false)
-
+    const onMouseLeaveHandler = () => window.pageYOffset === 0 && width > 1200 && setIsFixed(false)
 
     // Если на главной странице
     useEffect(() => setIsHome(location.pathname === "/"), [location])
 
     // Если скролл и на главной странице на верху фиксировать
     useEffect(() => {
-        const listenToScroll = () =>
-            setIsFixed(window.pageYOffset > 1 && isHome)
+        const listenToScroll = () => setIsFixed(window.pageYOffset > 1 && isHome)
 
         window.addEventListener("scroll", listenToScroll)
         return () => {
@@ -41,8 +37,7 @@ const HeaderAnimation: React.FC = ({children}) => {
         if (history.listen) {
             const unListen = history.listen(() => {
                 window.scrollTo(0, 0)
-                // if (width < 1200)
-                    // dispatch(changeMobileMenuVisible(false))
+                if (width < 1200) dispatch(changeMobileMenuVisible(false))
             })
             return () => {
                 unListen()

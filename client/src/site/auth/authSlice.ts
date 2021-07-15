@@ -13,7 +13,7 @@ interface StateProps {
 }
 
 const initialState: StateProps = {
-    token: getCookie("crm_token_access") || null,
+    token: getCookie("site_token_access") || null,
     detail: null,
     loading: true
 }
@@ -60,6 +60,9 @@ const authSlice = createSlice({
 
 // Вывод действий
 export const {changeToken} = authSlice.actions
+
+//
+export const authSelector = (state: StoreState) => state.auth
 
 // Вывод пользователя
 export const useUser = () => useSelector((state: StoreState) => state.auth)

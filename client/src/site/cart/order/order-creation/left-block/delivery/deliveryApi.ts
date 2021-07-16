@@ -3,7 +3,7 @@ import {Delivery} from "types/Delivery"
 import baseQuery from "utils/apiConfig"
 
 export const deliveryApi = createApi({
-    reducerPath: "additionalServiceApi",
+    reducerPath: "deliveryApi",
     baseQuery,
     endpoints: build => ({
         getDeliveries: build.query<Delivery[], string>({

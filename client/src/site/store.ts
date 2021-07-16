@@ -11,6 +11,7 @@ import app from "./layout/appSlice"
 import auth from "./auth/authSlice"
 import product from "./products/productSlice"
 import {deliveryApi} from "./cart/order/order-creation/left-block/delivery/deliveryApi"
+import {additionalServiceApi} from "./cart/order/order-creation/left-block/additional-service/additionalServiceApi"
 import {cityApi} from "./cart/order/order-creation/left-block/information/city-select/cityApi"
 import {countryApi} from "./cart/order/order-creation/left-block/information/country-select/countryApi"
 import {addressApi} from "./account/delivery-addresses/addressApi"
@@ -30,6 +31,7 @@ export const store = configureStore({
         [addressApi.reducerPath]: addressApi.reducer,
         [newsletterApi.reducerPath]: newsletterApi.reducer,
         [measurementApi.reducerPath]: measurementApi.reducer,
+        [additionalServiceApi.reducerPath]: additionalServiceApi.reducer,
         wishlist,
         app,
         cart,
@@ -49,6 +51,7 @@ export const store = configureStore({
             .concat(addressApi.middleware)
             .concat(newsletterApi.middleware)
             .concat(measurementApi.middleware)
+            .concat(additionalServiceApi.middleware)
     ]
 })
 

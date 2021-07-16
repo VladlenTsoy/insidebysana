@@ -17,13 +17,13 @@ export const addressApi = createApi({
     tagTypes: ["addresses"],
     endpoints: build => ({
         getAddresses: build.query<Address[], void>({
-            query: () => `user/addresses`,
+            query: () => `client/addresses`,
             providesTags: ["addresses"]
         }),
         createAddress: build.mutation<Address, Partial<Address>>({
             query(body) {
                 return {
-                    url: `user/address`,
+                    url: `client/address`,
                     method: "POST",
                     body
                 }
@@ -33,7 +33,7 @@ export const addressApi = createApi({
         deleteAddress: build.mutation<{success: boolean; id: number}, number>({
             query(id) {
                 return {
-                    url: `user/address/${id}`,
+                    url: `client/address/${id}`,
                     method: "DELETE"
                 }
             },

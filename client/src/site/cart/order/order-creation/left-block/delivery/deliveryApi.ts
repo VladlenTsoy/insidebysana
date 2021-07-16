@@ -7,10 +7,10 @@ export const deliveryApi = createApi({
     baseQuery,
     endpoints: build => ({
         getDeliveries: build.query<Delivery[], string>({
-            query: body => ({
+            query: country => ({
                 url: `delivery`,
                 method: "POST",
-                body
+                body: {country}
             })
         })
     })

@@ -114,12 +114,12 @@ const Form: React.FC<FormProps> = ({close}) => {
                                 errors.address && touched.address && styled.error
                             }`}
                         />
-                        <MapBlock
+                        {/* <MapBlock
                             setFieldValue={setFieldValue}
                             country_id={values.country}
                             city_id={values.city}
                             position={values.position}
-                        />
+                        /> */}
                         <div className={styled.actions}>
                             <Button type="default" typeHtml="submit" disabled={isSubmitting}>
                                 Сохранить

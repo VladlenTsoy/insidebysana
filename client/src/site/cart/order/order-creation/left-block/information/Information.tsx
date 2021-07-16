@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import styled from "./Information.module.css"
 import {Link} from "react-router-dom"
 import {Formik} from "formik"
@@ -18,6 +18,10 @@ interface InformationProps {
 
 const Information: React.FC<InformationProps> = ({information, onChangeInformation}) => {
     const {detail} = useUser()
+    const [centerCountry, setCenterCountry] = useState<[number, number] | undefined>()
+    const [centerCity, setCenterCity] = useState<[number, number] | undefined>()
+    const [mapCountry, setMapCountry] = useState<string | undefined>()
+    const [mapCity, setMapCity] = useState<string | undefined>()
 
     const onSubmitHandler = (values: any, {setSubmitting}: any) => {
         onChangeInformation(values)
@@ -102,6 +106,9 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                                     onChange={setFieldValue}
                                     onBlur={handleBlur}
                                     value={values.country}
+                                    setCenter={setCenterCountry}
+                                    setCenterCity={setCenterCity}
+                                    mapCountry={mapCountry}
                                     className={`${errors.country && touched.country && styled.error}`}
                                 />
                             </div>
@@ -112,6 +119,8 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                                     onChange={setFieldValue}
                                     onBlur={handleBlur}
                                     value={values.city}
+                                    setCenter={setCenterCity}
+                                    mapCity={mapCity}
                                     className={`${errors.city && touched.city && styled.error}`}
                                 />
                             </div>
@@ -131,9 +140,10 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                             </div>
                         </div>
                         <MapBlock
+                            setMapCountry={setMapCountry}
+                            setMapCity={setMapCity}
                             setFieldValue={setFieldValue}
-                            country_id={values.country}
-                            city_id={values.city}
+                            selectCenter={centerCity || centerCountry}
                             position={values.position}
                         />
                         <div className={styled.actions}>

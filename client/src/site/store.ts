@@ -44,6 +44,7 @@ export const store = configureStore({
             .concat(lookbookApi.middleware)
             .concat(orderApi.middleware)
             .concat(deliveryApi.middleware)
+            .concat(cityApi.middleware)
             .concat(countryApi.middleware)
             .concat(addressApi.middleware)
             .concat(newsletterApi.middleware)

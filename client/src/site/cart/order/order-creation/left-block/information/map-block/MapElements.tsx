@@ -5,13 +5,17 @@ interface MapElementsProps {
     setFieldValue: any
     selectCenter: any
     position: any
+    setMapCountry?: any
+    setMapCity?: any
 }
 
 const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
     ymaps,
     setFieldValue,
     selectCenter,
-    position
+    position,
+    setMapCountry,
+    setMapCity
 }) => {
     const [center, setCenter] = useState([41.311158, 69.279737])
     const [zoom, setZoom] = useState(position ? 16 : 12)
@@ -34,7 +38,10 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
             placemarkRef.current.properties.set("iconCaption", "Поиск...")
             ymaps.geocode(coords).then(function (res: any) {
                 var firstGeoObject = res.geoObjects.get(0)
-                // console.log(firstGeoObject.getAddressLine(), coords)
+
+                setMapCountry && setMapCountry(firstGeoObject.getCountry())
+                setMapCity && setMapCity(firstGeoObject.getAdministrativeAreas()[0])
+
                 setFieldValue("address", firstGeoObject.getAddressLine(), true)
                 setFieldValue("position", coords, true)
                 placemarkRef.current.properties.set({
@@ -52,7 +59,7 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
                 })
             })
         },
-        [setFieldValue, ymaps]
+        [setFieldValue, ymaps, setMapCountry, setMapCity]
     )
 
     const geolocationSearch = (e: any) => {
@@ -88,8 +95,23 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
         if (ymaps) {
             const suggestView = new ymaps.SuggestView("address")
             suggestView.events.add("select", search)
+            if (!position) {
+                var geolocation = ymaps.geolocation
+
+                geolocation
+                    .get({
+                        provider: "browser",
+                        mapStateAutoApply: true
+                    })
+                    .then(function ({geoObjects}: any) {
+                        placemarkRef.current.geometry.setCoordinates(geoObjects.position)
+                        setCenter(geoObjects.position)
+                        getAddress(geoObjects.position)
+                        setZoom(16)
+                    })
+            }
         }
-    }, [ymaps, search])
+    }, [ymaps, search, getAddress, position])
 
     useEffect(() => {
         setCenter(prevState => position || selectCenter || prevState)
@@ -97,7 +119,7 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
 
     return (
         <Map
-            modules={["geocode", "SuggestView"]}
+            modules={["geocode", "SuggestView", "geolocation"]}
             defaultState={{
                 zoom: 12,
                 center: [41.311158, 69.279737]

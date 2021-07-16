@@ -128,13 +128,12 @@ const GetAll = async (req, res) => {
         const orders = await Order.query()
             .where({client_id: user.id})
             // payment delete
-            .withGraphFetched("[delivery, address, productColors]")
+            .withGraphFetched("[delivery, address, productColors, payments]")
             .orderBy("created_at", "desc")
             .select(
                 "created_at",
                 "discount",
                 "id",
-                "payment_id",
                 "payment_state",
                 "total_price",
                 "promo_code"

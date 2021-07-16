@@ -82,11 +82,11 @@ router.get("/order/:id", OrderController.GetById)
 //
 router.post("/order/pay", OrderController.Pay)
 
-//
+// Вывод всех стран
 router.get("/countries", CountryController.GetAll)
 
-//
-router.get("/cities", CityController.GetAll)
+// Вывод городов
+router.get("/cities/:countryId", CityController.GetByCountryId)
 
 //
 router.get("/additional-services", AdditionalServicesController.GetAll)

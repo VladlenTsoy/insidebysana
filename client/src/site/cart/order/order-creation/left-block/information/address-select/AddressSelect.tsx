@@ -29,12 +29,14 @@ const AddressSelect: React.FC<AddressSelectProps> = ({setFieldValue}) => {
     }
 
     useEffect(() => {
-        const a = addresses.map(address => ({
-            label: `${address.title} \\ ${address.city} \\ ${address.address}`,
-            value: address.id
-        }))
+        if (addresses.length) {
+            const a = addresses.map(address => ({
+                label: `${address.title} \\ ${address.city} \\ ${address.address}`,
+                value: address.id
+            }))
 
-        setDeliveries(prevState => [...prevState, ...a])
+            setDeliveries(prevState => [...prevState, ...a])
+        }
     }, [addresses])
 
     return (
@@ -48,4 +50,4 @@ const AddressSelect: React.FC<AddressSelectProps> = ({setFieldValue}) => {
         </>
     )
 }
-export default AddressSelect
+export default React.memo<AddressSelectProps>(AddressSelect)

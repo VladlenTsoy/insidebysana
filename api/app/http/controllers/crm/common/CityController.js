@@ -8,9 +8,12 @@ const {logger} = require("config/logger.config")
  * @return {Promise<*>}
  * @constructor
  */
-const GetAll = async (req, res) => {
+const GetByCountryId = async (req, res) => {
     try {
-        const cities = await City.query().select("id", "name", "country_id", "position")
+        const {countryId} = req.params
+        const cities = await City.query()
+            .where({country_id: countryId})
+            .select("id", "name", "position", "country_id")
         return res.send(cities)
     } catch (e) {
         logger.error(e.stack)
@@ -18,4 +21,4 @@ const GetAll = async (req, res) => {
     }
 }
 
-module.exports = {GetAll}
+module.exports = {GetByCountryId}

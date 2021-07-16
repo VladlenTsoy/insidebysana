@@ -65,6 +65,7 @@ const Select: React.FC<SelectProps> = ({
     placeholder,
     isSearchable,
     defaultValue,
+    value,
     className,
     onBlur,
     onChange,
@@ -84,9 +85,10 @@ const Select: React.FC<SelectProps> = ({
             options={options}
             defaultValue={defaultValue}
             styles={styles}
+            value={value}
             isLoading={loading}
         />
     )
 }
 
-export default Select
+export default React.memo<SelectProps>(Select)

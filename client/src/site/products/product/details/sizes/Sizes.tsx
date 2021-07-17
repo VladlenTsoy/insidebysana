@@ -11,16 +11,20 @@ interface SizesProps {
 const Sizes: React.FC<SizesProps> = ({sizes, selectSizeHandler, requireSize}) => {
     return (
         <div className={styled.sizes}>
-            <div className={styled.title}>Размеры
+            <div className={styled.title}>
+                Размеры
                 {requireSize && <span className={styled.error}>*Выберите размер</span>}
             </div>
             <div className={styled.sizesAction}>
-                <RadioButton name="sizes" data={
-                    sizes.map((size) => ({
-                        label: size.title,
-                        value: String(size.size_id)
-                    }))
-                } onChange={selectSizeHandler}/>
+                <RadioButton
+                    name="sizes"
+                    data={sizes.map(size => ({
+                        label: `${size.title}`,
+                        value: String(size.size_id),
+                        disabled: Number(size.qty) <= 0
+                    }))}
+                    onChange={selectSizeHandler}
+                />
             </div>
         </div>
     )

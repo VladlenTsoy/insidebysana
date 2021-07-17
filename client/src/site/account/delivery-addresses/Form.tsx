@@ -1,14 +1,129 @@
-import React from "react"
+import React, {useRef, useState, useEffect} from "react"
 import styled from "./Form.module.css"
-import {Formik} from "formik"
+import {Formik, FormikHandlers, FormikHelpers, FormikState} from "formik"
 import Input from "components/input/Input"
 import PhoneInput from "components/phone-input/PhoneInput"
 import Button from "components/button/Button"
-import CountrySelect from "../../cart/order/order-creation/left-block/information/country-select/CountrySelect"
-import MapBlock from "../../cart/order/order-creation/left-block/information/map-block/MapBlock"
-import CitySelect from "../../cart/order/order-creation/left-block/information/city-select/CitySelect"
+import MapBlock from "../../cart/order/order-creation/left-block/information/delivery-address/MapBlock"
 import {useUser} from "site/auth/authSlice"
 import {useCreateAddressMutation} from "./addressApi"
+import {useGetCountriesQuery} from "site/cart/order/order-creation/left-block/information/delivery-address/countryApi"
+import {useGetCitiesByCountryIdQuery} from "site/cart/order/order-creation/left-block/information/delivery-address/cityApi"
+import {
+    createOptionCity,
+    createOptionCountry,
+    CountrySelect,
+    CitySelect
+} from "site/cart/order/order-creation/left-block/information/delivery-address/DeliveryAddress"
+import {useCallback} from "react"
+
+// Интерфайс даты для формы
+export interface FormDataProps {
+    title: string
+    full_name: string
+    phone: string
+    country: number | undefined
+    city: number | undefined
+    address: string
+    position: [number, number] | undefined
+}
+
+interface DeliveryAddressProps {
+    setFieldValue: FormikHelpers<FormDataProps>["setFieldValue"]
+    values: FormikState<FormDataProps>["values"]
+    errors: FormikState<FormDataProps>["errors"]
+    touched: FormikState<FormDataProps>["touched"]
+    handleBlur: FormikHandlers["handleBlur"]
+    handleChange: FormikHandlers["handleChange"]
+}
+
+const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
+    setFieldValue,
+    values,
+    errors,
+    touched,
+    handleBlur,
+    handleChange
+}) => {
+    const [mapCountry, setMapCountry] = useState<string>()
+    const [mapCity, setMapCity] = useState<string>()
+
+    const {data: countries, isLoading: isLoadingCountries} = useGetCountriesQuery()
+    const {data: cities, isLoading: isLoadingCities} = useGetCitiesByCountryIdQuery(values.country || 0, {
+        skip: !values.country
+    })
+
+    const countriesRef = useRef<any>()
+    const citiesRef = useRef<any>()
+
+    // Вывод первого города
+    useEffect(() => {
+        if (values.country && cities && cities.length && citiesRef.current)
+            citiesRef.current.select.setValue(createOptionCity(cities[0]))
+    }, [values.country, cities])
+
+    // Выбор страны с карты
+    useEffect(() => {
+        if (countries && countriesRef && mapCountry) {
+            const country = countries.find(country => country.name === mapCountry)
+            country && countriesRef.current.select.setValue(createOptionCountry(country))
+        }
+    }, [mapCountry, countriesRef, countries])
+
+    // Выбор города с карты
+    useEffect(() => {
+        if (mapCity && cities && citiesRef) {
+            const city = cities.find(city => city.name === mapCity)
+            city && citiesRef.current.select.setValue(createOptionCity(city))
+        }
+    }, [mapCity, cities, citiesRef])
+
+    const onChangeCityHandler = useCallback(
+        (e: any) => {
+            e && setFieldValue("city", e.value, false)
+        },
+        [setFieldValue]
+    )
+
+    return (
+        <>
+            <CountrySelect
+                inputRef={countriesRef}
+                countries={countries}
+                isLoading={isLoadingCountries}
+                setFieldValue={setFieldValue}
+                onBlur={handleBlur}
+                value={values.country}
+                className={`${errors.country && touched.country && styled.error}`}
+            />
+            <CitySelect
+                inputRef={citiesRef}
+                cities={cities}
+                isLoading={isLoadingCities}
+                onBlur={handleBlur}
+                onChange={onChangeCityHandler}
+                value={values.city}
+                className={`${errors.city && touched.city && styled.error}`}
+            />
+            <Input
+                placeholder="Введите адрес"
+                name="address"
+                id="address"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.address}
+                className={`${styled.formItem} ${errors.address && touched.address && styled.error}`}
+            />
+            <MapBlock
+                setMapCountry={setMapCountry}
+                setMapCity={setMapCity}
+                setFieldValue={setFieldValue}
+                selectCenter={[41.311158, 69.279737]}
+                position={values.position}
+            />
+        </>
+    )
+}
 
 interface FormProps {
     close: any
@@ -16,16 +131,15 @@ interface FormProps {
 
 const Form: React.FC<FormProps> = ({close}) => {
     const {detail} = useUser()
-    const [createAddress] = useCreateAddressMutation()
-    const information = {
+    const [createAddress, {isLoading}] = useCreateAddressMutation()
+    const information: FormDataProps = {
         title: "",
-        full_name: detail?.full_name,
-        phone: detail?.phone,
-        country: 0,
-        city: "",
+        full_name: detail?.full_name || "",
+        phone: detail?.phone || "",
+        country: 1,
+        city: undefined,
         address: "",
-        position: "",
-        location: ""
+        position: undefined
     }
 
     const onSubmitHandler = async (values: any, {setSubmitting}: any) => {
@@ -86,44 +200,28 @@ const Form: React.FC<FormProps> = ({close}) => {
                             value={values.phone}
                             className={`${styled.formItem} ${errors.phone && touched.phone && styled.error}`}
                         />
-                        <CountrySelect
-                            name="country"
-                            onChange={setFieldValue}
-                            onBlur={handleBlur}
-                            value={values.country}
-                            className={`${styled.formItem} ${
-                                errors.country && touched.country && styled.error
-                            }`}
-                        />
-                        <CitySelect
-                            country_id={values.country}
-                            name="city"
-                            onChange={setFieldValue}
-                            onBlur={handleBlur}
-                            value={values.city}
-                            className={`${errors.city && touched.city && styled.error}`}
-                        />
-                        <Input
-                            placeholder="Введите адрес"
-                            name="address"
-                            id="address"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.address}
-                            className={`${styled.formItem} ${
-                                errors.address && touched.address && styled.error
-                            }`}
-                        />
-                        {/* <MapBlock
+                        <DeliveryAddress
                             setFieldValue={setFieldValue}
-                            country_id={values.country}
-                            city_id={values.city}
-                            position={values.position}
-                        /> */}
+                            values={values}
+                            errors={errors}
+                            touched={touched}
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
+                        />
                         <div className={styled.actions}>
-                            <Button type="default" typeHtml="submit" disabled={isSubmitting}>
-                                Сохранить
-                            </Button>
+                            <div className={styled.actionsContent}>
+                                {!!Object.values(errors).length && (
+                                    <span className={styled.errorMessage}>Заполните все поля!</span>
+                                )}
+                                <Button
+                                    type="default"
+                                    typeHtml="submit"
+                                    disabled={isSubmitting}
+                                    loading={isLoading}
+                                >
+                                    Сохранить
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -131,4 +229,4 @@ const Form: React.FC<FormProps> = ({close}) => {
         </Formik>
     )
 }
-export default Form
+export default React.memo<FormProps>(Form)

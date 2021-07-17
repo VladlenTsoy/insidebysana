@@ -58,8 +58,8 @@ const DeliveryAddresses: React.FC = () => {
                                         <td>{address.title}</td>
                                         <td>{address.full_name}</td>
                                         <td>{address.phone}</td>
-                                        <td>{address.country}</td>
-                                        <td>{address.city}</td>
+                                        <td>{address.country_name}</td>
+                                        <td>{address.city_name}</td>
                                         <td>{address.address}</td>
                                         <td>
                                             <div

@@ -15,7 +15,7 @@ interface StateProps {
 const initialState: StateProps = {
     token: getCookie("site_token_access") || null,
     detail: null,
-    loading: true
+    loading: false
 }
 
 const authSlice = createSlice({
@@ -35,9 +35,6 @@ const authSlice = createSlice({
         })
         builder.addCase(fetchUser.fulfilled, (state, action) => {
             state.detail = action.payload
-            state.loading = false
-        })
-        builder.addCase(fetchUser.rejected, state => {
             state.loading = false
         })
         // Авторизация пользователя

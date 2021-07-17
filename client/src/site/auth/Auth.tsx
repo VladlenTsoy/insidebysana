@@ -8,8 +8,9 @@ const Login = React.lazy(() => import("./Login"))
 const Registration = React.lazy(() => import("./Registration"))
 
 const Auth = () => {
-    const {detail} = useUser()
+    const {detail, loading} = useUser()
 
+    if (loading) return <LoaderBlock />
     if (detail) return <Redirect to="/account" />
 
     return (

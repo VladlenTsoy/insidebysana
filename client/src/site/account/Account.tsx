@@ -18,12 +18,13 @@ const ChangePassword = React.lazy(() => import("./change-password/ChangePassword
 
 const Account = () => {
     const dispatch = useDispatch()
-    const {detail} = useUser()
+    const {detail, loading} = useUser()
 
     const logout = () => {
         dispatch(logoutUser())
     }
 
+    if (loading) return <LoaderBlock />
     if (!detail) return <Redirect to="/auth/login" />
 
     return (

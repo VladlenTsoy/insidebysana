@@ -1,15 +1,12 @@
-import React, {useState} from "react"
+import React from "react"
 import styled from "./Information.module.css"
 import {Link} from "react-router-dom"
 import {Formik} from "formik"
 import Input from "components/input/Input"
 import PhoneInput from "components/phone-input/PhoneInput"
-import CountrySelect from "./country-select/CountrySelect"
 import Button from "components/button/Button"
-import AddressSelect from "./address-select/AddressSelect"
-import CitySelect from "./city-select/CitySelect"
-import MapBlock from "./map-block/MapBlock"
 import {useUser} from "site/auth/authSlice"
+import DeliveryAddress from "./delivery-address/DeliveryAddress"
 
 interface InformationProps {
     information: any
@@ -18,10 +15,6 @@ interface InformationProps {
 
 const Information: React.FC<InformationProps> = ({information, onChangeInformation}) => {
     const {detail} = useUser()
-    const [centerCountry, setCenterCountry] = useState<[number, number] | undefined>()
-    const [centerCity, setCenterCity] = useState<[number, number] | undefined>()
-    const [mapCountry, setMapCountry] = useState<string | undefined>()
-    const [mapCity, setMapCity] = useState<string | undefined>()
 
     const onSubmitHandler = (values: any, {setSubmitting}: any) => {
         onChangeInformation(values)
@@ -42,21 +35,11 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                 initialValues={information}
                 validate={values => {
                     const errors: any = {}
-                    if (!values.full_name) {
-                        errors.full_name = "Введите имя!"
-                    }
-                    if (!values.phone) {
-                        errors.phone = "Введите телефон!"
-                    }
-                    if (!values.country) {
-                        errors.country = "Выберите страну!"
-                    }
-                    if (!values.city) {
-                        errors.city = "Введите город!"
-                    }
-                    if (!values.address) {
-                        errors.address = "Введите адрес!"
-                    }
+                    if (!values.full_name) errors.full_name = "Введите имя!"
+                    if (!values.phone) errors.phone = "Введите телефон!"
+                    if (!values.country) errors.country = "Выберите страну!"
+                    if (!values.city) errors.city = "Введите город!"
+                    if (!values.address) errors.address = "Введите адрес!"
                     return errors
                 }}
                 onSubmit={onSubmitHandler}
@@ -94,57 +77,13 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                             </div>
                         </div>
                         <h2 className={styled.deliveryTitle}>Доставка</h2>
-                        {detail && (
-                            <div className={styled.address}>
-                                <AddressSelect setFieldValue={setFieldValue} />
-                            </div>
-                        )}
-                        <div className={styled.delivery}>
-                            <div className={styled.formItem}>
-                                <CountrySelect
-                                    name="country"
-                                    onChange={setFieldValue}
-                                    onBlur={handleBlur}
-                                    value={values.country}
-                                    setCenter={setCenterCountry}
-                                    setCenterCity={setCenterCity}
-                                    mapCountry={mapCountry}
-                                    className={`${errors.country && touched.country && styled.error}`}
-                                />
-                            </div>
-                            <div className={styled.formItem}>
-                                <CitySelect
-                                    country_id={values.country}
-                                    name="city"
-                                    onChange={setFieldValue}
-                                    onBlur={handleBlur}
-                                    value={values.city}
-                                    setCenter={setCenterCity}
-                                    mapCity={mapCity}
-                                    className={`${errors.city && touched.city && styled.error}`}
-                                />
-                            </div>
-                            <div className={`${styled.formItem} ${styled.address}`}>
-                                <Input
-                                    id="address"
-                                    placeholder="Введите адрес"
-                                    name="address"
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    value={values.address}
-                                    className={`${errors.address && touched.address && styled.error}`}
-                                />
-                            </div>
-                            <div className={styled.hidden}>
-                                <input name="location" value={values.location} />
-                            </div>
-                        </div>
-                        <MapBlock
-                            setMapCountry={setMapCountry}
-                            setMapCity={setMapCity}
+                        <DeliveryAddress
                             setFieldValue={setFieldValue}
-                            selectCenter={centerCity || centerCountry}
-                            position={values.position}
+                            values={values}
+                            errors={errors}
+                            touched={touched}
+                            handleBlur={handleBlur}
+                            handleChange={handleChange}
                         />
                         <div className={styled.actions}>
                             <div className={styled.actionsContent}>

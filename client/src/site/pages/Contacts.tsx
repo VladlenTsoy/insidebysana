@@ -14,8 +14,8 @@ const Contacts: React.FC = () => {
                     <div className={styled.infoBlock}>
                         <div className={styled.title}>Адрес:</div>
                         <div className={styled.text}>
-                            Узбекистан, г. Ташкент, ул. Моштабиб, дом 5 (ориентир задняя сторона бутика
-                            "Glamour"
+                            Узбекистан, г. Ташкент, ул. Моштабиб, дом 5 (ориентир задняя сторона магазина
+                            "Glamour")
                         </div>
                     </div>
                     <div className={styled.infoBlock}>
@@ -27,10 +27,10 @@ const Contacts: React.FC = () => {
                     <div className={styled.infoBlock}>
                         <div className={styled.title}>Соц. сети:</div>
                         <div className={styled.icons}>
-                            <a href="/" target="_blank">
+                            <a href="https://www.instagram.com/insidebysana" target="_blank" rel="noreferrer">
                                 <InstagramFilled />
                             </a>
-                            <a href="/" target="_blank">
+                            <a href="https://www.facebook.com/insidebysana" target="_blank" rel="noreferrer">
                                 <FacebookFilled />
                             </a>
                         </div>

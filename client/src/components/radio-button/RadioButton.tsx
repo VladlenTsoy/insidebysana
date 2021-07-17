@@ -10,9 +10,10 @@ interface RadioButtonProps {
         disabled?: boolean
     }[]
     onChange?: any
+    bigBorder?: boolean
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({name, data, defaultValue, onChange}) => {
+const RadioButton: React.FC<RadioButtonProps> = ({name, data, defaultValue, onChange, bigBorder}) => {
     const [selected, setSelected] = useState(defaultValue)
 
     const onChangeHandler = (e: any) => {
@@ -30,7 +31,9 @@ const RadioButton: React.FC<RadioButtonProps> = ({name, data, defaultValue, onCh
                         disabled={item.disabled}
                         type="button"
                         key={`btn-${name}-${key}`}
-                        className={`${styled.labelButton} ${selected === item.value && styled.active}`}
+                        className={`${styled.labelButton} ${selected === item.value && styled.active} ${
+                            bigBorder ? styled.bigBorder : ""
+                        }`}
                     >
                         <label htmlFor={`${name}-${key}`}>{item.label}</label>
                     </button>

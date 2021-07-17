@@ -17,6 +17,7 @@ const Sizes: React.FC<SizesProps> = ({sizes, selectSizeHandler, requireSize}) =>
             </div>
             <div className={styled.sizesAction}>
                 <RadioButton
+                    bigBorder
                     name="sizes"
                     data={sizes.map(size => ({
                         label: `${size.title}`,

@@ -1,10 +1,15 @@
 import React from "react"
-import styled from './EmptyBlock.module.css'
+import styled from "./EmptyBlock.module.css"
 
-const EmptyBlock = () => {
+interface EmptyBlockProps {
+    action?: any
+}
+
+const EmptyBlock: React.FC<EmptyBlockProps> = ({action}) => {
     return (
         <div className={styled.emptyBlock}>
-            ПУСТО
+            <div className={styled.title}>ПУСТО</div>
+            {action && <div className={styled.action}>{action}</div>}
         </div>
     )
 }

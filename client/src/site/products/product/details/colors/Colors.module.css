@@ -8,9 +8,6 @@
     margin-bottom: 0.75rem;
 }
 
-.colorsAction {
-}
-
 .color {
     display: inline-block;
     margin-bottom: .25rem;
@@ -21,7 +18,7 @@
     /*border-radius: 50%;*/
     overflow: hidden;
     transition: all 0.2s ease-in-out;
-    border: 2px solid var(--white);
+    border: 3px solid var(--white);
     box-shadow: var(--dropdown-box-shadow);
     user-select: none;
 }

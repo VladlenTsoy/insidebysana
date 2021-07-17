@@ -26,18 +26,23 @@ const Footer = () => {
                         <Link to="/about-us">О нас</Link>
                         <Link to="/contacts">Адрес шоурума</Link>
                         <Link to="/contacts">Контакты</Link>
-                        <a href="/">Instagram</a>
-                        <a href="/">Telegram</a>
+                        <a href="https://www.instagram.com/insidebysana" target="_blank" rel="noreferrer">
+                            Instagram
+                        </a>
+                        <a href="https://www.facebook.com/insidebysana" target="_blank" rel="noreferrer">
+                            Telegram
+                        </a>
                         <Link to="/lookbook">Lookbook</Link>
                     </div>
                 </div>
                 <div className={styled.footerColumn}>
                     <h4>Новостная рассылка</h4>
-                    <Newsletter/>
+                    <Newsletter />
                 </div>
             </div>
             <div className={styled.copyright}>
-                {year} © InsideBySana. All rights reserved. Design and development by <a href="http://limitless.uz">Vladlen</a>.
+                {year} © InsideBySana. All rights reserved. Design and development by{" "}
+                <a href="http://limitless.uz">Vladlen</a>.
             </div>
         </>
     )

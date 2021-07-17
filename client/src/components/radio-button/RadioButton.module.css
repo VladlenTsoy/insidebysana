@@ -1,8 +1,9 @@
-.radioGroup {
-}
-
 .radioGroup input {
     display: none;
+}
+
+button.labelButton.bigBorder {
+    border-width: 3px !important;
 }
 
 .labelButton {
@@ -30,7 +31,4 @@
     padding: 0.75rem 1rem;
     cursor: pointer;
     color: var(--secondary-text);
-}
-
-.labelButton button:active {
 }

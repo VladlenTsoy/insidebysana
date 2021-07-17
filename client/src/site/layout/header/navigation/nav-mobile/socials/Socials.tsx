@@ -6,8 +6,12 @@ import FacebookFilled from "@ant-design/icons/FacebookFilled"
 const Socials = () => {
     return (
         <div className={styled.socials}>
-            <a href="/" target="_blank"><InstagramFilled /></a>
-            <a href="/" target="_blank"><FacebookFilled /></a>
+            <a href="https://www.instagram.com/insidebysana" target="_blank" rel="noreferrer">
+                <InstagramFilled />
+            </a>
+            <a href="https://www.facebook.com/insidebysana" target="_blank" rel="noreferrer">
+                <FacebookFilled />
+            </a>
         </div>
     )
 }

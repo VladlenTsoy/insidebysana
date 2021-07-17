@@ -45,7 +45,7 @@ const Payment: React.FC<PaymentProps> = ({backAdditionalService, onSubmitPayment
                     Назад
                 </Button>
                 <Button type="default" onClick={onClickHandler} disabled={!paymentId} loading={loading}>
-                    Оплатить
+                    Заказать
                 </Button>
             </div>
         </div>

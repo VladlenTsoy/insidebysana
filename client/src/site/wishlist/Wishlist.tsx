@@ -7,6 +7,9 @@ import {useLoadingWishlist, useSelectAllWishlist} from "./wishlistSlice"
 import LoaderBlock from "../../components/loader-block/LoaderBlock"
 import ClothesCard from "../../components/clothes-card/ClothesCard"
 import GridClothesCard from "../../components/grid-clothes-card/GridClothesCard"
+import Button from "components/button/Button"
+import {Link} from "react-router-dom"
+import PlusOutlined from "@ant-design/icons/PlusOutlined"
 
 const Wishlist: React.FC = () => {
     const loading = useLoadingWishlist()
@@ -32,7 +35,15 @@ const Wishlist: React.FC = () => {
                     ))}
                 </GridClothesCard>
             ) : (
-                <EmptyBlock />
+                <>
+                    <EmptyBlock
+                        action={
+                            <Link to="/products/all">
+                                <Button icon={<PlusOutlined />}>Добавить товары</Button>
+                            </Link>
+                        }
+                    />
+                </>
             )}
         </>
     )

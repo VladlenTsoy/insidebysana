@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react"
 import styled from "./FilterSort.module.css"
 import Filter from "./filter/Filter"
-import Sort from "./sort/Sort"
+// import Sort from "./sort/Sort"
 import {fetchProductsByFilter} from "../fetchProductsByFilter"
 import {useDispatch} from "../../store"
 import {useParams} from "react-router-dom"
@@ -12,7 +12,7 @@ import {useCurrentFilter} from "../productSlice"
 
 const FilterSort = () => {
     const {colorIds, price, sizeIds, subCategoryIds} = useCurrentFilter()
-    const [sort, setSort] = useState({column: "created_at", dir: "desc"})
+    const [sort] = useState({column: "created_at", dir: "desc"})
     const {width} = useScreenSize()
     const dispatch = useDispatch()
     const params = useParams<ProductsParamsProps>()
@@ -37,7 +37,7 @@ const FilterSort = () => {
         <div className={styled.filterAction}>
             <div className={styled.filterActionContainer}>
                 {width > 767 ? <Filter /> : <FilterMobile />}
-                <Sort setSort={setSort} />
+                {/* <Sort setSort={setSort} /> */}
             </div>
         </div>
     )

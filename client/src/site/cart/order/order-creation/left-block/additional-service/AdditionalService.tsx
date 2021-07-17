@@ -23,8 +23,6 @@ const AdditionalService: React.FC<AdditionalServiceProps> = ({
 }) => {
     const {data: additionalServices = [], isLoading} = useGetAdditionalServiceApisQuery()
 
-    console.log(additionalServices)
-
     const onClickHandler = async () => {
         await onSubmitAdditionalService()
     }

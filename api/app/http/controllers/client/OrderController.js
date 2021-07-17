@@ -40,12 +40,11 @@ const Create = async (req, res) => {
             discount,
             promo_code,
             total_price,
-            client: {full_name: information.full_name, phone: information.phone},
+            client: {id: user ? user.id : null, full_name: information.full_name, phone: information.phone},
             address: information,
             status_id: status ? status.id : null,
             source_id: 3,
             products,
-            client_id: user ? user.id : null
         })
 
         let paymentOpts = null
@@ -130,14 +129,7 @@ const GetAll = async (req, res) => {
             // payment delete
             .withGraphFetched("[delivery, address, productColors, payments]")
             .orderBy("created_at", "desc")
-            .select(
-                "created_at",
-                "discount",
-                "id",
-                "payment_state",
-                "total_price",
-                "promo_code"
-            )
+            .select("created_at", "discount", "id", "payment_state", "total_price", "promo_code")
 
         return res.send(orders)
     } catch (e) {

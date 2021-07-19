@@ -18,8 +18,6 @@ const expandIcon = ({isActive}: any) => (
 const OrderHistory: React.FC = () => {
     const {data: orders = [], isLoading} = useGetOrdersQuery()
 
-    console.log(orders)
-
     if (isLoading) return <LoaderBlock />
 
     if (!orders.length) return <EmptyBlock />
@@ -43,7 +41,7 @@ const OrderHistory: React.FC = () => {
                                 <div className={styled.cardOrderBody}>
                                     <div className={styled.details}>
                                         <div>
-                                            Оплата: <span>{JSON.stringify(order.payments)}</span>
+                                            Оплата: <span>{order.payments[0].title}</span>
                                         </div>
                                         <div>
                                             Доставка: <span>{order.delivery.title}</span>

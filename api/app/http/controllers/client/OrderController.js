@@ -3,6 +3,8 @@ const {raw} = require("objection")
 const OrderService = require("services/order/OrderService")
 const {Order} = require("models/orders/Order")
 const {Status} = require("models/orders/Status")
+const moment = require("moment")
+const {OrderPayment} = require("../../../models/orders/OrderPayment")
 
 /**
  * Создать сделку
@@ -33,19 +35,26 @@ const Create = async (req, res) => {
         const payments = [{payment_id, price: total_price}]
 
         // Создание сделки
-        const order = await OrderService.Create({
-            additionalServices: [{...additionalService, qty: 1}],
-            payments,
-            delivery_id,
-            discount,
-            promo_code,
-            total_price,
-            client: {id: user ? user.id : null, full_name: information.full_name, phone: information.phone},
-            address: information,
-            status_id: status ? status.id : null,
-            source_id: 3,
-            products,
-        })
+        const order = await OrderService.Create(
+            {
+                additionalServices: [{...additionalService, qty: 1}],
+                payments,
+                delivery_id,
+                discount,
+                promo_code,
+                total_price,
+                client: {
+                    id: user ? user.id : null,
+                    full_name: information.full_name,
+                    phone: information.phone
+                },
+                address: information,
+                status_id: status ? status.id : null,
+                source_id: 3,
+                products
+            },
+            {timer: true}
+        )
 
         let paymentOpts = null
 
@@ -87,7 +96,10 @@ const Pay = async (req, res) => {
     try {
         const {payment_id, total_price, order_id} = req.body
 
-        if (Number(payment_id) === 1)
+        if (Number(payment_id) === 3) {
+            await OrderPayment.query().where({order_id}).delete()
+            await OrderPayment.query().insert({order_id, total_price, payment_id})
+        } else if (Number(payment_id) === 1)
             paymentOpts = {
                 method: "post",
                 url: "https://checkout.paycom.uz",
@@ -150,8 +162,24 @@ const GetById = async (req, res) => {
         const order = await Order.query()
             .withGraphFetched("[productColors, address, payments, delivery, additionalServices]")
             .findById(id)
-            .select("id", "created_at", "total_price", "payment_state")
+            .select("id", "created_at", "total_price", "payment_state", "promo_code")
 
+        if (!order) return res.status(500).send({message: "Ошибка! Заказ не найден!"})
+
+        const createdAt = moment(order.created_at)
+        const currentTime = moment()
+
+        const duration = moment.duration(currentTime.diff(createdAt))
+        const hours = duration.asHours()
+
+        if (hours > 2) {
+            if (order.payment_state === 0) await Order.query().findById(id).update({payment_state: -1})
+            return res.status(500).send({
+                code: "er-order-1",
+                message: "Срок действия вашей брони, к сожалению, истёк"
+            })
+        }
+        console.log(hours)
         return res.send(order)
     } catch (e) {
         logger.error(e.stack)

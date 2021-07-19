@@ -150,3 +150,7 @@ li {
 #profile-orders-collapse .rc-collapse {
     border: 0;
 }
+
+.rc-dialog-content {
+    box-shadow: var(--dropdown-box-shadow);
+}

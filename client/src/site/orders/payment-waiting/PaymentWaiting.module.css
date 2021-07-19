@@ -46,9 +46,65 @@
     color: var(--secondary-text);
 }
 
+.order .subInfo .subPromoCodeItem {
+    text-align: right;
+}
+
+.order .subInfo .subPromoCodeItem:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.order .subInfo .subPromoCodeItem .title {
+    margin-right: 0.5rem;
+    color: var(--secondary-text);
+}
+
+.order .subInfo .subPromoCodeItem .discountCode {
+    margin-bottom: 0.25rem;
+}
+
+.order .subInfo .subPromoCodeItem .price {
+    text-decoration: line-through;
+}
+
+.order .subInfo .subPromoCodeItem .discount {
+    color: var(--primary);
+}
+
+.order .subInfo .subPromoCodeItem .totalPrice {
+    font-size: var(--large-font-size);
+}
+
+.order .subInfo .subPromoCodeItem .discount {
+    color: var(--primary);
+}
+
 .order .total span {
     margin-right: 0.5rem;
     color: var(--secondary-text);
+}
+
+.order .typePayment {
+    margin-bottom: 1rem;
+}
+
+.order .typePayment .select .option {
+
+}
+.order .typePayment .select {
+    width: 200px;
+    margin-left: auto;
+}
+
+.order .typePayment .select .option {
+    display: flex;
+    align-items: center;
+}
+
+.order .typePayment .select .option img {
+    width: 25px;
+    margin-right: .7rem;
+    
 }
 
 .order .action button {

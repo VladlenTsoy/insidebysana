@@ -2,7 +2,7 @@ export interface ProductColor {
     id: number
     title: string
     images: {
-        id: number,
+        id: number
         url: string
     }[]
     price: number
@@ -45,4 +45,5 @@ export interface ProductColorCard {
         discount: number
         end_at: string
     } | null
+    is_new?: boolean
 }

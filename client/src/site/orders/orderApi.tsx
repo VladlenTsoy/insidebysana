@@ -1,4 +1,6 @@
 import {createApi} from "@reduxjs/toolkit/query/react"
+import Order from "site/cart/order/Order"
+import {AdditionalService} from "types/AdditionalService"
 import baseQuery from "utils/apiConfig"
 
 interface Order {
@@ -64,14 +66,59 @@ interface Order {
     created_at: string
 }
 
+export interface OrderMore {
+    id: number
+    payment_id: number
+    total_price: string
+    created_at: string
+    promo_code: {
+        id: number
+        code: string
+        type: "fixed" | "percent"
+        discount: number
+    }
+    address: {
+        full_name: string
+        city: string
+        country: string
+        phone: string
+        address: string
+    }
+    delivery: {
+        id: number
+        title: string
+        price: number
+    }
+    payment: {
+        id: number
+        title: string
+    }
+    payment_state: number
+    additionalServices: AdditionalService[]
+    productColors: {
+        discount: number
+        id: number
+        price: number
+        qty: number
+        size_id: number
+        size_title: string
+        color_title: string
+        title: string
+        url_thumbnail: string
+    }[]
+}
+
 export const orderApi = createApi({
     reducerPath: "orderApi",
     baseQuery,
     endpoints: build => ({
         getOrders: build.query<Order[], void>({
             query: () => `client/orders`
+        }),
+        getOrderById: build.query<OrderMore, string>({
+            query: id => `order/${id}`
         })
     })
 })
 
-export const {useGetOrdersQuery} = orderApi
+export const {useGetOrdersQuery, useGetOrderByIdQuery} = orderApi

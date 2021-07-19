@@ -32,7 +32,7 @@
 
 .details .properties .property_title {
     color: var(--secondary-text);
-    margin-right: .5rem;
+    margin-right: 0.5rem;
 }
 
 .qty {
@@ -41,4 +41,17 @@
 
 .price {
     font-size: var(--large-font-size);
+}
+
+.price .dicount {
+    font-size: var(--small-font-size);
+    margin-bottom: .25rem;
+}
+
+.price .dicount .dicountPrice {
+    text-decoration: line-through;
+}
+
+.price .dicount .percent {
+    color: var(--primary);
 }

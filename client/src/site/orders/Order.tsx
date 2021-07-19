@@ -1,69 +1,27 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import styled from "./Order.module.css"
 import OrderSuccessful from "../cart/order/order-successful/OrderSuccessful"
 import {useParams} from "react-router"
-import {apiRequest} from "utils/api"
 import LoaderBlock from "components/loader-block/LoaderBlock"
 import PaymentWaiting from "./payment-waiting/PaymentWaiting"
 import Title from "components/title/Title"
 import {Link} from "react-router-dom"
-import {AdditionalService} from "types/AdditionalService"
-
-export interface OrderMore {
-    id: number
-    payment_id: number
-    total_price: string
-    created_at: string
-    address: {
-        full_name: string
-        city: string
-        country: string
-        phone: string
-        address: string
-    }
-    delivery: {
-        id: number
-        title: string
-        price: number
-    }
-    payment: {
-        id: number
-        title: string
-    }
-    payment_state: number
-    additionalServices: AdditionalService[]
-    productColors: {
-        discount: number
-        id: number
-        price: number
-        qty: number
-        size_id: number
-        size_title: string
-        color_title: string
-        title: string
-        url_thumbnail: string
-    }[]
-}
+import {useGetOrderByIdQuery} from "./orderApi"
 
 const Order: React.FC = () => {
     const {id} = useParams<{id: string}>()
-    const [loading, setLoading] = useState<boolean>(true)
-    const [order, setOrder] = useState<OrderMore | null>(null)
+    const {data: order, isLoading, error} = useGetOrderByIdQuery(id)
 
-    useEffect(() => {
-        ;(async () => {
-            try {
-                setLoading(true)
-                const response = await apiRequest("get", `order/${id}`, {type: "guest"})
-                await setOrder(response)
-                setLoading(false)
-            } catch (e) {
-                console.error(e)
-            }
-        })()
-    }, [id])
+    if (isLoading) return <LoaderBlock />
 
-    if (loading) return <LoaderBlock />
+    if (error) {
+        return (
+            <div className={`container ${styled.wrapper}  ${styled.notFound}`}>
+                <p>Срок действия вашей брони, к сожалению, истёк.</p>
+                <p>Вы можете оформить новый заказ.</p>
+            </div>
+        )
+    }
 
     if (!order || order?.payment_state === 1)
         return (

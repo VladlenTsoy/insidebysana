@@ -1,6 +1,6 @@
 import {useScreenSize} from "hooks/useScreenSize"
 import ImageLink from "../../../cart/cart-products/cart-product-column/image-link/ImageLink"
-import {OrderMore} from "../../Order"
+import {OrderMore} from "../../orderApi"
 import React from "react"
 import {Link} from "react-router-dom"
 import {formatPrice} from "utils/formatPrice"
@@ -38,7 +38,13 @@ const ProductItem: React.FC<ProductItemProps> = ({product}) => {
             {width > 767 && (
                 <>
                     <div className={styled.qty}>{product.qty}</div>
-                    <div className={styled.price}>{formatPrice(product.qty * product.price)} сум</div>
+                    <div className={styled.price}>
+                        <div className={styled.dicount}>
+                            <span className={styled.dicountPrice}>{formatPrice(product.qty * product.price)}</span> -{" "}
+                            <span className={styled.percent}>{product.discount}%</span>
+                        </div>
+                        <div>{formatPrice(product.qty * product.price, product.discount)} сум</div>
+                    </div>
                 </>
             )}
         </div>

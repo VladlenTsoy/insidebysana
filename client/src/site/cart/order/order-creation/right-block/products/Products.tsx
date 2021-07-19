@@ -1,11 +1,25 @@
-import React from "react"
+import React, {useEffect} from "react"
 import styled from "./Products.module.css"
 import ImageBlock from "components/image-block/ImageBlock"
 import {formatPrice} from "utils/formatPrice"
-import {useSelectAllProductCart} from "../../../../cartSlice"
+import {useLoadingCart, useSelectAllProductCart} from "../../../../cartSlice"
+import {useDispatch} from "site/store"
+import {fetchCart} from "site/cart/cartApi"
+import LoaderBlock from "print/components/loader-block/LoaderBlock"
 
 const Products = () => {
+    const loading = useLoadingCart()
     const products = useSelectAllProductCart()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const promise = dispatch(fetchCart())
+        return () => {
+            promise.abort()
+        }
+    }, [dispatch])
+
+    if (loading) return <LoaderBlock />
 
     return (
         <div className={styled.products}>
@@ -15,9 +29,7 @@ const Products = () => {
                         <ImageBlock src={product.url_thumbnail} alt={product.title} />
                     </div>
                     <div className={styled.info}>
-                        <div className={styled.title}>
-                            {product.title}
-                        </div>
+                        <div className={styled.title}>{product.title}</div>
                         <div className={styled.size}>{product.size.title}</div>
                     </div>
                     <div className={styled.price}>

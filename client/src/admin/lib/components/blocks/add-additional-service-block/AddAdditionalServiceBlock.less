@@ -1,0 +1,51 @@
+.add-additional-service {
+    margin-bottom: 1.5rem;
+
+    .action-block {
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: @border-radius-base;
+        text-align: center;
+        font-size: @font-size-lg;
+        border: @border-width-base dashed @border-color-base;
+        transition: all 0.3s ease-in-out;
+
+        .anticon {
+            margin-right: 0.5rem;
+        }
+
+        &:hover {
+            border-color: @primary-color;
+            color: @primary-color;
+        }
+    }
+
+    .list-additional-services {
+        .item-additional-service {
+            display: grid;
+            grid-template-columns: 1fr 105px 40px;
+            gap: 0.5rem;
+            align-items: center;
+            margin-bottom: 1rem;
+
+            .title {
+                font-size: @font-size-lg;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+.additional-service-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span:first-child {
+        font-size: @font-size-lg;
+    }
+
+    .price {
+        color: @text-color-secondary;
+    }
+}

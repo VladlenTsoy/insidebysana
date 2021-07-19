@@ -1,0 +1,22 @@
+.editor-home-product{
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+    border: 1px solid @border-color-base;
+    cursor: pointer;
+    transition: border-color .2s ease-in-out;
+
+    &:hover {
+      border-color: @primary-color;
+    }
+  }
+}

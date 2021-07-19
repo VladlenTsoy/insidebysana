@@ -1,0 +1,50 @@
+.add-payment-block {
+    margin-bottom: 1.5rem;
+
+    .action-block {
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: @border-radius-base;
+        text-align: center;
+        font-size: @font-size-lg;
+        border: @border-width-base dashed @border-color-base;
+        transition: all 0.3s ease-in-out;
+
+        .anticon {
+            margin-right: 0.5rem;
+        }
+
+        &:hover {
+            border-color: @primary-color;
+            color: @primary-color;
+        }
+    }
+}
+
+.edit-payment-block {
+    position: relative;
+    padding: 1rem;
+    border-radius: @border-radius-base;
+    border: @border-width-base solid @border-color-base;
+    margin-bottom: 1rem;
+
+    &::before {
+        content: "Оплата";
+        position: absolute;
+        top: -12px;
+        background: @white;
+        padding: 0 0.5rem;
+        color: @text-color-secondary;
+    }
+
+    .payment-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: @font-size-lg;
+
+        &:not(:last-child) {
+            margin-bottom: 1rem;
+        }
+    }
+}

@@ -84,9 +84,11 @@
     "start:pos": "export REACT_APP_BUILD_TARGET=pos && craco start --config configs/pos.config.js",
     "start:print": "export REACT_APP_BUILD_TARGET=print PORT=3001 && craco start --config configs/print.config.js",
     "start:site": "export REACT_APP_BUILD_TARGET=site PORT=3002 && craco start --config configs/site.config.js",
+    "start:admin": "export REACT_APP_BUILD_TARGET=admin PORT=3003 && craco start --config configs/admin.config.js",
     "build:pos": "export REACT_APP_BUILD_TARGET=pos && craco build --config configs/pos.config.js",
     "build:print": "export REACT_APP_BUILD_TARGET=print && craco build --config configs/print.config.js",
-    "build:site": "export REACT_APP_BUILD_TARGET=site && craco build --config configs/site.config.js"
+    "build:site": "export REACT_APP_BUILD_TARGET=site && craco build --config configs/site.config.js",
+    "build:admin": "export REACT_APP_BUILD_TARGET=admin && craco build --config configs/admin.config.js"
   },
   "eslintConfig": {
     "extends": [

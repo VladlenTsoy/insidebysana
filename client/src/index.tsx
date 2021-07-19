@@ -10,6 +10,8 @@ function importBuildTarget() {
         return import("./print/App")
     } else if (process.env.REACT_APP_BUILD_TARGET === "site") {
         return import("./site/App")
+    } else if (process.env.REACT_APP_BUILD_TARGET === "admin") {
+        return import("./admin/App")
     } else {
         return Promise.reject(new Error("No such build target: " + process.env.REACT_APP_BUILD_TARGET))
     }

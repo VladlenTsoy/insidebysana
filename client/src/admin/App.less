@@ -1,0 +1,65 @@
+@import "~antd/dist/antd.less";
+@import "~antd/es/style/themes/default.less";
+
+@font-face {
+    font-family: "Jost";
+    src: url("assets/fonts/Jost-VariableFont_wght.ttf");
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Jost";
+    src: url("assets/fonts/Jost-Italic-VariableFont_wght.ttf");
+    font-style: italic;
+}
+
+// Карточка
+.ant-card {
+    box-shadow: @box-shadow;
+    border: 0;
+}
+
+// Таблица
+.ant-table-thead {
+    background: @component-background;
+    border-radius: 10px;
+}
+
+.ant-table-thead > tr > th {
+    border: 0;
+}
+
+.ant-table-container table > thead > tr:first-child th:first-child {
+    border-top-left-radius: @border-radius-base;
+    border-bottom-left-radius: @border-radius-base;
+}
+
+.ant-table-container table > thead > tr:first-child th:last-child {
+    border-top-right-radius: @border-radius-base;
+    border-bottom-right-radius: @border-radius-base;
+}
+
+td.ant-table-column-sort {
+    background: @component-background;
+}
+
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td,
+.ant-table tfoot > tr > th,
+.ant-table tfoot > tr > td {
+    padding: 8px 16px;
+    white-space: nowrap;
+}
+
+body {
+}
+
+.settings-menu:not(.ant-menu-horizontal) .ant-menu-item-group-list .ant-menu-item {
+    border-radius: 10px;
+    margin-right: 1rem;
+}
+
+.tr-block {
+    color: @text-color-secondary;
+    text-decoration: line-through;
+}

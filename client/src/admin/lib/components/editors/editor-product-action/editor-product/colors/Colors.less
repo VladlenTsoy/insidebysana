@@ -1,0 +1,21 @@
+.edit-product .colors {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+}
+
+.edit-product .colors .color-create {
+  min-height: 250px;
+  font-size: 50px;
+  border: 1px dashed @border-color-base;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  transition: color, background-color 0.3s ease-in-out;
+}
+
+.edit-product .colors .color-create:hover {
+  color: @primary-color;
+  cursor: pointer;
+}

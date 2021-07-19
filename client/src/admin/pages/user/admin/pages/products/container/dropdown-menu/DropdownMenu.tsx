@@ -7,8 +7,8 @@ import DiscountItem from "./discount-item/DiscountItem"
 import HideItem from "./hide-item/HideItem"
 import PrintItem from "./print-item/PrintItem"
 import ImagesItem from "./images-item/ImagesItem"
-import EditorHomeProductsAction
-    from "../../../../../../../lib/components/editors/editor-home-products-action/EditorHomeProductsAction"
+import EditorHomeProductsAction from "../../../../../../../lib/components/editors/editor-home-products-action/EditorHomeProductsAction"
+import UpdateIsNewItem from "./UpdateIsNewItem"
 
 const DropdownMenu = (productColor: ProductColor) => {
     return (
@@ -35,6 +35,9 @@ const DropdownMenu = (productColor: ProductColor) => {
             </Menu.Item>
             <Menu.Item>
                 <DiscountItem productColor={productColor} />
+            </Menu.Item>
+            <Menu.Item>
+                <UpdateIsNewItem productColor={productColor} />
             </Menu.Item>
             <Menu.Item>
                 <HideItem productColor={productColor} />

@@ -47,15 +47,21 @@ const columns = [
         title: "Фото",
         dataIndex: ["url_thumbnail"],
         key: "url_thumbnail",
-        render: (image: string, record: any) => <div style={{width: "70px"}}>
-            <ImageBlock image={image} title={record.details.title} />
-        </div>
+        render: (image: string, record: any) => (
+            <div style={{width: "70px"}}>
+                <ImageBlock image={image} title={record.details.title} />
+            </div>
+        )
     },
     {
         title: "Название",
         dataIndex: ["details", "title"],
         key: "title",
-        render: (title: string, record: any) => <>{title} ({record.color.title})</>,
+        render: (title: string, record: any) => (
+            <>
+                {title} ({record.color.title}) {record.is_new ? <Tag color="green">New</Tag> : <></>}
+            </>
+        ),
         sorter: true
     },
     {
@@ -85,7 +91,9 @@ const columns = [
         render: (tags: any[], record: any) => (
             <div className="column-tags">
                 {tags.map(tag => (
-                    <Tag color="blue" key={`${record.id}-${tag.tag_id}`}>{tag.title}</Tag>
+                    <Tag color="blue" key={`${record.id}-${tag.tag_id}`}>
+                        {tag.title}
+                    </Tag>
                 ))}
             </div>
         )
@@ -161,10 +169,12 @@ const Container: React.FC<ContainerProps> = ({isMiniColumns}) => {
     const dispatch = useAdminDispatch()
 
     const onChange = async (pagination: any, filters: any, sorter: any) => {
-        await dispatch(changeSorter({
-            field: sorter.field,
-            order: sorter.order
-        }))
+        await dispatch(
+            changeSorter({
+                field: sorter.field,
+                order: sorter.order
+            })
+        )
         await dispatch(changePagination(pagination))
         await dispatch(fetchProductColors())
     }

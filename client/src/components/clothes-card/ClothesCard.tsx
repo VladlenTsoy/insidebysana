@@ -19,7 +19,7 @@ const ClothesCard: React.FC<ClothesCardProps> = ({product, priceVisible = false}
                         {product.discount && (
                             <div className={styled.discount}>{Math.ceil(product.discount.discount)}%</div>
                         )}
-                        {product.is_new && <div className={styled.isNew}>New</div>}
+                        {!!product.is_new && <div className={styled.isNew}>New</div>}
                     </div>
                     <ImageBlock src={product.url_thumbnail} alt={product.title} />
                 </div>

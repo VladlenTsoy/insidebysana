@@ -6,6 +6,7 @@ import {createProduct} from "../product/createProduct"
 import {editProduct} from "../product/editProduct"
 import {updateDiscount} from "./updateDiscount"
 import {hideProductColor} from "./hideProductColor"
+import {updateIsNewProductColor} from "./updateIsNewProductColor"
 
 export const productColorAdapter = createEntityAdapter<ProductColor>({
     sortComparer: false
@@ -13,10 +14,10 @@ export const productColorAdapter = createEntityAdapter<ProductColor>({
 
 export interface StateProps {
     loading: boolean
-    search: string,
+    search: string
     categoryId: number
-    sorter: {field: string, order: string}
-    pagination: {current: number, pageSize: number}
+    sorter: {field: string; order: string}
+    pagination: {current: number; pageSize: number}
 }
 
 const initialState = productColorAdapter.getInitialState<StateProps>({
@@ -31,16 +32,16 @@ const productColorSlice = createSlice({
     name: "productColor",
     initialState,
     reducers: {
-        changeSearch: (state, action: PayloadAction<StateProps['search']>) => {
+        changeSearch: (state, action: PayloadAction<StateProps["search"]>) => {
             state.search = action.payload
         },
-        changeCategoryId: (state, action: PayloadAction<StateProps['categoryId']>) => {
+        changeCategoryId: (state, action: PayloadAction<StateProps["categoryId"]>) => {
             state.categoryId = action.payload
         },
-        changeSorter: (state, action: PayloadAction<StateProps['sorter']>) => {
+        changeSorter: (state, action: PayloadAction<StateProps["sorter"]>) => {
             state.sorter = action.payload
         },
-        changePagination: (state, action: PayloadAction<StateProps['pagination']>) => {
+        changePagination: (state, action: PayloadAction<StateProps["pagination"]>) => {
             state.pagination = action.payload
         }
     },
@@ -82,6 +83,12 @@ const productColorSlice = createSlice({
         //
         builder.addCase(hideProductColor.fulfilled, (state, action) => {
             productColorAdapter.removeOne(state, action.payload)
+        })
+
+        //
+        builder.addCase(updateIsNewProductColor.fulfilled, (state, action) => {
+            const {productColorId, isNew} = action.payload
+            productColorAdapter.updateOne(state, {id: productColorId, changes: {is_new: isNew}})
         })
     }
 })

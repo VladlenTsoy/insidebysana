@@ -41,4 +41,5 @@ export interface ProductColor {
         }
     }
     url_thumbnail: string
+    is_new: boolean
 }

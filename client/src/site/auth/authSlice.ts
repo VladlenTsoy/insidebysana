@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit"
-import {fetchUser, authUser, logoutUser} from "./authApi"
+import {fetchUser, authUser, logoutUser, registrationUser} from "./authApi"
 import {StoreState} from "../store"
 import {updateToken} from "utils/api"
 import {User} from "./user"
@@ -39,6 +39,11 @@ const authSlice = createSlice({
         })
         // Авторизация пользователя
         builder.addCase(authUser.fulfilled, (state, action) => {
+            state.token = action.payload.token
+            updateToken(action.payload.token)
+        })
+        // Авторизация пользователя
+        builder.addCase(registrationUser.fulfilled, (state, action) => {
             state.token = action.payload.token
             updateToken(action.payload.token)
         })

@@ -98,6 +98,8 @@ router.post("/product/:id", ProductController.EditValidate, ProductController.Ed
 router.post("/product/:productColorId/discount", ProductDiscountController.Update)
 // Скрыть товар
 router.delete("/product/:productColorId/hide", ProductColorController.Hide)
+// Изменить статус новинки
+router.patch("/product/:productColorId/is-new", ProductColorController.UpdateIsNew)
 // Удаление товара
 router.delete("/product/:productColorId", ProductColorController.Delete)
 // Вернуть продукт

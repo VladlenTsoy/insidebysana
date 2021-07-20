@@ -20,13 +20,13 @@ const GetBySearch = async (req, res) => {
 
         // Продукты без кол-во
         const productsWithoutQty = await ProductColor.query()
-            .where("hide_id", null)
+            .where("product_colors.hide_id", null)
             .join("sizes")
             .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) <= 0`)
 
         // Продукты без кол-во
         const productsQty = await ProductColor.query()
-            .where("hide_id", null)
+            .where("product_colors.hide_id", null)
             .join("sizes")
             .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`)
 
@@ -47,7 +47,7 @@ const GetBySearch = async (req, res) => {
             .modify("filterSubCategory", categoryId)
             .modify("filterSizes", sizeId === 0 ? [] : [sizeId])
             .modify("search", search, false, ids)
-            .where("hide_id", null)
+            .where("product_colors.hide_id", null)
             .whereNotIn("id", ids)
 
         return res.send(products)

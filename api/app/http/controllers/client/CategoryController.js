@@ -16,13 +16,13 @@ const GetAll = async (req, res) => {
         // TODO - Посмотреть
         // Продукты без кол-во
         const productsWithoutQty = await ProductColor.query()
-            .where("hide_id", null)
+            .where("product_colors.hide_id", null)
             .join("sizes")
             .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) <= 0`)
 
         // Продукты без кол-во
         const productsQty = await ProductColor.query()
-            .where("hide_id", null)
+            .where("product_colors.hide_id", null)
             .join("sizes")
             .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`)
 
@@ -35,7 +35,6 @@ const GetAll = async (req, res) => {
         const productColors = await ProductColor.query()
             .where("product_colors.thumbnail", "IS NOT", null)
             .where("product_colors.hide_id", null)
-            .where("hide_id", null)
             .whereNotIn("id", ids)
 
         //

@@ -3,6 +3,7 @@ import {Size} from "admin/lib/types/Size"
 import React from "react"
 import {useDispatch} from "react-redux"
 import {createSize} from "admin/store/admin/size/createSize"
+import {editSize} from "admin/store/admin/size/editSize"
 
 interface EditorSizeProps {
     size?: Size
@@ -15,7 +16,8 @@ const EditorSize: React.FC<EditorSizeProps> = ({size, close, setLoading}) => {
 
     const onFinishHandler = async (values: any) => {
         setLoading(true)
-        await dispatch(createSize(values))
+        if (size) await dispatch(editSize({id: size.id, data: values}))
+        else await dispatch(createSize(values))
         setLoading(false)
         close()
     }

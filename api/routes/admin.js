@@ -36,6 +36,10 @@ router.patch("/color/:id", ColorController.CreateValidate, ColorController.Edit)
 router.delete("/color/:id", ColorController.Delete)
 // Вывод всех цветов
 router.get("/colors", ColorController.GetAll)
+//
+router.patch("/color/:id/hide", ColorController.Hide)
+//
+router.patch("/color/:id/display", ColorController.Display)
 
 // Вывод всех тегов
 router.get("/tags", TagController.GetAll)
@@ -82,6 +86,14 @@ router.delete("/category/:id", CategoryController.Delete)
 
 // Создание размеров
 router.post("/size", SizeController.Create)
+// Редактировать цвет
+router.patch("/size/:id", SizeController.Edit)
+// Удаление цвета
+router.delete("/size/:id", SizeController.Delete)
+//
+router.patch("/size/:id/hide", SizeController.Hide)
+//
+router.patch("/size/:id/display", SizeController.Display)
 
 // Поиск продукта
 router.post("/product-colors", ProductColorController.GetBySearch)

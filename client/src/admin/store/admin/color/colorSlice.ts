@@ -5,6 +5,8 @@ import {AdminState} from "../store"
 import {fetchColors} from "./fetchColors"
 import {editColor} from "./editColor"
 import {deleteColor} from "./deleteColor"
+import {hideColor} from "./hideColor"
+import {displayColor} from "./displayColor"
 
 export const colorAdapter = createEntityAdapter<Color>()
 
@@ -35,6 +37,14 @@ const colorSlice = createSlice({
         builder.addCase(deleteColor.fulfilled, (state, action) => {
             colorAdapter.removeOne(state, action.payload)
         })
+        // Скрыть цвет
+        builder.addCase(hideColor.fulfilled, (state, action) => {
+            colorAdapter.updateOne(state, {id: action.payload, changes: {hide_id: 1}})
+        })
+        // Вернуть цвет
+        builder.addCase(displayColor.fulfilled, (state, action) => {
+            colorAdapter.updateOne(state, {id: action.payload, changes: {hide_id: null}})
+        })
 
         // Вывод всех цветов
         builder.addCase(fetchColors.pending, state => {
@@ -50,9 +60,8 @@ const colorSlice = createSlice({
     }
 })
 
-export const {
-    selectById: getColorById,
-    selectAll: selectAllColors
-} = colorAdapter.getSelectors<AdminState>(state => state.color)
+export const {selectById: getColorById, selectAll: selectAllColors} = colorAdapter.getSelectors<AdminState>(
+    state => state.color
+)
 
 export default colorSlice.reducer

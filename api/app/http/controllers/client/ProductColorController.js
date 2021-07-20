@@ -24,7 +24,10 @@ const _getFilters = async ({colorIds, categoryId, sizeIds, subCategoryIds, price
         .where("product_colors.hide_id", null)
         .select("sizes")
     const productSizeIds = productSize.reduce((state, val) => [...state, ...Object.keys(val.sizes)], [])
-    response.sizes = await Size.query().whereIn("id", productSizeIds).select("id", "title")
+    response.sizes = await Size.query()
+        .where({hide_id: null})
+        .whereIn("id", productSizeIds)
+        .select("id", "title")
 
     // Вывод под категорий
     const productCategoryIds = await ProductColor.query()
@@ -47,7 +50,10 @@ const _getFilters = async ({colorIds, categoryId, sizeIds, subCategoryIds, price
         .where("product_colors.hide_id", null)
         .select("color_id")
         .pluck("color_id")
-    response.colors = await Color.query().whereIn("id", productColorIds).select("id", "title", "hex")
+    response.colors = await Color.query()
+        .where({hide_id: null})
+        .whereIn("id", productColorIds)
+        .select("id", "title", "hex")
 
     // Вывод прайса
     response.price = await ProductColor.query()

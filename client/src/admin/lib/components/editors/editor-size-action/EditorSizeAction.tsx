@@ -30,7 +30,7 @@ const EditorSizeAction: React.FC<EditorSizeActionProps> = ({children, size}) => 
                 confirmLoading={loading}
                 okButtonProps={{htmlType: "submit", form: "editor-size-modal"}}
             >
-                <EditorSize setLoading={setLoading} close={close} />
+                <EditorSize setLoading={setLoading} size={size} close={close} />
             </Modal>
         </>
     )

@@ -5,6 +5,7 @@ const {Category} = require("models/settings/Category")
 const {Color} = require("models/settings/Color")
 const {logger} = require("config/logger.config")
 const {body, validationResult} = require("express-validator")
+const {HomeProduct} = require("models/products/HomeProduct")
 
 const _getFilters = async ({colorIds, categoryId, sizeIds, subCategoryIds, price}) => {
     const response = {
@@ -199,6 +200,9 @@ const GetByProductId = async (req, res) => {
  */
 const GetNew = async (req, res) => {
     try {
+        const homeProducts = await HomeProduct.query().orderBy("position", "desc")
+        const ids = homeProducts.map(product => product.product_color_id)
+
         const products = await ProductColor.query()
             .withGraphFetched(
                 `[
@@ -209,7 +213,9 @@ const GetNew = async (req, res) => {
             .join("products", "products.id", "product_colors.product_id")
             .where("product_colors.hide_id", null)
             .where("product_colors.thumbnail", "IS NOT", null)
-            .orderBy("product_colors.created_at", "desc")
+            .whereRaw(`product_colors.id IN (SELECT home_products.product_color_id FROM home_products)`)
+            // .orderBy("product_colors.created_at", "desc")
+            .orderByRaw(`FIELD(product_colors.id, ${ids.reverse().join(",")})`)
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",

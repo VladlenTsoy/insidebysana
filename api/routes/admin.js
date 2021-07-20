@@ -23,6 +23,7 @@ const AdditionalServiceController = require("controllers/crm/admin/settings/Addi
 const PrintCategoryController = require("controllers/crm/admin/settings/print/PrintCategoryController")
 const PrintImageController = require("controllers/crm/admin/settings/print/PrintImageController")
 const PrintProductController = require("controllers/crm/admin/settings/print/PrintProductController")
+const HomeProductController = require("controllers/crm/admin/HomeProductController")
 const router = express.Router()
 const multer = require("multer")
 const upload = multer()
@@ -225,5 +226,14 @@ router.post("/print-product", PrintProductController.Create)
 router.patch("/print-product/:id", PrintProductController.Edit)
 // Удалить товар печати
 router.delete("/print-product/:id", PrintProductController.Delete)
+
+// Вывод всех продуктов для дом. страницы
+router.get("/home-products", HomeProductController.GetAll)
+// Добавить продукт для дом. страницы
+router.post("/home-product", HomeProductController.Create)
+// Изменить продукт для дом. страницы
+router.patch("/home-product/:id", HomeProductController.Edit)
+// Удалить продукт с дом. страницы
+router.delete("/home-product/:id", HomeProductController.Delete)
 
 module.exports = router

@@ -16,6 +16,7 @@ const PromoCodes = React.lazy(() => import("./promo-codes/PromoCodes"))
 const PrintCategories = React.lazy(() => import("./print-categories/PrintCategories"))
 const PrintImages = React.lazy(() => import("./print-images/PrintImages"))
 const AdditionalServices = React.lazy(() => import("./additional-services/AdditionalServices"))
+const Home = React.lazy(() => import("./home/Home"))
 
 const Settings = () => {
     const params = useLocation()
@@ -27,6 +28,9 @@ const Settings = () => {
                 <Col xxl={3} xl={5}>
                     <Menu className="settings-menu" defaultSelectedKeys={[secondPathname]}>
                         <Menu.ItemGroup title="Управление сайтом">
+                            <Menu.Item key="home">
+                                <Link to="/settings/home">Главная</Link>
+                            </Menu.Item>
                             <Menu.Item key="banners">
                                 <Link to="/settings/banners">Баннеры</Link>
                             </Menu.Item>
@@ -101,6 +105,7 @@ const Settings = () => {
                             path="/settings"
                             component={() => <Redirect to="/settings/categories" />}
                         />
+                        <Route path="/settings/home" component={Home} />
                         <Route path="/settings/banners" component={Banners} />
                         <Route path="/settings/categories" component={Categories} />
                         <Route path="/settings/sources" component={Sources} />

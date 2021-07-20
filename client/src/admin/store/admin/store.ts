@@ -26,6 +26,7 @@ import printImage from "./print-image/printImageSlice"
 import printProduct from "./print-product/printProductSlice"
 import productColorImage from "./product-color-image/productColorImageSlice"
 import trashProductColor from "admin/lib/components/trash-products/trashProductColorSlice"
+import homeProduct from "../../pages/user/admin/pages/settings/home/homeProductSlice"
 
 export type AdminState = ReturnType<typeof adminReducer>
 
@@ -57,7 +58,8 @@ export const adminReducer = combineReducers({
     orderArchive,
     printCategory,
     printImage,
-    printProduct
+    printProduct,
+    homeProduct
 })
 
 export type AppDispatch = typeof store.dispatch

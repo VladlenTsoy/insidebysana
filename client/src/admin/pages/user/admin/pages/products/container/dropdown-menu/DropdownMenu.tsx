@@ -8,32 +8,44 @@ import HideItem from "./hide-item/HideItem"
 import PrintItem from "./print-item/PrintItem"
 import ImagesItem from "./images-item/ImagesItem"
 import UpdateIsNewItem from "./UpdateIsNewItem"
+import {useUser} from "admin/hooks/use-user"
 
 const DropdownMenu = (productColor: ProductColor) => {
+    const {user} = useUser()
     return (
         <Menu>
-            <Menu.Item>
-                <EditorProductAction title="Редактировать" productId={productColor.details.id}>
-                    <span>
-                        <EditOutlined /> Редактировать
-                    </span>
-                </EditorProductAction>
-            </Menu.Item>
-            <Menu.Item>
-                <ImagesItem productColor={productColor} />
-            </Menu.Item>
-            <Menu.Item>
-                <PrintItem productColor={productColor} />
-            </Menu.Item>
-            <Menu.Item>
-                <DiscountItem productColor={productColor} />
-            </Menu.Item>
+            {user.access === "admin" && (
+                <Menu.Item>
+                    <EditorProductAction title="Редактировать" productId={productColor.details.id}>
+                        <span>
+                            <EditOutlined /> Редактировать
+                        </span>
+                    </EditorProductAction>
+                </Menu.Item>
+            )}
+            {user.access === "admin" && (
+                <Menu.Item>
+                    <ImagesItem productColor={productColor} />
+                </Menu.Item>
+            )}
+            {user.access === "admin" && (
+                <Menu.Item>
+                    <PrintItem productColor={productColor} />
+                </Menu.Item>
+            )}
+            {user.access === "admin" && (
+                <Menu.Item>
+                    <DiscountItem productColor={productColor} />
+                </Menu.Item>
+            )}
             <Menu.Item>
                 <UpdateIsNewItem productColor={productColor} />
             </Menu.Item>
-            <Menu.Item>
-                <HideItem productColor={productColor} />
-            </Menu.Item>
+            {user.access === "admin" && (
+                <Menu.Item>
+                    <HideItem productColor={productColor} />
+                </Menu.Item>
+            )}
         </Menu>
     )
 }

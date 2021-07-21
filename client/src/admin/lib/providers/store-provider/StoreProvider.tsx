@@ -11,7 +11,7 @@ const StoreProvider: React.FC = ({children}) => {
         if (user?.id) {
             ;(async () => {
                 // setLoading(true)
-                if (user.access === "admin") {
+                if (user.access === "admin" || user.access === "manager") {
                     const {adminReducer} = await import("../../../store/admin/store")
                     // @ts-ignore
                     store.replaceReducer(adminReducer)

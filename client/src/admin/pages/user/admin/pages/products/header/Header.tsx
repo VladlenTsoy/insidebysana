@@ -7,6 +7,7 @@ import {useAdminDispatch} from "../../../../../../store/admin/store"
 import {changeSearch} from "../../../../../../store/admin/product-color/productColorSlice"
 import {fetchProductColors} from "../../../../../../store/admin/product-color/fetchProductColors"
 import TrashProducts from "../../../../../../lib/components/trash-products/TrashProducts"
+import {useUser} from "admin/hooks/use-user"
 
 const {Search} = Input
 
@@ -15,12 +16,8 @@ interface HeaderProps {
     setMiniColumns: Dispatch<SetStateAction<boolean>>
 }
 
-const Header: React.FC<HeaderProps> = (
-    {
-        setMiniColumns,
-        isMiniColumns
-    }
-) => {
+const Header: React.FC<HeaderProps> = ({setMiniColumns, isMiniColumns}) => {
+    const {user} = useUser()
     const dispatch = useAdminDispatch()
     const onSearchHandler = async (value: string) => {
         await dispatch(changeSearch(value))
@@ -44,14 +41,13 @@ const Header: React.FC<HeaderProps> = (
                 />
             </div>
             <div className="right">
-                <TrashProducts>
-                    <Button
-                        size="large"
-                        icon={<DeleteOutlined />}
-                    >
-                        Корзина
-                    </Button>
-                </TrashProducts>
+                {user.access === "admin" && (
+                    <TrashProducts>
+                        <Button size="large" icon={<DeleteOutlined />}>
+                            Корзина
+                        </Button>
+                    </TrashProducts>
+                )}
                 <Button
                     size="large"
                     onClick={onClickCollapse}

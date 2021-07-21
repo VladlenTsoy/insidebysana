@@ -1,7 +1,7 @@
 import React from "react"
 import SidebarItems from "./layout/sidebar-items/SidebarItems"
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
-import {Navigations} from "./layout/navigation-items/NavigationItems"
+import {Navigations, ManagerNavigations} from "./layout/navigation-items/NavigationItems"
 import AccountItems from "./layout/account-items/AccountItems"
 import Layout from "admin/lib/layouts/facebook/Layout"
 import {LoadingBlock} from "admin/lib/ui"
@@ -10,6 +10,7 @@ import ColorsProvider from "../../../lib/providers/colors-provider/ColorsProvide
 import SizesProvider from "../../../lib/providers/sizes-provider/SizesProvider"
 import StatusesProvider from "../../../lib/providers/statuses-provider/StatusesProvider"
 import EventsProvider from "admin/lib/providers/events-provider/EventsProvider"
+import {useUser} from "admin/hooks/use-user"
 
 const Home = React.lazy(() => import("./pages/home/Home"))
 const Orders = React.lazy(() => import("./pages/orders/Orders"))
@@ -19,6 +20,7 @@ const Settings = React.lazy(() => import("./pages/settings/Settings"))
 const Staff = React.lazy(() => import("./pages/staff/Staff"))
 
 const Index: React.FC = () => {
+    const {user} = useUser()
     return (
         <CategoriesProvider>
             <ColorsProvider>
@@ -28,7 +30,7 @@ const Index: React.FC = () => {
                             <Router>
                                 <Layout
                                     sidebars={SidebarItems}
-                                    navigations={Navigations}
+                                    navigations={user === "admin" ? Navigations : ManagerNavigations}
                                     accountMenu={AccountItems}
                                 >
                                     <React.Suspense fallback={<LoadingBlock title="Загрузка страницы..." />}>

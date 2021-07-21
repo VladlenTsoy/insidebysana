@@ -12,6 +12,7 @@ const Index: React.FC = () => {
         <>
             <React.Suspense fallback={<Loader text="Загрузка доступа..." />}>
                 {user?.access === "admin" && <Admin />}
+                {user?.access === "manager" && <Admin />}
                 {user?.access === "cashier" && <Cashier />}
             </React.Suspense>
         </>

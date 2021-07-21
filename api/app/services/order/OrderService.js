@@ -56,7 +56,7 @@ const SelectOrderRef = () => {
  * Создание сделки
  * @param {additionalServices, status_id, client, source_id, delivery_id, processing, payments, total_price, discount, address} data
  */
-const Create = async data => {
+const Create = async (data, config) => {
     try {
         let {
             additionalServices,
@@ -136,6 +136,11 @@ const Create = async data => {
                 //
                 // OrderQueue.AddPaymentsToOrder.add({orderId: order.id, payments})
                 await AddPaymentsToOrder(order.id, payments)
+
+            console.log(order.id)
+            if (config.timer)
+                // Добавить таймер для отмены сделки
+                OrderQueue.AddTimerForCancelOrder(order.id)
         }
 
         return order
@@ -398,6 +403,21 @@ const UpdateStatusAndPositionQueue = ({order_id, status_id, prev_position, prev_
     }
 }
 
+/**
+ * Таймер для отмены заказа
+ * @param {*} orderId
+ */
+const AddTimerForCancelOrder = async orderId => {
+    try {
+        const order = await Order.query().findById(orderId)
+        if (order.payment_state === 0)
+            // Отмена сделки
+            await Order.query().findById(orderId).update({payment_state: -1})
+    } catch {
+        logger.error(e.stack)
+    }
+}
+
 module.exports = {
     Create,
     EditById,
@@ -408,5 +428,6 @@ module.exports = {
     SelectOrderForAdminRef,
     UpdateStatusAndPosition,
     UpdateStatusAndPositionQueue,
-    AddPaymentsToOrder
+    AddPaymentsToOrder,
+    AddTimerForCancelOrder
 }

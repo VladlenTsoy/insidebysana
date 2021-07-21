@@ -1,0 +1,91 @@
+.print-product {
+    display: grid;
+    grid-template-columns: 600px 1fr;
+    gap: 3rem;
+    padding: 2rem;
+
+    .print-product-image {
+        .wrapper-image {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            position: relative;
+            background: @border-color-base;
+            display: block;
+
+            &::before {
+                content: "";
+                display: block;
+                padding-bottom: 125%;
+            }
+
+            .image-block {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 100%;
+                width: 100%;
+                cursor: pointer;
+                font-size: 30px;
+            }
+        }
+    }
+
+    .print-product-details {
+        h2.ant-typography {
+            font-weight: 300;
+            margin-bottom: 0;
+        }
+
+        .sku {
+            font-size: 12px;
+            color: @text-color-secondary;
+            margin-bottom: 2rem;
+        }
+
+        .price {
+            font-weight: 300;
+            font-size: 25px;
+            color: @primary-color;
+            margin-bottom: 2rem;
+        }
+
+        .colors {
+            margin-bottom: 1rem;
+
+            .sub-title {
+                font-size: 12px;
+                color: @text-color-secondary;
+                margin-bottom: 0.5rem;
+            }
+
+            .color {
+                display: inline-block;
+                height: 40px;
+                width: 40px;
+                border: 2px solid @white;
+                background: rgb(90, 41, 41);
+                margin-bottom: 0.5rem;
+                box-shadow: 0 4px 11px rgba(0, 0, 0, 0.1);
+
+                &:not(:last-child) {
+                    margin-right: 0.75rem;
+                }
+            }
+        }
+
+        .sizes {
+            margin-bottom: 2rem;
+
+            .sub-title {
+                font-size: 12px;
+                color: @text-color-secondary;
+                margin-bottom: 0.5rem;
+            }
+
+            .ant-radio-button-wrapper {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+}

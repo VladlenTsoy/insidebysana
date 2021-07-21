@@ -31,7 +31,7 @@ const GetAllPaginate = async (req, res) => {
             .where("product_colors.hide_id", null)
             .modify("filterSubCategory", categoryId)
             .modify("search", search)
-            .select("product_colors.id", "product_colors.thumbnail", "product_colors.created_at", "sizes")
+            .select("product_colors.id", "product_colors.thumbnail", "product_colors.created_at", "sizes", "is_new")
 
         const order = sorter.order === "ascend" ? "asc" : "desc"
 
@@ -124,6 +124,7 @@ const GetBySearch = async (req, res) => {
                 `[
                 details(),
                 discount(),
+                color
             ]`
             )
             .modify("search", search)
@@ -180,4 +181,17 @@ const Return = async (req, res) => {
     }
 }
 
-module.exports = {GetAllPaginate, Hide, GetBySearch, GetFromTrash, Delete, Return}
+const UpdateIsNew = async (req, res) => {
+    try {
+        const {productColorId} = req.params
+        const {isNew} = req.body
+
+        await ProductColor.query().findById(productColorId).update({is_new: isNew})
+        return res.send({status: "success"})
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+module.exports = {GetAllPaginate, Hide, GetBySearch, GetFromTrash, Delete, Return, UpdateIsNew}

@@ -1,0 +1,84 @@
+.filter {
+    background: var(--secondary);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    font-size: var(--large-font-size);
+    border-bottom: 1px solid var(--secondary);
+    margin-bottom: 1.5rem;
+    background: var(--white);
+}
+
+.title {
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: var(--large-font-size);
+}
+
+.back,
+.close {
+    padding: 1rem;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.close {
+    border-left: 1px solid var(--secondary);
+}
+
+.back {
+    border-right: 1px solid var(--secondary);
+}
+
+.back:hover,
+.close:hover {
+    color: var(--primary);
+}
+
+.body {
+    background: var(--white);
+    margin-bottom: auto;
+}
+
+.menu {
+    background: var(--white);
+}
+
+.item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--secondary);
+    text-transform: uppercase;
+    display: flex;
+    cursor: pointer;
+    color: var(--default);
+    transition: color 0.2s ease-in-out;
+}
+
+.item:hover {
+    color: var(--primary);
+}
+
+.titleItem {
+    margin-right: auto;
+}
+
+.iconItem {
+    width: 12px;
+    transition: all 0.2s ease-in-out;
+}
+
+.footer {
+    padding: 1rem;
+    background: var(--white);
+}
+
+.footer .btnSee {
+    margin-bottom: 0.5rem;
+}

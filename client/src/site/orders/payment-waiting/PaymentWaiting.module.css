@@ -1,0 +1,112 @@
+.order {
+    max-width: var(--max-width-macro-container);
+    margin: 0 auto;
+}
+
+.order .message {
+    text-align: center;
+    font-size: var(--large-font-size);
+    margin-bottom: 3rem;
+}
+
+.order .message p {
+    margin-bottom: 0.5rem;
+}
+
+.order .products {
+    padding-bottom: 2rem;
+}
+
+.order .total {
+    display: flex;
+    margin-left: auto;
+    justify-content: flex-end;
+    font-size: var(--big-font-size);
+    font-weight: 300;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--secondary);
+    padding-top: 2rem;
+}
+
+.order .subInfo {
+    border-top: 1px solid var(--secondary);
+    padding: 1rem 0;
+}
+
+.order .subInfo .subInfoItem {
+    text-align: right;
+}
+
+.order .subInfo .subInfoItem:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.order .subInfo .subInfoItem .title {
+    margin-right: 0.5rem;
+    color: var(--secondary-text);
+}
+
+.order .subInfo .subPromoCodeItem {
+    text-align: right;
+}
+
+.order .subInfo .subPromoCodeItem:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.order .subInfo .subPromoCodeItem .title {
+    margin-right: 0.5rem;
+    color: var(--secondary-text);
+}
+
+.order .subInfo .subPromoCodeItem .discountCode {
+    margin-bottom: 0.25rem;
+}
+
+.order .subInfo .subPromoCodeItem .price {
+    text-decoration: line-through;
+}
+
+.order .subInfo .subPromoCodeItem .discount {
+    color: var(--primary);
+}
+
+.order .subInfo .subPromoCodeItem .totalPrice {
+    font-size: var(--large-font-size);
+}
+
+.order .subInfo .subPromoCodeItem .discount {
+    color: var(--primary);
+}
+
+.order .total span {
+    margin-right: 0.5rem;
+    color: var(--secondary-text);
+}
+
+.order .typePayment {
+    margin-bottom: 1rem;
+}
+
+.order .typePayment .select .option {
+
+}
+.order .typePayment .select {
+    width: 200px;
+    margin-left: auto;
+}
+
+.order .typePayment .select .option {
+    display: flex;
+    align-items: center;
+}
+
+.order .typePayment .select .option img {
+    width: 25px;
+    margin-right: .7rem;
+    
+}
+
+.order .action button {
+    margin-left: auto;
+}

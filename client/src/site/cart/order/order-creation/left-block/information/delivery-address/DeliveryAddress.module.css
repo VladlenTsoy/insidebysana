@@ -1,0 +1,45 @@
+.formItem input.error {
+    border-color: var(--danger);
+}
+
+.error {
+    border-color: var(--danger);
+}
+
+.address {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    margin-bottom: 1.5rem;
+}
+
+.delivery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 992px) {
+    .address {
+        grid-column-start: auto;
+        grid-column-end: auto;
+    }
+    .delivery {
+        grid-template-columns: 1fr;
+    }
+}
+
+.option {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 20px;
+    margin-right: 0.5rem;
+}
+
+.wrapper {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}

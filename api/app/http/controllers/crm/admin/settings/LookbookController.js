@@ -13,10 +13,10 @@ const PATH_TO_IMAGE = "images/lookbook"
  * @returns {Promise<*>}
  * @constructor
  */
-const GetAll = async (req, res) => {
+const GetByCategoryId = async (req, res) => {
     try {
-        const lookbook = await Lookbook.query()
-
+        const {categoryId} = req.params
+        const lookbook = await Lookbook.query().where({category_id: categoryId})
         return res.send(lookbook)
     } catch (e) {
         logger.error(e.stack)
@@ -26,7 +26,8 @@ const GetAll = async (req, res) => {
 
 const CreateValidate = [
     body("url_image").not().isEmpty().withMessage("Выберите картинку!"),
-    body("position").not().isEmpty().withMessage("Выберите позицию!")
+    body("position").not().isEmpty().withMessage("Выберите позицию!"),
+    body("category_id").not().isEmpty().withMessage("Выберите категорию!")
 ]
 
 /**
@@ -42,15 +43,15 @@ const Create = async (req, res) => {
     if (!errors.isEmpty()) return res.status(422).json({errors: errors.array()})
 
     try {
-        const {position, url_image} = req.body
-        const LookbookRef = await Lookbook.query().insertAndFetch({position})
+        const {position, url_image, category_id} = req.body
+        const LookbookRef = await Lookbook.query().insertAndFetch({position, category_id})
         const [imagePath] = await ImageService.UploadImage({
             folderPath: `${PATH_TO_FOLDER_IMAGES}/${LookbookRef.id}`,
             imagePatch: `${PATH_TO_IMAGE}/${LookbookRef.id}`,
             fileImage: url_image
         })
         const lookbook = await Lookbook.query()
-            .select("id", "position", "image")
+            .select("id", "position", "image", "category_id")
             .updateAndFetchById(LookbookRef.id, {image: imagePath})
         return res.send(lookbook)
     } catch (e) {
@@ -73,8 +74,8 @@ const EditById = async (req, res) => {
 
     try {
         const {id} = req.params
-        const {position, url_image} = req.body
-        const data = {position}
+        const {position, url_image, category_id} = req.body
+        const data = {position, category_id}
         if (!url_image.includes("http")) {
             const [imagePath] = await ImageService.UploadImage({
                 folderPath: `${PATH_TO_FOLDER_IMAGES}/${id}`,
@@ -111,4 +112,4 @@ const DeleteById = async (req, res) => {
     }
 }
 
-module.exports = {GetAll, Create, CreateValidate, EditById, DeleteById}
+module.exports = {GetByCategoryId, Create, CreateValidate, EditById, DeleteById}

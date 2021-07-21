@@ -1,0 +1,42 @@
+.contacts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: var(--max-width-mini-container);
+    margin: 0 auto 2rem;
+    padding: 0 1rem;
+    gap: 2rem;
+}
+
+.map {
+    height: 500px;
+}
+
+.infoBlock {
+    margin-bottom: 2rem;
+}
+
+.title {
+    color: var(--secondary-text);
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+}
+
+.text {
+    font-size: 20px;
+    margin-left: 2rem;
+    font-weight: 300;
+}
+
+.icons {
+    display: flex;
+    margin-left: 2rem;
+    font-size: 40px;
+    gap: 1rem;
+}
+
+@media (max-width: 767px) {
+    .contacts {
+        grid-template-columns: 1fr;
+    }
+}

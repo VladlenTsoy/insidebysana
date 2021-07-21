@@ -4,6 +4,8 @@ const ProductColorController = require("controllers/client/ProductColorControlle
 const MeasurementController = require("controllers/client/MeasurementController")
 const CategoryController = require("controllers/client/CategoryController")
 const PrintCategoryController = require("controllers/crm/common/PrintCategoryController")
+const PrintImageController = require("controllers/crm/common/PrintImageController")
+const PrintProductController = require("controllers/crm/common/PrintProductController")
 const BannerController = require("controllers/client/BannerController")
 const WishlistController = require("controllers/client/WishlistController")
 const CartController = require("controllers/client/CartController")
@@ -61,7 +63,11 @@ router.post("/wishlist", WishlistController.GetAll)
 router.post("/cart", CartController.GetAll)
 
 // Лукбук
-router.get("/lookbook", LookbookController.GetAll)
+router.get("/lookbook", LookbookController.GetLatest)
+//
+router.get("/lookbook/category/:id", LookbookController.GetByCategoryId)
+//
+router.get("/lookbook-categories/:categoryId", LookbookController.GetAll)
 // Подписаться
 router.post("/newsletter/subscribe", NewsletterController.SubscribeValidate, NewsletterController.Subscribe)
 // Промокод
@@ -80,16 +86,31 @@ router.get("/order/:id", OrderController.GetById)
 //
 router.post("/order/pay", OrderController.Pay)
 
-//
+// Вывод всех стран
 router.get("/countries", CountryController.GetAll)
 
-//
-router.get("/cities", CityController.GetAll)
+// Вывод городов
+router.get("/cities/:countryId", CityController.GetByCountryId)
 
 //
 router.get("/additional-services", AdditionalServicesController.GetAll)
 
 //
 router.get("/print-categories", PrintCategoryController.GetAll)
+
+//
+router.get("/print-images", PrintImageController.GetAll)
+
+//
+router.get("/print-image/:print_image_id/products", PrintProductController.GetByPrintImageId)
+
+//
+router.get("/print-image/products/latest", PrintProductController.GetLatest)
+
+//
+router.get("/print-product/:id", PrintProductController.GetById)
+
+//
+router.get("/print-images/:category_id", PrintImageController.GetByCategoryID)
 
 module.exports = router

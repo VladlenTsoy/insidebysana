@@ -46,7 +46,7 @@ const GetAll = async (req, res) => {
                             .join(
                                 `product_colors`,
                                 raw(
-                                    `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) IS NOT NULL`
+                                    `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`
                                 )
                             )
                             .findById(sizeId)
@@ -166,7 +166,7 @@ const SyncAndGetAll = async (req, res) => {
                                 .join(
                                     `product_colors`,
                                     raw(
-                                        `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) IS NOT NULL`
+                                        `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`
                                     )
                                 )
                                 .findById(sizeId)

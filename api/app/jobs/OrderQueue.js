@@ -83,10 +83,39 @@ UpdateStatusAndPositionToOrder.process(async ({data}) => {
     }
 })
 
+// Очередь на отмену сделки
+const AddTimerForCancelOrder = orderId => {
+    try {
+        console.log(orderId)
+        const BullTimerForCancelOrder = new Bull(
+            "AddTimerForCancelOrder",
+            redis,
+            defaultJobOptions,
+            settings,
+            limiter
+        )
+        // Действие очереди
+        BullTimerForCancelOrder.process(async ({data}) => {
+            try {
+                const OrderService = require("services/order/OrderService")
+                const {orderId} = data
+                await OrderService.AddTimerForCancelOrder(orderId)
+            } catch (e) {
+                logger.error(e.stack)
+            }
+        })
+
+        BullTimerForCancelOrder.add({orderId}, {delay: 2 * 3600000})
+    } catch (e) {
+        logger.error(e.stack)
+    }
+}
+
 module.exports = {
     AddAddressToOrder,
     AddProductsToOrder,
     AddAdditionalServiceToOrder,
     UpdateStatusAndPositionToOrder,
-    AddPaymentsToOrder
+    AddPaymentsToOrder,
+    AddTimerForCancelOrder
 }

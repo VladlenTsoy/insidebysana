@@ -1,0 +1,30 @@
+.contact {
+    display: grid;
+    gap: 1.5rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.formItem.error {
+    border-color: var(--danger);
+}
+
+.actions {
+    display: flex;
+    padding-top: 1.5rem;
+    justify-items: center;
+}
+
+.actions .actionsContent {
+    margin-left: auto;
+    display: flex;
+    justify-items: center;
+}
+
+.actions .errorMessage {
+    color: var(--danger);
+}
+
+.actions button {
+    margin-left: 1rem;
+}

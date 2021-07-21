@@ -4,7 +4,22 @@ const {ClientAddress} = require("models/ClientAddress")
 const GetAll = async (req, res) => {
     try {
         const user = req.user
-        const addresses = await ClientAddress.query().where({client_id: user.id})
+        const addresses = await ClientAddress.query()
+            .join("countries", "countries.id", "client_addresses.country")
+            .join("cities", "cities.id", "client_addresses.city")
+            .where({client_id: user.id})
+            .select(
+                "client_addresses.id",
+                "client_addresses.title",
+                "client_addresses.phone",
+                "client_addresses.full_name",
+                "client_addresses.address",
+                "client_addresses.position",
+                "client_addresses.country",
+                "client_addresses.city",
+                "countries.name as country_name",
+                "cities.name as city_name"
+            )
         return res.send(addresses)
     } catch (e) {
         logger.error(e.stack)

@@ -1,0 +1,68 @@
+.details {
+    max-width: 400px;
+    margin: 50px 0 0 50px;
+    width: 100%;
+    position: relative;
+}
+
+@media (max-width: 767px) {
+    .details {
+        max-width: initial;
+        margin: auto;
+        padding: 1rem;
+        width: initial;
+        position: relative;
+    }
+}
+
+.info {
+    right: 0;
+    top: 100px;
+    position: sticky;
+    padding-bottom: 2rem;
+}
+
+.title {
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.tagId {
+    color: var(--secondary-text);
+    margin-bottom: 2rem;
+    font-size: var(--small-font-size);
+}
+
+.price {
+    margin-bottom: 2rem;
+}
+
+.prevPrice {
+    color: var(--secondary-text);
+    margin-bottom: 0.25rem;
+}
+
+.prevPrice .oldPrice {
+    text-decoration: line-through;
+}
+
+.discount {
+    color: var(--primary);
+}
+
+.mainPrice {
+    font-size: 20px;
+    color: var(--primary);
+}
+
+.addToCard {
+    margin-bottom: 1rem;
+}
+
+.buyNow {
+    margin-bottom: 1rem;
+}
+
+.addToWishlist {
+    margin-bottom: 2rem;
+}

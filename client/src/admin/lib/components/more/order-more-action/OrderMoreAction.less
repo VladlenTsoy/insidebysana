@@ -1,0 +1,41 @@
+.order-more-container {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 2rem;
+
+    .information {
+        .descriptions {
+            margin-bottom: 1.5rem;
+        }
+
+        .client {
+            border: 1px solid @border-color-base;
+            border-radius: @border-radius-base;
+            display: flex;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+
+            .ant-avatar {
+                margin-right: 1rem;
+            }
+
+            .details {
+                margin-right: 1rem;
+                line-height: 1.2;
+
+                .full_name {
+                    font-size: @font-size-lg;
+                }
+
+                .phone {
+                    font-size: @font-size-sm;
+                }
+            }
+
+            .action {
+                margin-left: auto;
+            }
+        }
+    }
+}

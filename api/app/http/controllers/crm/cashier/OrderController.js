@@ -57,10 +57,8 @@ const Create = async (req, res) => {
  */
 const GetAll = async (req, res) => {
     try {
-        const {dateFrom, dateTo} = req.body
         const user = req.user
-
-        let resOrders = Order.query()
+        const resOrders = await Order.query()
             .withGraphFetched(`[client, payments, productColors, additionalServices]`)
             .select(
                 "id",
@@ -75,14 +73,10 @@ const GetAll = async (req, res) => {
             )
             .orderBy("created_at", "desc")
             .where({user_id: user.id})
-
-        if (dateFrom && dateTo)
-            resOrders.whereBetween("created_at", [
-                moment(dateFrom).startOf("day").format("YYYY-MM-DD HH:mm:ss"),
-                moment(dateTo).endOf("day").format("YYYY-MM-DD HH:mm:ss")
+            .whereBetween("created_at", [
+                moment().startOf("day").format("YYYY-MM-DD HH:mm:ss"),
+                moment().endOf("day").format("YYYY-MM-DD HH:mm:ss")
             ])
-
-        resOrders = await resOrders
 
         return res.send(resOrders)
     } catch (e) {

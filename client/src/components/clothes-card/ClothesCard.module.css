@@ -1,0 +1,93 @@
+.clothesCard {
+    margin-bottom: 1.5rem;
+}
+
+.imageBlock {
+    position: relative;
+    width: 100%;
+    margin-bottom: 1.25rem;
+    background: var(--secondary);
+    user-select: none;
+    display: block;
+}
+
+.imageBlock:before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / 0.8);
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.tags {
+    display: flex;
+    gap: .5rem;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.75rem;
+}
+
+.discount {
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.25rem 0.5rem;
+    font-size: var(--large-font-size);
+}
+
+.isNew {
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.25rem 0.5rem;
+    font-size: var(--large-font-size);
+}
+
+.title {
+    cursor: pointer;
+    text-align: center;
+    color: var(--default-text);
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    display: block;
+}
+
+.price {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.35s ease-in-out;
+}
+
+.visiblePrice .price {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.clothesCard:not(.visiblePrice):hover .price {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 767px) {
+    .price {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.price .prevPrice {
+    color: var(--secondary-text);
+    text-decoration: line-through;
+    font-size: var(--small-font-size);
+}
+
+.price .mainPrice {
+    color: var(--primary);
+}

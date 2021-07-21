@@ -1,0 +1,28 @@
+.title {
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
+}
+
+.h {
+    font-weight: 200;
+    text-align: center;
+    color: var(--primary);
+}
+
+.title h1 {
+    padding: 3rem 1rem;
+    font-size: var(--title-font-size);
+}
+
+.title h2 {
+    padding: 2rem 1rem;
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.title h3 {
+    padding: 2rem 1rem;
+    font-size: 25px;
+    font-weight: 300;
+}

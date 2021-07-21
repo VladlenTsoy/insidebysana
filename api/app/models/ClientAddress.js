@@ -3,6 +3,7 @@ const moment = require("moment")
 
 class ClientAddress extends Model {
     static tableName = "client_addresses"
+    static jsonAttributes = ["position"]
 
     $beforeInsert() {
         this.created_at = moment().format("YYYY-MM-DD HH:mm:ss")

@@ -1,5 +1,6 @@
 const {logger} = require("config/logger.config")
 const {ProductColor} = require("models/products/ProductColor")
+const {uniq} = require("lodash")
 
 /**
  * Вывод по поиску
@@ -19,11 +20,20 @@ const GetBySearch = async (req, res) => {
 
         // Продукты без кол-во
         const productsWithoutQty = await ProductColor.query()
+            .where("product_colors.hide_id", null)
             .join("sizes")
             .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) <= 0`)
 
+        // Продукты без кол-во
+        const productsQty = await ProductColor.query()
+            .where("product_colors.hide_id", null)
+            .join("sizes")
+            .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`)
+
         // Ids продуктов без кол-во
-        const ids = productsWithoutQty.map(product => product.id)
+        const _ids = productsWithoutQty.map(product => product.id)
+        const _have_ids = productsQty.map(product => product.id)
+        const ids = uniq(_ids).filter(id => !_have_ids.includes(id))
 
         // Продукты
         const products = await ProductColor.query()
@@ -33,12 +43,11 @@ const GetBySearch = async (req, res) => {
                 "product_colors.product_id",
                 "product_colors.sizes"
             )
-            .whereNotIn("id", ids)
             .withGraphFetched(`[color, details, discount]`)
             .modify("filterSubCategory", categoryId)
             .modify("filterSizes", sizeId === 0 ? [] : [sizeId])
-            .modify("search", search)
-            .where("hide_id", null)
+            .modify("search", search, false, ids)
+            .where("product_colors.hide_id", null)
             .whereNotIn("id", ids)
 
         return res.send(products)

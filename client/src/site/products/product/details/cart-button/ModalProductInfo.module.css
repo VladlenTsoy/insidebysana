@@ -1,0 +1,70 @@
+.content {
+    text-align: center;
+}
+
+.text {
+    margin-bottom: 0.5rem;
+}
+
+.mb {
+    margin-bottom: 1rem;
+}
+
+.imageBlock {
+    position: relative;
+    width: 60%;
+    margin-bottom: 1.25rem;
+    background: var(--secondary);
+    user-select: none;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.imageBlock:before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / 0.8);
+}
+
+.title {
+    margin-bottom: 0.25rem;
+    color: var(--secondary-text);
+}
+
+.price {
+    font-weight: bold;
+    margin-bottom: 1.25rem;
+}
+
+.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
+
+.button {
+    margin-bottom: 1rem;
+}
+
+.button button {
+    margin: 0 auto;
+}
+
+.actions {
+    color: var(--primary);
+    font-size: var(--small-font-size);
+}
+
+.actions a {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.actions div {
+    cursor: pointer;
+}

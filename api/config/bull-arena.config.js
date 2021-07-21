@@ -6,7 +6,8 @@ const queueNames = [
     "AddAddressToOrder",
     "AddProductsToOrder",
     "AddAdditionalServiceToOrder",
-    "UpdateStatusAndPositionToOrder"
+    "UpdateStatusAndPositionToOrder",
+    "AddTimerForCancelOrder"
 ]
 
 const defaultHostConfig = {

@@ -1,0 +1,81 @@
+.information .sub {
+    text-align: right;
+    margin-left: 1rem;
+}
+
+.contactTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 992px) {
+    .contact {
+        grid-template-columns: 1fr;
+    }
+}
+
+.formItem input.error {
+    border-color: var(--danger);
+}
+
+.address {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.deliveryTitle {
+    margin-bottom: 1rem;
+}
+
+.delivery {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 992px) {
+    .delivery {
+        grid-template-columns: 1fr;
+    }
+    .address {
+        grid-column-start: auto;
+        grid-column-end: auto;
+    }
+}
+
+.actions {
+    display: flex;
+    padding-top: 1.5rem;
+    justify-items: center;
+}
+
+.actions .actionsContent {
+    margin-left: auto;
+    display: flex;
+    justify-items: center;
+}
+
+.actions .errorMessage {
+    color: var(--danger);
+}
+
+.actions button {
+    margin-left: 1rem;
+}
+
+.address {
+    margin-bottom: 1.5rem;
+}
+
+.hidden {
+    display: none;
+}

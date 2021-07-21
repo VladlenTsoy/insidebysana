@@ -15,12 +15,16 @@ const BannerController = require("controllers/crm/admin/settings/BannerControlle
 const UserController = require("controllers/crm/admin/UserController")
 const PaymentMethodController = require("controllers/crm/admin/payment/PaymentMethodController")
 const LookbookController = require("controllers/crm/admin/settings/LookbookController")
+const LookbookCategoryController = require("controllers/crm/admin/settings/LookbookCategoryController")
 const NewsletterController = require("controllers/crm/admin/settings/NewsletterController")
 const PromoCodeController = require("controllers/crm/admin/settings/PromoCodeController")
 const DeliveryController = require("controllers/crm/admin/settings/DeliveryController")
 const SizeController = require("controllers/crm/admin/settings/SizeController")
 const AdditionalServiceController = require("controllers/crm/admin/settings/AdditionalServiceController")
 const PrintCategoryController = require("controllers/crm/admin/settings/print/PrintCategoryController")
+const PrintImageController = require("controllers/crm/admin/settings/print/PrintImageController")
+const PrintProductController = require("controllers/crm/admin/settings/print/PrintProductController")
+const HomeProductController = require("controllers/crm/admin/HomeProductController")
 const router = express.Router()
 const multer = require("multer")
 const upload = multer()
@@ -33,6 +37,10 @@ router.patch("/color/:id", ColorController.CreateValidate, ColorController.Edit)
 router.delete("/color/:id", ColorController.Delete)
 // Вывод всех цветов
 router.get("/colors", ColorController.GetAll)
+//
+router.patch("/color/:id/hide", ColorController.Hide)
+//
+router.patch("/color/:id/display", ColorController.Display)
 
 // Вывод всех тегов
 router.get("/tags", TagController.GetAll)
@@ -79,6 +87,14 @@ router.delete("/category/:id", CategoryController.Delete)
 
 // Создание размеров
 router.post("/size", SizeController.Create)
+// Редактировать цвет
+router.patch("/size/:id", SizeController.Edit)
+// Удаление цвета
+router.delete("/size/:id", SizeController.Delete)
+//
+router.patch("/size/:id/hide", SizeController.Hide)
+//
+router.patch("/size/:id/display", SizeController.Display)
 
 // Поиск продукта
 router.post("/product-colors", ProductColorController.GetBySearch)
@@ -96,6 +112,8 @@ router.post("/product/:id", ProductController.EditValidate, ProductController.Ed
 router.post("/product/:productColorId/discount", ProductDiscountController.Update)
 // Скрыть товар
 router.delete("/product/:productColorId/hide", ProductColorController.Hide)
+// Изменить статус новинки
+router.patch("/product/:productColorId/is-new", ProductColorController.UpdateIsNew)
 // Удаление товара
 router.delete("/product/:productColorId", ProductColorController.Delete)
 // Вернуть продукт
@@ -167,13 +185,21 @@ router.post("/user/:id", UserController.Edit)
 router.get("/payment-methods", PaymentMethodController.GetAll)
 
 // Вывод всех lookbook
-router.get("/lookbook", LookbookController.GetAll)
+router.get("/category/:categoryId/lookbook", LookbookController.GetByCategoryId)
 // Создать lookbook
 router.post("/lookbook", LookbookController.CreateValidate, LookbookController.Create)
 // Редактирование lookbook
 router.patch("/lookbook/:id", LookbookController.CreateValidate, LookbookController.EditById)
 // Удаление lookbook
 router.delete("/lookbook/:id", LookbookController.DeleteById)
+// Вывод категорий для лукбука
+router.get("/lookbook-categories", LookbookCategoryController.GetAll)
+// Создать категорию для лукбука
+router.post("/lookbook-category", LookbookCategoryController.Create)
+// Редактировать категорию для лукбука
+router.patch("/lookbook-category/:id", LookbookCategoryController.EditById)
+// Удалить категорию
+router.delete("/lookbook-category/:id", LookbookCategoryController.Delete)
 
 // Вывод всех подписанных
 router.get("/newsletter", NewsletterController.GetAll)
@@ -203,5 +229,32 @@ router.post("/print-category", PrintCategoryController.Create)
 router.patch("/print-category/:id", PrintCategoryController.Edit)
 // Удалить печать-категорию
 router.delete("/print-category/:id", PrintCategoryController.Delete)
+
+// Вывод всех изображений для печати
+router.get("/print-images", PrintImageController.GetAll)
+// Добавление изображения для печати
+router.post("/print-image", PrintImageController.Create)
+// Редактирование печать картинки
+router.patch("/print-image/:id", PrintImageController.Edit)
+// Удаление картинки для печати
+router.delete("/print-image/:id", PrintImageController.Delete)
+
+// Вывод всех продуктов по ID картинки для печати
+router.get("/print-products/:print_image_id", PrintProductController.GetByPrintImageId)
+// Добавление изображения для печати
+router.post("/print-product", PrintProductController.Create)
+// Редактирование печать картинки
+router.patch("/print-product/:id", PrintProductController.Edit)
+// Удалить товар печати
+router.delete("/print-product/:id", PrintProductController.Delete)
+
+// Вывод всех продуктов для дом. страницы
+router.get("/home-products", HomeProductController.GetAll)
+// Добавить продукт для дом. страницы
+router.post("/home-product", HomeProductController.Create)
+// Изменить продукт для дом. страницы
+router.patch("/home-product/:id", HomeProductController.Edit)
+// Удалить продукт с дом. страницы
+router.delete("/home-product/:id", HomeProductController.Delete)
 
 module.exports = router

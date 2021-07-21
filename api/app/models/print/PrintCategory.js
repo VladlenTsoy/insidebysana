@@ -3,7 +3,14 @@ const moment = require("moment")
 
 class PrintCategory extends Model {
     static tableName = "print_categories"
+    static hidden = ['image']
+    static virtualAttributes = ['url_image']
 
+    url_image() {
+        if (this.image)
+            return `${process.env.APP_URL}/${this.image}`;
+    }
+    
     static get relationMappings() {
         return {
             // Категория

@@ -30,7 +30,7 @@ const Index: React.FC = () => {
                             <Router>
                                 <Layout
                                     sidebars={SidebarItems}
-                                    navigations={user === "admin" ? Navigations : ManagerNavigations}
+                                    navigations={user.access === "admin" ? Navigations : ManagerNavigations}
                                     accountMenu={AccountItems}
                                 >
                                     <React.Suspense fallback={<LoadingBlock title="Загрузка страницы..." />}>

@@ -5,9 +5,10 @@ const {LookbookCategory} = require("models/settings/LookbookCategory")
 const GetLatest = async (req, res) => {
     try {
         const lookbookCategory = await LookbookCategory.query().findOne({}).orderBy("created_at", "desc")
-        lookbookCategory.images = await Lookbook.query()
-            .where({category_id: lookbookCategory.id})
-            .orderBy("position", "asc")
+        if (lookbookCategory)
+            lookbookCategory.images = await Lookbook.query()
+                .where({category_id: lookbookCategory.id})
+                .orderBy("position", "asc")
         return res.send(lookbookCategory)
     } catch (e) {
         logger.error(e.stack)
@@ -33,9 +34,10 @@ const GetByCategoryId = async (req, res) => {
     try {
         const {id} = req.params
         const lookbookCategory = await LookbookCategory.query().findOne({id}).orderBy("created_at", "desc")
-        lookbookCategory.images = await Lookbook.query()
-            .where({category_id: lookbookCategory.id})
-            .orderBy("position", "asc")
+        if (lookbookCategory)
+            lookbookCategory.images = await Lookbook.query()
+                .where({category_id: lookbookCategory.id})
+                .orderBy("position", "asc")
         return res.send(lookbookCategory)
     } catch (e) {
         logger.error(e.stack)

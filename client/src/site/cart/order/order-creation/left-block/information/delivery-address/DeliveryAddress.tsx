@@ -1,6 +1,6 @@
 import {FormikHelpers, FormikHandlers, FormikState} from "formik"
 import React, {useEffect, useRef, useState, useCallback} from "react"
-import {Address, useGetAddressesQuery} from "site/account/delivery-addresses/addressApi"
+import {Address} from "site/account/delivery-addresses/addressApi"
 import {useUser} from "site/auth/authSlice"
 import Select from "components/select/Select"
 import styled from "./DeliveryAddress.module.css"
@@ -46,6 +46,7 @@ export interface FormDataProps {
     city: number | undefined
     address: string
     position: [number, number] | undefined
+    client_address_id?: number
 }
 
 interface AddressSelectProps {
@@ -53,28 +54,35 @@ interface AddressSelectProps {
     addresses?: Address[]
     isLoading: boolean
     onChange: any
+    value?: FormDataProps["client_address_id"]
 }
 
 export const AddressSelect: React.FC<AddressSelectProps> = ({
     addresses = [],
     isLoading,
     inputRef,
-    onChange
+    onChange,
+    value
 }) => {
     const [options, setOptions] = useState<BasicOptionType[]>([{label: "Новый адрес", value: 0}])
 
     useEffect(() => {
         if (addresses && addresses.length) {
             const _options = addresses.map(createOptionAddress)
-            setOptions(prevState => [...prevState, ..._options])
+            setOptions(() => [{label: "Новый адрес", value: 0}, ..._options])
         }
     }, [addresses])
 
+    useEffect(() => {
+        inputRef && inputRef.current.select.setValue(options.find(option => option.value === value))
+    }, [options, inputRef, value])
+
     return (
         <Select
+            name="client_address_id"
+            placeholder="Сохраненные адреса"
             inputRef={inputRef}
             options={options}
-            defaultValue={options[0]}
             onChange={onChange}
             loading={isLoading}
         />
@@ -84,6 +92,7 @@ export const AddressSelect: React.FC<AddressSelectProps> = ({
 interface CountrySelectProps {
     countries?: Country[]
     isLoading: boolean
+    onChange?: NamedProps["onChange"]
     onBlur: NamedProps["onBlur"]
     setFieldValue: FormikHelpers<FormDataProps>["setFieldValue"]
     className: NamedProps["className"]
@@ -96,21 +105,11 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
     isLoading,
     onBlur,
     className,
-    setFieldValue,
+    onChange,
     value,
     inputRef
 }) => {
     const [options, setOptions] = useState<BasicOptionType[]>([])
-
-    const onChangeHandler = (e: any) => {
-        if (e) {
-            setFieldValue("country", e.value, true)
-            if (countries) {
-                const country = countries.find(country => country.id === e.value)
-                country && setFieldValue("position", country.position, true)
-            }
-        }
-    }
 
     useEffect(() => {
         if (countries) {
@@ -127,7 +126,7 @@ export const CountrySelect: React.FC<CountrySelectProps> = ({
             options={options}
             placeholder="Выберите страну"
             isSearchable={false}
-            onChange={onChangeHandler}
+            onChange={onChange}
             onBlur={onBlur}
             name="country"
             className={className}
@@ -142,7 +141,7 @@ interface CitySelectProps {
     onBlur: NamedProps["onBlur"]
     className: NamedProps["className"]
     value: FormDataProps["city"]
-    onChange?: any
+    onChange?: NamedProps["onChange"]
 }
 
 export const CitySelect: React.FC<CitySelectProps> = ({
@@ -180,6 +179,7 @@ export const CitySelect: React.FC<CitySelectProps> = ({
 }
 
 interface DeliveryAddressProps {
+    addresses?: Address[]
     setFieldValue: FormikHelpers<FormDataProps>["setFieldValue"]
     values: FormikState<FormDataProps>["values"]
     errors: FormikState<FormDataProps>["errors"]
@@ -194,16 +194,15 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
     errors,
     touched,
     handleBlur,
-    handleChange
+    handleChange,
+    addresses
 }) => {
     const {detail} = useUser()
-    const {data: addresses, isLoading: isLoadingAddresses} = useGetAddressesQuery(undefined, {skip: !detail})
     const {data: countries, isLoading: isLoadingCountries} = useGetCountriesQuery()
     const {data: cities, isLoading: isLoadingCities} = useGetCitiesByCountryIdQuery(values.country || 0, {
         skip: !values.country
     })
 
-    const [currentAddress, setCurrentAddress] = useState<Address>()
     const [mapCountry, setMapCountry] = useState<string>()
     const [mapCity, setMapCity] = useState<string>()
 
@@ -214,30 +213,30 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
     // Выбор адреса клиента
     const addressOnChangeHandler = useCallback(
         (e: any) => {
+            if (!e) return
             const addressId = e.value
+
             if (addresses) {
                 const address = addresses.find(address => address.id === addressId)
-                setCurrentAddress(address)
-
                 if (address) {
-                    setFieldValue("country", address.country, true)
-                    setFieldValue("city", address.city, true)
-                    setFieldValue("address", address.address, true)
-                    setFieldValue("phone", address.phone, true)
-                    setFieldValue("full_name", address.full_name, true)
-                    setFieldValue("position", address.position, true)
+                    setFieldValue("position", address.position)
+                    setFieldValue("full_name", address.full_name)
+                    setFieldValue("country", address.country)
+                    setFieldValue("city", address.city)
+                    setFieldValue("phone", address.phone)
+                    setFieldValue("address", address.address)
                 } else {
-                    setCurrentAddress(undefined)
-                    //     setFieldValue("country", 1, true)
-                    //     setFieldValue("city", undefined, true)
-                    //     setFieldValue("address", "", true)
-                    //     setFieldValue("phone", detail?.phone || "", true)
-                    //     setFieldValue("full_name", detail?.full_name || "", true)
-                    //     setFieldValue("position", undefined, true)
+                    setFieldValue("country", 1)
+                    setFieldValue("city", undefined)
+                    setFieldValue("address", "")
+                    setFieldValue("phone", detail?.phone || "")
+                    setFieldValue("full_name", detail?.full_name || "")
+                    setFieldValue("position", undefined)
+                    setFieldValue("client_address_id", 0)
                 }
             }
         },
-        [addresses, setFieldValue]
+        [addresses, setFieldValue, detail]
     )
 
     // Вывод первого города
@@ -245,29 +244,6 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
         if (values.country && cities && cities.length && citiesRef.current)
             citiesRef.current.select.setValue(createOptionCity(cities[0]))
     }, [values.country, cities])
-
-    // Выбрать первый адрес клиента
-    useEffect(() => {
-        if (addresses && addresses.length) {
-            const address = addresses[0]
-            setCurrentAddress(address)
-            addressesRef.current.select.selectOption(createOptionAddress(address))
-        }
-    }, [addresses])
-
-    // Если изменять текущий адрес (Новый адрес)
-    useEffect(() => {
-        if (currentAddress) {
-            if (
-                currentAddress.country !== values.country ||
-                currentAddress.country !== values.city ||
-                currentAddress.position !== values.position ||
-                currentAddress.address !== values.address
-            )
-                if (addressesRef.current)
-                    addressesRef.current.select.selectOption({label: "Новый адрес", value: 0})
-        }
-    }, [values, addressesRef, currentAddress])
 
     // Выбор страны с карты
     useEffect(() => {
@@ -285,15 +261,37 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
         }
     }, [mapCity, cities, citiesRef])
 
+    const onChangeCountryHandler = useCallback(
+        (e: any) => {
+            if (e) {
+                setFieldValue("country", e.value, true)
+                if (countries) {
+                    const country = countries.find(country => country.id === e.value)
+                    !!(country && values.client_address_id === 0) &&
+                        setFieldValue("position", country.position, true)
+                }
+            }
+        },
+        [setFieldValue, countries, values]
+    )
+
+    const onChangeCityHandler = useCallback(
+        (e: any) => {
+            e && setFieldValue("city", e.value)
+        },
+        [setFieldValue]
+    )
+
     return (
         <>
             <div className={styled.address}>
                 {detail && (
                     <AddressSelect
                         inputRef={addressesRef}
-                        isLoading={isLoadingAddresses}
+                        isLoading={false}
                         addresses={addresses}
                         onChange={addressOnChangeHandler}
+                        value={values.client_address_id}
                     />
                 )}
             </div>
@@ -302,6 +300,7 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
                     <CountrySelect
                         inputRef={countriesRef}
                         countries={countries}
+                        onChange={onChangeCountryHandler}
                         isLoading={isLoadingCountries}
                         setFieldValue={setFieldValue}
                         onBlur={handleBlur}
@@ -315,6 +314,7 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
                         cities={cities}
                         isLoading={isLoadingCities}
                         onBlur={handleBlur}
+                        onChange={onChangeCityHandler}
                         value={values.city}
                         className={`${errors.city && touched.city && styled.error}`}
                     />
@@ -332,7 +332,7 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
                 </div>
             </div>
             <MapBlock
-                autoGeolocation={!(currentAddress || values.address)}
+                autoGeolocation={!(values.address || values.client_address_id)}
                 setMapCountry={setMapCountry}
                 setMapCity={setMapCity}
                 setFieldValue={setFieldValue}

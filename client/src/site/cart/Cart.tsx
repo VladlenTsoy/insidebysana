@@ -6,10 +6,13 @@ import {fetchCart} from "./cartApi"
 import {useDispatch} from "../store"
 import OrderingDrawer from "./order/Order"
 import Drawer from "../../components/drawer/Drawer"
+import {useParams} from "react-router-dom"
 
 const Cart: React.FC = () => {
+    const params = useParams<{order: string}>()
+
     const dispatch = useDispatch()
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(!!params.order)
 
     const openOrder = () => setVisible(true)
     const closeOrder = () => setVisible(false)

@@ -7,6 +7,8 @@ import PhoneInput from "components/phone-input/PhoneInput"
 import Button from "components/button/Button"
 import {useUser} from "site/auth/authSlice"
 import DeliveryAddress from "./delivery-address/DeliveryAddress"
+import {useGetAddressesQuery} from "site/account/delivery-addresses/addressApi"
+import LoaderBlock from "print/components/loader-block/LoaderBlock"
 
 interface InformationProps {
     information: any
@@ -15,11 +17,32 @@ interface InformationProps {
 
 const Information: React.FC<InformationProps> = ({information, onChangeInformation}) => {
     const {detail} = useUser()
+    const {data: addresses, isLoading: isLoadingAddresses} = useGetAddressesQuery(undefined, {
+        skip: !detail
+    })
 
     const onSubmitHandler = (values: any, {setSubmitting}: any) => {
         onChangeInformation(values)
         setSubmitting(false)
     }
+
+    const findInitialValues = () => {
+        if (addresses && addresses[0]) {
+            const address = addresses[0]
+            return {
+                full_name: address.full_name,
+                phone: address.phone,
+                client_address_id: address.id,
+                country: address.country,
+                city: address.city,
+                address: address.address,
+                position: address.position
+            }
+        }
+        return information
+    }
+
+    if (isLoadingAddresses) return <LoaderBlock />
 
     return (
         <div className={styled.information}>
@@ -32,7 +55,7 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                 )}
             </div>
             <Formik
-                initialValues={information}
+                initialValues={findInitialValues()}
                 validate={values => {
                     const errors: any = {}
                     if (!values.full_name) errors.full_name = "Введите имя!"
@@ -78,6 +101,7 @@ const Information: React.FC<InformationProps> = ({information, onChangeInformati
                         </div>
                         <h2 className={styled.deliveryTitle}>Доставка</h2>
                         <DeliveryAddress
+                            addresses={addresses}
                             setFieldValue={setFieldValue}
                             values={values}
                             errors={errors}

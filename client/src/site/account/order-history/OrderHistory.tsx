@@ -22,6 +22,8 @@ const OrderHistory: React.FC = () => {
 
     if (!orders.length) return <EmptyBlock />
 
+    console.log(orders)
+
     return (
         <div id="profile-orders-collapse">
             <Collapse expandIcon={expandIcon} openMotion={motion}>
@@ -41,10 +43,10 @@ const OrderHistory: React.FC = () => {
                                 <div className={styled.cardOrderBody}>
                                     <div className={styled.details}>
                                         <div>
-                                            Оплата: <span>{order.payments[0].title}</span>
+                                            Оплата: <span>{order.payments[0]?.title}</span>
                                         </div>
                                         <div>
-                                            Доставка: <span>{order.delivery.title}</span>
+                                            Доставка: <span>{order?.delivery?.title || "Пусто"}</span>
                                         </div>
                                     </div>
                                     <div className={styled.rightBlock}>

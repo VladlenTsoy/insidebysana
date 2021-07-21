@@ -13,7 +13,7 @@ interface StateProps {
 }
 
 const initialState: StateProps = {
-    token: getCookie("site_token_access") || null,
+    token: getCookie("crm_token_access") || null,
     detail: null,
     loading: true
 }

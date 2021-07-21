@@ -1,3 +1,7 @@
+.ant-tabs .ant-tabs-nav {
+    margin-bottom: 0;
+}
+
 .pos-system {
     height: 100%;
 
@@ -12,9 +16,9 @@
         display: flex;
         overflow: auto;
         flex-direction: column;
+        background: linear-gradient(160deg, #2f3957 0%, #0c132c 50%);
 
         .search-wrapper {
-            margin-bottom: 1rem;
             padding: 0 1rem;
             display: flex;
             gap: 1rem;
@@ -26,67 +30,14 @@
 
         .products-wrapper {
             overflow-y: auto;
-            padding: 0 1rem 1rem 1rem;
+            padding: 1rem;
 
             .products-container {
                 display: grid;
-                gap: 2rem 1rem;
+                gap: 1rem;
                 grid-template-columns: 1fr 1fr 1fr;
 
-                .product-card {
-                    .wrap-details {
-                        display: grid;
-                        grid-template-columns: 40px 1fr;
-                        grid-gap: 0.5rem;
-                        margin-bottom: 0.5rem;
-
-                        .ant-typography {
-                            margin-bottom: 0.25rem;
-                        }
-
-                        .thumbnail {
-                            height: 55px;
-                        }
-
-                        .details {
-                            display: flex;
-                            justify-content: space-between;
-                            flex-direction: column;
-                            gap: 0.33rem;
-
-                            .ant-radio-button-wrapper.added {
-                                background: @text-color-secondary;
-                                color: @white;
-                            }
-                        }
-                    }
-
-                    .sizes-action {
-                        margin-bottom: 0.5rem;
-
-                        .button-size {
-                            position: relative;
-
-                            .qty {
-                                background: @white;
-                                position: absolute;
-                                font-size: 10px;
-                                line-height: 1;
-                                display: flex;
-                                align-items: center;
-                                color: @text-color-secondary;
-                                height: 14px;
-                                text-align: center;
-                                top: -2px;
-                                right: -6px;
-                                padding: 0 3px;
-                                border-radius: 5px;
-                                border: 1px solid @border-color-base;
-                                z-index: 2;
-                            }
-                        }
-                    }
-                }
+                
             }
         }
     }

@@ -41,7 +41,8 @@ function App() {
                             <Route path="/lookbook/:id" component={LookbookSingle} />
                             <Route path="/contacts" component={Contacts} />
                             <Route path="/wishlist" component={Wishlist} />
-                            <Route path="/cart" component={Cart} />
+                            <Route exact path="/cart" component={Cart} />
+                            <Route path="/cart/:order" component={Cart} />
                             <Route path="/account" component={Account} />
                             <Route path="/public-offer" component={PublicOffer} />
                             <Route path="/return-policy" component={ReturnPolicy} />

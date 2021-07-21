@@ -32,7 +32,8 @@ const OrderCreation: React.FC<OrderCreationProps> = ({onClose, updateOrderId}) =
                   email: "",
                   country: 1,
                   city: "",
-                  address: ""
+                  address: "",
+                  client_address_id: 0
               }
             : {
                   full_name: "",
@@ -40,7 +41,8 @@ const OrderCreation: React.FC<OrderCreationProps> = ({onClose, updateOrderId}) =
                   email: "",
                   country: 1,
                   city: "",
-                  address: ""
+                  address: "",
+                  client_address_id: 0
               }
     )
     const [delivery, setDelivery] = useState<Delivery | null>(null)

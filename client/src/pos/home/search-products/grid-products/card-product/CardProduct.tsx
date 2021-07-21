@@ -1,4 +1,4 @@
-import {DeleteFilled, PlusOutlined} from "@ant-design/icons"
+import {DeleteFilled, MinusOutlined, PlusOutlined} from "@ant-design/icons"
 import {Button, Radio, Typography} from "antd"
 import ImageBlock from "components/blocks/image-block/ImageBlock"
 import React, {useCallback, useState} from "react"
@@ -8,6 +8,9 @@ import {ProductColorCard} from "types/cashier/PosProductColor"
 import {useDispatch} from "../../../../store"
 import {addToCart, removeFromCart} from "../../../posSlice"
 import {useSelectAllPosProductColors} from "../../../posSelectors"
+import "./CardProduct.less"
+import {formatPrice} from "utils/formatPrice"
+import {updateQty} from "admin/store/cashier/pos/posSlice"
 
 const {Title} = Typography
 
@@ -20,8 +23,9 @@ const CardProduct: React.FC<CardProductProps> = ({product}) => {
     const [size, setSize] = useState<number | null>(null)
     const dispatch = useDispatch()
     const products = useSelectAllPosProductColors()
+    const cartProducts = useSelectAllPosProductColors()
 
-    // Добавить продукт
+    //
     const addProduct = useCallback(product => dispatch(addToCart({...product, qty: 1})), [dispatch])
 
     // Удалить продукт
@@ -63,21 +67,105 @@ const CardProduct: React.FC<CardProductProps> = ({product}) => {
         _product => _product.size_id === size && _product.product_color_id === product.id
     )
 
+    //
+    const qtyProduct = useCallback(
+        qty => size && dispatch(updateQty({product_color_id: product.id, size_id: size, qty: qty})),
+        [dispatch, size, product]
+    )
+
+    const searchQtyBySize = useCallback(
+        size => {
+            if (size) {
+                const findProduct = cartProducts.find(
+                    cartProduct => cartProduct.product_color_id === product.id && cartProduct.size_id === size
+                )
+                if (findProduct) return findProduct.qty
+            }
+            return 0
+        },
+        [product, cartProducts]
+    )
+
+    const plusHandler = useCallback(
+        (e: any) => {
+            e.preventDefault()
+            if (!size) return
+            const qty = searchQtyBySize(size)
+            if (qty > 0) qtyProduct(qty + 1)
+            else
+                addProduct({
+                    size_id: size,
+                    product_color_id: product.id,
+                    product
+                })
+        },
+        [addProduct, size, product, qtyProduct, searchQtyBySize]
+    )
+
+    const minusHandler = useCallback(
+        (e: any) => {
+            e.preventDefault()
+            const qty = searchQtyBySize(size)
+            if (!size) return
+            if (qty > 1) qtyProduct(qty - 1)
+            else {
+                deleteProduct({
+                    size_id: size,
+                    product_color_id: product.id
+                })
+                setSize(null)
+            }
+        },
+        [size, deleteProduct, searchQtyBySize, qtyProduct, product]
+    )
+
+    console.log(size)
+
     return (
         <div className="product-card">
             <div className="wrap-details">
                 <div className="thumbnail">
+                    <div className="color">
+                        <span className="hex" style={{background: "#ff6370"}} />
+                        <span className="title">{product.color.title}</span>
+                    </div>
+                    {product.discount && (
+                        <div className="discount">-{Math.ceil(product.discount.discount)}%</div>
+                    )}
                     <ImageBlock image={product.url_thumbnail} />
+                    {/* <span className="price">{formatPrice(product.details.price, product.discount)} сум</span> */}
+                    {size && (
+                        <div className="add-to-cart-block">
+                            <div className="minus" onClick={minusHandler}>
+                                {searchQtyBySize(size) > 0 ? (
+                                    searchQtyBySize(size) === 1 ? (
+                                        <DeleteFilled />
+                                    ) : (
+                                        <MinusOutlined />
+                                    )
+                                ) : null}
+                            </div>
+                            <div className="count">{searchQtyBySize(size)}</div>
+                            <div className="plus" onClick={plusHandler}>
+                                <PlusOutlined />
+                            </div>
+                            {size && (
+                                <div className="remainder">Осталось: {product.sizes[Number(size)].qty}</div>
+                            )}
+                        </div>
+                    )}
                 </div>
                 <div className="details">
-                    <Title level={5}>{`${product.details.title} (${product.color.title})`}</Title>
-                    <div>
+                    <div className="title">{product.details.title}</div>
+                    <div className="price-discount">{formatPrice(product.details.price, product.discount)} сум</div>
+                    <div className="price">{formatPrice(product.details.price, product.discount)} сум</div>
+                    {/* <div>
                         <PriceBlock price={product.details.price} discount={product.discount} />
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="sizes-action">
-                <Radio.Group onChange={onChangeHandler}>
+                <Radio.Group onChange={onChangeHandler} size="large">
                     {Object.keys(product.sizes).map(
                         key =>
                             product.sizes[Number(key)].qty > 0 && (
@@ -97,7 +185,7 @@ const CardProduct: React.FC<CardProductProps> = ({product}) => {
                     )}
                 </Radio.Group>
             </div>
-            {isAdded ? (
+            {/* {isAdded ? (
                 <Button
                     type="primary"
                     danger
@@ -118,7 +206,7 @@ const CardProduct: React.FC<CardProductProps> = ({product}) => {
                 >
                     Добавить
                 </Button>
-            )}
+            )} */}
         </div>
     )
 }

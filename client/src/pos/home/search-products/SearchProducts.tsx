@@ -43,7 +43,7 @@ const SearchProducts: React.FC<SearchProductsProps> = ({searchRef}) => {
 
     return (
         <div className="search-container">
-            <div className="search-wrapper">
+            {/* <div className="search-wrapper">
                 <CategorySelect />
                 <SizeSelect />
                 <Input
@@ -53,7 +53,7 @@ const SearchProducts: React.FC<SearchProductsProps> = ({searchRef}) => {
                     ref={searchRef}
                     placeholder="Введите SKU или название товара"
                 />
-            </div>
+            </div> */}
             <div className="products-wrapper">
                 <GridProducts loading={loading} products={products} />
             </div>

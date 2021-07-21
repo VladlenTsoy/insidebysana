@@ -18,6 +18,7 @@ import staff from "./staff/staffSlice"
 import paymentMethod from "./payment-method/paymentMethodSlice"
 import print from "./product-color-print-image/productColorPrintSlice"
 import lookbook from "./lookbook/lookbookSlice"
+import lookbookCategory from "./lookbook/lookbookCategorySlice"
 import orderArchive from "./order-archive/orderArchiveSlice"
 import newsletter from "./newsletter/newsletterSlice"
 import promoCode from "./promo-code/promoCodeSlice"
@@ -59,7 +60,8 @@ export const adminReducer = combineReducers({
     printCategory,
     printImage,
     printProduct,
-    homeProduct
+    homeProduct,
+    lookbookCategory
 })
 
 export type AppDispatch = typeof store.dispatch

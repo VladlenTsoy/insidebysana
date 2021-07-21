@@ -11,12 +11,13 @@ interface AgrProps {
     data: {
         url_image: Lookbook["url_image"]
         position: Lookbook["position"]
+        category_id: Lookbook["category_id"]
     }
 }
 
 export const editLookbook = createAsyncThunk<ReturnedType, AgrProps, AdminThunkProps>(
     "admin/lookbook/edit",
-    async ({ id, data }) => {
+    async ({id, data}) => {
         //
         const response = await apiRequest("patch", `admin/lookbook/${id}`, {data})
         response && message({type: "success", content: "Вы успешно изменили lookbook!"})

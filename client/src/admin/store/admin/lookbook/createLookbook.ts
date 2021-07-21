@@ -9,6 +9,7 @@ type ReturnedType = Lookbook
 interface AgrProps {
     image: Lookbook["url_image"]
     position: Lookbook["position"]
+    category_id: Lookbook["category_id"]
 }
 
 export const createLookbook = createAsyncThunk<ReturnedType, AgrProps, AdminThunkProps>(

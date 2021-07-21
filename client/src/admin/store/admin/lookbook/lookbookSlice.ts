@@ -1,9 +1,9 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Lookbook} from "../../../lib/types/Lookbook"
 import {AdminState} from "../store"
-import {fetchLookbook} from "./fetchLookbook"
+import {fetchLookbookByCategoryId} from "./fetchLookbookByCategoryId"
 import {createLookbook} from "./createLookbook"
-import {editLookbook} from "./editLookbookts"
+import {editLookbook} from "./editLookbook"
 import {deleteLookbook} from "./deleteLookbook"
 
 export const lookbookAdapter = createEntityAdapter<Lookbook>()
@@ -21,14 +21,14 @@ const lookbookSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: builder => {
-        builder.addCase(fetchLookbook.pending, state => {
+        builder.addCase(fetchLookbookByCategoryId.pending, state => {
             state.loading = true
         })
-        builder.addCase(fetchLookbook.fulfilled, (state, action) => {
+        builder.addCase(fetchLookbookByCategoryId.fulfilled, (state, action) => {
             lookbookAdapter.addMany(state, action.payload)
             state.loading = false
         })
-        builder.addCase(fetchLookbook.rejected, state => {
+        builder.addCase(fetchLookbookByCategoryId.rejected, state => {
             state.loading = false
         })
         builder.addCase(createLookbook.fulfilled, (state, action) => {
@@ -44,6 +44,8 @@ const lookbookSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllLookbook} = lookbookAdapter.getSelectors<AdminState>(state => state.lookbook)
+export const {selectAll: selectAllLookbook} = lookbookAdapter.getSelectors<AdminState>(
+    state => state.lookbook
+)
 
 export default lookbookSlice.reducer

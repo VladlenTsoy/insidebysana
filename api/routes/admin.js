@@ -15,6 +15,7 @@ const BannerController = require("controllers/crm/admin/settings/BannerControlle
 const UserController = require("controllers/crm/admin/UserController")
 const PaymentMethodController = require("controllers/crm/admin/payment/PaymentMethodController")
 const LookbookController = require("controllers/crm/admin/settings/LookbookController")
+const LookbookCategoryController = require("controllers/crm/admin/settings/LookbookCategoryController")
 const NewsletterController = require("controllers/crm/admin/settings/NewsletterController")
 const PromoCodeController = require("controllers/crm/admin/settings/PromoCodeController")
 const DeliveryController = require("controllers/crm/admin/settings/DeliveryController")
@@ -184,13 +185,21 @@ router.post("/user/:id", UserController.Edit)
 router.get("/payment-methods", PaymentMethodController.GetAll)
 
 // Вывод всех lookbook
-router.get("/lookbook", LookbookController.GetAll)
+router.get("/category/:categoryId/lookbook", LookbookController.GetByCategoryId)
 // Создать lookbook
 router.post("/lookbook", LookbookController.CreateValidate, LookbookController.Create)
 // Редактирование lookbook
 router.patch("/lookbook/:id", LookbookController.CreateValidate, LookbookController.EditById)
 // Удаление lookbook
 router.delete("/lookbook/:id", LookbookController.DeleteById)
+// Вывод категорий для лукбука
+router.get("/lookbook-categories", LookbookCategoryController.GetAll)
+// Создать категорию для лукбука
+router.post("/lookbook-category", LookbookCategoryController.Create)
+// Редактировать категорию для лукбука
+router.patch("/lookbook-category/:id", LookbookCategoryController.EditById)
+// Удалить категорию
+router.delete("/lookbook-category/:id", LookbookCategoryController.Delete)
 
 // Вывод всех подписанных
 router.get("/newsletter", NewsletterController.GetAll)

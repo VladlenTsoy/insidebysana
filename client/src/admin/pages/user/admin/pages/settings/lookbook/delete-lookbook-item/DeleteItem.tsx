@@ -1,9 +1,9 @@
-import React from "react";
-import {useAdminDispatch} from "../../../../../../../../store/admin/store";
-import {Modal} from "antd";
-import {DeleteOutlined} from "@ant-design/icons";
-import {Lookbook} from "../../../../../../../../lib/types/Lookbook"
-import {deleteLookbook} from "../../../../../../../../store/admin/lookbook/deleteLookbook"
+import React from "react"
+import {useAdminDispatch} from "../../../../../../../store/admin/store"
+import {Modal} from "antd"
+import {DeleteOutlined} from "@ant-design/icons"
+import {Lookbook} from "../../../../../../../lib/types/Lookbook"
+import {deleteLookbook} from "admin/store/admin/lookbook/deleteLookbook"
 
 interface DeleteItemProps {
     lookbook: Lookbook
@@ -26,6 +26,6 @@ const DeleteItem: React.FC<DeleteItemProps> = ({lookbook}) => {
             <DeleteOutlined /> Удалить
         </div>
     )
-};
+}
 
-export default DeleteItem;
+export default DeleteItem

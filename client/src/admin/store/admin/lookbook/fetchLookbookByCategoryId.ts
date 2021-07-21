@@ -5,10 +5,10 @@ import {Lookbook} from "../../../lib/types/Lookbook"
 
 type ReturnedType = Lookbook[]
 
-export const fetchLookbook = createAsyncThunk<ReturnedType, undefined, AdminThunkProps>(
+export const fetchLookbookByCategoryId = createAsyncThunk<ReturnedType, number, AdminThunkProps>(
     "admin/lookbook/fetch",
-    async (_, {signal}) => {
-        return await apiRequest("get", `admin/lookbook`, {signal})
+    async (categoryId, {signal}) => {
+        return await apiRequest("get", `admin/category/${categoryId}/lookbook`, {signal})
     },
     {
         condition(_, {getState}) {

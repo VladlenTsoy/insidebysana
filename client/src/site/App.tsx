@@ -19,6 +19,7 @@ const Payment = React.lazy(() => import("./pages/Payment"))
 const Delivery = React.lazy(() => import("./pages/Delivery"))
 const Cookies = React.lazy(() => import("./pages/Cookies"))
 const Lookbook = React.lazy(() => import("./lookbook/Lookbook"))
+const LookbookSingle = React.lazy(() => import("./lookbook/LookbookSingle"))
 const AboutUs = React.lazy(() => import("./pages/AboutUs"))
 const Contacts = React.lazy(() => import("./pages/Contacts"))
 const Auth = React.lazy(() => import("./auth/Auth"))
@@ -36,7 +37,8 @@ function App() {
                             <Route path="/about-us" component={AboutUs} />
                             <Route path="/products/:id" component={Products} />
                             <Route path="/product/:id" component={Product} />
-                            <Route path="/lookbook" component={Lookbook} />
+                            <Route exact path="/lookbook" component={Lookbook} />
+                            <Route path="/lookbook/:id" component={LookbookSingle} />
                             <Route path="/contacts" component={Contacts} />
                             <Route path="/wishlist" component={Wishlist} />
                             <Route path="/cart" component={Cart} />

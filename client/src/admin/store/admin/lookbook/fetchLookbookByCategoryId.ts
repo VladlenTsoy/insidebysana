@@ -9,11 +9,11 @@ export const fetchLookbookByCategoryId = createAsyncThunk<ReturnedType, number, 
     "admin/lookbook/fetch",
     async (categoryId, {signal}) => {
         return await apiRequest("get", `admin/category/${categoryId}/lookbook`, {signal})
-    },
-    {
-        condition(_, {getState}) {
-            const {lookbook} = getState()
-            return !lookbook.ids.length
-        }
     }
+    // {
+    //     condition(_, {getState}) {
+    //         const {lookbook} = getState()
+    //         return !lookbook.ids.length
+    //     }
+    // }
 )

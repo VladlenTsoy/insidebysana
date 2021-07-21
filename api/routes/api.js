@@ -63,7 +63,11 @@ router.post("/wishlist", WishlistController.GetAll)
 router.post("/cart", CartController.GetAll)
 
 // Лукбук
-router.get("/lookbook", LookbookController.GetAll)
+router.get("/lookbook", LookbookController.GetLatest)
+//
+router.get("/lookbook/category/:id", LookbookController.GetByCategoryId)
+//
+router.get("/lookbook-categories/:categoryId", LookbookController.GetAll)
 // Подписаться
 router.post("/newsletter/subscribe", NewsletterController.SubscribeValidate, NewsletterController.Subscribe)
 // Промокод

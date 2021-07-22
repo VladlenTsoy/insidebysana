@@ -137,8 +137,7 @@ const Create = async (data, config) => {
                 // OrderQueue.AddPaymentsToOrder.add({orderId: order.id, payments})
                 await AddPaymentsToOrder(order.id, payments)
 
-            console.log(order.id)
-            if (config.timer)
+            if (config && config.timer)
                 // Добавить таймер для отмены сделки
                 OrderQueue.AddTimerForCancelOrder(order.id)
         }

@@ -12,7 +12,7 @@ import {
 } from "../../../posSelectors"
 import {changeButtonSubmit, clearCart} from "../../../posSlice"
 import {useDispatch} from "../../../../store"
-import {useGetSizeQuery} from "../../../search-products/size-select/sizeApi"
+import {useGetSizeQuery} from "../../../search-products/sizeApi"
 import "./PosOrder.less"
 import Header from "./header/Header"
 import {useCheckPrint} from "utils/CheckPrint"

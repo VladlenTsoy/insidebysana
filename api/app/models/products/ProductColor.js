@@ -231,7 +231,7 @@ class ProductColor extends Model {
                 }
             },
             color: {
-                filter: query => query.select("colors.id", "colors.title"),
+                filter: query => query.select("colors.id", "colors.title", "colors.hex"),
                 relation: Model.HasOneRelation,
                 modelClass: Color,
                 join: {

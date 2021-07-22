@@ -254,6 +254,14 @@ const posSlice = createSlice({
         changeSizeId: (state, action: PayloadAction<StateProps["size_id"]>) => {
             state.size_id = action.payload
         },
+        // Сбросить фильтрацию категорию и размер
+        resetCategoryIdAndSizeId: (
+            state,
+            action: PayloadAction<{categoryId: StateProps["category_id"]; sizeId: StateProps["size_id"]}>
+        ) => {
+            state.category_id = action.payload.categoryId
+            state.size_id = action.payload.sizeId
+        },
         // Изменить состояния на обработку
         changeProcessing: (state, action: PayloadAction<StateProps["processing"]>) => {
             state.processing = action.payload
@@ -310,11 +318,10 @@ export const {
     changeProcessing,
     changePriceToPayment,
     changeDrawer,
-    changeButtonSubmit
+    changeButtonSubmit,
+    resetCategoryIdAndSizeId
 } = posSlice.actions
 
-export const {selectAll: selectAllPosProductColors} = posAdapter.getSelectors<StoreState>(
-    state => state.pos
-)
+export const {selectAll: selectAllPosProductColors} = posAdapter.getSelectors<StoreState>(state => state.pos)
 
 export default posSlice.reducer

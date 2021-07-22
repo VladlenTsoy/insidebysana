@@ -1,0 +1,172 @@
+.products-container {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.product-card {
+    background-color: @white;
+    border-radius: 10px;
+    padding: 0.5rem;
+
+    .thumbnail {
+        height: 150px;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 0.5rem;
+        color: @black;
+        background: #efefef;
+
+        .color {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: @white;
+            padding: 0 0.5rem 0 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            color: @black;
+            z-index: 1;
+
+            .hex {
+                opacity: 0.8;
+                display: inline-block;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                margin-right: 0.35rem;
+                transform: scale(1.1);
+            }
+        }
+
+        .discount {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 0 0.5rem 0 0.5rem;
+            border-radius: 10px;
+            background: #fe9c64;
+            color: @white !important;
+            z-index: 1;
+        }
+
+        .add-to-cart-block {
+            position: absolute;
+            background: #fe9c64;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: @white;
+
+            .plus,
+            .minus {
+                padding: 1.5rem;
+                cursor: pointer;
+                width: 100%;
+            }
+
+            .minus {
+                text-align: right;
+            }
+
+            .remainder {
+                position: absolute;
+                bottom: 0.5rem;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .details {
+        text-align: center;
+
+        .title {
+            font-size: 16px;
+            line-height: 1.2;
+            margin-bottom: 0;
+            color: @black;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-discount {
+            color: fade(@black, 40%);
+            font-size: 12px;
+            text-decoration: line-through;
+            line-height: 1;
+        }
+
+        .price {
+            margin-bottom: 0.75rem;
+            font-weight: bold;
+            color: @black;
+            line-height: 1;
+        }
+    }
+}
+
+.sizes-action {
+    text-align: center;
+
+    .ant-radio-group {
+        .button-size:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    .ant-radio-button-wrapper:not(:first-child)::before {
+        content: none;
+    }
+    .ant-radio-button-wrapper-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
+        border-color: transparent;
+    }
+
+    .button-size {
+        position: relative;
+        background-color: #4cc279;
+        border-radius: 20px;
+
+        &:first-child:last-child {
+            border-radius: 20px;
+        }
+
+        &.ant-radio-button-wrapper-checked {
+            border-color: transparent;
+            background: #fe9c64;
+
+            &::before {
+                content: none;
+            }
+        }
+
+        span {
+            color: @white !important;
+        }
+
+        .qty {
+            background: @white;
+            position: absolute;
+            font-size: 10px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            // color: @text-color-secondary;
+            height: 14px;
+            text-align: center;
+            top: -2px;
+            right: -6px;
+            padding: 0 3px;
+            border-radius: 5px;
+            border: 1px solid @border-color-base;
+            z-index: 2;
+        }
+    }
+}

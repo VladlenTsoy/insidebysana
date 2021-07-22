@@ -32,8 +32,8 @@ module.exports = {
                         modifyVars: {
                             ...getThemeVariables({dark: true}),
                             "@popover-background": "#010b24",
+                            "@component-background": "#010b24",
                             "max-width": "100%",
-                            "@box-shadow": "0 5px 20px rgba(146, 153, 184, 0.1)",
                             "@font-family":
                                 "-apple-system, Montserrat, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
                             "@primary-color": "#fe9c64",

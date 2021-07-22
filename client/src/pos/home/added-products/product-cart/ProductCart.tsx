@@ -1,14 +1,34 @@
-import {Button, Typography} from "antd"
+import {Badge, Button, Tag, Typography} from "antd"
 import React, {useCallback} from "react"
 import {removeFromCart, updateQty} from "../../posSlice"
 import {useDispatch} from "../../..//store"
 import {ProductColorCart} from "types/cashier/PosProductColor"
 // import TagSize from "components/editors/editor-order-action/editor-order/order-products/tab-added-products/tag-size/TagSize"
 import PriceBlock from "components/blocks/price-block/PriceBlock"
-import InputPlusMinus from "components/form/input-plus-minus/InputPlusMinus"
-import {DeleteOutlined} from "@ant-design/icons"
+import {DeleteOutlined, MinusOutlined, PlusOutlined} from "@ant-design/icons"
+import "./ProductCart.less"
+import TagSize from "admin/lib/components/editors/editor-order-action/editor-order/order-products/tab-added-products/tag-size/TagSize"
 
-const {Title} = Typography
+interface PlusMinusInputProps {
+    max: number
+    value: number
+    min: number
+    onChange: any
+}
+
+const PlusMinusInput: React.FC<PlusMinusInputProps> = ({value}) => {
+    return (
+        <div className="plus-minus-input">
+            <div className="minus">
+                <MinusOutlined />
+            </div>
+            <div className="count">{value}</div>
+            <div className="plus">
+                <PlusOutlined />
+            </div>
+        </div>
+    )
+}
 
 interface ProductCartProps {
     product: ProductColorCart
@@ -35,28 +55,25 @@ const ProductCart: React.FC<ProductCartProps> = ({product}) => {
 
     return (
         <div className="cart-product-item">
-            {/* <ImageBlock image={product.product.url_thumbnail} /> */}
-            <div>
-                <Title level={5}>
+            <div className="details">
+                <div className="title">
                     {product.product.details.title} ({product.product.color.title})
-                </Title>
-                <div className="size-qty">
-                    {/* <TagSize sizeId={product.size_id} /> ({product.product.sizes[product.size_id].qty}) */}
                 </div>
-                <div>
+                {/* <div className="size-qty">
+                    XS (12)
+                </div> */}
+                <div className="price-size">
                     <PriceBlock price={product.product.details.price} discount={product.product.discount} />
+                    <Tag color="#fe9c64">XS (12)</Tag>
                 </div>
             </div>
             <div>
-                <InputPlusMinus
+                <PlusMinusInput
                     max={product.product.sizes[product.size_id].qty}
                     onChange={updateProductQty}
                     value={product.qty}
                     min={1}
                 />
-            </div>
-            <div>
-                <Button size="large" danger onClick={deleteProduct} icon={<DeleteOutlined />} />
             </div>
         </div>
     )

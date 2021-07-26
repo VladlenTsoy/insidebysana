@@ -2,12 +2,7 @@ const socket = require("socket.io")
 
 const io = socket({
     cors: {
-        origin: [
-            process.env.APP_CLIENT_URL,
-            process.env.APP_CRM_URL,
-            "http://localhost:3002",
-            "http://localhost:3003"
-        ],
+        origin: true,
         credentials: true
     }
 })

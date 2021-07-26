@@ -195,9 +195,7 @@ class ProductColor extends Model {
                     query
                         .join(
                             `sizes`,
-                            raw(
-                                `JSON_EXTRACT(product_colors.sizes,concat('$."',sizes.id,'".qty')) > 0`
-                            )
+                            raw(`JSON_EXTRACT(product_colors.sizes,concat('$."',sizes.id,'".qty')) > 0`)
                         )
                         .select(
                             "sizes.id as size_id",
@@ -213,12 +211,10 @@ class ProductColor extends Model {
             },
             colors: {
                 filter: query =>
-                    query.select(
-                        "colors.id",
-                        "colors.title",
-                        "colors.hex",
-                        "product_colors.id as product_id"
-                    ),
+                    query
+                        .where("product_colors.thumbnail", "IS NOT", null)
+                        .where("product_colors.hide_id", null)
+                        .select("colors.id", "colors.title", "colors.hex", "product_colors.id as product_id"),
                 relation: Model.ManyToManyRelation,
                 modelClass: Color,
                 join: {
@@ -242,8 +238,12 @@ class ProductColor extends Model {
             discount: {
                 filter: query =>
                     query
-                        .where("product_discounts.end_at", ">=", new Date())
-                        .orWhere("product_discounts.end_at", null)
+                        .where(builder => {
+                            builder
+                                .where("product_discounts.end_at", ">=", new Date())
+                                .orWhere("product_discounts.end_at", null)
+                        })
+                        .andWhere("product_discounts.discount", "!=", 0)
                         .select("product_discounts.discount", "product_discounts.end_at"),
                 relation: Model.HasOneRelation,
                 modelClass: ProductDiscount,

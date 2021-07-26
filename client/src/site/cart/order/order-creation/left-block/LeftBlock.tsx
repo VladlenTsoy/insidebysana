@@ -43,7 +43,7 @@ const LeftBlock: React.FC<LeftBlockProps> = ({
     return (
         <div className={styled.leftBlock}>
             <div className={styled.header}>
-                <Header onClose={onClose} />
+                <Header onClose={onClose} step={step} changeStep={changeStep} />
             </div>
             {step === "information" && (
                 <Information onChangeInformation={onChangeInformation} information={information} />

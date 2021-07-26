@@ -2,7 +2,7 @@ import Button from "components/button/Button"
 import EmptyBlock from "components/empty-block/EmptyBlock"
 import LoaderBlock from "components/loader-block/LoaderBlock"
 import React from "react"
-import {ArrowLeftOutlined} from "@ant-design/icons"
+// import {ArrowLeftOutlined} from "@ant-design/icons"
 import styled from "./AdditionalService.module.css"
 import TypesAdditionalServices from "./types-additional-services/TypesAdditionalServices"
 import {AdditionalService as AdditionalServiceType} from "types/AdditionalService"
@@ -49,9 +49,9 @@ const AdditionalService: React.FC<AdditionalServiceProps> = ({
                 <EmptyBlock />
             )}
             <div className={styled.button}>
-                <Button onClick={backDelivery} link icon={<ArrowLeftOutlined />}>
+                {/* <Button onClick={backDelivery} link icon={<ArrowLeftOutlined />}>
                     Назад
-                </Button>
+                </Button> */}
                 <Button type="default" onClick={onClickHandler}>
                     Выбрать оплату
                 </Button>

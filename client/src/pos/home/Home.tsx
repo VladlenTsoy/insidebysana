@@ -1,12 +1,11 @@
-import React, {useEffect, useRef, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {fetchProductColorBySKU} from "./fetchProductColorBySKU"
 import {useDispatch} from "../store"
 import AddedProducts from "./added-products/AddedProducts"
 import "./Home.less"
-import SearchProducts from "./search-products/SearchProducts"
+import GridProducts from "./search-products/GridProducts"
 
 const Home: React.FC = () => {
-    const searchRef = useRef<HTMLInputElement>(null)
     const [search, setSearch] = useState("")
     const dispatch = useDispatch()
 
@@ -63,7 +62,7 @@ const Home: React.FC = () => {
         <>
             <div className="pos-system">
                 <div className="container">
-                    <SearchProducts searchRef={searchRef} />
+                    <GridProducts />
                     <AddedProducts />
                 </div>
             </div>

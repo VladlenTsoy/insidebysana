@@ -22,7 +22,7 @@ const ActionsBlock: React.FC = () => {
     return (
         <>
             <div className="total-block">
-                <div className="additional-services-action">
+                {/* <div className="additional-services-action">
                     <AdditionalServicesAction />
                 </div>
                 <div className="discount-action">
@@ -47,7 +47,7 @@ const ActionsBlock: React.FC = () => {
                             <Button size="large" danger icon={<CloseOutlined />} onClick={clearDiscount} />
                         )}
                     </div>
-                </div>
+                </div> */}
                 <div className="total-price">
                     <div>Сумма к оплате:</div>
                     <div>{formatPrice(totalPrice)} сум</div>

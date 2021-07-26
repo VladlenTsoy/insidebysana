@@ -59,6 +59,7 @@ const CardProductThumbnail: React.FC<CardProductThumbnailProps> = ({
     const plusHandler = useCallback(
         (e: any) => {
             e.preventDefault()
+            createRipple(e)
             if (!selectSize) return
             if (searchQtyBySize(selectSize) >= product.sizes[selectSize].qty) return
             const qty = searchQtyBySize(selectSize)
@@ -72,6 +73,7 @@ const CardProductThumbnail: React.FC<CardProductThumbnailProps> = ({
     const minusHandler = useCallback(
         (e: any) => {
             e.preventDefault()
+            createRipple(e)
             if (!selectSize) return
             const qty = searchQtyBySize(selectSize)
             if (qty > 1) updateQtyToCart(qty - 1)
@@ -82,6 +84,34 @@ const CardProductThumbnail: React.FC<CardProductThumbnailProps> = ({
         },
         [selectSize, dispatch, searchQtyBySize, updateQtyToCart, product, changeSelectSize]
     )
+
+    function createRipple(event: any) {
+        const button = event.currentTarget.parentElement
+
+        const circle = document.createElement("span")
+        const diameter = Math.max(button.clientWidth, button.clientHeight)
+        const radius = diameter / 2
+
+        const rect = button.getBoundingClientRect()
+
+        circle.style.width = circle.style.height = `${diameter}px`
+        circle.style.left = `${event.clientX - rect.x - radius}px`
+        circle.style.top = `${event.clientY - rect.y - radius}px`
+        circle.classList.add("ripple")
+
+        const ripple = button.getElementsByClassName("ripple")[0]
+
+        if (ripple) {
+            ripple.remove()
+        }
+
+        button.appendChild(circle)
+    }
+
+    // const buttons = document.getElementsByTagName("button")
+    // for (const button of buttons) {
+    // button.addEventListener("click", createRipple)
+    // }
 
     return (
         <div className="thumbnail">
@@ -150,6 +180,7 @@ const CardProduct: React.FC<CardProductProps> = ({product}) => {
     return (
         <motion.div
             className="product-card"
+            id={`product-item-${product.id}`}
             layout
             variants={{
                 hidden: {y: 20, opacity: 0, filter: "blur(5px)"},
@@ -202,46 +233,49 @@ const GridProducts: React.FC = () => {
     const loading = useLoadingPosProductColors()
 
     return (
-        <AnimatePresence>
-            {loading && (
-                <motion.div key="loading">
-                    <LoadingBlock />
-                </motion.div>
-            )}
-            {!loading && !products.length && (
-                <motion.div key="empty">
-                    <Empty />
-                </motion.div>
-            )}
-            {!loading && !!products.length && (
-                <motion.div
-                    key="grid-products"
-                    className="products-container"
-                    animate="visible"
-                    initial="hidden"
-                    exit="exit"
-                    variants={{
-                        visible: {
-                            transition: {
-                                delayChildren: 0.05,
-                                staggerChildren: 0.05
+        <div className="search-container">
+            <AnimatePresence>
+                {loading && (
+                    <motion.div key="loading">
+                        <LoadingBlock />
+                    </motion.div>
+                )}
+                {!loading && !products.length && (
+                    <motion.div key="empty">
+                        <Empty />
+                    </motion.div>
+                )}
+                {!loading && !!products.length && (
+                    <motion.div
+                        id="grid-products-list"
+                        key="grid-products"
+                        className="products-container"
+                        animate="visible"
+                        initial="hidden"
+                        exit="exit"
+                        variants={{
+                            visible: {
+                                transition: {
+                                    delayChildren: 0.05,
+                                    staggerChildren: 0.05
+                                }
+                            },
+                            exit: {
+                                transition: {
+                                    delayChildren: 0.05,
+                                    staggerChildren: 0.05,
+                                    repeatType: "reverse"
+                                }
                             }
-                        },
-                        exit: {
-                            transition: {
-                                delayChildren: 0.05,
-                                staggerChildren: 0.05,
-                                repeatType: "reverse"
-                            }
-                        }
-                    }}
-                >
-                    {products.map(product => (
-                        <CardProduct key={product.id} product={product} />
-                    ))}
-                </motion.div>
-            )}
-        </AnimatePresence>
+                        }}
+                    >
+                        {products.map(product => (
+                            <CardProduct key={product.id} product={product} />
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
     )
 }
 export default React.memo(GridProducts)

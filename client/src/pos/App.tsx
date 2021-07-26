@@ -10,9 +10,10 @@ import ruRU from "antd/es/locale-provider/ru_RU"
 import {useUser} from "./auth/authSlice"
 import {BrowserRouter as Router, Switch} from "react-router-dom"
 import {fetchUser} from "./auth/authApi"
+import Layout from "./layouts/Layout"
 
 const Auth = React.lazy(() => import("./auth/Auth"))
-const Home = React.lazy(() => import("./Layout"))
+const Home = React.lazy(() => import("./home/Home"))
 
 locale("ru")
 
@@ -32,7 +33,13 @@ const OutputComponent = () => {
     if (!!token && loading) return <Loader text="Загрузка доступа..." />
     return (
         <React.Suspense fallback={<Loader text="Загрузка доступа..." />}>
-            {detail ? <Home /> : <Auth />}
+            {detail ? (
+                <Layout>
+                    <Home />
+                </Layout>
+            ) : (
+                <Auth />
+            )}
         </React.Suspense>
     )
 }

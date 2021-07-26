@@ -1,70 +1,13 @@
-.ant-tabs .ant-tabs-nav {
-    margin-bottom: 0;
-}
-
 .pos-system {
     height: 100%;
+    overflow: hidden;
+    background: linear-gradient(160deg, #2f3957 0%, #0c132c 50%);
 
     .container {
         display: grid;
         grid-template-columns: 1fr 350px;
         height: 100%;
-    }
-
-    .cart-container {
-        flex: 1;
-        display: flex;
-        overflow: auto;
-        flex-direction: column;
-      
-
-        .cart-scroll-products {
-            overflow: auto;
-            height: 100%;
-            padding: 0 1rem 1rem 1rem;
-            border-bottom: 1px solid @border-color-base;
-            box-shadow: 0px -40px 15px -20px #00000005 inset;
-        }
-
-       
-
-        .total-block {
-            padding: 1rem;
-
-            .additional-services-action {
-                margin-bottom: 1rem;
-            }
-
-            .discount-action {
-                display: flex;
-                justify-content: space-between;
-                font-weight: 500;
-                font-size: 20px;
-                margin-bottom: 1rem;
-
-                div:first-child {
-                    color: @text-color-secondary;
-                }
-
-                div:last-child {
-                    .discount-value {
-                        margin-right: 0.5rem;
-                    }
-                }
-            }
-
-            .total-price {
-                display: flex;
-                justify-content: space-between;
-                font-weight: 500;
-                font-size: 20px;
-                margin-bottom: 1rem;
-
-                div:first-child {
-                    color: @text-color-secondary;
-                }
-            }
-        }
+        overflow: hidden;
     }
 }
 

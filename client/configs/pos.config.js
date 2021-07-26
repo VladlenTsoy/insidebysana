@@ -39,7 +39,7 @@ module.exports = {
                             "@primary-color": "#fe9c64",
                             "@success-color": "#13cd3c",
                             "@warning-color": "#ff6370",
-                            "@error-color": "#fb2b76",
+                            "@error-color": "#ff6370",
                             "@border-width-base": "1px",
                             "@border-radius-base": "10px",
                             "@border-color-base": "#f5f6f8",

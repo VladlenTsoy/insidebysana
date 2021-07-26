@@ -1,5 +1,28 @@
 @import "~antd/dist/antd.dark.less";
 
+body *::-webkit-scrollbar {
+    display: none;
+}
+
+body * {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
 .grid-cards {
     display: grid;
     grid-template-columns: repeat(6, 1fr);

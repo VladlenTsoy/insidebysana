@@ -1,17 +1,15 @@
-import {CheckOutlined, FilterOutlined, SearchOutlined} from "@ant-design/icons"
-import {Button, Input, Drawer} from "antd"
-import React, {useEffect, useState} from "react"
-import {fetchProductColorBySearch} from "../fetchProductColorBySearch"
-import {useCategoryIdPos, useSizeIdPos} from "../posSelectors"
-import {useDispatch} from "../../store"
-import GridProducts from "./GridProducts"
-import {useGetSizeQuery} from "./sizeApi"
-import {changeCategoryId, changeSizeId, resetCategoryIdAndSizeId} from "../posSlice"
-import {useGetCategoriesQuery} from "./categoryApi"
+import React, {useState} from "react"
+import {CheckOutlined, FilterOutlined} from "@ant-design/icons"
+import {Button, Drawer} from "antd"
 import LoadingBlock from "components/blocks/loading-block/LoadingBlock"
-import "./SearchProducts.less"
+import {useCategoryIdPos, useSizeIdPos} from "pos/home/posSelectors"
+import {changeCategoryId, changeSizeId, resetCategoryIdAndSizeId} from "pos/home/posSlice"
+import {useGetCategoriesQuery} from "pos/home/search-products/categoryApi"
+import {useGetSizeQuery} from "pos/home/search-products/sizeApi"
+import {useDispatch} from "pos/store"
+import "./FilterButton.less"
 
-const ButtonFilter = () => {
+const FilterButton: React.FC = () => {
     const [visible, setVisible] = useState(false)
     const {data: sizes, isLoading: isLoadingSizes} = useGetSizeQuery()
     const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery()
@@ -19,24 +17,29 @@ const ButtonFilter = () => {
     const categoryId = useCategoryIdPos()
     const sizeId = useSizeIdPos()
 
+    // Фильтрация по категориям
     const changeCategoryHandler = async (id: number) => {
-        await dispatch(changeCategoryId(id))
+        await dispatch(changeCategoryId(id === categoryId ? 0 : id))
     }
 
+    // Фильтрация по размеру
     const changeSizeHandler = async (id: number) => {
-        await dispatch(changeSizeId(id))
+        await dispatch(changeSizeId(id === sizeId ? 0 : id))
     }
 
+    // Сбросить фильтр
     const resetFilterHandler = async () => {
         await dispatch(resetCategoryIdAndSizeId({categoryId: 0, sizeId: 0}))
     }
 
+    // Открыть фильтрацию
     const openHandler = () => setVisible(true)
+    // Закрыть фильтрацию
     const closeHandler = () => setVisible(false)
 
     return (
         <>
-            <Button type="primary" size="large" icon={<FilterOutlined />} onClick={openHandler}>
+            <Button type="link" size="large" icon={<FilterOutlined />} onClick={openHandler}>
                 Фильтрация
             </Button>
             <Drawer
@@ -121,49 +124,4 @@ const ButtonFilter = () => {
     )
 }
 
-interface SearchProductsProps {
-    searchRef: any
-}
-
-const SearchProducts: React.FC<SearchProductsProps> = ({searchRef}) => {
-    const dispatch = useDispatch()
-
-    const [search, setSearch] = useState<string>("")
-    const categoryId = useCategoryIdPos()
-    const sizeId = useSizeIdPos()
-
-    let timeout: any
-
-    const onChangeHandler = (e: any) => {
-        if (timeout) clearTimeout(timeout)
-        timeout = setTimeout(() => {
-            setSearch(e.target.value)
-        }, 500)
-    }
-
-    useEffect(() => {
-        const promise = dispatch(fetchProductColorBySearch({search, categoryId, sizeId}))
-        return () => {
-            promise.abort()
-        }
-    }, [search, dispatch, categoryId, sizeId])
-
-    return (
-        <div className="search-container">
-            <div className="search-wrapper">
-                <ButtonFilter />
-                <Input
-                    suffix={<SearchOutlined />}
-                    size="large"
-                    onChange={onChangeHandler}
-                    ref={searchRef}
-                    placeholder="Введите SKU или название товара"
-                />
-            </div>
-            <div className="products-wrapper">
-                <GridProducts />
-            </div>
-        </div>
-    )
-}
-export default SearchProducts
+export default FilterButton

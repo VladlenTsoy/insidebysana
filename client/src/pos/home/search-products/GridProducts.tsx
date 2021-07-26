@@ -85,7 +85,8 @@ const CardProductThumbnail: React.FC<CardProductThumbnailProps> = ({
         [selectSize, dispatch, searchQtyBySize, updateQtyToCart, product, changeSelectSize]
     )
 
-    function createRipple(event: any) {
+    // Создание анимации
+    const createRipple = (event: any) => {
         const button = event.currentTarget.parentElement
 
         const circle = document.createElement("span")
@@ -101,17 +102,9 @@ const CardProductThumbnail: React.FC<CardProductThumbnailProps> = ({
 
         const ripple = button.getElementsByClassName("ripple")[0]
 
-        if (ripple) {
-            ripple.remove()
-        }
-
+        if (ripple) ripple.remove()
         button.appendChild(circle)
     }
-
-    // const buttons = document.getElementsByTagName("button")
-    // for (const button of buttons) {
-    // button.addEventListener("click", createRipple)
-    // }
 
     return (
         <div className="thumbnail">

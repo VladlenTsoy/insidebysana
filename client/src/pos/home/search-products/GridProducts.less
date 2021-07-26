@@ -6,7 +6,7 @@
 .products-container {
     display: grid;
     gap: 1rem;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 
 .product-card {
@@ -125,62 +125,62 @@
             line-height: 1;
         }
     }
-}
 
-.sizes-action {
-    text-align: center;
+    .sizes-action {
+        text-align: center;
 
-    .ant-radio-group {
-        .button-size:not(:last-child) {
-            margin-right: 0.5rem;
-        }
-    }
-
-    .ant-radio-button-wrapper:not(:first-child)::before {
-        content: none;
-    }
-    .ant-radio-button-wrapper-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
-        border-color: transparent;
-    }
-
-    .button-size {
-        position: relative;
-        background-color: #4cc279;
-        border-radius: 20px;
-
-        &:first-child:last-child {
-            border-radius: 20px;
-        }
-
-        &.ant-radio-button-wrapper-checked {
-            border-color: transparent;
-            background: #fe9c64;
-
-            &::before {
-                content: none;
+        .ant-radio-group {
+            .button-size:not(:last-child) {
+                margin-right: 0.5rem;
             }
         }
 
-        span {
-            color: @white !important;
+        .ant-radio-button-wrapper:not(:first-child)::before {
+            content: none;
+        }
+        .ant-radio-button-wrapper-checked:not([class*=" ant-radio-button-wrapper-disabled"]).ant-radio-button-wrapper:first-child {
+            border-color: transparent;
         }
 
-        .qty {
-            background: @white;
-            position: absolute;
-            font-size: 10px;
-            line-height: 1;
-            display: flex;
-            align-items: center;
-            // color: @text-color-secondary;
-            height: 14px;
-            text-align: center;
-            top: -2px;
-            right: -6px;
-            padding: 0 3px;
-            border-radius: 5px;
-            border: 1px solid @border-color-base;
-            z-index: 2;
+        .button-size {
+            position: relative;
+            background-color: #4cc279;
+            border-radius: 20px;
+
+            &:first-child:last-child {
+                border-radius: 20px;
+            }
+
+            &.ant-radio-button-wrapper-checked {
+                border-color: transparent;
+                background: #fe9c64;
+
+                &::before {
+                    content: none;
+                }
+            }
+
+            span {
+                color: @white !important;
+            }
+
+            .qty {
+                background: @white;
+                position: absolute;
+                font-size: 10px;
+                line-height: 1;
+                display: flex;
+                align-items: center;
+                // color: @text-color-secondary;
+                height: 14px;
+                text-align: center;
+                top: -2px;
+                right: -6px;
+                padding: 0 3px;
+                border-radius: 5px;
+                border: 1px solid @border-color-base;
+                z-index: 2;
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ interface FilterDrawerProps {
 
 const FilterDrawer: React.FC<FilterDrawerProps> = ({onClose}) => {
     const [page, setPage] = useState("menu")
-    const [pageName, setPageName] = useState("Фильрация")
+    const [pageName, setPageName] = useState("Фильтрация")
     const dispatch = useDispatch()
 
     const onClickBackHandler = () => setPage("menu")
@@ -36,7 +36,7 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({onClose}) => {
                     return "Цвета"
             }
 
-            return "Фильрация"
+            return "Фильтрация"
         })
     }, [page])
 

@@ -55,6 +55,22 @@ module.exports = {
                     src="https://www.facebook.com/tr?id=230761784901784&ev=PageView&noscript=1"
                     /></noscript>
                     <!-- End Facebook Pixel Code -->
+                    <!-- Yandex.Metrika counter -->
+                    <script type="text/javascript" >
+                    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                    m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+                    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+                    ym(83295820, "init", {
+                            clickmap:true,
+                            trackLinks:true,
+                            accurateTrackBounce:true,
+                            webvisor:true,
+                            ecommerce:"dataLayer"
+                    });
+                    </script>
+                    <noscript><div><img src="https://mc.yandex.ru/watch/83295820" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+                    <!-- /Yandex.Metrika counter -->
                 `
                     : ""
             }

@@ -4,7 +4,7 @@ import PaymentSvg from "assets/images/payment/payme.svg"
 // import ApelsinSvg from "assets/images/payment/apelsin.png"
 import CashSvg from "assets/images/payment/cash.svg"
 import Button from "components/button/Button"
-import ArrowLeftOutlined from "@ant-design/icons/ArrowLeftOutlined"
+// import ArrowLeftOutlined from "@ant-design/icons/ArrowLeftOutlined"
 import TypesPayment from "./types-payment/TypesPayment"
 
 interface PaymentProps {
@@ -41,9 +41,9 @@ const Payment: React.FC<PaymentProps> = ({backAdditionalService, onSubmitPayment
                 <TypesPayment name="payment" types={types} onChange={onChangeHandler} />
             </div>
             <div className={styled.button}>
-                <Button onClick={backAdditionalService} link icon={<ArrowLeftOutlined />}>
+                {/* <Button onClick={backAdditionalService} link icon={<ArrowLeftOutlined />}>
                     Назад
-                </Button>
+                </Button> */}
                 <Button type="default" onClick={onClickHandler} disabled={!paymentId} loading={loading}>
                     Заказать
                 </Button>

@@ -3,7 +3,7 @@ import EditorLookbookAction from "admin/lib/components/editors/editor-lookbook-a
 import MenuButton from "admin/lib/components/menu-button/MenuButton"
 import {Lookbook} from "admin/lib/types/Lookbook"
 import {fetchLookbookByCategoryId} from "admin/store/admin/lookbook/fetchLookbookByCategoryId"
-import {useLoadingLookbook, useSelectAllLookbook} from "admin/store/admin/lookbook/lookbookSelectors"
+import {useLoadingLookbook, useSelectLookbookByCategoryId} from "admin/store/admin/lookbook/lookbookSelectors"
 import {useAdminDispatch} from "admin/store/admin/store"
 import {Menu, Table} from "antd"
 import ImageBlock from "components/blocks/image-block/ImageBlock"
@@ -56,7 +56,7 @@ interface TableLookbookProps {
 const TableLookbook: React.FC<TableLookbookProps> = ({categoryId}) => {
     const dispatch = useAdminDispatch()
     const loading = useLoadingLookbook()
-    const lookbook = useSelectAllLookbook()
+    const lookbook: any = useSelectLookbookByCategoryId(categoryId)
 
     useEffect(() => {
         const promise = dispatch(fetchLookbookByCategoryId(categoryId))

@@ -113,7 +113,7 @@ const OrderCreation: React.FC<OrderCreationProps> = ({onClose, updateOrderId}) =
     return (
         <div className={styled.wrapper}>
             <div className={styled.mobileHeader}>
-                <Header onClose={onClose} />
+                <Header onClose={onClose} step={step} changeStep={changeStep} />
             </div>
             <div className={styled.container}>
                 <LeftBlock

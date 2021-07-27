@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import styled from "./Delivery.module.css"
-import ArrowLeftOutlined from "@ant-design/icons/ArrowLeftOutlined"
+// import ArrowLeftOutlined from "@ant-design/icons/ArrowLeftOutlined"
 import Button from "components/button/Button"
 import LoaderBlock from "components/loader-block/LoaderBlock"
 import TypesDelivery from "./types-delivery/TypesDelivery"
@@ -52,9 +52,9 @@ const DeliveryBlock: React.FC<DeliveryProps> = ({
                 <EmptyBlock />
             )}
             <div className={styled.button}>
-                <Button onClick={backInformation} link icon={<ArrowLeftOutlined />}>
+                {/* <Button onClick={backInformation} link icon={<ArrowLeftOutlined />}>
                     Назад
-                </Button>
+                </Button> */}
                 <Button type="default" onClick={onClickHandler} disabled={!selectDelivery}>
                     Далее
                 </Button>

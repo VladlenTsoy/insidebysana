@@ -1,21 +1,22 @@
 import {Tag} from "antd"
 import React, {useCallback} from "react"
-import {addToCart, removeFromCart, updateQty} from "../posSlice"
+import {addToCart, removeFromCart, updateQty} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../store"
-import {ProductColorCart} from "types/cashier/PosProductColor"
+import {CartProductItemType} from "pos/features/cart/cart"
 import PriceBlock from "components/blocks/price-block/PriceBlock"
 import {DeleteOutlined, MinusOutlined, PlusOutlined, StopOutlined} from "@ant-design/icons"
-import "./ProductCart.less"
-import {useSelectAllPosProductColors} from "pos/home/posSelectors"
+import "./CartProductItem.less"
+import {useCartProductColors} from "pos/features/cart/cartSlice"
 
 interface PlusMinusInputProps {
-    productCart: ProductColorCart
+    productCart: CartProductItemType
 }
 
 const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
     const dispatch = useDispatch()
-    const cartProducts = useSelectAllPosProductColors()
+    const cartProducts = useCartProductColors()
     const {product_color_id, size_id, product} = productCart
+    const sizeQty = product.sizes_props.find(size => size.size_id === size_id)?.qty
 
     // Поиск кол-во по размеру в товаре
     const searchQtyBySize = useCallback(() => {
@@ -38,7 +39,7 @@ const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
     const plusHandler = useCallback(
         (e: any) => {
             e.preventDefault()
-            if (searchQtyBySize() >= product.sizes[size_id].qty) return
+            if (sizeQty && searchQtyBySize() >= sizeQty) return
             const qty = searchQtyBySize()
             if (qty > 0) updateQtyToCart(qty + 1)
             else dispatch(addToCart({size_id, product_color_id, product, qty: 1}))
@@ -78,7 +79,7 @@ const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
             </div>
             <div className="count">{searchQtyBySize()}</div>
             <div className="plus" onClick={plusHandler}>
-                {searchQtyBySize() < product.sizes[size_id].qty && (
+                {sizeQty && searchQtyBySize() < sizeQty && (
                     <div className="btn">
                         <PlusOutlined />
                     </div>
@@ -89,7 +90,7 @@ const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
 }
 
 interface ProductCartProps {
-    product: ProductColorCart
+    product: CartProductItemType
 }
 
 const ProductCart: React.FC<ProductCartProps> = ({product}) => {
@@ -129,10 +130,10 @@ const ProductCart: React.FC<ProductCartProps> = ({product}) => {
         <div className="cart-product-item">
             <div className="details" onClick={onClickHadnler}>
                 <div className="title">
-                    {product.product.details.title} ({product.product.color.title})
+                    {product.product.title} ({product.product.color.title})
                 </div>
                 <div className="price-size">
-                    <PriceBlock price={product.product.details.price} discount={product.product.discount} />
+                    <PriceBlock price={product.product.price} discount={product.product.discount} />
                     <Tag color="#fe9c64">XS (12)</Tag>
                 </div>
             </div>

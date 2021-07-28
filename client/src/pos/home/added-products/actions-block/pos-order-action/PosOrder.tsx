@@ -7,12 +7,13 @@ import {
     usePayChange,
     usePayments,
     useProcessing,
-    useSelectAllPosProductColors,
+    useCartProductColors,
     useTotalPricePos
-} from "../../../posSelectors"
-import {changeButtonSubmit, clearCart} from "../../../posSlice"
+} from "pos/features/cart/cartSlice"
+import {changeButtonSubmit} from "../../../posSlice"
+import {clearCart} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../../../store"
-import {useGetSizeQuery} from "../../../search-products/sizeApi"
+import {useGetSizeQuery} from "../../../../layouts/sizeApi"
 import "./PosOrder.less"
 import Header from "./header/Header"
 import {useCheckPrint} from "utils/CheckPrint"
@@ -21,7 +22,7 @@ import Container from "./container/Container"
 const PosOrder: React.FC = () => {
     const [selectClient, setSelectClient] = useState<Client | null>(null)
     const dispatch = useDispatch()
-    const products = useSelectAllPosProductColors()
+    const products = useCartProductColors()
     const totalPrice = useTotalPricePos()
     const additionalServices = useAdditionalServicesPos()
     const discount = useDiscountPos()
@@ -45,7 +46,7 @@ const PosOrder: React.FC = () => {
             id: product_color_id,
             qty,
             size_id,
-            price: product.details.price
+            price: product.price
         }))
 
         const response = await createOrder({

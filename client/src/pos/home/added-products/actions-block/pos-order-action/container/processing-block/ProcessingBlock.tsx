@@ -1,8 +1,7 @@
 import React from "react"
 import {Switch} from "antd"
-import {useProcessing} from "../../../../../posSelectors"
+import {useProcessing, changeProcessing} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../../../../../store"
-import {changeProcessing} from "../../../../../posSlice"
 
 const ProcessingBlock: React.FC = () => {
     const processing = useProcessing()

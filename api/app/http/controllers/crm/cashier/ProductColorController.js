@@ -13,7 +13,7 @@ const GetBySearch = async (req, res) => {
         let {search, categoryId, sizeId} = req.body
 
         // Поиск по SKU
-        if (search.includes("PC")) {
+        if (search && search.includes("PC")) {
             const [productColorId] = search.match(/\d+/g)
             search = productColorId
         }
@@ -36,19 +36,31 @@ const GetBySearch = async (req, res) => {
         const ids = uniq(_ids).filter(id => !_have_ids.includes(id))
 
         // Продукты
+        // const products = await ProductColor.query()
+        //     .select(
+        //         "product_colors.id",
+        //         "product_colors.thumbnail",
+        //         "product_colors.product_id",
+        //         "product_colors.sizes"
+        //     )
+        //     .withGraphFetched(`[color, details, discount]`)
+        //     .modify("filterSubCategory", categoryId)
+        //     .modify("filterSizes", sizeId === 0 ? [] : [sizeId])
+        //     .modify("search", search, false, ids)
+        //     .where("product_colors.hide_id", null)
+        //     .whereNotIn("id", ids)
+        //     .limit(18)
+
         const products = await ProductColor.query()
-            .select(
-                "product_colors.id",
-                "product_colors.thumbnail",
-                "product_colors.product_id",
-                "product_colors.sizes"
-            )
-            .withGraphFetched(`[color, details, discount]`)
+            .withGraphFetched(`[color, discount, sizes_props]`)
+            .join("products", "products.id", "product_colors.product_id")
+            .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
             .modify("filterSubCategory", categoryId)
             .modify("filterSizes", sizeId === 0 ? [] : [sizeId])
             .modify("search", search, false, ids)
             .where("product_colors.hide_id", null)
-            .whereNotIn("id", ids)
+            .whereNotIn("product_colors.id", ids)
+            .limit(18)
 
         return res.send(products)
     } catch (e) {

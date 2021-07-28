@@ -1,11 +1,12 @@
-import {SearchOutlined} from "@ant-design/icons"
-import {Input} from "antd"
-import {fetchProductColorBySearch} from "pos/home/fetchProductColorBySearch"
-import {useCategoryIdPos, useSizeIdPos} from "pos/home/posSelectors"
+import {MenuOutlined, SearchOutlined} from "@ant-design/icons"
+import {Button, Input} from "antd"
+import {fetchProductColorBySearch} from "pos/features/product/fetchProductColorBySearch"
+import {useCategoryIdPos, useProductPaginationPos, useSizeIdPos} from "pos/features/product/productSlice"
 import React, {useEffect, useState} from "react"
 import {useDispatch} from "../store"
 import FilterButton from "./FilterButton"
 import "./Header.less"
+import Navigation from "./Navigation"
 
 const Header: React.FC = () => {
     const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const Header: React.FC = () => {
     const [search, setSearch] = useState<string>("")
     const categoryId = useCategoryIdPos()
     const sizeId = useSizeIdPos()
+    const {currentPage} = useProductPaginationPos()
 
     let timeout: any
 
@@ -24,15 +26,17 @@ const Header: React.FC = () => {
     }
 
     useEffect(() => {
-        const promise = dispatch(fetchProductColorBySearch({search, categoryId, sizeId}))
+        const promise = dispatch(fetchProductColorBySearch({search, categoryId, sizeId, currentPage}))
         return () => {
             promise.abort()
         }
-    }, [search, dispatch, categoryId, sizeId])
+    }, [search, dispatch, categoryId, sizeId, currentPage])
 
     return (
         <div className="header">
-            <div className="logo"></div>
+            <div className="logo">
+                <Button icon={<MenuOutlined />} size="large" />
+            </div>
             <div>
                 <FilterButton />
             </div>
@@ -45,6 +49,7 @@ const Header: React.FC = () => {
                     placeholder="Введите SKU или название товара"
                 />
             </div>
+            <Navigation />
         </div>
     )
 }

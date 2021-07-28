@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react"
-import {fetchProductColorBySKU} from "./fetchProductColorBySKU"
+import {fetchProductColorBySKU} from "../features/cart/fetchProductColorBySKU"
 import {useDispatch} from "../store"
-import AddedProducts from "./added-products/AddedProducts"
+import CartProducts from "pos/features/cart/CartProducts"
 import "./Home.less"
-import GridProducts from "./search-products/GridProducts"
+import GridProducts from "../features/product/GridProducts"
 
 const Home: React.FC = () => {
     const [search, setSearch] = useState("")
@@ -63,7 +63,7 @@ const Home: React.FC = () => {
             <div className="pos-system">
                 <div className="container">
                     <GridProducts />
-                    <AddedProducts />
+                    <CartProducts />
                 </div>
             </div>
         </>

@@ -1,6 +1,6 @@
 import {Alert} from "antd"
 import React from "react"
-import {useLeftToPay, useTotalPricePos} from "../../../../../posSelectors"
+import {useLeftToPay, useTotalPricePos} from "pos/features/cart/cartSlice"
 import {formatPrice} from "utils/formatPrice"
 
 const LeftToPayBlock: React.FC = () => {

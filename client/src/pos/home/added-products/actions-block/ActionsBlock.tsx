@@ -1,8 +1,8 @@
 import {FlagOutlined, EditOutlined, CloseOutlined, PlusOutlined} from "@ant-design/icons"
 import {Button} from "antd"
 import React from "react"
-import {useDiscountPos, useSelectAllPosProductColors, useTotalPricePos} from "../../posSelectors"
-import {setDiscount} from "../../posSlice"
+import {useDiscountPos, useCartProductColors, useTotalPricePos} from "pos/features/cart/cartSlice"
+import {setDiscount} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../../store"
 import {formatPrice} from "utils/formatPrice"
 import AdditionalServicesAction from "./additional-services-action/AdditionalServicesAction"
@@ -11,7 +11,7 @@ import PosOrderAction from "./pos-order-action/PosOrderAction"
 
 const ActionsBlock: React.FC = () => {
     const totalPrice = useTotalPricePos()
-    const products = useSelectAllPosProductColors()
+    const products = useCartProductColors()
     const discount = useDiscountPos()
     const dispatch = useDispatch()
 

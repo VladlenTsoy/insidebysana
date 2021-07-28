@@ -4,9 +4,9 @@ import PaymeImage from "assets/images/payment/payme_01.svg"
 import ApelsinImage from "assets/images/payment/apelsin-v1.png"
 import CreditCardImage from "assets/images/payment/credit-card-payment.png"
 import ClickImage from "assets/images/payment/click.png"
-import {usePayments} from "../../../../../posSelectors"
+import {usePayments} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
-import {addOrDeletePayment} from "../../../../../posSlice"
+import {addOrDeletePayment} from "pos/features/cart/cartSlice"
 
 const PaymentBlock: React.FC = () => {
     const checkedPayments = usePayments()

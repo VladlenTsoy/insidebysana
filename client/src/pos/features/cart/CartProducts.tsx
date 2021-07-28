@@ -1,13 +1,13 @@
 import React from "react"
-import {useSelectAllPosProductColors} from "../posSelectors"
-import ActionsBlock from "./actions-block/ActionsBlock"
-import ProductCart from "./ProductCart"
-import "./AddedProducts.less"
+import {useCartProductColors} from "pos/features/cart/cartSlice"
+import ActionsBlock from "pos/home/added-products/actions-block/ActionsBlock"
+import ProductCart from "./CartProductItem"
+import "./CartProducts.less"
 
 interface AddedProductsProps {}
 
 const AddedProducts: React.FC<AddedProductsProps> = () => {
-    const products = useSelectAllPosProductColors()
+    const products = useCartProductColors()
 
     return (
         <div className="cart-container">

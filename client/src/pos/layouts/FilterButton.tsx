@@ -2,10 +2,15 @@ import React, {useState} from "react"
 import {CheckOutlined, FilterOutlined} from "@ant-design/icons"
 import {Button, Drawer} from "antd"
 import LoadingBlock from "components/blocks/loading-block/LoadingBlock"
-import {useCategoryIdPos, useSizeIdPos} from "pos/home/posSelectors"
-import {changeCategoryId, changeSizeId, resetCategoryIdAndSizeId} from "pos/home/posSlice"
-import {useGetCategoriesQuery} from "pos/home/search-products/categoryApi"
-import {useGetSizeQuery} from "pos/home/search-products/sizeApi"
+import {
+    changeCategoryId,
+    changeSizeId,
+    resetCategoryIdAndSizeId,
+    useCategoryIdPos,
+    useSizeIdPos
+} from "pos/features/product/productSlice"
+import {useGetCategoriesQuery} from "pos/layouts/categoryApi"
+import {useGetSizeQuery} from "pos/layouts/sizeApi"
 import {useDispatch} from "pos/store"
 import "./FilterButton.less"
 

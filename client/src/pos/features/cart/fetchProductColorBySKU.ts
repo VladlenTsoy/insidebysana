@@ -1,10 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {ThunkProps} from "../store"
+import {ThunkProps} from "../../store"
 import {apiRequest} from "utils/api"
-import {ProductColorCart} from "types/cashier/PosProductColor"
+import {CartProductItemType} from "./cart"
 import {message} from "antd"
 
-type ReturnedType = ProductColorCart | undefined
+type ReturnedType = CartProductItemType | undefined
 
 type AgrsProps = {
     sku: string

@@ -3,8 +3,12 @@ import {Button, Dropdown, Menu} from "antd"
 import InputPlusMinus from "components/form/input-plus-minus/InputPlusMinus"
 import LoadingBlock from "components/blocks/loading-block/LoadingBlock"
 import React from "react"
-import {useAdditionalServicesPos} from "../../../posSelectors"
-import {addAdditionalService, removeAdditionalService, updateQtyAdditionalService} from "../../../posSlice"
+import {useAdditionalServicesPos} from "pos/features/cart/cartSlice"
+import {
+    addAdditionalService,
+    removeAdditionalService,
+    updateQtyAdditionalService
+} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../../../store"
 import {formatPrice} from "utils/formatPrice"
 import {useGetAdditionalServicesQuery} from "./additionalServiceApi"

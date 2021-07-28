@@ -1,5 +1,5 @@
 import React from "react"
-import {usePayChange} from "../../../../../posSelectors"
+import {usePayChange} from "pos/features/cart/cartSlice"
 import {formatPrice} from "utils/formatPrice"
 
 const PayChangeBlock: React.FC = () => {

@@ -1,6 +1,6 @@
 import {Client} from "types/Client"
 import React, {useCallback, useState} from "react"
-import {useCreateOrderMutation} from "../../../../orders/orderApi"
+import {useCreateOrderMutation} from "pos/features/order/orderApi"
 import {
     useAdditionalServicesPos,
     useDiscountPos,
@@ -10,10 +10,10 @@ import {
     useCartProductColors,
     useTotalPricePos
 } from "pos/features/cart/cartSlice"
-import {changeButtonSubmit} from "../../../posSlice"
+import {changeButtonSubmit} from "pos/home/posSlice"
 import {clearCart} from "pos/features/cart/cartSlice"
-import {useDispatch} from "../../../../store"
-import {useGetSizeQuery} from "../../../../layouts/sizeApi"
+import {useDispatch} from "pos/store"
+import {useGetSizeQuery} from "pos/layouts/sizeApi"
 import "./PosOrder.less"
 import Header from "./header/Header"
 import {useCheckPrint} from "utils/CheckPrint"

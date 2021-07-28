@@ -1,8 +1,8 @@
 import {Drawer} from "antd"
 import React from "react"
-import {useDrawerOrderPos} from "../../../posSelectors"
-import {changeDrawer} from "../../../posSlice"
-import {useDispatch} from "../../../../store"
+import {useDrawerOrderPos} from "pos/home/posSelectors"
+import {changeDrawer} from "pos/home/posSlice"
+import {useDispatch} from "pos/store"
 import PosOrder from "./PosOrder"
 
 const PosOrderAction: React.FC = ({children}) => {

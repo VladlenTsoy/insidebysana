@@ -1,12 +1,36 @@
-import {MenuOutlined, SearchOutlined} from "@ant-design/icons"
-import {Button, Input} from "antd"
+import {MenuOutlined, SearchOutlined, SkinFilled, DollarCircleFilled} from "@ant-design/icons"
+import {Button, Input, Dropdown, Menu} from "antd"
 import {fetchProductColorBySearch} from "pos/features/product/fetchProductColorBySearch"
 import {useCategoryIdPos, useProductPaginationPos, useSizeIdPos} from "pos/features/product/productSlice"
 import React, {useEffect, useState} from "react"
+import {Link, useLocation} from "react-router-dom"
 import {useDispatch} from "../store"
 import FilterButton from "./FilterButton"
 import "./Header.less"
 import Navigation from "./Navigation"
+
+const MenuSidebar: React.FC = () => {
+    const {pathname} = useLocation()
+
+    const menu = (
+        <Menu selectedKeys={[pathname]}>
+            <Menu.Item className="account-item" icon={<SkinFilled />} key="/">
+                <Link to="/">Товары</Link>
+            </Menu.Item>
+            <Menu.Item className="account-item" icon={<DollarCircleFilled />} key="/orders">
+                <Link to="/orders">Сделки</Link>
+            </Menu.Item>
+        </Menu>
+    )
+
+    return (
+        <div className="logo">
+            <Dropdown overlay={menu} trigger={["click"]}>
+                <Button icon={<MenuOutlined />} size="large" />
+            </Dropdown>
+        </div>
+    )
+}
 
 const Header: React.FC = () => {
     const dispatch = useDispatch()
@@ -34,9 +58,7 @@ const Header: React.FC = () => {
 
     return (
         <div className="header">
-            <div className="logo">
-                <Button icon={<MenuOutlined />} size="large" />
-            </div>
+            <MenuSidebar />
             <div>
                 <FilterButton />
             </div>

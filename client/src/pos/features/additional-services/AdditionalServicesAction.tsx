@@ -9,9 +9,10 @@ import {
     removeAdditionalService,
     updateQtyAdditionalService
 } from "pos/features/cart/cartSlice"
-import {useDispatch} from "../../../../store"
+import {useDispatch} from "pos/store"
 import {formatPrice} from "utils/formatPrice"
 import {useGetAdditionalServicesQuery} from "./additionalServiceApi"
+import "./AdditionalServicesAction.less"
 
 const AdditionalServicesAction: React.FC = () => {
     const {data: additionalServices, isLoading} = useGetAdditionalServicesQuery()

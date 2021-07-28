@@ -1,8 +1,8 @@
 import OrdersTableBlock from "components/blocks/orders-table-block/OrdersTableBlock"
 import React from "react"
-import {useGetOrdersQuery} from "./orderApi"
+import {useGetOrdersQuery} from "../orderApi"
 import {useGetPaymentMethodQuery} from "./paymentMethodsApi"
-import "./Orders.less"
+import "./OrdersList.less"
 
 const Orders: React.FC = () => {
     const {data: orders, isLoading: isLoadingOrders} = useGetOrdersQuery()

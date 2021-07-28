@@ -14,6 +14,7 @@ export interface StateProps {
         from: string
         to: string
     }
+    sourceId: number
 }
 
 const initialState = orderArchiveAdapter.getInitialState<StateProps>({
@@ -21,7 +22,8 @@ const initialState = orderArchiveAdapter.getInitialState<StateProps>({
     filterDates: {
         from: moment().toISOString(),
         to: moment().toISOString()
-    }
+    },
+    sourceId: 0
 })
 
 const orderArchiveSlice = createSlice({
@@ -30,6 +32,9 @@ const orderArchiveSlice = createSlice({
     reducers: {
         updateFilterDates: (state, action: PayloadAction<{from: string; to: string}>) => {
             state.filterDates = action.payload
+        },
+        updateFilterSource: (state, action: PayloadAction<number>) => {
+            state.sourceId = action.payload
         }
     },
     extraReducers: builder => {
@@ -44,7 +49,7 @@ const orderArchiveSlice = createSlice({
     }
 })
 
-export const {updateFilterDates} = orderArchiveSlice.actions
+export const {updateFilterDates, updateFilterSource} = orderArchiveSlice.actions
 
 export const {
     selectById: getOrderArchiveById,

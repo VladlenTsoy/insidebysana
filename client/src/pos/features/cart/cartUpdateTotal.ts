@@ -9,7 +9,7 @@ export const updateTotal = (state: StoreState["cart"]) => {
     // Добавление товаров
     if (products.length) {
         totalPrice += products.reduce((acc, {product, qty}: any) => {
-            const price = product.discount.discount
+            const price = product.discount
                 ? (product.price - (product.price / 100) * product.discount.discount).toFixed(0)
                 : product.price
             return acc + Number(price) * qty

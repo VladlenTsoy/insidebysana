@@ -1,7 +1,5 @@
 const {logger} = require("config/logger.config")
 const {ProductColor} = require("models/products/ProductColor")
-const {uniq} = require("lodash")
-const {raw} = require("objection")
 
 /**
  * Вывод по поиску
@@ -19,20 +17,46 @@ const GetBySearch = async (req, res) => {
             search = productColorId
         }
 
-        const products = await ProductColor.query()
+        const refProductColor = ProductColor.query()
             .withGraphFetched(`[color, discount, sizes_props]`)
             .join("products", "products.id", "product_colors.product_id")
-            .modify("filterSubCategory", categoryId)
-            .modify("filterSizes", sizeId === 0 ? [] : [sizeId])
-            .modify("search", search, false)
             .where("product_colors.hide_id", null)
-            // TODO - лучшее решение
-            .whereRaw(
+            .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
+
+        // Поиск
+        if (search.trim() !== "") {
+            refProductColor.where(builder => {
+                builder
+                    .whereRaw(
+                        `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
+                    )
+                    .orWhereRaw(
+                        `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
+                    )
+                    .orWhere("product_colors.id", "LIKE", `%${search}%`)
+            })
+        }
+
+        // Вывод по размерам
+        if (sizeId && sizeId !== 0)
+            refProductColor
+                .whereRaw(
+                    `JSON_SEARCH(JSON_KEYS(product_colors.sizes), 'all', ${String(sizeId)}) IS NOT null`
+                )
+                .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',${sizeId},'".qty')) > 0`)
+        // TODO - лучшее решение
+        else
+            refProductColor.whereRaw(
                 `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
             )
-            .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
-        .page(currentPage, 18)
 
+        // По категориям
+        if (categoryId && categoryId !== 0)
+            refProductColor.whereRaw(
+                `product_colors.product_id IN (SELECT id FROM products WHERE category_id = ${categoryId})`
+            )
+
+        const products = await refProductColor.page(currentPage, 18)
         return res.send(products)
     } catch (e) {
         logger.error(e.stack)

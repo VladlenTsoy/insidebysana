@@ -7,7 +7,6 @@ import {ProductCardType} from "pos/features/product/product"
 import PriceBlock from "components/blocks/price-block/PriceBlock"
 import {DeleteOutlined, MinusOutlined, PlusOutlined, StopOutlined} from "@ant-design/icons"
 import "./CartProductItem.less"
-import {useGetProductColorById} from "../product/productSlice"
 
 interface PlusMinusInputProps {
     productCart: CartProductItemType
@@ -82,8 +81,8 @@ interface ProductCartProps {
 }
 
 const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
-    const product = useGetProductColorById(cartProduct.product_color_id)
-    const selectSize = product?.sizes_props.find(size => size.size_id === cartProduct.size_id)
+    const {product} = cartProduct
+    const selectSize = product.sizes_props.find(size => size.size_id === cartProduct.size_id)
 
     // Дейиствие при нажатии
     const onClickHadnler = (e: any) => {
@@ -119,7 +118,7 @@ const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
         button.appendChild(circle)
     }
 
-    if (product && selectSize)
+    if (selectSize)
         return (
             <div className="cart-product-item">
                 <div className="details" onClick={onClickHadnler}>

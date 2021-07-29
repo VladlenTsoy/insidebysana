@@ -8,8 +8,8 @@ export const productAdapter = createEntityAdapter<ProductCardType>()
 
 export interface StateProps {
     loading: boolean
-    category_id: number
-    size_id: number
+    categoryId: number
+    sizeId: number
     search?: string
     pagination: {
         currentPage: number
@@ -20,8 +20,8 @@ export interface StateProps {
 
 const initialState = productAdapter.getInitialState<StateProps>({
     loading: false,
-    category_id: 0,
-    size_id: 0,
+    categoryId: 0,
+    sizeId: 0,
     pagination: {currentPage: 0, limit: 18, total: 0},
     search: undefined
 })
@@ -31,24 +31,24 @@ const productSlice = createSlice({
     initialState,
     reducers: {
         // Изменить Категорию для фильтации
-        changeCategoryId: (state, action: PayloadAction<StateProps["category_id"]>) => {
-            state.category_id = action.payload
+        changeCategoryId: (state, action: PayloadAction<StateProps["categoryId"]>) => {
+            state.categoryId = action.payload
             state.pagination = initialState.pagination
             productAdapter.removeAll(state)
         },
         // Изменить Размер для фильтрации
-        changeSizeId: (state, action: PayloadAction<StateProps["size_id"]>) => {
-            state.size_id = action.payload
+        changeSizeId: (state, action: PayloadAction<StateProps["sizeId"]>) => {
+            state.sizeId = action.payload
             state.pagination = initialState.pagination
             productAdapter.removeAll(state)
         },
         // Сбросить фильтрацию категорию и размер
         resetCategoryIdAndSizeId: (
             state,
-            action: PayloadAction<{categoryId: StateProps["category_id"]; sizeId: StateProps["size_id"]}>
+            action: PayloadAction<{categoryId: StateProps["categoryId"]; sizeId: StateProps["sizeId"]}>
         ) => {
-            state.category_id = action.payload.categoryId
-            state.size_id = action.payload.sizeId
+            state.categoryId = action.payload.categoryId
+            state.sizeId = action.payload.sizeId
             state.pagination = initialState.pagination
             productAdapter.removeAll(state)
         },
@@ -69,7 +69,9 @@ const productSlice = createSlice({
             state.loading = true
         })
         builder.addCase(fetchProductColorBySearch.fulfilled, (state, action) => {
+            const {currentPage = 0} = action.meta.arg
             productAdapter.addMany(state, action.payload.results)
+            state.pagination.currentPage = currentPage + 1
             state.pagination.total = action.payload.total
             state.loading = false
         })
@@ -89,23 +91,13 @@ export const {selectAll} = productAdapter.getSelectors<StoreState>(state => stat
 export default productSlice.reducer
 
 // Вывод Категории для фильтрации
-export const useCategoryIdPos = () => useSelector((state: StoreState) => state.product.category_id)
+export const useCategoryIdPos = () => useSelector((state: StoreState) => state.product.categoryId)
 
 // Вывод размера для фильтрации
-export const useSizeIdPos = () => useSelector((state: StoreState) => state.product.size_id)
-
-// Вывод пагинации
-export const useProductPaginationPos = () => useSelector((state: StoreState) => state.product.pagination)
+export const useSizeIdPos = () => useSelector((state: StoreState) => state.product.sizeId)
 
 // Вывод продукта
 export const useProductColors = () => useSelector(selectAll)
 
-// Вывод загрузки
-export const useLoadingProductColors = () => useSelector((state: StoreState) => state.product.loading)
-
-// Вывод поиска
-export const useGetFilterSearch = () => useSelector((state: StoreState) => state.product.search)
-
-// Вывод продукта по Id
-export const useGetProductColorById = (id: number) =>
-    useSelector((state: StoreState) => state.product.entities[id])
+// Вывод параметров для продуктов
+export const useGetParamsProduct = () => useSelector((state: StoreState) => state.product)

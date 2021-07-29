@@ -9,7 +9,7 @@ const {ProductColor} = require("models/products/ProductColor")
  */
 const GetBySearch = async (req, res) => {
     try {
-        let {search, categoryId, sizeId, currentPage} = req.body
+        let {search, categoryId, sizeId, currentPage, limit} = req.body
 
         // Поиск по SKU
         if (search && search.includes("PC")) {
@@ -56,7 +56,7 @@ const GetBySearch = async (req, res) => {
                 `product_colors.product_id IN (SELECT id FROM products WHERE category_id = ${categoryId})`
             )
 
-        const products = await refProductColor.page(currentPage, 18)
+        const products = await refProductColor.page(currentPage, limit)
         return res.send(products)
     } catch (e) {
         logger.error(e.stack)

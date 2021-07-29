@@ -17,9 +17,13 @@ type AgrsProps = {
 
 export const fetchProductColorBySearch = createAsyncThunk<ReturnedType, AgrsProps, ThunkProps>(
     "pos/product-color/fetch",
-    async ({search = "", categoryId = 0, sizeId = 0, currentPage = 0}, {signal}) => {
+    async ({search = "", categoryId = 0, sizeId = 0, currentPage = 0}, {signal, getState}) => {
+        const {
+            pagination: {limit}
+        } = getState().product
+
         return await apiRequest("post", `cashier/search-products`, {
-            data: {search, categoryId, sizeId, currentPage},
+            data: {search, categoryId, sizeId, currentPage, limit},
             signal
         })
     },

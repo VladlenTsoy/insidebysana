@@ -8,6 +8,7 @@ import {formatPrice} from "utils/formatPrice"
 import {motion, AnimatePresence} from "framer-motion"
 import "./ProductCard.less"
 import {ProductCardType} from "./product"
+import {formatDiscount} from "utils/formatDiscount"
 
 type SelectSize = number | null
 
@@ -167,9 +168,10 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
                     <span className="hex" style={{background: product.color.hex}} />
                     <span className="title">{product.color.title}</span>
                 </div>
-                {product.discount && <div className="discount">-{Math.ceil(product.discount.discount)}%</div>}
+                {product.discount && (
+                    <div className="discount">-{formatDiscount(product.discount.discount)}%</div>
+                )}
                 <ImageBlock image={product.url_thumbnail} />
-
                 <AnimatePresence>
                     {selectSize && (
                         <ThumbnailActions
@@ -188,7 +190,7 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
             <div className="sizes-action">
                 <Radio.Group onChange={onChangeHandler} size="large" value={selectSize?.size_id || null}>
                     {product.sizes_props.map(
-                        (size, key) =>
+                        size =>
                             size.qty > 0 && (
                                 <Radio.Button
                                     key={`PC${product.id}S${size.size_id}`}

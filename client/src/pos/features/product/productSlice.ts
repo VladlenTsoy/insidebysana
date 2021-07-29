@@ -65,7 +65,7 @@ const productSlice = createSlice({
     },
     extraReducers: builder => {
         // Загрузка продуктов
-        builder.addCase(fetchProductColorBySearch.pending, (state, action) => {
+        builder.addCase(fetchProductColorBySearch.pending, state => {
             state.loading = true
         })
         builder.addCase(fetchProductColorBySearch.fulfilled, (state, action) => {
@@ -73,6 +73,9 @@ const productSlice = createSlice({
             productAdapter.addMany(state, action.payload.results)
             state.pagination.currentPage = currentPage + 1
             state.pagination.total = action.payload.total
+            state.loading = false
+        })
+        builder.addCase(fetchProductColorBySearch.rejected, state => {
             state.loading = false
         })
     }

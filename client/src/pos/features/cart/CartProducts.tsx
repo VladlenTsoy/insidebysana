@@ -1,5 +1,5 @@
 import React from "react"
-import {useCartProductColors, useTotalPricePos} from "pos/features/cart/cartSlice"
+import {useCartAdditionalServices, useCartProductColors, useTotalPricePos} from "pos/features/cart/cartSlice"
 import ProductCart from "./CartProductItem"
 import {Button} from "antd"
 import "./CartProducts.less"
@@ -7,16 +7,25 @@ import {formatPrice} from "utils/formatPrice"
 import AdditionalServicesAction from "pos/features/additional-services/AdditionalServicesAction"
 import PosOrderAction from "pos/features/order/create-order/PosOrderAction"
 import {FlagOutlined} from "@ant-design/icons"
+import {motion} from "framer-motion"
+import CartAdditionalServiceItem from "../additional-services/CartAdditionalServiceItem"
 
 interface AddedProductsProps {}
 
 const AddedProducts: React.FC<AddedProductsProps> = () => {
     const products = useCartProductColors()
+    const additionalServices = useCartAdditionalServices()
     const totalPrice = useTotalPricePos()
 
     return (
-        <div className="cart-container">
-            <div className="asdasd">
+        <motion.div
+            animate={{opacity: 1, x: 0}}
+            initial={{opacity: 0, x: 100}}
+            exit={{opacity: 0, x: 100}}
+            transition={{duration: 0.5}}
+            className="cart-container"
+        >
+            <div className="cart-content">
                 <div className="cart-scroll-products">
                     {products.map(product => (
                         <ProductCart
@@ -24,11 +33,15 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                             key={`${product.product_color_id}${product.size_id}`}
                         />
                     ))}
+                    {additionalServices.map(additionalService => (
+                        <CartAdditionalServiceItem
+                            additionalService={additionalService}
+                            key={additionalService.id}
+                        />
+                    ))}
                 </div>
                 <div className="total-block">
-                    <div className="additional-services-action">
-                        <AdditionalServicesAction />
-                    </div>
+                    <AdditionalServicesAction />
                     <div className="total-price">
                         <div>Сумма к оплате:</div>
                         <div>{formatPrice(totalPrice)} сум</div>
@@ -46,7 +59,7 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                     </PosOrderAction>
                 </div>
             </div>
-        </div>
+        </motion.div>
     )
 }
 export default AddedProducts

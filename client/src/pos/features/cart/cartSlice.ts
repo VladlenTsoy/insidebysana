@@ -265,6 +265,9 @@ export default cartSlice.reducer
 
 export const useCartProductColors = () => useSelector(selectAll)
 
+export const useCartAdditionalServices = () =>
+    useSelector((state: StoreState) => state.cart.addtionalServices)
+
 // Вывод итоговой суммы
 export const useTotalPricePos = () => useSelector((state: StoreState) => state.cart.totalPrice)
 

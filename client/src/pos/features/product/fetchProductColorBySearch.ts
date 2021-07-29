@@ -34,6 +34,7 @@ export const fetchProductColorBySearch = createAsyncThunk<ReturnedType, AgrsProp
                 !product.loading &&
                 (product.pagination.total === 0 || product.pagination.total > product.ids.length)
             )
-        }
+        },
+        dispatchConditionRejection: true
     }
 )

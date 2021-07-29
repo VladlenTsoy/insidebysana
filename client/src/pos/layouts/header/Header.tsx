@@ -1,5 +1,5 @@
-import {MenuOutlined, SearchOutlined, SkinFilled, DollarCircleFilled} from "@ant-design/icons"
-import {Button, Input, Dropdown, Menu} from "antd"
+import {SearchOutlined, SkinFilled, DollarCircleFilled} from "@ant-design/icons"
+import {Input, Dropdown, Menu} from "antd"
 import {changeSearch} from "pos/features/product/productSlice"
 import React from "react"
 import {Link, useLocation} from "react-router-dom"
@@ -7,6 +7,7 @@ import {useDispatch} from "pos/store"
 import FilterButton from "./FilterButton"
 import "./Header.less"
 import Navigation from "./Navigation"
+import logo from "assets/images/logo-2-white.svg"
 
 const MenuSidebar: React.FC = () => {
     const {pathname} = useLocation()
@@ -25,7 +26,10 @@ const MenuSidebar: React.FC = () => {
     return (
         <div className="logo">
             <Dropdown overlay={menu} trigger={["click"]}>
-                <Button icon={<MenuOutlined />} size="large" />
+                <div className="logo-img">
+                    <img src={logo} alt="insidebysana" />
+                    <span>Меню</span>
+                </div>
             </Dropdown>
         </div>
     )

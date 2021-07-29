@@ -7,7 +7,7 @@ export const categoryApi = createApi({
     baseQuery,
     endpoints: build => ({
         getCategories: build.query<Category[], void>({
-            query: () => `user/categories`
+            query: () => `user/cashier/categories`
         })
     })
 })

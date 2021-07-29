@@ -7,7 +7,7 @@ export const sizeApi = createApi({
     baseQuery,
     endpoints: build => ({
         getSize: build.query<Size[], void>({
-            query: () => `user/sizes`
+            query: () => `user/cashier/sizes`
         })
     })
 })

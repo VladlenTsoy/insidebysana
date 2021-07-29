@@ -13,7 +13,7 @@ import {
 import {changeButtonSubmit} from "pos/home/posSlice"
 import {clearCart} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
-import {useGetSizeQuery} from "pos/layouts/sizeApi"
+import {useGetSizeQuery} from "pos/layouts/header/sizeApi"
 import "./PosOrder.less"
 import Header from "./header/Header"
 import {useCheckPrint} from "utils/CheckPrint"

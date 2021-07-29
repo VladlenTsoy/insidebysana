@@ -9,8 +9,8 @@ import {
     useCategoryIdPos,
     useSizeIdPos
 } from "pos/features/product/productSlice"
-import {useGetCategoriesQuery} from "pos/layouts/categoryApi"
-import {useGetSizeQuery} from "pos/layouts/sizeApi"
+import {useGetCategoriesQuery} from "./categoryApi"
+import {useGetSizeQuery} from "./sizeApi"
 import {useDispatch} from "pos/store"
 import "./FilterButton.less"
 

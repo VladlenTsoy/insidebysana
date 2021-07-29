@@ -33,12 +33,14 @@ const productSlice = createSlice({
         // Изменить Категорию для фильтации
         changeCategoryId: (state, action: PayloadAction<StateProps["category_id"]>) => {
             state.category_id = action.payload
-            state.pagination.currentPage = initialState.pagination.currentPage
+            state.pagination = initialState.pagination
+            productAdapter.removeAll(state)
         },
         // Изменить Размер для фильтрации
         changeSizeId: (state, action: PayloadAction<StateProps["size_id"]>) => {
             state.size_id = action.payload
-            state.pagination.currentPage = initialState.pagination.currentPage
+            state.pagination = initialState.pagination
+            productAdapter.removeAll(state)
         },
         // Сбросить фильтрацию категорию и размер
         resetCategoryIdAndSizeId: (
@@ -47,10 +49,18 @@ const productSlice = createSlice({
         ) => {
             state.category_id = action.payload.categoryId
             state.size_id = action.payload.sizeId
+            state.pagination = initialState.pagination
+            productAdapter.removeAll(state)
         },
         // Изменения пагинации
         changeCurrentPage: (state, action: PayloadAction<StateProps["pagination"]["currentPage"]>) => {
             state.pagination.currentPage = action.payload
+        },
+        // Изменения поиска
+        changeSearch: (state, action: PayloadAction<StateProps["search"]>) => {
+            state.search = action.payload
+            state.pagination = initialState.pagination
+            productAdapter.removeAll(state)
         }
     },
     extraReducers: builder => {
@@ -59,7 +69,8 @@ const productSlice = createSlice({
             state.loading = true
         })
         builder.addCase(fetchProductColorBySearch.fulfilled, (state, action) => {
-            productAdapter.addMany(state, action.payload)
+            productAdapter.addMany(state, action.payload.results)
+            state.pagination.total = action.payload.total
             state.loading = false
         })
     }
@@ -69,7 +80,8 @@ export const {
     changeCategoryId,
     changeSizeId,
     resetCategoryIdAndSizeId,
-    changeCurrentPage
+    changeCurrentPage,
+    changeSearch
 } = productSlice.actions
 
 export const {selectAll} = productAdapter.getSelectors<StoreState>(state => state.product)
@@ -90,3 +102,10 @@ export const useProductColors = () => useSelector(selectAll)
 
 // Вывод загрузки
 export const useLoadingProductColors = () => useSelector((state: StoreState) => state.product.loading)
+
+// Вывод поиска
+export const useGetFilterSearch = () => useSelector((state: StoreState) => state.product.search)
+
+// Вывод продукта по Id
+export const useGetProductColorById = (id: number) =>
+    useSelector((state: StoreState) => state.product.entities[id])

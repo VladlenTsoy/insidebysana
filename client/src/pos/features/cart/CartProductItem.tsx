@@ -3,30 +3,20 @@ import React, {useCallback} from "react"
 import {addToCart, removeFromCart, updateQty} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../store"
 import {CartProductItemType} from "pos/features/cart/cart"
+import {ProductCardType} from "pos/features/product/product"
 import PriceBlock from "components/blocks/price-block/PriceBlock"
 import {DeleteOutlined, MinusOutlined, PlusOutlined, StopOutlined} from "@ant-design/icons"
 import "./CartProductItem.less"
-import {useCartProductColors} from "pos/features/cart/cartSlice"
+import {useGetProductColorById} from "../product/productSlice"
 
 interface PlusMinusInputProps {
     productCart: CartProductItemType
+    selectSize: ProductCardType["sizes_props"][0]
 }
 
-const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
+const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart, selectSize}) => {
     const dispatch = useDispatch()
-    const cartProducts = useCartProductColors()
     const {product_color_id, size_id, product} = productCart
-    const sizeQty = product.sizes_props.find(size => size.size_id === size_id)?.qty
-
-    // Поиск кол-во по размеру в товаре
-    const searchQtyBySize = useCallback(() => {
-        const findProduct = cartProducts.find(
-            cartProduct =>
-                cartProduct.product_color_id === product_color_id && cartProduct.size_id === size_id
-        )
-        if (findProduct) return findProduct.qty
-        return 0
-    }, [product_color_id, size_id, cartProducts])
 
     // Обновление кол-во в корзине
     const updateQtyToCart = useCallback(qty => dispatch(updateQty({product_color_id, size_id, qty: qty})), [
@@ -39,30 +29,28 @@ const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
     const plusHandler = useCallback(
         (e: any) => {
             e.preventDefault()
-            if (sizeQty && searchQtyBySize() >= sizeQty) return
-            const qty = searchQtyBySize()
-            if (qty > 0) updateQtyToCart(qty + 1)
+            if (productCart.qty >= selectSize.qty) return
+            if (productCart.qty > 0) updateQtyToCart(productCart.qty + 1)
             else dispatch(addToCart({size_id, product_color_id, product, qty: 1}))
         },
-        [dispatch, product_color_id, size_id, product, updateQtyToCart, searchQtyBySize]
+        [dispatch, product_color_id, size_id, product, updateQtyToCart, productCart, selectSize]
     )
 
     // При нажатии на минус
     const minusHandler = useCallback(
         (e: any) => {
             e.preventDefault()
-            const qty = searchQtyBySize()
-            if (qty > 1) updateQtyToCart(qty - 1)
+            if (productCart.qty > 1) updateQtyToCart(productCart.qty - 1)
             else dispatch(removeFromCart({size_id, product_color_id}))
         },
-        [dispatch, searchQtyBySize, updateQtyToCart, size_id, product_color_id]
+        [dispatch, productCart, updateQtyToCart, size_id, product_color_id]
     )
 
     return (
         <div className="plus-minus-input">
             <div className="minus" onClick={minusHandler}>
-                {searchQtyBySize() > 0 ? (
-                    searchQtyBySize() === 1 ? (
+                {productCart.qty > 0 ? (
+                    productCart.qty === 1 ? (
                         <div className="btn btn-danger">
                             <DeleteOutlined />
                         </div>
@@ -77,9 +65,9 @@ const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
                     </div>
                 )}
             </div>
-            <div className="count">{searchQtyBySize()}</div>
+            <div className="count">{productCart.qty}</div>
             <div className="plus" onClick={plusHandler}>
-                {sizeQty && searchQtyBySize() < sizeQty && (
+                {productCart.qty < selectSize.qty && (
                     <div className="btn">
                         <PlusOutlined />
                     </div>
@@ -90,20 +78,25 @@ const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart}) => {
 }
 
 interface ProductCartProps {
-    product: CartProductItemType
+    cartProduct: CartProductItemType
 }
 
-const ProductCart: React.FC<ProductCartProps> = ({product}) => {
+const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
+    const product = useGetProductColorById(cartProduct.product_color_id)
+    const selectSize = product?.sizes_props.find(size => size.size_id === cartProduct.size_id)
+
+    // Дейиствие при нажатии
     const onClickHadnler = (e: any) => {
         createRipple(e)
-        const productCardSearch = document.querySelector(`#product-item-${product.product_color_id}`)
+        const productCardSearch = document.querySelector(`#product-item-${cartProduct.product_color_id}`)
         if (productCardSearch) {
-            productCardSearch.classList.add("active")
+            // productCardSearch.classList.add("active")
             productCardSearch.scrollIntoView({behavior: "smooth", block: "center"})
         }
     }
 
-    function createRipple(event: any) {
+    // Анимация клика
+    const createRipple = (event: any) => {
         const button = event.currentTarget
 
         const circle = document.createElement("span")
@@ -126,21 +119,23 @@ const ProductCart: React.FC<ProductCartProps> = ({product}) => {
         button.appendChild(circle)
     }
 
-    return (
-        <div className="cart-product-item">
-            <div className="details" onClick={onClickHadnler}>
-                <div className="title">
-                    {product.product.title} ({product.product.color.title})
+    if (product && selectSize)
+        return (
+            <div className="cart-product-item">
+                <div className="details" onClick={onClickHadnler}>
+                    <div className="title">
+                        {product.title} ({product.color.title})
+                    </div>
+                    <div className="price-size">
+                        <PriceBlock price={product.price} discount={product.discount} />
+                        <Tag color="#fe9c64">XS (12)</Tag>
+                    </div>
                 </div>
-                <div className="price-size">
-                    <PriceBlock price={product.product.price} discount={product.product.discount} />
-                    <Tag color="#fe9c64">XS (12)</Tag>
+                <div>
+                    <PlusMinusInput productCart={cartProduct} selectSize={selectSize} />
                 </div>
             </div>
-            <div>
-                <PlusMinusInput productCart={product} />
-            </div>
-        </div>
-    )
+        )
+    return null
 }
-export default ProductCart
+export default React.memo(ProductCart)

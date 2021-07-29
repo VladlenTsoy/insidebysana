@@ -1,10 +1,9 @@
 import {MenuOutlined, SearchOutlined, SkinFilled, DollarCircleFilled} from "@ant-design/icons"
 import {Button, Input, Dropdown, Menu} from "antd"
-import {fetchProductColorBySearch} from "pos/features/product/fetchProductColorBySearch"
-import {useCategoryIdPos, useProductPaginationPos, useSizeIdPos} from "pos/features/product/productSlice"
-import React, {useEffect, useState} from "react"
+import {changeSearch} from "pos/features/product/productSlice"
+import React from "react"
 import {Link, useLocation} from "react-router-dom"
-import {useDispatch} from "../store"
+import {useDispatch} from "pos/store"
 import FilterButton from "./FilterButton"
 import "./Header.less"
 import Navigation from "./Navigation"
@@ -34,27 +33,14 @@ const MenuSidebar: React.FC = () => {
 
 const Header: React.FC = () => {
     const dispatch = useDispatch()
-
-    const [search, setSearch] = useState<string>("")
-    const categoryId = useCategoryIdPos()
-    const sizeId = useSizeIdPos()
-    const {currentPage} = useProductPaginationPos()
-
     let timeout: any
 
     const onChangeHandler = (e: any) => {
         if (timeout) clearTimeout(timeout)
         timeout = setTimeout(() => {
-            setSearch(e.target.value)
+            dispatch(changeSearch(e.target.value))
         }, 500)
     }
-
-    useEffect(() => {
-        const promise = dispatch(fetchProductColorBySearch({search, categoryId, sizeId, currentPage}))
-        return () => {
-            promise.abort()
-        }
-    }, [search, dispatch, categoryId, sizeId, currentPage])
 
     return (
         <div className="header">

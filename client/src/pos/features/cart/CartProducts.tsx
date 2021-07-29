@@ -20,7 +20,7 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                 <div className="cart-scroll-products">
                     {products.map(product => (
                         <ProductCart
-                            product={product}
+                            cartProduct={product}
                             key={`${product.product_color_id}${product.size_id}`}
                         />
                     ))}

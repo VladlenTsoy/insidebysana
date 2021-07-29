@@ -1,5 +1,5 @@
 import React from "react"
-import Header from "./Header"
+import Header from "./header/Header"
 import "./Layout.less"
 
 const Layout: React.FC = ({children}) => {

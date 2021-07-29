@@ -250,7 +250,7 @@ const GetForEditById = async (req, res) => {
  */
 const GetArchiveByDates = async (req, res) => {
     try {
-        const {dateFrom, dateTo} = req.body
+        const {dateFrom, dateTo, sourceId} = req.body
 
         let resOrders = Order.query()
             .withGraphFetched(`[client, payments, productColors, additionalServices]`)
@@ -271,6 +271,8 @@ const GetArchiveByDates = async (req, res) => {
                 moment(dateFrom).startOf("day").format("YYYY-MM-DD HH:mm:ss"),
                 moment(dateTo).endOf("day").format("YYYY-MM-DD HH:mm:ss")
             ])
+
+        if (sourceId && sourceId !== 0) resOrders.where("source_id", sourceId)
 
         resOrders = await resOrders
 

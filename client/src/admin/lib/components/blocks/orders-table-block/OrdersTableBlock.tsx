@@ -1,4 +1,4 @@
-import {DatePicker, Typography} from "antd"
+import {DatePicker, Select, Typography} from "antd"
 import {RangePickerProps} from "antd/lib/date-picker/generatePicker"
 import {PaymentMethod} from "admin/lib/types/payment/PaymentMethod"
 import {User} from "admin/lib/types/User"
@@ -11,6 +11,7 @@ import "./OrdersTableBlock.less"
 import {OrderTableColumn} from "./OrderTableColumn"
 //@ts-ignore
 import ReactHTMLTableToExcel from "react-html-table-to-excel"
+import {Source} from "types/Source"
 
 const {Text} = Typography
 const {RangePicker} = DatePicker
@@ -21,11 +22,15 @@ interface OrdersTableBlockProps {
     orders: OrderTableColumn[]
     onChangeHandler?: RangePickerProps<any>["onChange"]
     access: User["access"]
+    sources?: Source[]
+    onChangeSourceHandler?: any
 }
 
 const OrdersTableBlock: React.FC<OrdersTableBlockProps> = ({
     loading,
     onChangeHandler,
+    onChangeSourceHandler,
+    sources,
     orders,
     access,
     payments
@@ -46,8 +51,19 @@ const OrdersTableBlock: React.FC<OrdersTableBlockProps> = ({
 
     return (
         <>
-            {!!onChangeHandler && (
+            {!!onChangeHandler && !!onChangeSourceHandler && (
                 <div className="header">
+                    <Select
+                        size="large"
+                        className="filter-source"
+                        onChange={onChangeSourceHandler}
+                        defaultValue={0}
+                    >
+                        <Select.Option value={0}>Все</Select.Option>
+                        {sources?.map(source => (
+                            <Select.Option value={source.id}>{source.title}</Select.Option>
+                        ))}
+                    </Select>
                     <RangePicker
                         size="large"
                         onChange={onChangeHandler}

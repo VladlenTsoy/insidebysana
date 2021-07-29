@@ -53,7 +53,7 @@ const Header: React.FC = () => {
                     suffix={<SearchOutlined />}
                     size="large"
                     onChange={onChangeHandler}
-                    // ref={searchRef}
+                    allowClear
                     placeholder="Введите SKU или название товара"
                 />
             </div>

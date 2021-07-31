@@ -1,0 +1,68 @@
+.source-list {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid @border-color-base;
+    border-radius: @border-radius-base;
+    height: 100%;
+    overflow: auto;
+
+    legend {
+        color: @text-color-secondary;
+        font-size: 12px;
+        width: auto;
+        margin: 0;
+        border: 0;
+        padding: 0 0.25rem;
+    }
+
+    .source-item {
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid @border-color-base;
+        }
+
+        &.active {
+            font-weight: bold;
+        }
+
+        .anticon {
+            width: 0;
+            color: @primary-color;
+            // margin-right: 0.5rem;
+        }
+    }
+}
+
+.comment {
+    overflow: auto;
+    height: 100%;
+
+    .back {
+        margin-bottom: 0.5rem;
+        cursor: pointer;
+        text-transform: uppercase;
+        padding: 0.25rem 0;
+
+        .anticon {
+            margin-right: 0.25rem;
+            vertical-align: -2px;
+        }
+
+        .text {
+            display: inline-block;
+            margin-right: 0.5rem;
+            padding-right: 0.5rem;
+            border-right: 1px solid @border-color-base;
+        }
+
+        .title {
+            display: inline-block;
+            color: @text-color-secondary;
+            text-transform: capitalize;
+        }
+    }
+}

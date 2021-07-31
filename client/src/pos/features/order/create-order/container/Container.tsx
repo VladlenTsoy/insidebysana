@@ -1,7 +1,6 @@
 import {Button, Form, InputNumber} from "antd"
 import React from "react"
-import {useButtonSubmit} from "../../../../home/posSelectors"
-import {useLeftToPay, usePayments} from "pos/features/cart/cartSlice"
+import {useCartParams} from "pos/features/cart/cartSlice"
 import {changePriceToPayment} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../../../store"
 import {formatPrice} from "utils/formatPrice"
@@ -10,7 +9,7 @@ import ClientAction from "./client-action/ClientAction"
 import LeftToPayBlock from "./left-to-pay-block/LeftToPayBlock"
 import PayChangeBlock from "./pay-change-block/PayChangeBlock"
 import PaymentBlock from "./payments-block/PaymentBlock"
-import ProcessingBlock from "./processing-block/ProcessingBlock"
+import ProcessingBlock from "../create-order-form/ProcessingSwitch"
 
 interface ContainerProps {
     selectClient: any
@@ -19,10 +18,9 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({selectClient, updateSelectClient, onFinishHandler}) => {
-    const payments = usePayments()
     const dispatch = useDispatch()
-    const leftToPay = useLeftToPay()
-    const {disabled, loading} = useButtonSubmit()
+    const {leftToPay, payments} = useCartParams()
+    // const {disabled, loading} = useButtonSubmit()
 
     const onChangePaymentHandler = (payment: PosOrderPayment) => dispatch(changePriceToPayment(payment))
 
@@ -69,8 +67,8 @@ const Container: React.FC<ContainerProps> = ({selectClient, updateSelectClient, 
                 </div>
                 <Button
                     type="primary"
-                    loading={loading}
-                    disabled={disabled}
+                    // loading={loading}
+                    // disabled={disabled}
                     htmlType="submit"
                     form="pos-create-order"
                     className="button-finish"

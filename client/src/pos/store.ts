@@ -5,7 +5,6 @@ import {categoryApi} from "./layouts/header/categoryApi"
 import {sizeApi} from "./layouts/header/sizeApi"
 import {additionalServiceApi} from "./features/additional-services/additionalServiceApi"
 import {paymentMethodApi} from "./features/order/orders-list/paymentMethodsApi"
-import pos from "./home/posSlice"
 import product from "./features/product/productSlice"
 import cart from "./features/cart/cartSlice"
 import auth from "./auth/authSlice"
@@ -18,7 +17,6 @@ export const store = configureStore({
         [sizeApi.reducerPath]: sizeApi.reducer,
         [additionalServiceApi.reducerPath]: additionalServiceApi.reducer,
         [paymentMethodApi.reducerPath]: paymentMethodApi.reducer,
-        pos,
         auth,
         cart,
         product

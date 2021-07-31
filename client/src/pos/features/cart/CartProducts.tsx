@@ -1,11 +1,11 @@
 import React from "react"
-import {useCartAdditionalServices, useCartProductColors, useTotalPricePos} from "pos/features/cart/cartSlice"
+import {useCartAdditionalServices, useCartParams, useCartProductColors} from "pos/features/cart/cartSlice"
 import ProductCart from "./CartProductItem"
 import {Button} from "antd"
 import "./CartProducts.less"
 import {formatPrice} from "utils/formatPrice"
 import AdditionalServicesAction from "pos/features/additional-services/AdditionalServicesAction"
-import PosOrderAction from "pos/features/order/create-order/PosOrderAction"
+import CreateOrderAction from "pos/features/order/create-order/CreateOrderAction"
 import {FlagOutlined} from "@ant-design/icons"
 import {motion} from "framer-motion"
 import CartAdditionalServiceItem from "../additional-services/CartAdditionalServiceItem"
@@ -15,7 +15,7 @@ interface AddedProductsProps {}
 const AddedProducts: React.FC<AddedProductsProps> = () => {
     const products = useCartProductColors()
     const additionalServices = useCartAdditionalServices()
-    const totalPrice = useTotalPricePos()
+    const {totalPrice} = useCartParams()
 
     return (
         <motion.div
@@ -46,8 +46,9 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                         <div>Сумма к оплате:</div>
                         <div>{formatPrice(totalPrice)} сум</div>
                     </div>
-                    <PosOrderAction>
+                    <CreateOrderAction>
                         <Button
+                            className="black"
                             type="primary"
                             block
                             size="large"
@@ -56,7 +57,7 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                         >
                             Завершить
                         </Button>
-                    </PosOrderAction>
+                    </CreateOrderAction>
                 </div>
             </div>
         </motion.div>

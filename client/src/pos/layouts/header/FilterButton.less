@@ -50,6 +50,7 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     cursor: pointer;
+                    display: flex;
 
                     &.filter-item-all {
                         border-bottom: 1px solid #ffffff11;
@@ -60,11 +61,8 @@
                     }
 
                     .anticon {
-                        margin-right: 0.5rem;
+                        width: 0;
                         color: @primary-color;
-                        transform: translateX(-10px);
-                        opacity: 0;
-                        animation: leftToRight 0.2s linear forwards;
                     }
                 }
             }
@@ -75,16 +73,6 @@
             gap: 1rem;
             padding: 1rem;
             border-top: 1px solid #ffffff11;
-        }
-    }
-    @keyframes leftToRight {
-        form {
-            opacity: 0;
-            transform: translateX(-10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0px);
         }
     }
 }

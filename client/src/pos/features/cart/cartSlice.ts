@@ -13,10 +13,10 @@ export const cartAdapter = createEntityAdapter<CartProductItemType>({
 export interface StateProps {
     totalPrice: number
     discount: {
-        type: string
+        type: "percent" | "fixed"
         discount: number
     } | null
-    addtionalServices: {
+    additionalServices: {
         id: number
         title: string
         price: number
@@ -30,16 +30,24 @@ export interface StateProps {
     payChange: number // Сдачи
     leftToPay: number // Осталось оплатить
     processing: boolean // На обработку
+    createOrderButton: {
+        disabled: boolean
+        loading: boolean
+    }
 }
 
 const initialState = cartAdapter.getInitialState<StateProps>({
     totalPrice: 0,
     discount: null,
-    addtionalServices: [],
+    additionalServices: [],
     payments: [{payment_id: 3, label: "Наличные", price: 0}],
     payChange: 0,
     leftToPay: 0,
-    processing: false
+    processing: false,
+    createOrderButton: {
+        disabled: true,
+        loading: false
+    }
 })
 
 const cartSlice = createSlice({
@@ -48,15 +56,15 @@ const cartSlice = createSlice({
     reducers: {
         // Добавить доп. услугу
         addAdditionalService: (state, action: PayloadAction<AdditionalService>) => {
-            const checkAdditionalService = state.addtionalServices.find(
+            const checkAdditionalService = state.additionalServices.find(
                 additionalService => additionalService.id === action.payload.id
             )
             if (checkAdditionalService)
-                state.addtionalServices = state.addtionalServices.map(additionalService => {
+                state.additionalServices = state.additionalServices.map(additionalService => {
                     if (additionalService.id === action.payload.id) additionalService.qty += 1
                     return additionalService
                 })
-            else state.addtionalServices = [...state.addtionalServices, {...action.payload, qty: 1}]
+            else state.additionalServices = [...state.additionalServices, {...action.payload, qty: 1}]
             // Сумма
             const [totalPrice, leftToPay] = updateTotal(state)
             state.totalPrice = totalPrice
@@ -64,7 +72,7 @@ const cartSlice = createSlice({
         },
         // Удалить доп. услугу
         removeAdditionalService: (state, action: PayloadAction<AdditionalService["id"]>) => {
-            state.addtionalServices = state.addtionalServices.filter(
+            state.additionalServices = state.additionalServices.filter(
                 additionalService => additionalService.id !== action.payload
             )
             // Сумма
@@ -77,7 +85,7 @@ const cartSlice = createSlice({
             state,
             action: PayloadAction<{id: AdditionalService["id"]; qty: number}>
         ) => {
-            state.addtionalServices = state.addtionalServices.map(additionalService => {
+            state.additionalServices = state.additionalServices.map(additionalService => {
                 if (additionalService.id === action.payload.id) additionalService.qty = action.payload.qty
                 return additionalService
             })
@@ -129,14 +137,14 @@ const cartSlice = createSlice({
         clearCart: state => {
             cartAdapter.removeAll(state)
             state.discount = null
-            state.addtionalServices = []
+            state.additionalServices = []
             // Сумма
             state.totalPrice = 0
             state.leftToPay = 0
             state.processing = false
             state.payChange = 0
             // state.drawer = {visible: false}
-            // state.buttonSubmit = {loading: false, disabled: true}
+            state.createOrderButton = {loading: false, disabled: true}
             state.payments = [{payment_id: 3, label: "Наличные", price: 0}]
         },
         // Задать скидку
@@ -162,7 +170,7 @@ const cartSlice = createSlice({
             state.payChange =
                 totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
             // Блокировка кнопки
-            // state.buttonSubmit.disabled = state.totalPrice > totalPricePayments
+            state.createOrderButton.disabled = state.totalPrice > totalPricePayments
         },
         // Обновить оплату
         changePriceToPayment: (
@@ -184,7 +192,7 @@ const cartSlice = createSlice({
             state.payChange =
                 totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
             // Блокировка кнопки
-            // state.buttonSubmit.disabled = state.totalPrice > totalPricePayments
+            state.createOrderButton.disabled = state.totalPrice > totalPricePayments
         },
 
         // Изменить состояния на обработку
@@ -233,25 +241,7 @@ export default cartSlice.reducer
 export const useCartProductColors = () => useSelector(selectAll)
 
 export const useCartAdditionalServices = () =>
-    useSelector((state: StoreState) => state.cart.addtionalServices)
+    useSelector((state: StoreState) => state.cart.additionalServices)
 
-// Вывод итоговой суммы
-export const useTotalPricePos = () => useSelector((state: StoreState) => state.cart.totalPrice)
-
-// Вывод скидки
-export const useDiscountPos = () => useSelector((state: StoreState) => state.cart.discount)
-
-// Вывод доп. услуг
-export const useAdditionalServicesPos = () => useSelector((state: StoreState) => state.cart.addtionalServices)
-
-// Вывод состояния на обработку
-export const useProcessing = () => useSelector((state: StoreState) => state.cart.processing)
-
-// Вывод остатка оплаты
-export const useLeftToPay = () => useSelector((state: StoreState) => state.cart.leftToPay)
-
-// Вывод сдачи
-export const usePayChange = () => useSelector((state: StoreState) => state.cart.payChange)
-
-// Вывод видов оплаты
-export const usePayments = () => useSelector((state: StoreState) => state.cart.payments)
+// Вывод параметров корзины
+export const useCartParams = () => useSelector((state: StoreState) => state.cart)

@@ -1,19 +1,19 @@
 import {DollarOutlined, PercentageOutlined} from "@ant-design/icons"
 import {InputNumber, Radio, Form} from "antd"
 import React from "react"
-import {setDiscount, useDiscountPos} from "pos/features/cart/cartSlice"
+import {setDiscount, useCartParams} from "pos/features/cart/cartSlice"
 import {useDispatch} from "../../../../../store"
 import "./Discount.less"
 import {formatPrice} from "utils/formatPrice"
 import {useState} from "react"
 
 interface DiscountProps {
-    close: any
+    close: () => void
 }
 
 const Discount: React.FC<DiscountProps> = ({close}) => {
     const dispatch = useDispatch()
-    const discount = useDiscountPos()
+    const {discount} = useCartParams()
     const [typeDiscount, setTypeDiscound] = useState<string>(discount ? discount.type : "fixed")
 
     const onChangeHandler = (e: any) => setTypeDiscound(e.target.value)

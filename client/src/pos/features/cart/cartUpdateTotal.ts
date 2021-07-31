@@ -2,7 +2,7 @@ import {StoreState} from "pos/store"
 
 // Обновить итоговую стоимость
 export const updateTotal = (state: StoreState["cart"]) => {
-    const {discount, addtionalServices} = state
+    const {discount, additionalServices} = state
     const products = Object.values(state.entities)
     let totalPrice = 0
 
@@ -23,8 +23,8 @@ export const updateTotal = (state: StoreState["cart"]) => {
     }
 
     // Добавление допб услуг
-    if (addtionalServices.length)
-        totalPrice += addtionalServices.reduce(
+    if (additionalServices.length)
+        totalPrice += additionalServices.reduce(
             (acc, addtionalService) => (acc += addtionalService.price * addtionalService.qty),
             0
         )

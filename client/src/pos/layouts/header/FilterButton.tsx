@@ -13,6 +13,20 @@ import {useGetCategoriesQuery} from "./categoryApi"
 import {useGetSizeQuery} from "./sizeApi"
 import {useDispatch} from "pos/store"
 import "./FilterButton.less"
+import {motion, AnimatePresence} from "framer-motion"
+
+const MotionCheckAnimation: React.FC = ({children}) => {
+    return (
+        <motion.span
+            animate={{opacity: 1, x: 0}}
+            initial={{opacity: 0, x: -20}}
+            exit={{opacity: 0, x: -20}}
+            key="icon"
+        >
+            {children}
+        </motion.span>
+    )
+}
 
 const FilterButton: React.FC = () => {
     const [visible, setVisible] = useState(false)
@@ -67,8 +81,23 @@ const FilterButton: React.FC = () => {
                                     }`}
                                     onClick={() => changeCategoryHandler(0)}
                                 >
-                                    {categoryId === 0 && <CheckOutlined />}
-                                    Все
+                                    <AnimatePresence>
+                                        {categoryId === 0 && (
+                                            <MotionCheckAnimation>
+                                                <CheckOutlined />
+                                            </MotionCheckAnimation>
+                                        )}
+                                        <motion.span
+                                            animate={
+                                                categoryId === 0
+                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                    : {x: 0, width: "100%"}
+                                            }
+                                            key="title"
+                                        >
+                                            Все
+                                        </motion.span>
+                                    </AnimatePresence>
                                 </div>
                                 {categories?.map(category => (
                                     <div className="filter-group" key={category.id}>
@@ -82,8 +111,23 @@ const FilterButton: React.FC = () => {
                                                     key={sub.id}
                                                     onClick={() => changeCategoryHandler(sub.id)}
                                                 >
-                                                    {categoryId === sub.id && <CheckOutlined />}
-                                                    {sub.title}
+                                                    <AnimatePresence>
+                                                        {categoryId === sub.id && (
+                                                            <MotionCheckAnimation>
+                                                                <CheckOutlined />
+                                                            </MotionCheckAnimation>
+                                                        )}
+                                                        <motion.span
+                                                            animate={
+                                                                categoryId === sub.id
+                                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                                    : {x: 0, width: "100%"}
+                                                            }
+                                                            key="title"
+                                                        >
+                                                            {sub.title}
+                                                        </motion.span>
+                                                    </AnimatePresence>
                                                 </div>
                                             ))}
                                         </div>
@@ -97,8 +141,23 @@ const FilterButton: React.FC = () => {
                                     }`}
                                     onClick={() => changeSizeHandler(0)}
                                 >
-                                    {sizeId === 0 && <CheckOutlined />}
-                                    Все
+                                    <AnimatePresence>
+                                        {sizeId === 0 && (
+                                            <MotionCheckAnimation>
+                                                <CheckOutlined />
+                                            </MotionCheckAnimation>
+                                        )}
+                                        <motion.span
+                                            animate={
+                                                sizeId === 0
+                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                    : {x: 0, width: "100%"}
+                                            }
+                                            key="title"
+                                        >
+                                            Все
+                                        </motion.span>
+                                    </AnimatePresence>
                                 </div>
                                 {sizes?.map(size => (
                                     <div
@@ -108,8 +167,21 @@ const FilterButton: React.FC = () => {
                                         key={size.id}
                                         onClick={() => changeSizeHandler(size.id)}
                                     >
-                                        {sizeId === size.id && <CheckOutlined />}
-                                        {size.title}
+                                        {sizeId === size.id && (
+                                            <MotionCheckAnimation>
+                                                <CheckOutlined />
+                                            </MotionCheckAnimation>
+                                        )}
+                                        <motion.span
+                                            animate={
+                                                sizeId === size.id
+                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                    : {x: 0, width: "100%"}
+                                            }
+                                            key="title"
+                                        >
+                                            {size.title}
+                                        </motion.span>
                                     </div>
                                 ))}
                             </div>

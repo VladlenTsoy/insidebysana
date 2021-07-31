@@ -1,10 +1,11 @@
 import React from "react"
 import {Switch} from "antd"
-import {useProcessing, changeProcessing} from "pos/features/cart/cartSlice"
-import {useDispatch} from "../../../../../store"
+import {useCartParams, changeProcessing} from "pos/features/cart/cartSlice"
+import {useDispatch} from "pos/store"
+import "./ProcessingSwitch.less"
 
 const ProcessingBlock: React.FC = () => {
-    const processing = useProcessing()
+    const {processing} = useCartParams()
     const dispatch = useDispatch()
 
     const changeProcessingHandler = (check: boolean) => dispatch(changeProcessing(check))

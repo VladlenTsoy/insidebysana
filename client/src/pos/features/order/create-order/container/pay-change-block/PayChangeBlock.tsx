@@ -1,9 +1,9 @@
 import React from "react"
-import {usePayChange} from "pos/features/cart/cartSlice"
+import {useCartParams} from "pos/features/cart/cartSlice"
 import {formatPrice} from "utils/formatPrice"
 
 const PayChangeBlock: React.FC = () => {
-    const payChange = usePayChange()
+    const {payChange} = useCartParams()
 
     return (
         <div className="pay-change">

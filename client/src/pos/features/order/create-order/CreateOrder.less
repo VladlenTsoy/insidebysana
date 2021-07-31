@@ -1,0 +1,130 @@
+.create-order-drawer {
+    .ant-drawer-body {
+        padding: 0;
+    }
+}
+
+.create-order {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .header {
+        height: 55px;
+        border-bottom: 1px solid @border-color-base;
+    }
+
+    .container {
+        height: 100%;
+        gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        overflow: hidden;
+
+        .create-order-form {
+            overflow: auto;
+            height: 100%;
+        }
+
+        .finish-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            overflow: auto;
+            padding: 1rem 1rem 1rem 0;
+
+            .cart-details {
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                flex: 1 1;
+                overflow: hidden;
+            }
+        }
+    }
+}
+
+// .create-order {
+//     display: grid;
+//     height: 100%;
+//     grid-template-rows: 60px 1fr;
+
+//     .header {
+//         display: flex;
+//         align-items: center;
+//         justify-content: space-between;
+//         border-bottom: 1px solid @border-color-base;
+//         font-size: 20px;
+
+//         > div {
+//             padding: 0.5rem 1rem;
+//         }
+
+//         .back {
+//             cursor: pointer;
+//             transition: all 0.3s ease-in-out;
+
+//             .anticon {
+//                 margin-right: 0.5rem;
+//             }
+
+//             &:hover {
+//                 color: @primary-color;
+//             }
+//         }
+//     }
+
+//     .container {
+//         display: grid;
+//         height: 100%;
+//         grid-template-columns: 300px 1fr;
+
+//         .payments-block {
+//             border-right: 1px solid @border-color-base;
+
+//             .payment-block {
+//                 padding: 1rem 1rem;
+//                 display: block;
+//                 border-bottom: 1px solid @border-color-base;
+//                 cursor: pointer;
+
+//                 &.active {
+//                     background-color: #ffb100;
+//                 }
+
+//                 input {
+//                     display: none;
+//                 }
+
+//                 .title {
+//                     img {
+//                         width: 60px;
+//                         height: 60px;
+//                         margin-right: 1rem;
+//                         object-fit: contain;
+//                     }
+
+//                     span {
+//                         font-size: 20px;
+//                     }
+//                 }
+//             }
+//         }
+
+//         .content {
+//             height: 100%;
+//             display: grid;
+//             grid-template-rows: 1fr 60px;
+
+//             .inputs {
+//                 padding: 1rem;
+//             }
+
+//             .button-finish {
+//                 height: 60px;
+//                 font-size: 20px;
+//             }
+//         }
+//     }
+// }

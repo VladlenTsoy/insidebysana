@@ -1,11 +1,10 @@
 import {Alert} from "antd"
 import React from "react"
-import {useLeftToPay, useTotalPricePos} from "pos/features/cart/cartSlice"
+import {useCartParams} from "pos/features/cart/cartSlice"
 import {formatPrice} from "utils/formatPrice"
 
 const LeftToPayBlock: React.FC = () => {
-    const leftToPay = useLeftToPay()
-    const totalPrice = useTotalPricePos()
+    const {totalPrice, leftToPay} = useCartParams()
 
     return (
         <Alert

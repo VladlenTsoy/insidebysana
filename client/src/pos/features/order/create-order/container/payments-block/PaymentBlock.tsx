@@ -4,12 +4,12 @@ import PaymeImage from "assets/images/payment/payme_01.svg"
 import ApelsinImage from "assets/images/payment/apelsin-v1.png"
 import CreditCardImage from "assets/images/payment/credit-card-payment.png"
 import ClickImage from "assets/images/payment/click.png"
-import {usePayments} from "pos/features/cart/cartSlice"
+import {useCartParams} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
 import {addOrDeletePayment} from "pos/features/cart/cartSlice"
 
 const PaymentBlock: React.FC = () => {
-    const checkedPayments = usePayments()
+    const {payments} = useCartParams()
     const dispatch = useDispatch()
 
     const paymentMethods = [
@@ -47,9 +47,7 @@ const PaymentBlock: React.FC = () => {
             {paymentMethods.map(method => (
                 <div
                     className={`payment-block ${
-                        checkedPayments.find(payment => payment.payment_id === method.payment_id)
-                            ? "active"
-                            : ""
+                        payments.find(payment => payment.payment_id === method.payment_id) ? "active" : ""
                     }`}
                     key={method.payment_id}
                     onClick={() => onChangePayments(method)}

@@ -66,7 +66,7 @@ const cartSlice = createSlice({
                 })
             else state.additionalServices = [...state.additionalServices, {...action.payload, qty: 1}]
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -76,7 +76,7 @@ const cartSlice = createSlice({
                 additionalService => additionalService.id !== action.payload
             )
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -90,7 +90,7 @@ const cartSlice = createSlice({
                 return additionalService
             })
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -98,7 +98,7 @@ const cartSlice = createSlice({
         addToCart: (state, action: PayloadAction<CartProductItemType>) => {
             cartAdapter.addOne(state, action.payload)
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -113,7 +113,7 @@ const cartSlice = createSlice({
             const {product_color_id, size_id} = action.payload
             cartAdapter.removeOne(state, `${product_color_id}${size_id}`)
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -129,7 +129,7 @@ const cartSlice = createSlice({
             const {product_color_id, size_id, qty} = action.payload
             cartAdapter.updateOne(state, {id: `${product_color_id}${size_id}`, changes: {qty}})
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -151,7 +151,7 @@ const cartSlice = createSlice({
         setDiscount: (state, action: PayloadAction<StateProps["discount"]>) => {
             state.discount = action.payload
             // Сумма
-            const [totalPrice, leftToPay] = updateTotal(state)
+            const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
@@ -163,14 +163,10 @@ const cartSlice = createSlice({
                 state.payments = state.payments.filter(payment => payment.payment_id !== payment_id)
             else state.payments = [...state.payments, action.payload]
 
-            const totalPricePayments = state.payments.reduce((acc, payment) => (acc += payment.price), 0)
-            // Осталось оплатить
-            state.leftToPay = state.totalPrice - totalPricePayments
-            // Сдачи
-            state.payChange =
-                totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
-            // Блокировка кнопки
-            state.createOrderButton.disabled = state.totalPrice > totalPricePayments
+            const {leftToPay, payChange, createOrderButtonDisabled} = updateTotal(state)
+            state.leftToPay = leftToPay
+            state.payChange = payChange
+            state.createOrderButton.disabled = createOrderButtonDisabled
         },
         // Обновить оплату
         changePriceToPayment: (
@@ -185,14 +181,11 @@ const cartSlice = createSlice({
                 if (payment.payment_id === payment_id) payment.price = price
                 return payment
             })
-            const totalPricePayments = state.payments.reduce((acc, payment) => (acc += payment.price), 0)
-            // Осталось оплатить
-            state.leftToPay = state.totalPrice - totalPricePayments
-            // Сдачи
-            state.payChange =
-                totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
-            // Блокировка кнопки
-            state.createOrderButton.disabled = state.totalPrice > totalPricePayments
+
+            const {leftToPay, payChange, createOrderButtonDisabled} = updateTotal(state)
+            state.leftToPay = leftToPay
+            state.payChange = payChange
+            state.createOrderButton.disabled = createOrderButtonDisabled
         },
 
         // Изменить состояния на обработку
@@ -212,7 +205,7 @@ const cartSlice = createSlice({
                     })
                 } else cartAdapter.addOne(state, action.payload)
                 // Сумма
-                const [totalPrice, leftToPay] = updateTotal(state)
+                const {totalPrice, leftToPay} = updateTotal(state)
                 state.totalPrice = totalPrice
                 state.leftToPay = leftToPay
             }

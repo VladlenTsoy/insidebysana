@@ -17,6 +17,7 @@ import PaymentsBlock from "./container/payments-block/PaymentBlock"
 import ClientSearch from "./create-order-form/ClientSearch"
 import Form from "antd/lib/form/Form"
 import ClientSourceList from "./create-order-form/ClientSourceList"
+import Payments from "./create-order-form/Payments"
 
 interface CreateOrderProps {
     close: () => void
@@ -83,7 +84,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
             <div className="header"></div>
             <div className="container">
                 <div className="create-order-form">
-                    <div></div>
+                    <Payments />
                 </div>
                 <div className="finish-block">
                     <div className="cart-details">

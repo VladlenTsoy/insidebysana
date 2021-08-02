@@ -32,7 +32,11 @@ export const updateTotal = (state: StoreState["cart"]) => {
     // Общая введенная сумма
     const totalPricePayments = state.payments.reduce((acc, payment) => (acc += payment.price), 0)
     // Осталось оплатить
-    const leftToPay = totalPrice - totalPricePayments
+    const leftToPay = totalPrice - totalPricePayments >= 0 ? totalPrice - totalPricePayments : 0
+    // Сдачи
+    const payChange = totalPricePayments - state.totalPrice > 0 ? totalPricePayments - state.totalPrice : 0
+    // Блокировка кнопки
+    const createOrderButtonDisabled = state.totalPrice > totalPricePayments
 
-    return [totalPrice, leftToPay]
+    return {totalPrice, leftToPay, payChange, createOrderButtonDisabled}
 }

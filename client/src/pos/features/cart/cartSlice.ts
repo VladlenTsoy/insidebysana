@@ -161,7 +161,7 @@ const cartSlice = createSlice({
 
             if (!!state.payments.find(payment => payment.payment_id === payment_id))
                 state.payments = state.payments.filter(payment => payment.payment_id !== payment_id)
-            else state.payments = [...state.payments, action.payload]
+            else state.payments = [...state.payments, {...action.payload, price: 0}]
 
             const {leftToPay, payChange, createOrderButtonDisabled} = updateTotal(state)
             state.leftToPay = leftToPay

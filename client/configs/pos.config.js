@@ -34,6 +34,7 @@ module.exports = {
                             "@popover-background": "#010b24",
                             "@component-background": "#010b24",
                             "@border-color-base": "#ffffff12",
+                            "border-color-split": "#ffffff12",
                             "@primary-color": "#fe9c64",
                             "@success-color": "#4cc279",
                             "@warning-color": "#ff6370",

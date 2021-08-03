@@ -1,9 +1,9 @@
 import {Form, Input} from "antd"
-import {Client} from "types/Client"
-import LoadingBlock from "components/blocks/loading-block/LoadingBlock"
+import {Client} from "admin/lib/types/Client"
+import {LoadingBlock} from "admin/lib/ui"
 import React, {useEffect, useState} from "react"
-import {apiRequest} from "utils/api"
-import {formatPhone} from "utils/formatPhone"
+import {apiRequest} from "admin/utils/api"
+import {formatPhone} from "admin/utils/formatPhone"
 import "./SearchClientInput.less"
 
 interface SearchClientInputProps {

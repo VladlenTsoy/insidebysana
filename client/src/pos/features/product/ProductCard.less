@@ -45,14 +45,14 @@
             right: 8px;
             padding: 0 0.5rem 0 0.5rem;
             border-radius: 10px;
-            background: #fe9c64;
+            background: @primary-color;
             color: @white !important;
             z-index: 1;
         }
 
         .add-to-cart-block {
             position: absolute;
-            background: #fe9c64;
+            background: @primary-color;
             top: 0;
             left: 0;
             right: 0;
@@ -79,7 +79,7 @@
             .remainder {
                 position: absolute;
                 bottom: 0.5rem;
-                font-size: 14px;
+                font-size: @font-size-base;
             }
 
             span.ripple {
@@ -93,7 +93,7 @@
         text-align: center;
 
         .title {
-            font-size: 16px;
+            font-size: @font-size-lg;
             line-height: 1.2;
             margin-bottom: 0;
             color: @black;
@@ -102,7 +102,7 @@
 
         .price-discount {
             color: fade(@black, 40%);
-            font-size: 12px;
+            font-size: @font-size-sm;
             text-decoration: line-through;
             line-height: 1;
         }
@@ -142,7 +142,7 @@
 
             &.ant-radio-button-wrapper-checked {
                 border-color: transparent;
-                background: #fe9c64;
+                background: @primary-color;
 
                 &::before {
                     content: none;
@@ -152,24 +152,6 @@
             span {
                 color: @white !important;
             }
-
-            // .qty {
-            //     background: @white;
-            //     position: absolute;
-            //     font-size: 10px;
-            //     line-height: 1;
-            //     display: flex;
-            //     align-items: center;
-            //     // color: @text-color-secondary;
-            //     height: 14px;
-            //     text-align: center;
-            //     top: -2px;
-            //     right: -6px;
-            //     padding: 0 3px;
-            //     border-radius: 5px;
-            //     border: 1px solid @border-color-base;
-            //     z-index: 2;
-            // }
         }
     }
 }

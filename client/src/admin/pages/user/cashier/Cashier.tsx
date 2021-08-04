@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Button, Space, Tabs} from "antd"
+import {Button, Result, Space, Tabs} from "antd"
 import CategoriesProvider from "../../../lib/providers/categories-provider/CategoriesProvider"
 import {LoadingBlock} from "admin/lib/ui"
 import {
@@ -16,7 +16,6 @@ import {useUser} from "admin/hooks/use-user"
 
 const {TabPane} = Tabs
 
-const PosSystem = React.lazy(() => import("./pages/pos-system/PosSystem"))
 const Orders = React.lazy(() => import("./pages/orders/Orders"))
 
 const Cashier: React.FC = () => {
@@ -69,9 +68,21 @@ const Cashier: React.FC = () => {
                             key="1"
                         >
                             <div className="container">
-                                <React.Suspense fallback={<LoadingBlock title="Загрузка страницы..." />}>
-                                    <PosSystem />
-                                </React.Suspense>
+                                <Result
+                                    status="404"
+                                    title="404"
+                                    subTitle={
+                                        <>
+                                            POS переехал на{" "}
+                                            <a href="https://pos.insidebysana.uz/">pos.insidebysana.uz</a>
+                                        </>
+                                    }
+                                    extra={
+                                        <a href="https://pos.insidebysana.uz/">
+                                            <Button type="primary">Перейти</Button>
+                                        </a>
+                                    }
+                                />
                             </div>
                         </TabPane>
                         <TabPane

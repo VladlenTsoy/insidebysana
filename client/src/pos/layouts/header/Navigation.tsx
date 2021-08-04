@@ -3,14 +3,32 @@ import {
     CaretDownFilled,
     FullscreenOutlined,
     FullscreenExitOutlined,
-    PoweroffOutlined
+    PoweroffOutlined,
+    QuestionCircleOutlined
 } from "@ant-design/icons"
-import {Button, Menu, Dropdown} from "antd"
-import React, {useState} from "react"
+import {Button, Menu, Dropdown, Modal} from "antd"
+import React, {useCallback, useState} from "react"
 import "./Navigation.less"
+import {logoutUser} from "pos/auth/authApi"
+import {useDispatch} from "pos/store"
+
+const {confirm} = Modal
 
 const Navigation: React.FC = () => {
     const [fullScreen, setFullScreen] = useState(false)
+    const dispatch = useDispatch()
+
+    // Выход
+    const logout = useCallback(() => {
+        confirm({
+            zIndex: 1002,
+            title: "Вы действительно хотите выйти?",
+            icon: <QuestionCircleOutlined />,
+            onOk: async () => {
+                dispatch(logoutUser())
+            }
+        })
+    }, [dispatch])
 
     const requestFullScreen = () => {
         if (!document.fullscreenElement) {
@@ -24,7 +42,13 @@ const Navigation: React.FC = () => {
 
     const menu = (
         <Menu>
-            <Menu.Item className="account-item" danger icon={<PoweroffOutlined />} key="/logout">
+            <Menu.Item
+                className="account-item"
+                danger
+                icon={<PoweroffOutlined />}
+                key="/logout"
+                onClick={logout}
+            >
                 Выйти
             </Menu.Item>
         </Menu>

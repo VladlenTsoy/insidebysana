@@ -32,17 +32,19 @@ module.exports = {
                         modifyVars: {
                             ...getThemeVariables({dark: true}),
                             "@popover-background": "#010b24",
+                            "@component-background": "#010b24",
+                            "@border-color-base": "#ffffff12",
+                            "border-color-split": "#ffffff12",
+                            "@primary-color": "#fe9c64",
+                            "@success-color": "#4cc279",
+                            "@warning-color": "#ff6370",
+                            "@error-color": "#ff6370",
                             "max-width": "100%",
-                            "@box-shadow": "0 5px 20px rgba(146, 153, 184, 0.1)",
                             "@font-family":
                                 "-apple-system, Montserrat, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-                            "@primary-color": "#fe9c64",
-                            "@success-color": "#13cd3c",
-                            "@warning-color": "#ff6370",
-                            "@error-color": "#fb2b76",
+
                             "@border-width-base": "1px",
                             "@border-radius-base": "10px",
-                            "@border-color-base": "#f5f6f8",
                             "@black": "#161938",
                             "@text-color-secondary": "#9babc5"
                         }

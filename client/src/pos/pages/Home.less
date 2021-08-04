@@ -1,0 +1,35 @@
+.pos-system {
+    height: 100%;
+    overflow: hidden;
+    background: linear-gradient(160deg, #2f3957 0%, #0c132c 50%);
+
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        height: 100%;
+        overflow: hidden;
+    }
+}
+
+.pay-change {
+    .total-price {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 1rem;
+
+        div:first-child {
+            color: @text-color-secondary;
+        }
+    }
+}
+
+
+
+.pos-create-order {
+    .ant-form-item-label label {
+        font-size: 20px;
+    }
+}
+

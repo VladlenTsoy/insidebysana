@@ -34,7 +34,7 @@ const Print: React.FC<PrintProps> = ({
         const discountProducts = products.reduce(
             (acc: number, {size_id, product, product_color_id, qty}: any) => {
                 if (product.discount)
-                    acc += Math.round((product.details.price / 100) * product.discount.discount)
+                    acc += Math.round((product.price / 100) * product.discount.discount)
                 return acc
             },
             0
@@ -47,10 +47,10 @@ const Print: React.FC<PrintProps> = ({
                     (acc: number, {size_id, product, product_color_id, qty}: any) => {
                         const price = product.discount
                             ? (
-                                  product.details.price -
-                                  (product.details.price / 100) * product.discount.discount
+                                  product.price -
+                                  (product.price / 100) * product.discount.discount
                               ).toFixed(0)
-                            : product.details.price
+                            : product.price
                         return acc + Number(price) * qty
                     },
                     0
@@ -100,15 +100,15 @@ const Print: React.FC<PrintProps> = ({
                             </td>
                             <td className="title">
                                 <div>
-                                    {product.details.title} <div>{product.color.title}</div>
+                                    {product.title} <div>{product.color.title}</div>
                                 </div>
                             </td>
                             <td className="size">
                                 {sizes.find((size: any) => Number(size.id) === Number(size_id))?.title}
                             </td>
                             <td className="qty">{qty}</td>
-                            <td>{formatPrice(product.details.price)}</td>
-                            <td>{formatPrice(product.details.price * qty)}</td>
+                            <td>{formatPrice(product.price)}</td>
+                            <td>{formatPrice(product.price * qty)}</td>
                         </tr>,
                         <tr key={`border-${product_color_id}${size_id}`}>
                             <td className="margin-no-border" colSpan={6} />

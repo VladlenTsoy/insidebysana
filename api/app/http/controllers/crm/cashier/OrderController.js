@@ -14,7 +14,17 @@ const {raw} = require("objection")
  */
 const Create = async (req, res) => {
     try {
-        const {payments, client, products, additionalServices, total_price, discount, processing} = req.body
+        const {
+            payments,
+            client,
+            products,
+            additionalServices,
+            total_price,
+            discount,
+            processing,
+            clientSourceId,
+            clientSourceComment
+        } = req.body
         const user = req.user
 
         let status = await Status.query()
@@ -36,7 +46,9 @@ const Create = async (req, res) => {
             source_id: 6,
             user_id: user.id,
             status_id: status ? status.id : null,
-            payment_state: 1
+            payment_state: 1,
+            client_source_id: clientSourceId,
+            client_source_comment: clientSourceComment
         })
 
         const orderRef = OrderService.SelectOrderRef().withGraphFetched("[productColors]")

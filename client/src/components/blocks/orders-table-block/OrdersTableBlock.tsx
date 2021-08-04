@@ -42,7 +42,7 @@ const OrdersTableBlock: React.FC<OrdersTableBlockProps> = ({
     }
 
     return (
-        <>
+        <div className="orders-table-blocks">
             {!!onChangeHandler && (
                 <div className="header">
                     <RangePicker
@@ -141,7 +141,7 @@ const OrdersTableBlock: React.FC<OrdersTableBlockProps> = ({
                     </table>
                 </>
             )}
-        </>
+        </div>
     )
 }
 export default OrdersTableBlock

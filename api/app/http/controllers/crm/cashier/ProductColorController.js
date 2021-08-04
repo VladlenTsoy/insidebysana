@@ -1,6 +1,5 @@
 const {logger} = require("config/logger.config")
 const {ProductColor} = require("models/products/ProductColor")
-const {uniq} = require("lodash")
 
 /**
  * Вывод по поиску
@@ -10,46 +9,54 @@ const {uniq} = require("lodash")
  */
 const GetBySearch = async (req, res) => {
     try {
-        let {search, categoryId, sizeId} = req.body
+        let {search, categoryId, sizeId, currentPage, limit} = req.body
 
         // Поиск по SKU
-        if (search.includes("PC")) {
+        if (search && search.includes("PC")) {
             const [productColorId] = search.match(/\d+/g)
             search = productColorId
         }
 
-        // Продукты без кол-во
-        const productsWithoutQty = await ProductColor.query()
+        const refProductColor = ProductColor.query()
+            .withGraphFetched(`[color, discount, sizes_props]`)
+            .join("products", "products.id", "product_colors.product_id")
             .where("product_colors.hide_id", null)
-            .join("sizes")
-            .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) <= 0`)
+            .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
 
-        // Продукты без кол-во
-        const productsQty = await ProductColor.query()
-            .where("product_colors.hide_id", null)
-            .join("sizes")
-            .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`)
+        // Поиск
+        if (search.trim() !== "") {
+            refProductColor.where(builder => {
+                builder
+                    .whereRaw(
+                        `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
+                    )
+                    .orWhereRaw(
+                        `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
+                    )
+                    .orWhere("product_colors.id", "LIKE", `%${search}%`)
+            })
+        }
 
-        // Ids продуктов без кол-во
-        const _ids = productsWithoutQty.map(product => product.id)
-        const _have_ids = productsQty.map(product => product.id)
-        const ids = uniq(_ids).filter(id => !_have_ids.includes(id))
-
-        // Продукты
-        const products = await ProductColor.query()
-            .select(
-                "product_colors.id",
-                "product_colors.thumbnail",
-                "product_colors.product_id",
-                "product_colors.sizes"
+        // Вывод по размерам
+        if (sizeId && sizeId !== 0)
+            refProductColor
+                .whereRaw(
+                    `JSON_SEARCH(JSON_KEYS(product_colors.sizes), 'all', ${String(sizeId)}) IS NOT null`
+                )
+                .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',${sizeId},'".qty')) > 0`)
+        // TODO - лучшее решение
+        else
+            refProductColor.whereRaw(
+                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
             )
-            .withGraphFetched(`[color, details, discount]`)
-            .modify("filterSubCategory", categoryId)
-            .modify("filterSizes", sizeId === 0 ? [] : [sizeId])
-            .modify("search", search, false, ids)
-            .where("product_colors.hide_id", null)
-            .whereNotIn("id", ids)
 
+        // По категориям
+        if (categoryId && categoryId !== 0)
+            refProductColor.whereRaw(
+                `product_colors.product_id IN (SELECT id FROM products WHERE category_id = ${categoryId})`
+            )
+
+        const products = await refProductColor.page(currentPage, limit)
         return res.send(products)
     } catch (e) {
         logger.error(e.stack)

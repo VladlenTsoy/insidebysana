@@ -1,0 +1,40 @@
+.create-order-discount {
+    display: grid;
+    padding: 1rem 0;
+    font-size: 18px;
+    border-bottom: 1px solid @border-color-base;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    grid-template-columns: 96px 1fr 40px;
+
+    .discount-radio {
+        .anticon {
+            transform: scale(1.5);
+        }
+    }
+
+    .discount-input {
+        position: relative;
+
+        .ant-input-number {
+            width: 100%;
+            font-size: 18px;
+            padding-right: 2.5rem;
+        }
+
+        .icon {
+            position: absolute;
+            right: 10px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            top: 0;
+        }
+    }
+
+    .price-delete-action {
+        .price {
+            margin-right: 0.5rem;
+        }
+    }
+}

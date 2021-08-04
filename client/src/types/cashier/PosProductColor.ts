@@ -12,6 +12,7 @@ export interface ProductColorCard {
     color: {
         id: number
         title: string
+        hex: string
     }
     sizes: {
         qty: number

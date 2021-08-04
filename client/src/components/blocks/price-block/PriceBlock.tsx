@@ -5,6 +5,7 @@ import {formatPrice} from "utils/formatPrice"
 import {ClockCircleOutlined} from "@ant-design/icons"
 import {Tooltip} from "antd"
 import {formatDate} from "utils/formatDate"
+import {formatDiscount} from "utils/formatDiscount"
 
 interface PriceBlockProps {
     discount?: ProductColor["discount"]
@@ -24,7 +25,8 @@ const PriceBlock: React.FC<PriceBlockProps> = ({discount, price}) => {
                         </div>
                     )}
                     <small>
-                        {formatPrice(price)} - <span className="percent">{discount.discount}%</span>
+                        {formatPrice(price)} -{" "}
+                        <span className="percent">{formatDiscount(discount.discount)}%</span>
                     </small>
                     <div>{formatPrice((price - (price / 100) * discount.discount).toFixed(0))} сум</div>
                 </>

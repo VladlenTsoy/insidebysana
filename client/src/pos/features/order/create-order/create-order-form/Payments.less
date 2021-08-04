@@ -1,0 +1,85 @@
+.payments-card {
+    height: 100%;
+    border-radius: 10px;
+
+    .payments-list {
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+
+        .payment-item {
+            padding: 1rem 1rem;
+            display: block;
+            cursor: pointer;
+            border: 1px solid @border-color-base;
+            text-align: center;
+            border-radius: @border-radius-base;
+
+            &.active {
+                background-color: @success-color;
+            }
+
+            img {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 0.5rem;
+                object-fit: contain;
+            }
+
+            span {
+                font-size: @font-size-lg;
+                display: block;
+            }
+        }
+    }
+
+    .form-payments-list {
+        background: #fff;
+        border-radius: @border-radius-base;
+        .payment-form-item {
+            display: flex;
+            color: @black;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid rgb(0 0 0 / 6%);
+
+            .title {
+                margin-right: auto;
+                font-size: @font-size-lg;
+            }
+
+            .ant-form-item {
+                margin-bottom: 0;
+
+                .ant-input-number {
+                    border: 0;
+                    box-shadow: none;
+
+                    .ant-input-number-input-wrap {
+                        .ant-input-number-input {
+                            color: @black;
+                            font-size: 25px;
+                            height: 46px;
+                            position: relative;
+                            padding-right: 3.25rem;
+                            max-width: 250px;
+                            text-align: right;
+                        }
+
+                        &::after {
+                            content: "сум";
+                            position: absolute;
+                            right: 0.5rem;
+                            font-size: 18px;
+                            color: @black;
+                            line-height: 46px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

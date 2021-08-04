@@ -12,6 +12,8 @@ exports.up = function (knex) {
         table.integer("status_id").defaultTo(1)
         table.integer("position").notNullable()
         table.boolean("processing").notNullable().defaultTo(false)
+        table.integer("client_source_id")
+        table.integer("client_source_comment")
         table.timestamps(true, true)
     })
 }

@@ -1,0 +1,33 @@
+.additional-services-action {
+    margin-bottom: 1rem;
+
+    .ant-btn {
+        box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+        color: rgba(22, 25, 56, 0.85);
+        background: #fff;
+        border: 1px solid #f5f6f8;
+
+        &:hover,
+        &:focus {
+            color: #a5694e;
+            background: transparent;
+            border-color: #a5694e;
+        }
+    }
+}
+
+.additional-service-item {
+    .ant-dropdown-menu-title-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        span:first-child {
+            font-size: @font-size-lg;
+        }
+
+        .price {
+            color: @text-color-secondary;
+        }
+    }
+}

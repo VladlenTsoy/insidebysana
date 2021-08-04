@@ -73,7 +73,9 @@ const Create = async (data, config) => {
             user_id,
             processing,
             created_at,
-            address
+            address,
+            client_source_id,
+            client_source_comment
         } = data
 
         let client_id = null
@@ -105,6 +107,8 @@ const Create = async (data, config) => {
             payment_state,
             processing,
             position,
+            client_source_id,
+            client_source_comment,
             created_at
         })
 

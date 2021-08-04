@@ -1,11 +1,12 @@
 import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit"
 import {useDispatch as useDefaultDispatch} from "react-redux"
-import {orderApi} from "./orders/orderApi"
-import {categoryApi} from "./home/search-products/category-select/categoryApi"
-import {sizeApi} from "./home/search-products/size-select/sizeApi"
-import {additionalServiceApi} from "./home/added-products/actions-block/additional-services-action/additionalServiceApi"
-import {paymentMethodApi} from "./orders/paymentMethodsApi"
-import pos from "./home/posSlice"
+import {orderApi} from "./features/order/orderApi"
+import {categoryApi} from "./layouts/header/categoryApi"
+import {sizeApi} from "./layouts/header/sizeApi"
+import {additionalServiceApi} from "./features/additional-services/additionalServiceApi"
+import {paymentMethodApi} from "./features/order/orders-list/paymentMethodsApi"
+import product from "./features/product/productSlice"
+import cart from "./features/cart/cartSlice"
 import auth from "./auth/authSlice"
 import {setupListeners} from "@reduxjs/toolkit/query"
 
@@ -16,8 +17,9 @@ export const store = configureStore({
         [sizeApi.reducerPath]: sizeApi.reducer,
         [additionalServiceApi.reducerPath]: additionalServiceApi.reducer,
         [paymentMethodApi.reducerPath]: paymentMethodApi.reducer,
-        pos,
-        auth
+        auth,
+        cart,
+        product
     },
     middleware: [
         ...getDefaultMiddleware({immutableCheck: false})

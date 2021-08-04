@@ -1,0 +1,30 @@
+.wrapper-search-client-input {
+    position: relative;
+
+    .dropdown-clients {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 22;
+        top: calc(100% + 5px);
+        max-height: 200px;
+        overflow: auto;
+        background: #213d84;
+        box-shadow: @box-shadow-base;
+        border-radius: @border-radius-base;
+        padding: 0.5rem 0;
+
+        .dropdown-client {
+            display: flex;
+            padding: 0.5rem 1rem;
+
+            div:first-child {
+                color: @text-color-secondary;
+            }
+
+            div:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+        }
+    }
+}

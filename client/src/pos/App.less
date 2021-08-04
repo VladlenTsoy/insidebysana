@@ -1,8 +1,42 @@
 @import "~antd/dist/antd.dark.less";
 
-.grid-cards {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    overflow: hidden;
+body *::-webkit-scrollbar {
+    display: none;
 }
+
+body * {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.black.ant-btn-primary[disabled],
+.black.ant-btn-primary[disabled]:active,
+.black.ant-btn-primary[disabled]:focus,
+.black.ant-btn-primary[disabled]:hover {
+    color: rgba(0, 0, 0, 0.25);
+    background: #f5f5f5;
+    border-color: #f5f6f8;
+    text-shadow: none;
+    box-shadow: none;
+}
+
+// .grid-cards {
+//     display: grid;
+//     grid-template-columns: repeat(6, 1fr);
+//     gap: 1rem;
+//     overflow: hidden;
+// }

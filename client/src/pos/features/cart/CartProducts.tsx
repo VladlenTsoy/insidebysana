@@ -46,13 +46,7 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                         <div>{formatPrice(totalPrice)} сум</div>
                     </div>
                     <CreateOrderAction>
-                        <Button
-                            className="black"
-                            type="primary"
-                            block
-                            size="large"
-                            disabled={!products.length}
-                        >
+                        <Button type="primary" block size="large" disabled={!products.length}>
                             Далее
                         </Button>
                     </CreateOrderAction>

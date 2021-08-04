@@ -127,7 +127,9 @@ const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
                     </div>
                     <div className="price-size">
                         <PriceBlock price={product.price} discount={product.discount} />
-                        <Tag color="#fe9c64">XS (12)</Tag>
+                        <Tag color="#fe9c64">
+                            {selectSize.title} ({selectSize.qty})
+                        </Tag>
                     </div>
                 </div>
                 <div>

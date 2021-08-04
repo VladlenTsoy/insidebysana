@@ -40,7 +40,7 @@ const Home: React.FC = () => {
 
             // При нажатии клавиш
             else {
-                if (keyName.includes("Shift"))
+                if (keyName && keyName.includes("Shift"))
                     // Замена Shift
                     keyName = keyName.replaceAll("Shift", "")
                 str = str + keyName

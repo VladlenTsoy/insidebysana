@@ -34,6 +34,8 @@ export interface StateProps {
         disabled: boolean
         loading: boolean
     }
+    clientSource: {id: number; title: string; comment?: boolean} | null
+    clientSourceComment?: string
 }
 
 const initialState = cartAdapter.getInitialState<StateProps>({
@@ -47,7 +49,8 @@ const initialState = cartAdapter.getInitialState<StateProps>({
     createOrderButton: {
         disabled: true,
         loading: false
-    }
+    },
+    clientSource: null
 })
 
 const cartSlice = createSlice({
@@ -145,6 +148,8 @@ const cartSlice = createSlice({
             state.payChange = 0
             // state.drawer = {visible: false}
             state.createOrderButton = {loading: false, disabled: true}
+            state.clientSource = null
+            state.clientSourceComment = undefined
             state.payments = [{payment_id: 3, label: "Наличные", price: 0}]
         },
         // Задать скидку
@@ -191,6 +196,17 @@ const cartSlice = createSlice({
         // Изменить состояния на обработку
         changeProcessing: (state, action: PayloadAction<StateProps["processing"]>) => {
             state.processing = action.payload
+        },
+
+        changeCreateOrderButton: (state, action: PayloadAction<any>) => {
+            state.createOrderButton = {...state.createOrderButton, ...action.payload}
+        },
+        changeClientSource: (state, action: PayloadAction<StateProps["clientSource"]>) => {
+            state.clientSource = state.clientSource?.id === action.payload?.id ? null : action.payload
+            state.clientSourceComment = undefined
+        },
+        changeClientSourceComment: (state, action: PayloadAction<StateProps["clientSourceComment"]>) => {
+            state.clientSourceComment = action.payload
         }
     },
     extraReducers: builder => {
@@ -224,7 +240,10 @@ export const {
     removeAdditionalService,
     updateQtyAdditionalService,
     changeProcessing,
-    changePriceToPayment
+    changePriceToPayment,
+    changeCreateOrderButton,
+    changeClientSource,
+    changeClientSourceComment
 } = cartSlice.actions
 
 export const {selectAll} = cartAdapter.getSelectors<StoreState>(state => state.cart)

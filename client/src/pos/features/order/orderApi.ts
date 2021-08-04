@@ -29,6 +29,8 @@ interface AgrProps {
         discount?: ProductColor["discount"]
     }[]
     total_price: number
+    clientSourceId: number | null
+    clientSourceComment?: string
 }
 
 export const orderApi = createApi({

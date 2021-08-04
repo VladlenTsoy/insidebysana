@@ -1,7 +1,7 @@
 import {Client} from "types/Client"
 import React, {useCallback, useState} from "react"
 import {useCreateOrderMutation} from "pos/features/order/orderApi"
-import {useCartProductColors, useCartParams} from "pos/features/cart/cartSlice"
+import {useCartProductColors, useCartParams, changeCreateOrderButton} from "pos/features/cart/cartSlice"
 import {clearCart} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
 import {useGetSizeQuery} from "pos/layouts/header/sizeApi"
@@ -30,9 +30,12 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
         discount,
         processing,
         payments,
-        createOrderButton
+        createOrderButton,
+        payChange,
+        clientSource,
+        clientSourceComment
     } = useCartParams()
-    // const print = useCheckPrint()
+    const print = useCheckPrint()
     const dispatch = useDispatch()
     const {data: sizes} = useGetSizeQuery()
     const [createOrder] = useCreateOrderMutation()
@@ -42,7 +45,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
     }, [])
 
     const onFinishHandler = async (values: any) => {
-        // dispatch(changeButtonSubmit({loading: true}))
+        dispatch(changeCreateOrderButton({loading: true}))
 
         const orderProducts = products.map(({product, product_color_id, qty, size_id}) => ({
             discount: product?.discount,
@@ -52,6 +55,18 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
             price: product.price
         }))
 
+        // console.log({
+        //     additionalServices: additionalServices,
+        //     processing: processing,
+        //     client: selectClient,
+        //     payments: payments,
+        //     discount: discount,
+        //     products: orderProducts,
+        //     total_price: totalPrice,
+        //     clientSourceId: clientSource?.id,
+        //     clientSourceComment: clientSourceComment
+        // })
+
         const response = await createOrder({
             additionalServices: additionalServices,
             processing: processing,
@@ -59,27 +74,29 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
             payments: payments,
             discount: discount,
             products: orderProducts,
-            total_price: totalPrice
+            total_price: totalPrice,
+            clientSourceId: clientSource?.id,
+            clientSourceComment: clientSourceComment
         })
 
-        // await print({
-        //     additionalServices,
-        //     products,
-        //     totalPrice,
-        //     order: response,
-        //     payments,
-        //     discount,
-        //     payChange,
-        //     sizes
-        // })
+        await print({
+            additionalServices,
+            products,
+            totalPrice,
+            order: response,
+            payments,
+            discount,
+            payChange,
+            sizes
+        })
 
         dispatch(clearCart())
         close()
     }
 
     return (
-        <Form className="create-order" layout="vertical" size="large">
-            <div className="header"></div>
+        <Form className="create-order" layout="vertical" size="large" onFinish={onFinishHandler}>
+            <Header close={close} />
             <div className="container">
                 <div className="create-order-form">
                     <Payments />
@@ -93,6 +110,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
                             <PriceList />
                             <ProcessingBlock />
                             <Button
+                                htmlType="submit"
                                 type="primary"
                                 size="large"
                                 block
@@ -105,12 +123,6 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
                     </div>
                 </div>
             </div>
-            {/* <Header close={close} />
-            <Container
-                selectClient={selectClient}
-                updateSelectClient={updateSelectClient}
-                onFinishHandler={onFinishHandler}
-            /> */}
         </Form>
     )
 }

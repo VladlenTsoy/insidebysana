@@ -1,9 +1,10 @@
 import {CheckOutlined, LeftOutlined} from "@ant-design/icons"
 import {Input} from "antd"
 import React from "react"
-import {useState} from "react"
 import "./ClientSourceList.less"
 import {motion} from "framer-motion"
+import {useDispatch} from "pos/store"
+import {changeClientSource, changeClientSourceComment, useCartParams} from "pos/features/cart/cartSlice"
 
 interface ClientSourceProps {
     id: number
@@ -20,19 +21,17 @@ const sourcesList: ClientSourceProps[] = [
 ]
 
 const ClientSourceList: React.FC = () => {
-    const [selectClientSource, setSelectClientSource] = useState<ClientSourceProps>()
+    const {clientSource, clientSourceComment} = useCartParams()
+    const dispatch = useDispatch()
 
-    const onChangeHandler = (_selectClientSource: ClientSourceProps) => {
-        setSelectClientSource(prevState =>
-            prevState && prevState.id === _selectClientSource.id ? undefined : _selectClientSource
-        )
-    }
+    const onChangeHandler = (_clientSource: ClientSourceProps) => dispatch(changeClientSource(_clientSource))
 
-    const backOnClickHandler = () => setSelectClientSource(undefined)
+    const backOnClickHandler = () => dispatch(changeClientSource(null))
+    const textAreaChangeHandler = (e: any) => dispatch(changeClientSourceComment(e.target.value))
 
     return (
         <>
-            {selectClientSource?.comment ? (
+            {clientSource?.comment ? (
                 <motion.div
                     animate={{opacity: 1, y: 0}}
                     initial={{opacity: 0, y: 20}}
@@ -42,9 +41,14 @@ const ClientSourceList: React.FC = () => {
                     <div className="back" onClick={backOnClickHandler}>
                         <LeftOutlined />
                         <span className="text">Назад</span>
-                        <span className="title">{selectClientSource.title}</span>
+                        <span className="title">{clientSource.title}</span>
                     </div>
-                    <Input.TextArea autoFocus rows={4} />
+                    <Input.TextArea
+                        autoFocus
+                        rows={4}
+                        onChange={textAreaChangeHandler}
+                        value={clientSourceComment}
+                    />
                 </motion.div>
             ) : (
                 <motion.fieldset
@@ -58,14 +62,12 @@ const ClientSourceList: React.FC = () => {
                         {sourcesList.map(sourceItem => (
                             <div
                                 className={`source-item ${
-                                    selectClientSource && selectClientSource.id === sourceItem.id
-                                        ? "active"
-                                        : ""
+                                    clientSource && clientSource.id === sourceItem.id ? "active" : ""
                                 }`}
                                 key={sourceItem.id}
                                 onClick={() => onChangeHandler(sourceItem)}
                             >
-                                {selectClientSource && selectClientSource.id === sourceItem.id && (
+                                {clientSource && clientSource.id === sourceItem.id && (
                                     <motion.span
                                         animate={{opacity: 1, x: 0}}
                                         initial={{opacity: 0, x: -20}}
@@ -77,7 +79,7 @@ const ClientSourceList: React.FC = () => {
                                 )}
                                 <motion.span
                                     animate={
-                                        selectClientSource && selectClientSource.id === sourceItem.id
+                                        clientSource && clientSource.id === sourceItem.id
                                             ? {x: 20, width: "calc(100% - 20px)"}
                                             : {x: 0, width: "100%"}
                                     }

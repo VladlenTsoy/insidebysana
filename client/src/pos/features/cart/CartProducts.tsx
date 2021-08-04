@@ -6,7 +6,6 @@ import "./CartProducts.less"
 import {formatPrice} from "utils/formatPrice"
 import AdditionalServicesAction from "pos/features/additional-services/AdditionalServicesAction"
 import CreateOrderAction from "pos/features/order/create-order/CreateOrderAction"
-import {FlagOutlined} from "@ant-design/icons"
 import {motion} from "framer-motion"
 import CartAdditionalServiceItem from "../additional-services/CartAdditionalServiceItem"
 
@@ -53,9 +52,8 @@ const AddedProducts: React.FC<AddedProductsProps> = () => {
                             block
                             size="large"
                             disabled={!products.length}
-                            icon={<FlagOutlined />}
                         >
-                            Завершить
+                            Далее
                         </Button>
                     </CreateOrderAction>
                 </div>

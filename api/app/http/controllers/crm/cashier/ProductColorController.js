@@ -77,15 +77,19 @@ const GetBySKU = async (req, res) => {
 
         if (productColorId && sizeId) {
             const product = await ProductColor.query()
-                .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',${sizeId},'".qty')) > 0`)
+                .whereRaw(
+                    `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+                )
+                .withGraphFetched(`[color, discount, sizes_props]`)
+                .join("products", "products.id", "product_colors.product_id")
+                .where("product_colors.hide_id", null)
                 .findById(productColorId)
-                .select("id", "thumbnail", "product_id", "sizes")
-                .withGraphFetched(`[color,details,discount]`)
+                .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
 
             if (product)
                 return res.send({
-                    product_color_id: productColorId,
-                    size_id: sizeId,
+                    product_color_id: Number(productColorId),
+                    size_id: Number(sizeId),
                     qty: 1,
                     product: product
                 })

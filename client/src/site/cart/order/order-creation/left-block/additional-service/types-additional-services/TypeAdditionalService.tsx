@@ -31,7 +31,7 @@ const TypeAdditionalService: React.FC<TypeAdditionalServiceProps> = ({
                 </div>
                 <div className={styled.image}>{icon && <img src={icon} alt={title} />}</div>
                 <div className={styled.info}>{title}</div>
-                <div className={styled.price}>{`${formatPrice(price)} сум` || "Бесплатно"}</div>
+                <div className={styled.price}>{price ? `${formatPrice(price)} сум` : "Бесплатно"}</div>
             </div>
         </label>
     )

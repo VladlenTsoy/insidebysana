@@ -36,6 +36,7 @@ const Home: React.FC = () => {
                     setSearch(str.toUpperCase())
                     clearSearchStr()
                 }
+                clearSearchStr()
             }
 
             // При нажатии клавиш

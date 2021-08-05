@@ -1,5 +1,4 @@
 import {createApi} from "@reduxjs/toolkit/query/react"
-import Order from "site/cart/order/Order"
 import {AdditionalService} from "types/AdditionalService"
 import baseQuery from "utils/apiConfig"
 

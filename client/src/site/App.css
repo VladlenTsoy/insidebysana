@@ -14,6 +14,24 @@ body {
     font-size: var(--default-font-size);
 }
 
+.text_pages h4,
+.text_pages h3 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.text_pages p {
+    margin-bottom: 0.5rem;
+}
+
+.text_pages ol {
+    margin: initial;
+}
+
+.text_pages li {
+    margin-bottom: 0.5rem;
+}
+
 /****/
 
 #product-properties .rc-collapse > .rc-collapse-item > .rc-collapse-header {

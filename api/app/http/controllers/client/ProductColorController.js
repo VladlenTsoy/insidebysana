@@ -147,29 +147,14 @@ const GetById = async (req, res) => {
                 "products.price"
             )
 
-        // Продукты без кол-во
-        const productsWithoutQty = await ProductColor.query()
-            .where("product_colors.hide_id", null)
-            .join("sizes")
-            .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) <= 0`)
-
-        // Продукты без кол-во
-        const productsQty = await ProductColor.query()
-            .where("product_colors.hide_id", null)
-            .join("sizes")
-            .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`)
-
-        // Ids продуктов без кол-во
-        const _ids = productsWithoutQty.map(product => product.id)
-        const _have_ids = productsQty.map(product => product.id)
-        const ids = uniq(_ids).filter(id => !_have_ids.includes(id))
-
         const productColors = await ProductColor.query()
             .join("colors", "colors.id", "product_colors.color_id")
-            .whereNotIn("product_colors.id", ids)
             .where("product_colors.product_id", product.product_id)
             .where("product_colors.thumbnail", "IS NOT", null)
             .where("product_colors.hide_id", null)
+            .whereRaw(
+                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+            )
             .select("colors.id", "colors.title", "colors.hex", "product_colors.id as product_id")
 
         product.colors = productColors

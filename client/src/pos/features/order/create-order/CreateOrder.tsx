@@ -55,6 +55,10 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
             price: product.price
         }))
 
+        const orderPayments = payments.map(payment => {
+            return {...payment, price: payment.price - payChange}
+        })
+
         // console.log({
         //     additionalServices: additionalServices,
         //     processing: processing,
@@ -71,7 +75,7 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
             additionalServices: additionalServices,
             processing: processing,
             client: selectClient,
-            payments: payments,
+            payments: orderPayments,
             discount: discount,
             products: orderProducts,
             total_price: totalPrice,

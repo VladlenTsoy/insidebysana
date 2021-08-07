@@ -65,8 +65,12 @@
                             height: 46px;
                             position: relative;
                             padding-right: 3.25rem;
-                            max-width: 250px;
+                            max-width: 300px;
                             text-align: right;
+
+                            &::placeholder {
+                                color: fade(@black, 30%);
+                            }
                         }
 
                         &::after {
@@ -76,6 +80,7 @@
                             font-size: @font-size-xl;
                             color: @black;
                             line-height: 46px;
+                            pointer-events: none;
                         }
                     }
                 }

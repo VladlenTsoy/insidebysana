@@ -73,15 +73,17 @@ const Payments: React.FC = () => {
                             validateStatus={leftToPay > 0 ? "error" : "success"}
                         >
                             <InputNumber
+                                type="tel"
                                 autoFocus={key === 0}
                                 value={payment.price}
+                                placeholder="Введите сумму"
                                 onChange={val =>
                                     onChangePaymentHandler({
                                         ...payment,
                                         price: Number(val)
                                     })
                                 }
-                                formatter={val => formatPrice(Number(val))}
+                                formatter={val => (val ? formatPrice(Number(val)) : "")}
                                 style={{width: "100%"}}
                             />
                         </Form.Item>

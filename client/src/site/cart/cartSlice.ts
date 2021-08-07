@@ -50,9 +50,22 @@ const cartSlice = createSlice({
             state.loading = true
         })
         builder.addCase(fetchCart.fulfilled, (state, action) => {
-            cartAdapter.upsertMany(state, action.payload.products)
-            state.skus = action.payload.skus
-            setLocalCart(state.skus)
+            const {skus, products} = action.payload
+
+            if (products.length >= 4) {
+                const _saveProducts = products.slice()
+                const _productMinPriceIds = products
+                    .sort((a, b) => (b.price >= a.price ? -1 : 1))
+                    .splice(0, 2)
+                    .map(product => product.sku)
+
+                const _products = _saveProducts.map(product => {
+                    return _productMinPriceIds.includes(product.sku) ? {...product, promotion: true} : product
+                })
+                cartAdapter.upsertMany(state, _products)
+            } else cartAdapter.upsertMany(state, action.payload.products)
+            state.skus = skus
+            setLocalCart(skus)
             state.loading = false
         })
         builder.addCase(fetchCart.rejected, state => {

@@ -4,7 +4,6 @@
 }
 
 .details {
-
 }
 
 .details .title {
@@ -12,7 +11,7 @@
     margin-bottom: 1rem;
     display: inline-block;
     color: var(--default-text);
-    transition: color .2s ease-in-out;
+    transition: color 0.2s ease-in-out;
 }
 
 .details .title:hover {
@@ -20,7 +19,7 @@
 }
 
 .details .size {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 }
 
 .details .price {
@@ -35,7 +34,7 @@
 }
 
 .details .prevPrice {
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
     font-size: var(--small-font-size);
     color: var(--secondary-text);
     margin-top: 1rem;
@@ -52,6 +51,15 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.promotion {
+    margin-bottom: 0.25rem;
+    color: var(--primary);
+}
+
+.free {
+    color: var(--primary);
 }
 
 @media (max-width: 767px) {

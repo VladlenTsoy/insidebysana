@@ -1,23 +1,13 @@
-import React, {useEffect} from "react"
+import React from "react"
 import styled from "./Products.module.css"
 import ImageBlock from "components/image-block/ImageBlock"
 import {formatPrice} from "utils/formatPrice"
 import {useLoadingCart, useSelectAllProductCart} from "../../../../cartSlice"
-import {useDispatch} from "site/store"
-import {fetchCart} from "site/cart/cartApi"
 import LoaderBlock from "print/components/loader-block/LoaderBlock"
 
 const Products = () => {
     const loading = useLoadingCart()
     const products = useSelectAllProductCart()
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        const promise = dispatch(fetchCart())
-        return () => {
-            promise.abort()
-        }
-    }, [dispatch])
 
     if (loading) return <LoaderBlock />
 
@@ -45,7 +35,16 @@ const Products = () => {
                             </div>
                         )}
                         <div className={styled.totalPrice}>
-                            {formatPrice(product.price * product.qty, product.discount)} сум
+                            {product.promotion && product.qty === 1
+                                ? `Бесплатно`
+                                : `${formatPrice(
+                                      product.price *
+                                          (product.promotion && product.qty > 1
+                                              ? product.qty - 1
+                                              : product.qty),
+                                      product.discount
+                                  )} сум`}
+                            {product.promotion && product.qty > 1 && <div>+ 1 бесплатно</div>}
                         </div>
                         <div className={styled.qty}>
                             <span>кол-во:</span> {product.qty}

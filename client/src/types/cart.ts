@@ -19,4 +19,5 @@ export interface ProductColorCart {
         qty: number
         title: string
     }
+    promotion?: boolean
 }

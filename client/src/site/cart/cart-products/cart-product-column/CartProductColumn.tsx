@@ -33,10 +33,14 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
             // Цена со скидкой
             const lastPrice = checkDiscount(product.price, product.discount)
             // Общая цена
-            setTotalPrice(val * lastPrice)
+            setTotalPrice((product.promotion ? val - 1 : val) * lastPrice)
         },
         [dispatch, product]
     )
+
+    useEffect(() => {
+        if (product.promotion && product.qty > 0 && product.qty < 2) setTotalPrice(0)
+    }, [product])
 
     useEffect(() => {
         addTotalPrice(product.sku, totalPrice)
@@ -85,7 +89,16 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
                 </div>
             )}
             <div className={styled.total}>
-                <div className={styled.totalPrice}>{formatPrice(totalPrice)} сум</div>
+                <div className={styled.totalPrice}>
+                    {totalPrice ? (
+                        `${formatPrice(totalPrice)} сум`
+                    ) : (
+                        <span className={styled.free}>Бесплатно</span>
+                    )}
+                </div>
+                {!!(product.promotion && product.qty > 1) && (
+                    <div className={styled.promotion}>+ 1 бесплатно</div>
+                )}
                 {width < 767 && (
                     <RemoveButton
                         sku={product.sku}

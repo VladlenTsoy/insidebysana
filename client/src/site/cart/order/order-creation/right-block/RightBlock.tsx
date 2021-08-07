@@ -40,9 +40,17 @@ const RightBlock: React.FC<RightBlockProps> = ({
 
     useEffect(() => {
         const price = products.reduce((state, product) => {
-            const _price = product.price * product.qty
+            let _price = 0
+            //
+            if (product.promotion) {
+                if (product.qty > 1) {
+                    _price = product.price * (product.qty - 1)
+                } else _price = 0
+            } else _price = product.price * product.qty
+            //
             if (product.discount) state += checkDiscount(_price, product.discount)
             else state += _price
+            //
             return state
         }, 0)
         setPriceProducts(price)

@@ -10,11 +10,13 @@ import {authSelector} from "../../auth/authSlice"
 import {usePrefetch} from "./navigation/nav-desktop/products-menu/categories-menu/categoryApi"
 import {fetchCart} from "site/cart/cartApi"
 import {fetchWishlist} from "site/wishlist/wishlistApi"
+import {useRouteMatch} from "react-router-dom"
 
 const Header: React.FC = () => {
     const {token, detail} = useSelector(authSelector)
     const dispatch = useDispatch()
     const prefetchCategories = usePrefetch("getCategories")
+    const match = useRouteMatch("/cart")
 
     useEffect(() => {
         prefetchCategories(undefined)
@@ -30,15 +32,17 @@ const Header: React.FC = () => {
         }
     }, [dispatch, token])
 
-    //
+    // Вывод корзины и избранного
     useEffect(() => {
-        const promiseCart = dispatch(fetchCart())
-        const promiseWishlist = dispatch(fetchWishlist())
-        return () => {
-            promiseCart.abort()
-            promiseWishlist.abort()
+        if (detail || match?.path === "/cart") {
+            const promiseCart = dispatch(fetchCart())
+            const promiseWishlist = dispatch(fetchWishlist())
+            return () => {
+                promiseCart.abort()
+                promiseWishlist.abort()
+            }
         }
-    }, [detail, dispatch])
+    }, [detail, dispatch, match])
 
     return (
         <HeaderAnimation>

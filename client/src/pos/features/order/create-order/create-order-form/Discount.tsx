@@ -47,6 +47,7 @@ const Discount: React.FC = () => {
             />
             <div className="discount-input">
                 <InputNumber
+                    type="tel"
                     size="large"
                     onChange={onValueChangeHandler}
                     min={0}

@@ -154,7 +154,8 @@ const cartSlice = createSlice({
         },
         // Задать скидку
         setDiscount: (state, action: PayloadAction<StateProps["discount"]>) => {
-            state.discount = action.payload
+            if (action.payload && action.payload.discount > 0) state.discount = action.payload
+            else state.discount = null
             // Сумма
             const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice

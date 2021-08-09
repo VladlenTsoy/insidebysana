@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import styled from "./RightBlock.module.css"
-import {checkDiscount, formatPrice} from "utils/formatPrice"
+import {formatPrice} from "utils/formatPrice"
 import Products from "./products/Products"
 import Promo from "./promo/Promo"
 import ShoppingCartOutlined from "@ant-design/icons/ShoppingCartOutlined"
@@ -40,10 +40,7 @@ const RightBlock: React.FC<RightBlockProps> = ({
 
     useEffect(() => {
         const price = products.reduce((state, product) => {
-            const _price = product.price * product.qty
-            if (product.discount) state += checkDiscount(_price, product.discount)
-            else state += _price
-            return state
+            return (state += product.total_price)
         }, 0)
         setPriceProducts(price)
     }, [products])

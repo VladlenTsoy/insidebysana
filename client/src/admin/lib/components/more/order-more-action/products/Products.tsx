@@ -40,6 +40,20 @@ const columns = [
                 discount={product.discount ? {discount: product.discount} : undefined}
             />
         )
+    },
+    {
+        title: "Сумма",
+        render: (_: any, product: any) =>
+            product.promotion && product.qty === 1 ? (
+                `Бесплатно`
+            ) : (
+                <PriceBlock
+                    price={
+                        product.price * (product.promotion && product.qty > 1 ? product.qty - 1 : product.qty)
+                    }
+                    discount={product.discount ? {discount: product.discount} : undefined}
+                />
+            )
     }
 ]
 

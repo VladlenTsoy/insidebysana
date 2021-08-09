@@ -191,7 +191,7 @@ const GetProductsByOrderId = async (req, res) => {
         const productColors = await OrderProductColor.query()
             .withGraphFetched("[details, size]")
             .where({order_id: id})
-            .select("qty", "price", "discount")
+            .select("qty", "price", "discount", "promotion")
         return res.send(productColors)
     } catch (e) {
         logger.error(e.stack)

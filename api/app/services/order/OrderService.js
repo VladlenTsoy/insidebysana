@@ -335,6 +335,7 @@ const AddProductsToOrder = async (orderId, products) => {
                     size_id: sizeId,
                     qty: product.qty,
                     price: product.price,
+                    promotion: product.promotion,
                     discount: product.discount && product.discount.discount
                 })
                 // Изменения остатка

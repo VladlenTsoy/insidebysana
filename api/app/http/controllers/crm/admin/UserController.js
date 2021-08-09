@@ -59,7 +59,11 @@ const Create = async (req, res) => {
 const Edit = async (req, res) => {
     try {
         const {id} = req.params
-        const data = req.body
+        const {full_name, email, password, access} = req.body
+        const data = {full_name, email, access}
+        //
+        if (password && password.trim() !== "") data.password = password
+        //
         const user = await (data.password ? UserPassword : User).query().updateAndFetchById(id, data)
         return res.send(user)
     } catch (e) {

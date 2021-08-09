@@ -8,7 +8,7 @@ export interface ProductColorCart {
     color: {
         id: number
         title: string
-    },
+    }
     discount?: {
         discount: number
         end_at: string
@@ -19,5 +19,6 @@ export interface ProductColorCart {
         qty: number
         title: string
     }
-    promotion?: boolean
+    promotion?: number
+    total_price: number
 }

@@ -1,7 +1,7 @@
-import React, {useCallback, useEffect, useState} from "react"
+import React, {useCallback, useEffect} from "react"
 import styled from "./CartProductColumn.module.css"
 import {Link} from "react-router-dom"
-import {checkDiscount, formatPrice} from "../../../../utils/formatPrice"
+import {formatPrice} from "../../../../utils/formatPrice"
 import {useScreenSize} from "../../../../hooks/useScreenSize"
 import {ProductColorCart} from "../../../../types/cart"
 import RemoveButton from "./remove-button/RemoveButton"
@@ -21,7 +21,6 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
     addTotalPrice,
     removeProductFromTotalPrice
 }) => {
-    const [totalPrice, setTotalPrice] = useState(checkDiscount(product.price, product.discount))
     const {width} = useScreenSize()
     const dispatch = useDispatch()
 
@@ -30,21 +29,13 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
         (val: number) => {
             // Обновление в состоянии проекта
             dispatch(updateQtyCart({sku: product.sku, qty: val}))
-            // Цена со скидкой
-            const lastPrice = checkDiscount(product.price, product.discount)
-            // Общая цена
-            setTotalPrice((product.promotion ? val - 1 : val) * lastPrice)
         },
         [dispatch, product]
     )
 
     useEffect(() => {
-        if (product.promotion && product.qty > 0 && product.qty < 2) setTotalPrice(0)
-    }, [product])
-
-    useEffect(() => {
-        addTotalPrice(product.sku, totalPrice)
-    }, [totalPrice, product, addTotalPrice])
+        addTotalPrice(product.sku, product.total_price)
+    }, [product, addTotalPrice])
 
     return (
         <>
@@ -90,14 +81,14 @@ const CartProductColumn: React.FC<CartProductColumnProps> = ({
             )}
             <div className={styled.total}>
                 <div className={styled.totalPrice}>
-                    {totalPrice ? (
-                        `${formatPrice(totalPrice)} сум`
+                    {!!product.total_price ? (
+                        `${formatPrice(product.total_price)} сум`
                     ) : (
                         <span className={styled.free}>Бесплатно</span>
                     )}
                 </div>
-                {!!(product.promotion && product.qty > 1) && (
-                    <div className={styled.promotion}>+ 1 бесплатно</div>
+                {!!(product.promotion && product.qty > product.promotion) && (
+                    <div className={styled.promotion}>+ {product.promotion} бесплатно</div>
                 )}
                 {width < 767 && (
                     <RemoveButton

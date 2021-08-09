@@ -35,16 +35,10 @@ const Products = () => {
                             </div>
                         )}
                         <div className={styled.totalPrice}>
-                            {product.promotion && product.qty === 1
-                                ? `Бесплатно`
-                                : `${formatPrice(
-                                      product.price *
-                                          (product.promotion && product.qty > 1
-                                              ? product.qty - 1
-                                              : product.qty),
-                                      product.discount
-                                  )} сум`}
-                            {product.promotion && product.qty > 1 && <div>+ 1 бесплатно</div>}
+                            {product.total_price ? `${formatPrice(product.total_price)} сум` : "Бесплатно"}
+                            {!!(product.promotion && product.qty > 1) && (
+                                <div>+ {product.promotion} бесплатно</div>
+                            )}
                         </div>
                         <div className={styled.qty}>
                             <span>кол-во:</span> {product.qty}

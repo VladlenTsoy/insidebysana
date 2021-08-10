@@ -25,6 +25,7 @@ const GetByAll = async (req, res) => {
     }
 }
 
+// Вывод сделки по ID
 const GetById = async (req, res) => {
     try {
         const {id} = req.params
@@ -98,6 +99,7 @@ const Create = async (req, res) => {
     }
 }
 
+// Редактирование сделки
 const EditById = async (req, res) => {
     try {
         const {id} = req.params

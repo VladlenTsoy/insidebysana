@@ -95,6 +95,9 @@ const GetPagination = async (req, res) => {
             .modify("filterPrice", price)
             .where("product_colors.thumbnail", "IS NOT", null)
             .where("product_colors.hide_id", null)
+            .whereRaw(
+                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+            )
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
@@ -232,7 +235,9 @@ const GetNew = async (req, res) => {
             .where("product_colors.hide_id", null)
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereRaw(`product_colors.id IN (SELECT home_products.product_color_id FROM home_products)`)
-            // .orderBy("product_colors.created_at", "desc")
+            .whereRaw(
+                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+            )
             .orderByRaw(`FIELD(product_colors.id, ${ids.reverse().join(",")})`)
             .select(
                 "product_colors.id",
@@ -274,17 +279,24 @@ const Search = async (req, res) => {
         }
 
         const products = await ProductColor.query()
-            .withGraphFetched(
-                `[
-                discount(),
-                color(),                
-            ]`
-            )
-            .modify("search", search)
             .join("products", "products.id", "product_colors.product_id")
+            .withGraphFetched(`[discount, color]`)
+            .whereRaw(
+                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+            )
             .where("product_colors.hide_id", null)
             .where("product_colors.thumbnail", "IS NOT", null)
-            .orderBy("product_colors.created_at", "asc")
+            .where(builder => {
+                if (search.trim() !== "")
+                    builder
+                        .whereRaw(
+                            `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
+                        )
+                        .orWhereRaw(
+                            `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
+                        )
+                        .orWhere("product_colors.id", "LIKE", `%${search}%`)
+            })
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
@@ -323,6 +335,9 @@ const GetByRecentIds = async (req, res) => {
             .join("products", "products.id", "product_colors.product_id")
             .where("product_colors.hide_id", null)
             .where("product_colors.thumbnail", "IS NOT", null)
+            .whereRaw(
+                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+            )
             .orderByRaw(`FIELD(product_colors.id, ${ids.reverse().join(",")})`)
             .select(
                 "product_colors.id",

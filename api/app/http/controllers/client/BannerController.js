@@ -1,5 +1,5 @@
-const {Banner} = require('models/settings/Banner')
-const {logger} = require("config/logger.config");
+const {Banner} = require("models/settings/Banner")
+const {logger} = require("config/logger.config")
 
 /**
  * Вывод баннеров
@@ -11,7 +11,8 @@ const {logger} = require("config/logger.config");
 const GetAll = async (req, res) => {
     try {
         const banners = await Banner.query()
-            .select('id', 'title', 'image', 'button_link', 'button_title')
+            .orderBy("created_at", "desc")
+            .select("id", "title", "image", "button_link", "button_title")
 
         return res.send(banners)
     } catch (e) {

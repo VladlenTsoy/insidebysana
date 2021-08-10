@@ -48,7 +48,8 @@ const Create = async (req, res) => {
         const [imagePath] = await ImageService.UploadImage({
             folderPath: `${PATH_TO_FOLDER_IMAGES}/${bannerRef.id}`,
             imagePatch: `${PATH_TO_IMAGE}/${bannerRef.id}`,
-            fileImage: url_image
+            fileImage: url_image,
+            quality: 100
         })
         const banner = await Banner.query()
             .select("id", "title", "image", "button_link", "button_title")
@@ -80,7 +81,8 @@ const EditById = async (req, res) => {
             const [imagePath] = await ImageService.UploadImage({
                 folderPath: `${PATH_TO_FOLDER_IMAGES}/${id}`,
                 imagePatch: `${PATH_TO_IMAGE}/${id}`,
-                fileImage: url_image
+                fileImage: url_image,
+                quality: 100
             })
             data.image = imagePath
             await ImageService.DeleteImagesExceptCurrent(`${PATH_TO_FOLDER_IMAGES}/${id}`, imagePath)

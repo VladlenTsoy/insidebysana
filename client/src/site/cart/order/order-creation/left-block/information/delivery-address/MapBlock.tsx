@@ -36,6 +36,7 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
     const [center, setCenter] = useState([41.311158, 69.279737])
     const [zoom, setZoom] = useState(position ? SEARCH_ZOOM : BASIC_ZOOM)
     const placemarkRef = useRef<any>(null)
+    const [mapAutoGeolocation, setMapAutoGeolocation] = useState(autoGeolocation)
 
     const getAddress = useCallback(
         (coords: number[], toForm: boolean = false) => {
@@ -72,7 +73,7 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
     )
 
     useEffect(() => {
-        if (ymaps && autoGeolocation) {
+        if (ymaps && mapAutoGeolocation) {
             ymaps.geolocation
                 .get({
                     provider: "browser",
@@ -83,9 +84,10 @@ const MapElements: React.FC<YMapsProps & MapElementsProps> = ({
                     setCenter(geoObjects.position)
                     getAddress(geoObjects.position, true)
                     setZoom(SEARCH_ZOOM)
+                    setMapAutoGeolocation(false)
                 })
         }
-    }, [ymaps, getAddress, autoGeolocation])
+    }, [ymaps, getAddress, mapAutoGeolocation])
 
     // useEffect(() => {
     //     setCenter(prevState => position || selectCenter || prevState)

@@ -198,6 +198,7 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
     addresses
 }) => {
     const {detail} = useUser()
+    const [autoGeolocation] = useState(!(values.address || values.client_address_id))
     const {data: countries, isLoading: isLoadingCountries} = useGetCountriesQuery()
     const {data: cities, isLoading: isLoadingCities} = useGetCitiesByCountryIdQuery(values.country || 0, {
         skip: !values.country
@@ -332,7 +333,7 @@ export const DeliveryAddress: React.FC<DeliveryAddressProps> = ({
                 </div>
             </div>
             <MapBlock
-                autoGeolocation={!(values.address || values.client_address_id)}
+                autoGeolocation={autoGeolocation}
                 setMapCountry={setMapCountry}
                 setMapCity={setMapCity}
                 setFieldValue={setFieldValue}

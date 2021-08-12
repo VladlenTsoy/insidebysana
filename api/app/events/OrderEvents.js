@@ -10,7 +10,7 @@ const SMSTemplateService = require("services/SMSTemplateService")
  * События при создание сделки
  * @param {*} param0
  */
-const CreateHandler = async ({status_id, lead, order_id}) => {
+const CreateHandler = async ({status_id, client, order_id}) => {
     if (!order_id) return
 
     try {
@@ -23,11 +23,13 @@ const CreateHandler = async ({status_id, lead, order_id}) => {
         // Уведомление для администраторов
         io.to("admins").emit("order_create", order)
 
-        if (status_id && lead) {
+        if (status_id && client) {
             // Вывод статуса
             const status = await Status.query().findById(status_id)
             if (status && Array.isArray(status.sms) && status.sms.length) {
-                const smsAction = status.sms.find(sms => sms.payment_state.includes(order.payment_state))
+                const smsAction = status.sms.find(sms =>
+                    sms.payment_state.includes(String(order.payment_state))
+                )
 
                 if (smsAction) {
                     const updateMessage = SMSTemplateService.ReplaceVariablesToData(
@@ -36,10 +38,16 @@ const CreateHandler = async ({status_id, lead, order_id}) => {
                         order.total_price
                     )
 
+                    console.log({
+                        phone: client.phone,
+                        message: updateMessage,
+                        timeout: smsAction.timeout
+                    })
+
                     if (updateMessage)
                         // Отпрака сообщения
                         SendMessageQueue({
-                            phone: information.phone,
+                            phone: client.phone,
                             message: updateMessage,
                             timeout: smsAction.timeout
                         })

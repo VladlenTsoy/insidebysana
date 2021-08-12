@@ -62,13 +62,19 @@ const FilterDrawer: React.FC<FilterDrawerProps> = ({onClose}) => {
                 {page === "colors" && <Colors />}
                 {page === "price" && <Price />}
             </div>
-            {page === "menu" && (
+            {page === "menu" ? (
                 <div className={styled.footer}>
-                    <Button block filled onClick={onClose} className={styled.btnSee}>
+                    <Button block filled onClick={onClose}>
                         Показать
                     </Button>
                     <Button block link size="small" onClick={onResetFilter}>
                         Сбросить фильтр
+                    </Button>
+                </div>
+            ) : (
+                <div className={styled.footer}>
+                    <Button block filled onClick={onClose}>
+                        Показать
                     </Button>
                 </div>
             )}

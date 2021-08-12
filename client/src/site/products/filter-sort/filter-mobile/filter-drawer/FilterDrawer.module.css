@@ -79,6 +79,6 @@
     background: var(--white);
 }
 
-.footer .btnSee {
+.footer button:first-child:not(:last-child) {
     margin-bottom: 0.5rem;
 }

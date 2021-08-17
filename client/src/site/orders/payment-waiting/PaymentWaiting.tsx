@@ -79,7 +79,7 @@ const PaymentWaiting: React.FC<PaymentWaitingProps> = ({order}) => {
             <div className={styled.order}>
                 <div className={styled.message}>
                     <p>Срок действия вашей брони истекает через {getTimeFromMins(minutesLeft)}</p>
-                    <p>Пожалуйста, перейдите в корзину, чтобы оплатить заказ.</p>
+                    <p>Пожалуйста, выберите тип оплаты, чтобы оплатить заказ.</p>
                 </div>
                 <div className={styled.products}>
                     {order.productColors.map(product => (

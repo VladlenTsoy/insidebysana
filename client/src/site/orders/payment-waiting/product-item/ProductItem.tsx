@@ -16,20 +16,32 @@ const ProductItem: React.FC<ProductItemProps> = ({product}) => {
     return (
         <div key={product.id} className={styled.wrapper}>
             <div className={styled.left}>
-                <ImageLink image={product.url_thumbnail} id={product.id} />
+                <div className={styled.wrapperThumbnail}>
+                    <div className={styled.thumbnail}>
+                        <ImageLink image={product.url_thumbnail} id={product.id} />
+                    </div>
+                </div>
                 <div className={styled.details}>
                     <Link to={`/product/${product.id}`} className={styled.title}>
                         {product.title} ({product.color_title})
                     </Link>
                     <div className={styled.properties}>
-                        <span className={styled.property_title}>Размер: </span>
-                        <span>{product.size_title}</span>
+                        <p>
+                            <span className={styled.property_title}>Размер: </span>
+                            <span className={styled.property_desc}>{product.size_title}</span>
+                            {width < 767 && (
+                                <>
+                                    <span className={styled.property_title}>Кол-во: </span>
+                                    <span className={styled.property_desc}>{product.qty}</span>
+                                </>
+                            )}
+                        </p>
                         {width < 767 && (
                             <>
-                                <span className={styled.property_title}>Кол-во: </span>
-                                <span>{product.qty}</span>
                                 <span className={styled.property_title}>Цена: </span>
-                                <span>{formatPrice(product.qty * product.price)} сум</span>
+                                <span className={styled.property_desc}>
+                                    {formatPrice(product.qty * product.price)} сум
+                                </span>
                             </>
                         )}
                     </div>
@@ -40,8 +52,10 @@ const ProductItem: React.FC<ProductItemProps> = ({product}) => {
                     <div className={styled.qty}>{product.qty}</div>
                     <div className={styled.price}>
                         <div className={styled.dicount}>
-                            <span className={styled.dicountPrice}>{formatPrice(product.qty * product.price)}</span> -{" "}
-                            <span className={styled.percent}>{product.discount}%</span>
+                            <span className={styled.dicountPrice}>
+                                {formatPrice(product.qty * product.price)}
+                            </span>{" "}
+                            - <span className={styled.percent}>{product.discount}%</span>
                         </div>
                         <div>{formatPrice(product.qty * product.price, product.discount)} сум</div>
                     </div>

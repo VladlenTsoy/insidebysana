@@ -35,7 +35,8 @@ const CreateHandler = async ({status_id, client, order_id}) => {
                     const updateMessage = SMSTemplateService.ReplaceVariablesToData(
                         smsAction.message,
                         order_id,
-                        order.total_price
+                        order.total_price,
+                        client.full_name
                     )
 
                     console.log({

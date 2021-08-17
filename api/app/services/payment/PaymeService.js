@@ -272,7 +272,7 @@ class PaymeService {
                 return this.error(this.PaymeException.ERROR_INVALID_ACCOUNT, "Transaction is expired.")
 
             // Обновление ордера
-            // await Order.query().findById(transaction.order_id).update({payment_state: 1})
+            await Order.query().findById(transaction.order_id).update({payment_state: 1})
             await OrderEvents.eventEmitter.emit("create_order_event", {
                 orderId: transaction.order_id,
                 paymentState: 1
@@ -315,7 +315,7 @@ class PaymeService {
                 })
 
                 // Обновление ордера
-                // await Order.query().findById(transaction.order_id).update({payment_state: -1})
+                await Order.query().findById(transaction.order_id).update({payment_state: -1})
                 await OrderEvents.eventEmitter.emit("create_order_event", {
                     orderId: transaction.order_id,
                     paymentState: -1
@@ -337,7 +337,7 @@ class PaymeService {
                 })
 
                 // Обновление ордера
-                // await Order.query().findById(transaction.order_id).update({payment_state: -1})
+                await Order.query().findById(transaction.order_id).update({payment_state: -1})
                 await OrderEvents.eventEmitter.emit("create_order_event", {
                     orderId: transaction.order_id,
                     paymentState: -1

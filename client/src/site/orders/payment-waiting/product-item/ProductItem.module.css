@@ -5,6 +5,11 @@
     gap: 1rem;
 }
 
+@media (max-width: 767px) {
+    .wrapper {
+        display: block;
+    }
+}
 .wrapper:not(:last-child) {
     margin-bottom: 1rem;
 }
@@ -12,6 +17,11 @@
 .left {
     display: flex;
     align-items: center;
+}
+
+.left .wrapperThumbnail {
+    position: relative;
+    min-width: 100px;
 }
 
 .details .title {
@@ -30,7 +40,16 @@
     font-size: var(--small-font-size);
 }
 
+.details .properties p {
+    margin-bottom: .5rem;
+}
+
 .details .properties .property_title {
+    color: var(--secondary-text);
+    margin-right: 0.15rem;
+}
+
+.details .properties .property_desc {
     color: var(--secondary-text);
     margin-right: 0.5rem;
 }
@@ -45,7 +64,7 @@
 
 .price .dicount {
     font-size: var(--small-font-size);
-    margin-bottom: .25rem;
+    margin-bottom: 0.25rem;
 }
 
 .price .dicount .dicountPrice {

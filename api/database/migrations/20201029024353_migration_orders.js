@@ -14,6 +14,8 @@ exports.up = function (knex) {
         table.boolean("processing").notNullable().defaultTo(false)
         table.integer("client_source_id")
         table.integer("client_source_comment")
+        table.boolean("is_archive")
+        table.timestamps("delete_at")
         table.timestamps(true, true)
     })
 }

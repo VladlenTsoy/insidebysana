@@ -1,20 +1,20 @@
-import {Order} from "admin/lib/types/Order"
+import {OrderCardType} from "admin/features/order/Order"
 import React, {useEffect} from "react"
 import {useDispatch} from "react-redux"
-import {addOrder, updateOrder} from "admin/store/admin/order/orderSlice"
+import {addOrder, updateOrder} from "admin/features/order/orderSlice"
 import socket from "admin/utils/socket"
 
 const EventsProvider: React.FC = ({children}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const createOrderListener = (order: Order) => {
+        const createOrderListener = (order: OrderCardType) => {
             dispatch(addOrder(order))
         }
 
         socket.on("order_create", createOrderListener)
 
-        const updateOrderListener = (order: Order) => {
+        const updateOrderListener = (order: OrderCardType) => {
             dispatch(updateOrder(order))
         }
 

@@ -4,7 +4,7 @@ import {
     useLoadingPrintCategories,
     useSelectAllPrintCategories
 } from "admin/store/admin/print-category/printCategorySelectors"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import InputImage from "../../form/input-image/InputImage"
 import {fetchPrintCategories} from "admin/store/admin/print-category/fetchPrintCategories"
 import {formatPrice} from "admin/utils/formatPrice"

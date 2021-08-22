@@ -1,6 +1,6 @@
 import {ProductColor} from "admin/lib/types/product/ProductColor"
 import {updateIsNewProductColor} from "admin/store/admin/product-color/updateIsNewProductColor"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {Modal} from "antd"
 import React from "react"
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons"

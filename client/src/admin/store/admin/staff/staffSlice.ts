@@ -1,5 +1,5 @@
 import {createSlice, createEntityAdapter} from "@reduxjs/toolkit"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {User} from "../../../lib/types/User"
 import {fetchStaff} from "./fetchStaff"
 import {createStaff} from "./createStaff"
@@ -56,6 +56,6 @@ const staffSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllStaff} = staffAdapter.getSelectors<AdminState>(state => state.staff)
+export const {selectAll: selectAllStaff} = staffAdapter.getSelectors<StoreState>(state => state.staff)
 
 export default staffSlice.reducer

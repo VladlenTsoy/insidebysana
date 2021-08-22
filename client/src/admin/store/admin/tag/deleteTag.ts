@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {apiRequest} from "admin/utils/api"
 import {message} from "admin/lib/ui"
-import {AdminThunkProps} from "../store"
+import {AdminThunkProps} from "../../../store"
 import {Tag} from "../../../lib/types/Tag"
 
 type ReturnedType = Tag["id"]

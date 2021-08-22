@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import Container from "./container/Container"
-import {useAdminDispatch} from "../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../store"
 import {fetchNewsletter} from "../../../../../../store/admin/newsletter/fetchNewsletter"
 
 const Newsletter = () => {

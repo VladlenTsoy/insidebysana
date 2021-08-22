@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useState} from "react"
 import "./EditorProduct.less"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {createProduct} from "admin/store/admin/product/createProduct"
 import {editProduct} from "admin/store/admin/product/editProduct"
 import Basic from "./basic/Basic"

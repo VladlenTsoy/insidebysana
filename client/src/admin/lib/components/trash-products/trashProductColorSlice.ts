@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {ProductColor} from "../../types/product/ProductColor"
-import {AdminState} from "../../../store/admin/store"
+import {StoreState} from "../../../store"
 import {fetchProductColorsFromTrash} from "./fetchProductColorsFromTrash"
 import {returnProductColorFromTrash} from "./return-item/returnProductColorFromTrash"
 import {deleteProductColorFromTrash} from "./delete-item/deleteProductColorFromTrash"
@@ -43,6 +43,6 @@ const trashProductColorSlice = createSlice({
 
 export const {
     selectAll: selectAllTrashProductColors
-} = trashProductColorAdapter.getSelectors<AdminState>(state => state.trashProductColor)
+} = trashProductColorAdapter.getSelectors<StoreState>(state => state.trashProductColor)
 
 export default trashProductColorSlice.reducer

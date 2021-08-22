@@ -3,7 +3,7 @@ import "./EditorPrint.less"
 import {deletePrintImage} from "../../../../../store/admin/product-color-print-image/deletePrintImage"
 import {uploadPrintImage} from "../../../../../store/admin/product-color-print-image/uploadPrintImage"
 import {fetchPrintImage} from "../../../../../store/admin/product-color-print-image/fetchPrintImage"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {ProductColor} from "../../../../types/product/ProductColor"
 import {
     useLoadingPrints,

@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Banner} from "../../../lib/types/Banner"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchBanners} from "./fetchBanners"
 import {createBanner} from "./createBanner"
 import {editBanner} from "./editBanner";
@@ -47,6 +47,6 @@ const bannerSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllBanners} = bannerAdapter.getSelectors<AdminState>(state => state.banner)
+export const {selectAll: selectAllBanners} = bannerAdapter.getSelectors<StoreState>(state => state.banner)
 
 export default bannerSlice.reducer

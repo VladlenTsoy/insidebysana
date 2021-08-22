@@ -2,7 +2,7 @@ import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {ProductColorPrint} from "../../../lib/types/product/ProductColorPrint"
 import {fetchPrintImage} from "./fetchPrintImage"
 import {uploadPrintImage} from "./uploadPrintImage"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {deletePrintImage} from "./deletePrintImage";
 
 export const productColorPrintAdapter = createEntityAdapter<ProductColorPrint>({
@@ -44,6 +44,6 @@ const productColorPrintSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllPrints} = productColorPrintAdapter.getSelectors<AdminState>(state => state.print)
+export const {selectAll: selectAllPrints} = productColorPrintAdapter.getSelectors<StoreState>(state => state.print)
 
 export default productColorPrintSlice.reducer

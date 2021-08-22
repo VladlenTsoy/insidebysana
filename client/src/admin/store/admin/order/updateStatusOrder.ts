@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {AdminThunkProps} from "../store"
+import {AdminThunkProps} from "../../../store"
 import socket from "admin/utils/socket"
 import {Order} from "../../../lib/types/Order"
 

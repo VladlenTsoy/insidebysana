@@ -1,7 +1,7 @@
 import {createSlice, createEntityAdapter} from "@reduxjs/toolkit"
 import {Color} from "admin/lib/types/Color"
 import {createColor} from "./createColor"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchColors} from "./fetchColors"
 import {editColor} from "./editColor"
 import {deleteColor} from "./deleteColor"
@@ -60,7 +60,7 @@ const colorSlice = createSlice({
     }
 })
 
-export const {selectById: getColorById, selectAll: selectAllColors} = colorAdapter.getSelectors<AdminState>(
+export const {selectById: getColorById, selectAll: selectAllColors} = colorAdapter.getSelectors<StoreState>(
     state => state.color
 )
 

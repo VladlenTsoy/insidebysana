@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import {ProductColor} from "../../../lib/types/product/ProductColor"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchProductColors} from "./fetchProductColors"
 import {createProduct} from "../product/createProduct"
 import {editProduct} from "../product/editProduct"
@@ -98,6 +98,6 @@ export const {changeCategoryId, changePagination, changeSearch, changeSorter} = 
 export const {
     selectById: getProductColorById,
     selectAll: selectAllProductColors
-} = productColorAdapter.getSelectors<AdminState>(state => state.productColor)
+} = productColorAdapter.getSelectors<StoreState>(state => state.productColor)
 
 export default productColorSlice.reducer

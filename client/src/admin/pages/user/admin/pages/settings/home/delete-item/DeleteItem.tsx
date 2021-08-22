@@ -2,7 +2,7 @@ import React from "react"
 import {Modal} from "antd"
 import {DeleteOutlined} from "@ant-design/icons"
 import {HomeProduct} from "../homeProductSlice"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {deleteHomeProduct} from "../homeProductApi"
 
 interface DeleteItemProps {

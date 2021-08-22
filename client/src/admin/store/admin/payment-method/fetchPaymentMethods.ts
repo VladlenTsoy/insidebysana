@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {apiRequest} from "admin/utils/api"
-import {AdminThunkProps} from "../store"
+import {AdminThunkProps} from "../../../store"
 import {PaymentMethod} from "../../../lib/types/payment/PaymentMethod"
 
 type ReturnedType = PaymentMethod[]

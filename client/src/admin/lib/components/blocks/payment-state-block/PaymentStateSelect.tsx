@@ -4,7 +4,7 @@ import {Order} from "admin/lib/types/Order"
 import React, {useState} from "react"
 import {cancelOrder} from "admin/store/admin/order/cancelOrder"
 import {changePaymentStateOrder} from "admin/store/admin/order/changePaymentStateOrder"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 
 interface PaymentStateSelectProps {
     orderId: Order["id"]

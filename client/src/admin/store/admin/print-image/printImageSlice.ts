@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {PrintImage} from "./PrintImage"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchPrintImages} from "./fetchPrintImages"
 import {createPrintImage} from "./createPrintImage"
 import {editPrintImage} from "./editPrintImage"
@@ -47,6 +47,6 @@ const printImageSlice = createSlice({
     }
 })
 
-export const {selectAll} = printImageAdapter.getSelectors<AdminState>(state => state.printImage)
+export const {selectAll} = printImageAdapter.getSelectors<StoreState>(state => state.printImage)
 
 export default printImageSlice.reducer

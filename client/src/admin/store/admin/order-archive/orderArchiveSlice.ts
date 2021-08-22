@@ -1,7 +1,7 @@
 import {createEntityAdapter, createSlice, PayloadAction} from "@reduxjs/toolkit"
 import moment from "moment"
 import {ArchiveOrder} from "../../../lib/types/Order"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchOrdersArchive} from "./fetchOrdersArchive"
 
 export const orderArchiveAdapter = createEntityAdapter<ArchiveOrder>({
@@ -54,6 +54,6 @@ export const {updateFilterDates, updateFilterSource} = orderArchiveSlice.actions
 export const {
     selectById: getOrderArchiveById,
     selectAll: selectAllOrdersAchive
-} = orderArchiveAdapter.getSelectors<AdminState>(state => state.orderArchive)
+} = orderArchiveAdapter.getSelectors<StoreState>(state => state.orderArchive)
 
 export default orderArchiveSlice.reducer

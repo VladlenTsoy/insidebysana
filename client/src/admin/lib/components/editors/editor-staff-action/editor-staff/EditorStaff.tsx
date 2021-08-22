@@ -1,7 +1,7 @@
 import React from "react"
 import {Col, Form, Input, Row, Select} from "antd"
 import {User} from "../../../../types/User"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {createStaff} from "../../../../../store/admin/staff/createStaff"
 import {editStaff} from "../../../../../store/admin/staff/editStaff"
 import {emailRules, passwordRules} from "../../../../../utils/formRules";

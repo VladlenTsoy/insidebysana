@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {store} from "../../../store/store"
+import {store} from "../../../store"
 import {Loader} from "../../ui"
 import {useUser} from "../../../hooks/use-user"
 
@@ -12,13 +12,9 @@ const StoreProvider: React.FC = ({children}) => {
             ;(async () => {
                 // setLoading(true)
                 if (user.access === "admin" || user.access === "manager") {
-                    const {adminReducer} = await import("../../../store/admin/store")
+                    const {adminReducer} = await import("../../../store")
                     // @ts-ignore
                     store.replaceReducer(adminReducer)
-                } else if (user.access === "cashier") {
-                    const {cashierReducer} = await import("../../../store/cashier/store")
-                    // @ts-ignore
-                    store.replaceReducer(cashierReducer)
                 }
                 setLoading(false)
             })()

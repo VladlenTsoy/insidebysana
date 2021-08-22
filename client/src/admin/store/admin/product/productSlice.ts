@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Product} from "../../../lib/types/product/Product"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchProductById} from "./fetchProductById"
 import {editProduct} from "./editProduct"
 import {createProduct} from "./createProduct"
@@ -48,6 +48,6 @@ const productSlice = createSlice({
 export const {
     selectById: getProductById,
     selectAll: selectAllProducts
-} = productAdapter.getSelectors<AdminState>(state => state.product)
+} = productAdapter.getSelectors<StoreState>(state => state.product)
 
 export default productSlice.reducer

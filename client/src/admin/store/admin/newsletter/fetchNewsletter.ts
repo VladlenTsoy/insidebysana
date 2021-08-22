@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {apiRequest} from "admin/utils/api"
-import {AdminThunkProps} from "../store"
+import {AdminThunkProps} from "../../../store"
 import {Newsletter} from "../../../lib/types/Newsletter"
 
 type ReturnedType = Newsletter[]

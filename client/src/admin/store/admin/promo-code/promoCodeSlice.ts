@@ -1,5 +1,5 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {PromoCode} from "../../../lib/types/PromoCode"
 import {fetchPromoCodes} from "./fetchPromoCodes"
 import {editPromoCode} from "./editPromoCode"
@@ -44,6 +44,6 @@ const promoCodeSlice = createSlice({
 
 export const {
     selectAll: selectAllPromoCodes
-} = promoCodeAdapter.getSelectors<AdminState>(state => state.promoCode)
+} = promoCodeAdapter.getSelectors<StoreState>(state => state.promoCode)
 
 export default promoCodeSlice.reducer

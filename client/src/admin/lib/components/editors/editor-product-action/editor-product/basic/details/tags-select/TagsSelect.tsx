@@ -2,7 +2,7 @@ import React, {useEffect} from "react"
 import {Form, Select} from "antd"
 import {fetchTags} from "admin/store/admin/tag/fetchTags"
 import {useLoadingTag, useSelectAllTags} from "admin/store/admin/tag/tagSelectors"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 
 const {Option} = Select
 

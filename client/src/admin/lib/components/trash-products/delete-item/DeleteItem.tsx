@@ -1,7 +1,7 @@
 import React from "react"
 import {CloseOutlined} from "@ant-design/icons"
 import {Modal} from "antd"
-import {useAdminDispatch} from "../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../store"
 import {ProductColor} from "../../../types/product/ProductColor"
 import {deleteProductColorFromTrash} from "./deleteProductColorFromTrash"
 

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from "react"
 import {ProductColor} from "../../../../types/product/ProductColor"
 import UploadImages from "../../../form/upload-images/UploadImages"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {
     useLoadingProductColorImages,
     useSelectImagesByProductColorId

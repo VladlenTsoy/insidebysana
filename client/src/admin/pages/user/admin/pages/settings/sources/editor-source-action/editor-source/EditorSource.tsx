@@ -1,6 +1,6 @@
 import React from "react"
 import {Input, Form} from "antd"
-import {useAdminDispatch} from "../../../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../../../store"
 import {createSource} from "../../../../../../../../store/admin/source/createSource"
 import {Source} from "../../../../../../../../lib/types/Source";
 

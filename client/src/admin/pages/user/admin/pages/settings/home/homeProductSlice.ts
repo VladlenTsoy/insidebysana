@@ -1,5 +1,5 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
-import {AdminState} from "admin/store/admin/store"
+import {StoreState} from "admin/store"
 import {useSelector} from "react-redux"
 import {fetchHomeProducts, deleteHomeProduct, createHomeProduct, editHomeProduct} from "./homeProductApi"
 
@@ -54,10 +54,10 @@ const homeProductSlice = createSlice({
     }
 })
 
-export const {selectAll} = homeProductAdapter.getSelectors<AdminState>(state => state.homeProduct)
+export const {selectAll} = homeProductAdapter.getSelectors<StoreState>(state => state.homeProduct)
 
 // Загрузка
-export const useLoadingHomeProducts = () => useSelector((state: AdminState) => state.homeProduct.loading)
+export const useLoadingHomeProducts = () => useSelector((state: StoreState) => state.homeProduct.loading)
 
 // Вывод всех
 export const useSelectAllHomeProducts = () => useSelector(selectAll)

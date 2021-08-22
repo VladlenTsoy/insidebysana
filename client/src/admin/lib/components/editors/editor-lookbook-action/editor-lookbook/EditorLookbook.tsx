@@ -1,7 +1,7 @@
 import React from "react"
 import {Form, Input, Select} from "antd"
 import {useForm} from "antd/es/form/Form"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {Lookbook} from "../../../../types/Lookbook"
 import InputImage from "../../../form/input-image/InputImage"
 import {createLookbook} from "../../../../../store/admin/lookbook/createLookbook"

@@ -1,7 +1,7 @@
 import React from "react"
 import {Form, Input, Select} from "antd"
 import {useSelectAllCategories} from "admin/store/common/category/categorySelectors"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {createCategory} from "../../../../../store/admin/category/createCategory"
 import {SubCategory} from "../../../../types/Category"
 import {editCategory} from "../../../../../store/admin/category/editCategory"

@@ -4,7 +4,7 @@ import {Button} from "antd"
 import "./Orders.less"
 import StatusColumn from "./status-column/StatusColumn"
 import {useSelectAllStatuses} from "../../../../../store/admin/status/statusSelectors"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {updateStatusOrder} from "../../../../../store/admin/order/updateStatusOrder"
 import {fetchOrders} from "../../../../../store/admin/order/fetchOrders"
 import {updatePositionStatus} from "../../../../../store/admin/status/updatePositionStatus"
@@ -71,7 +71,7 @@ const Orders = () => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <ScrollContainer hideScrollbars={false} ignoreElements=".task, .title">
+            <ScrollContainer hideScrollbars={false} ignoreElements=".order-card, .title">
                 <div className="container">
                     <Droppable direction="horizontal" droppableId="statuses" type="status">
                         {provided => (

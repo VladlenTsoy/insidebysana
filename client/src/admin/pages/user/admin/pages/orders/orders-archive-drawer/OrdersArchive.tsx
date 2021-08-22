@@ -8,7 +8,7 @@ import {
     useSelectAllOrdersArchive
 } from "admin/store/admin/order-archive/orderArchiveSelectors"
 import {updateFilterDates, updateFilterSource} from "admin/store/admin/order-archive/orderArchiveSlice"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import OrdersTableBlock from "admin/lib/components/blocks/orders-table-block/OrdersTableBlock"
 import {useUser} from "admin/hooks/use-user"
 import {

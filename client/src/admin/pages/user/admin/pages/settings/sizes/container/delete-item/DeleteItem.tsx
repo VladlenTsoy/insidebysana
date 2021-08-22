@@ -1,5 +1,5 @@
 import React from "react"
-import {useAdminDispatch} from "../../../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../../../store"
 import {Modal} from "antd"
 import {DeleteOutlined} from "@ant-design/icons"
 import {deleteSize} from "admin/store/admin/size/deleteSize"

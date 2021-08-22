@@ -1,6 +1,6 @@
 import React from "react"
 import {Form, Input, DatePicker, Row, Col} from "antd"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import SelectClientSources from "../../../form/select-client-source/SelectClientSources"
 import {createClient} from "../../../../../store/admin/client/createClient"
 import {Client} from "../../../../types/Client"

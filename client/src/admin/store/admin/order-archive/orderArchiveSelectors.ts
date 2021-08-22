@@ -1,18 +1,18 @@
 import {useSelector} from "react-redux"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {selectAllOrdersAchive} from "./orderArchiveSlice"
 
 // Загрузка
-export const useLoadingOrdersArchive = () => useSelector((state: AdminState) => state.orderArchive.loading)
+export const useLoadingOrdersArchive = () => useSelector((state: StoreState) => state.orderArchive.loading)
 
 //
 export const useFilterDatesOrdersArchive = () =>
-    useSelector((state: AdminState) => state.orderArchive.filterDates)
+    useSelector((state: StoreState) => state.orderArchive.filterDates)
 
 
 //
 export const useFilterSourceOrdersArchive = () =>
-useSelector((state: AdminState) => state.orderArchive.sourceId)
+useSelector((state: StoreState) => state.orderArchive.sourceId)
 
 // Вывод всех
 export const useSelectAllOrdersArchive = () => useSelector(selectAllOrdersAchive)

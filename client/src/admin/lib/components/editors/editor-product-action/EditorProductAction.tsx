@@ -5,7 +5,7 @@ import EditorProduct from "./editor-product/EditorProduct"
 import EditorProductDrawerTitle from "./editor-product-drawer/editor-product-drawer-title/EditorProductDrawerTitle"
 import EditorProductDrawerFooter from "./editor-product-drawer/editor-product-drawer-footer/EditorProductDrawerFooter"
 import {Product} from "admin/lib/types/product/Product"
-import {useAdminDispatch} from "../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../store"
 import {fetchProductColors} from "../../../../store/admin/product-color/fetchProductColors"
 
 interface EditorProductActionProps {

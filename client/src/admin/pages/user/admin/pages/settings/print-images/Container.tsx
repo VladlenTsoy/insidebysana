@@ -8,7 +8,7 @@ import {PrintImage} from "admin/store/admin/print-image/PrintImage"
 import EditorPrintImageAction from "admin/lib/components/editors/editor-print-image-action/EditorPrintImageAction"
 import MenuButton from "admin/lib/components/menu-button/MenuButton"
 import EditorPrintProductAction from "admin/lib/components/editors/editor-print-product-action/EditorPrintProductAction"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {useEffect} from "react"
 import {fetchPrintProductsByImageId} from "admin/store/admin/print-product/fetchPrintProductsByImageId"
 import {

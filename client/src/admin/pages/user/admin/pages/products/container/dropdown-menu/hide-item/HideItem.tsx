@@ -2,7 +2,7 @@ import React from "react"
 import {EyeInvisibleOutlined} from "@ant-design/icons"
 import {ProductColor} from "../../../../../../../../lib/types/product/ProductColor"
 import {Modal} from "antd"
-import {useAdminDispatch} from "../../../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../../../store"
 import {hideProductColor} from "../../../../../../../../store/admin/product-color/hideProductColor"
 import {fetchProductColorsFromTrash} from "../../../../../../../../lib/components/trash-products/fetchProductColorsFromTrash"
 

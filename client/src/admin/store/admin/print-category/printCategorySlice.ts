@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {PrintCategory} from "./PrintCategory"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchPrintCategories} from "./fetchPrintCategories"
 import {createPrintCategory} from "./createPrintCategory"
 import {editPrintCategory} from "./editPrintCategory"
@@ -47,6 +47,6 @@ const printCategorySlice = createSlice({
     }
 })
 
-export const {selectAll} = printCategoryAdapter.getSelectors<AdminState>(state => state.printCategory)
+export const {selectAll} = printCategoryAdapter.getSelectors<StoreState>(state => state.printCategory)
 
 export default printCategorySlice.reducer

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import Header from "./header/Header"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {fetchStaff} from "../../../../../store/admin/staff/fetchStaff"
 import Container from "./container/Container"
 

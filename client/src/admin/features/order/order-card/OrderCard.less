@@ -1,0 +1,157 @@
+.order-card {
+    border-radius: @border-radius-base;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 3px 3px 0;
+    padding: 8px 8px 12px;
+    margin-bottom: 8px;
+    transition: background-color 0.2s ease;
+    background: @component-background;
+
+    /*** HEADER ***/
+    .order-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        white-space: nowrap;
+
+        .information {
+            margin-right: auto;
+            line-height: 1.5;
+
+            .id {
+                font-weight: bold;
+
+                > .anticon {
+                    color: @text-color-secondary;
+                    margin-right: 0.3rem;
+                }
+            }
+
+            .date {
+                font-size: 12px;
+
+                .anticon {
+                    margin-right: 0.3rem;
+                    color: @text-color-secondary;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .delivery {
+            margin-right: 0.25rem;
+            background: #546bd1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            border-radius: 10px;
+            color: @white;
+            height: 25px;
+            width: 40px;
+            font-size: 16px;
+        }
+
+        .status {
+            margin-right: 0.5rem;
+
+            > div {
+                height: 25px;
+                width: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 10px;
+                // padding: 0.25rem 1rem;
+                color: @white;
+                font-size: 16px;
+            }
+
+            .wait {
+                background: #9babc5;
+            }
+
+            .check {
+                background: @success-color;
+            }
+            .cancel {
+                background: @error-color;
+            }
+        }
+
+        .action {
+            transition: all 0.1s ease-in-out;
+            cursor: pointer;
+        }
+    }
+
+    /*** CLIENT ***/
+    .client {
+        margin-bottom: 0.5rem;
+        padding: 0.25rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid #eff2f5;
+        border-bottom: 1px solid #eff2f5;
+
+        .information {
+            > .anticon {
+                color: @text-color-secondary;
+                margin-right: 0.3rem;
+            }
+
+            .full-name {
+                font-size: 16px;
+            }
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.25rem;
+        }
+    }
+
+    /*** PRICE ***/
+    .order-card-footer {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+
+        .information {
+            margin-right: auto;
+
+            > .products {
+                display: flex;
+                align-items: center;
+
+                .anticon {
+                    color: @text-color-secondary;
+                    margin-right: 0.3rem;
+                }
+            }
+        }
+        .total-price {
+            line-height: 1.2;
+
+            > .discount {
+                text-align: right;
+                color: @text-color-secondary;
+                font-size: 10px;
+
+                span {
+                    margin-right: 0.25rem;
+                }
+
+                b {
+                    margin-right: 0.1rem;
+                    color: @black;
+                }
+            }
+
+            > .price {
+                text-align: right;
+            }
+        }
+    }
+}

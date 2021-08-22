@@ -1,7 +1,7 @@
 import {EditOutlined, PlusOutlined} from "@ant-design/icons"
 import EditorHomeProductAction from "admin/lib/components/editors/editor-home-product-action/EditorHomeProductAction"
 import MenuButton from "admin/lib/components/menu-button/MenuButton"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {Button, Menu, Table} from "antd"
 import ImageBlock from "components/blocks/image-block/ImageBlock"
 import DeleteItem from "./delete-item/DeleteItem"

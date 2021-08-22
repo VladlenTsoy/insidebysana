@@ -9,7 +9,7 @@ import {
 } from "admin/store/admin/payment-method/paymentMethodSelectors"
 import {fetchSources} from "admin/store/admin/source/fetchSources"
 import {useLoadingSources, useSelectAllSources} from "admin/store/admin/source/sourceSelectors"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 
 interface PaymentConditionsProps {
     conditions?: Status["conditions"]

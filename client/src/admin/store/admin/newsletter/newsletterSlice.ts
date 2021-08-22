@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Newsletter} from "../../../lib/types/Newsletter"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchNewsletter} from "./fetchNewsletter"
 
 export const newsletterAdapter = createEntityAdapter<Newsletter>()
@@ -33,7 +33,7 @@ const newsletterSlice = createSlice({
 })
 
 
-export const {selectAll: selectAllNewsletter} = newsletterAdapter.getSelectors<AdminState>(
+export const {selectAll: selectAllNewsletter} = newsletterAdapter.getSelectors<StoreState>(
     state => state.newsletter
 )
 

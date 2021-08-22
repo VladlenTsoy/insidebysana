@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Status} from "../../../lib/types/Status"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchStatuses} from "./fetchStatuses"
 import {updatePositionStatus} from "./updatePositionStatus"
 import {createStatus} from "./createStatus"
@@ -70,6 +70,6 @@ const statusSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllStatuses} = statusAdapter.getSelectors<AdminState>(state => state.status)
+export const {selectAll: selectAllStatuses} = statusAdapter.getSelectors<StoreState>(state => state.status)
 
 export default statusSlice.reducer

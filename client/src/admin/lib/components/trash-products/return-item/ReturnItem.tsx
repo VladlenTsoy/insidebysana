@@ -1,6 +1,6 @@
 import React from "react"
 import {UndoOutlined} from "@ant-design/icons"
-import {useAdminDispatch} from "../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../store"
 import {Modal} from "antd"
 import {ProductColor} from "../../../types/product/ProductColor"
 import {returnProductColorFromTrash} from "./returnProductColorFromTrash"

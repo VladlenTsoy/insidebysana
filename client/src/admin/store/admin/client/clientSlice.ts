@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Client} from "../../../lib/types/Client"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchClients} from "./fetchClients"
 import {createClient} from "./createClient"
 import {editClient} from "./editClient"
@@ -62,7 +62,7 @@ const clientSlice = createSlice({
 })
 
 export const {selectAll: selectAllClients, selectById: getClientById} = clientAdapter.getSelectors<
-    AdminState
+    StoreState
 >(state => state.client)
 
 export default clientSlice.reducer

@@ -4,7 +4,7 @@ import InputPlusMinus from "admin/lib/components/form/input-plus-minus/InputPlus
 import {LoadingBlock} from "admin/lib/ui"
 import React, {Dispatch, SetStateAction, useEffect} from "react"
 import {fetchAdditionalServices} from "admin/store/admin/additional-service/fetchAdditionalServices"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {
     useLoadingAdditionalServices,
     useSelectAllAdditionalServices

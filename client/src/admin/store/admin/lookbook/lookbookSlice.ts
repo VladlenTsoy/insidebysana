@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {Lookbook} from "../../../lib/types/Lookbook"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchLookbookByCategoryId} from "./fetchLookbookByCategoryId"
 import {createLookbook} from "./createLookbook"
 import {editLookbook} from "./editLookbook"
@@ -44,7 +44,7 @@ const lookbookSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllLookbook} = lookbookAdapter.getSelectors<AdminState>(
+export const {selectAll: selectAllLookbook} = lookbookAdapter.getSelectors<StoreState>(
     state => state.lookbook
 )
 

@@ -5,7 +5,7 @@ import {
     useSelectAllAdditionalServices
 } from "admin/store/common/additional-service/additionalServiceSelectors"
 import {fetchAdditionalServices} from "admin/store/admin/additional-service/fetchAdditionalServices"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {formatPrice} from "admin/utils/formatPrice"
 import {AdditionalService} from "admin/lib/types/AdditionalService"
 import EditorAdditionalServiceAction from "admin/lib/components/editors/editor-additional-service-action/EditorAdditionalServiceAction"

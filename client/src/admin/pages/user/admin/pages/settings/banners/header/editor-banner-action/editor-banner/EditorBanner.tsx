@@ -1,6 +1,6 @@
 import React from "react"
 import {Input, Form} from "antd"
-import {useAdminDispatch} from "../../../../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../../../../store"
 import {useForm} from "antd/es/form/Form"
 import InputImage from "../../../../../../../../../lib/components/form/input-image/InputImage"
 import {createBanner} from "../../../../../../../../../store/admin/banner/createBanner"

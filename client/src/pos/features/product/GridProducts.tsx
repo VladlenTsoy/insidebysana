@@ -3,13 +3,13 @@ import React, {useEffect} from "react"
 import {useGetParamsProduct, useProductColors} from "pos/features/product/productSlice"
 import "./GridProducts.less"
 import {motion, AnimatePresence} from "framer-motion"
-import {useCashierDispatch} from "admin/store/cashier/store"
+import {useDispatch} from "../../store"
 import ProductCard from "./ProductCard"
 import {fetchProductColorBySearch} from "./fetchProductColorBySearch"
 import {LoadingOutlined} from "@ant-design/icons"
 
 const GridProducts: React.FC = () => {
-    const dispatch = useCashierDispatch()
+    const dispatch = useDispatch()
     const {
         loading,
         categoryId,

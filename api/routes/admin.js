@@ -63,6 +63,10 @@ router.get("/orders", OrderController.GetByAll)
 router.post("/order", OrderController.Create)
 // Отмена сделки
 router.post("/order/:id/cancel", OrderController.Cancel)
+// Отправить сделку в корзину
+router.post("/order/:id/hide", OrderController.Hide)
+//
+router.post("/order/:id/archive", OrderController.SendToArchive)
 // Вывод адреса сделки
 router.get("/order/:id/address", OrderController.GetAddressByOrderId)
 // Вывод товаров сделки

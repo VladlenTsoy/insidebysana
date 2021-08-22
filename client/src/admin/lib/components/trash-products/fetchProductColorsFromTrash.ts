@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {apiRequest} from "../../../utils/api"
-import {AdminThunkProps} from "../../../store/admin/store"
+import {AdminThunkProps} from "../../../store"
 import {ProductColor} from "../../types/product/ProductColor"
 
 type ReturnedType = ProductColor[]

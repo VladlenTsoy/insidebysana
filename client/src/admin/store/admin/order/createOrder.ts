@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {AdminThunkProps} from "../store"
+import {AdminThunkProps} from "../../../store"
 import {apiRequest} from "../../../utils/api"
 import {message} from "../../../lib/ui"
 import {Order, OrderAddress, OrderDiscount, OrderPayment} from "../../../lib/types/Order"

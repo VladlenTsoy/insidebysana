@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {fetchClients} from "../../../../../store/admin/client/fetchClients"
 import Header from "./header/Header"
 import Container from "./container/Container"

@@ -1,6 +1,6 @@
 import React, {useEffect} from "react"
 import {fetchPrintCategories} from "admin/store/admin/print-category/fetchPrintCategories"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import Container from "./container/Container"
 import Header from "./header/Header"
 

@@ -3,7 +3,7 @@ import {ProductColor} from "../../../types/product/ProductColor"
 import {Drawer} from "antd"
 import EditorImages from "./editor-images/EditorImages"
 import {fetchProductColors} from "../../../../store/admin/product-color/fetchProductColors"
-import {useAdminDispatch} from "../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../store"
 
 interface EditorImagesActionProps {
     productColor: ProductColor

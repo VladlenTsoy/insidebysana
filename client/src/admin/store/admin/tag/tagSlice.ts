@@ -1,6 +1,6 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {fetchTags} from "./fetchTags"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {Tag} from "../../../lib/types/Tag"
 import {editTag} from "./editTag"
 import {deleteTag} from "./deleteTag"
@@ -42,7 +42,7 @@ const tagSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllTags} = tagAdapter.getSelectors<AdminState>(
+export const {selectAll: selectAllTags} = tagAdapter.getSelectors<StoreState>(
     state => state.tag
 )
 

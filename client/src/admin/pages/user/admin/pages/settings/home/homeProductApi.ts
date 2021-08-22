@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {AdminThunkProps} from "admin/store/admin/store"
+import {AdminThunkProps} from "admin/store"
 import {apiRequest} from "admin/utils/api"
 import {HomeProduct} from "./homeProductSlice"
 import {message} from "admin/lib/ui"

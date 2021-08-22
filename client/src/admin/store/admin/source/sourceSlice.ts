@@ -1,7 +1,7 @@
 import {createSlice, createEntityAdapter} from "@reduxjs/toolkit"
 import {Source} from "admin/lib/types/Source"
 import {createSource} from "./createSource"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchSources} from "./fetchSources"
 import {editSource} from "./editSource";
 
@@ -56,6 +56,6 @@ const sourceSlice = createSlice({
   }
 })
 
-export const {selectById: getSourceById, selectAll: selectAllSources} = sourceAdapter.getSelectors<AdminState>(state => state.source)
+export const {selectById: getSourceById, selectAll: selectAllSources} = sourceAdapter.getSelectors<StoreState>(state => state.source)
 
 export default sourceSlice.reducer

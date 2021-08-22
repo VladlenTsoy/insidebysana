@@ -1,5 +1,5 @@
 import React from "react"
-import {useAdminDispatch} from "../../../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../../../store"
 import {Modal} from "antd"
 import {EyeOutlined, EyeInvisibleOutlined} from "@ant-design/icons"
 import {Color} from "../../../../../../../../lib/types/Color"

@@ -1,9 +1,9 @@
 import {useSelector} from "react-redux"
 import {selectAllTags} from "./tagSlice"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 
 // Загрузка
-export const useLoadingTag = () => useSelector((state: AdminState) => state.tag.loading)
+export const useLoadingTag = () => useSelector((state: StoreState) => state.tag.loading)
 
 // Вывод всех цветов
 export const useSelectAllTags = () => useSelector(selectAllTags)

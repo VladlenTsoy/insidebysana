@@ -1,5 +1,5 @@
 import {useSelector} from "react-redux"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {selectAllImages} from "./productColorImageSlice"
 import {ProductColorImage} from "../../../lib/types/ProductColorImage"
 
@@ -7,9 +7,9 @@ import {ProductColorImage} from "../../../lib/types/ProductColorImage"
 export const useSelectImagesByProductColorId = (
     productColorId: ProductColorImage["product_color_id"]
 ): ProductColorImage[] =>
-    useSelector((state: AdminState) =>
+    useSelector((state: StoreState) =>
         selectAllImages(state).filter(image => image.product_color_id === productColorId)
     )
 
 // Загрузка картинок
-export const useLoadingProductColorImages = () => useSelector((state: AdminState) => state.productColorImage.loading)
+export const useLoadingProductColorImages = () => useSelector((state: StoreState) => state.productColorImage.loading)

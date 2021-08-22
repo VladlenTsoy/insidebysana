@@ -1,6 +1,6 @@
 import {createHomeProduct, editHomeProduct} from "admin/pages/user/admin/pages/settings/home/homeProductApi"
 import {HomeProduct} from "admin/pages/user/admin/pages/settings/home/homeProductSlice"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {Form, InputNumber} from "antd"
 import React from "react"
 import SelectProducts from "../../form/select-products/SelectProducts"

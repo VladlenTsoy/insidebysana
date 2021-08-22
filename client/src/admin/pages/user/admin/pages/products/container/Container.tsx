@@ -10,7 +10,7 @@ import PriceBlock from "../../../../../../lib/components/blocks/price-block/Pric
 import {formatDate} from "../../../../../../utils/formatDate"
 import MenuButton from "../../../../../../lib/components/menu-button/MenuButton"
 import {changePagination, changeSorter} from "../../../../../../store/admin/product-color/productColorSlice"
-import {useAdminDispatch} from "../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../store"
 import {fetchProductColors} from "../../../../../../store/admin/product-color/fetchProductColors"
 
 const {Text} = Typography
@@ -182,6 +182,7 @@ const Container: React.FC<ContainerProps> = ({isMiniColumns}) => {
     return (
         <>
             <Table
+                size="large"
                 loading={loading}
                 rowKey="id"
                 scroll={{x: "100%"}}

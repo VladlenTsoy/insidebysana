@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {useAdminDispatch} from "../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../store"
 import {fetchSources} from "../../../../../../store/admin/source/fetchSources"
 import Container from "./container/Container"
 import Header from "./header/Header";

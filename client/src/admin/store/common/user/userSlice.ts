@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {fetchUser} from "./fetchUser";
-import {StoreState} from "../../store";
+import {StoreState} from "admin/store";
 import {updateUser} from "./updateUser";
 import {logoutUser} from "./logoutUser";
 import {authUser} from "./authUser";

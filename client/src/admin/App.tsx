@@ -1,7 +1,7 @@
 import React from "react"
 import "./App.less"
 import {Provider} from "react-redux"
-import {store} from "./store/store"
+import {store} from "./store"
 import UserProvider from "./lib/providers/user-provider/UserProvider"
 import StoreProvider from "./lib/providers/store-provider/StoreProvider"
 import {locale} from "moment"

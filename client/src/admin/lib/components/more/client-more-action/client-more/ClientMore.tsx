@@ -7,7 +7,7 @@ import Cart from "./cart/Cart"
 import Wishlist from "./wishlist/Wishlist"
 import Details from "./details/Details"
 import {useSelectClientById} from "admin/store/admin/client/clientSelectors"
-import {useAdminDispatch} from "admin/store/admin/store"
+import {useAdminDispatch} from "admin/store"
 import {fetchClientById} from "admin/store/admin/client/fetchClientById"
 import {LoadingBlock} from "admin/lib/ui"
 

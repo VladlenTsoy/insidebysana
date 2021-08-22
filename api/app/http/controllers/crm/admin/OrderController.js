@@ -15,8 +15,25 @@ const moment = require("moment")
  */
 const GetByAll = async (req, res) => {
     try {
-        const ordersRef = OrderService.SelectOrderForAdminRef()
-        const orders = await ordersRef.whereNotNull("status_id")
+        const orders = await Order.query()
+            .withGraphFetched(`[client, delivery]`)
+            .select(
+                "id",
+                "created_at",
+                "discount",
+                "payment_state",
+                "position",
+                "promo_code",
+                "status_id",
+                "total_price",
+                raw(
+                    "(SELECT sum(qty) FROM order_product_colors WHERE order_product_colors.order_id = orders.id) as product_color_qty"
+                )
+            )
+            .where("source_id", "!=", 6)
+            .whereNull("is_archive")
+            .whereNull("delete_at")
+            .whereNotNull("status_id")
 
         return res.send(orders)
     } catch (e) {
@@ -253,9 +270,11 @@ const GetForEditById = async (req, res) => {
 const GetArchiveByDates = async (req, res) => {
     try {
         const {dateFrom, dateTo, sourceId} = req.body
-
         let resOrders = Order.query()
             .withGraphFetched(`[client, payments, productColors, additionalServices]`)
+            .where(builder => {
+                builder.where({source_id: 6}).orWhere({is_archive: true})
+            })
             .select(
                 "id",
                 "total_price",
@@ -285,6 +304,31 @@ const GetArchiveByDates = async (req, res) => {
     }
 }
 
+const Hide = async (req, res) => {
+    try {
+        const {id} = req.params
+        await Order.query()
+            .findById(id)
+            .update({delete_at: moment().format("YYYY-MM-DD HH:mm:ss")})
+
+        return res.send({status: "success"})
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+const SendToArchive = async (req, res) => {
+    try {
+        const {id} = req.params
+        await Order.query().findById(id).update({is_archive: true})
+        return res.send({status: "success"})
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
 module.exports = {
     GetById,
     GetByAll,
@@ -295,5 +339,7 @@ module.exports = {
     GetAddressByOrderId,
     GetProductsByOrderId,
     ChangePaymentState,
-    GetForEditById
+    GetForEditById,
+    Hide,
+    SendToArchive
 }

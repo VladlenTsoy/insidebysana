@@ -13,6 +13,7 @@ class Order extends Model {
         const {Delivery} = require("../settings/Delivery")
         const {OrderAddress} = require("./OrderAddress")
         const {OrderPayment} = require("./OrderPayment")
+        const {OrderProductColor} = require("./OrderProductColor")
         const {OrderAdditionalService} = require("./OrderAdditionalService")
         const {ProductColor} = require("../products/ProductColor")
 

@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import {apiRequest} from "../../../utils/api";
-import {AdminThunkProps} from "../../admin/store";
+import {AdminThunkProps} from "../../../store";
 
 interface ReturnedType {
     status: "success"

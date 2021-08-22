@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {useAdminDispatch} from "../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../store"
 import {fetchLookbookCategories} from "../../../../../../store/admin/lookbook/fetchLookbookCategories"
 import Header from "./Header"
 import Container from "./Container"

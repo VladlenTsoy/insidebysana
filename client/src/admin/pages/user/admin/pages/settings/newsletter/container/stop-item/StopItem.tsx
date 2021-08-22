@@ -1,7 +1,7 @@
 import React from "react"
 import {StopOutlined, FlagOutlined} from "@ant-design/icons"
 import {PromoCode} from "../../../../../../../../lib/types/PromoCode"
-import {useAdminDispatch} from "../../../../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../../../../store"
 import {editPromoCode} from "../../../../../../../../store/admin/promo-code/editPromoCode"
 import {Modal} from "antd"
 

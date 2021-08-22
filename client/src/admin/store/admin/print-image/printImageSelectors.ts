@@ -1,9 +1,9 @@
 import {useSelector} from "react-redux"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {selectAll} from "./printImageSlice"
 
 // Загрузка
-export const useLoadingPrintImages = () => useSelector((state: AdminState) => state.printImage.loading)
+export const useLoadingPrintImages = () => useSelector((state: StoreState) => state.printImage.loading)
 
 // Вывод всех
 export const useSelectAllPrintImages = () => useSelector(selectAll)

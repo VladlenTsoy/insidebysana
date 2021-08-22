@@ -1,6 +1,6 @@
 import React from "react"
 import {Form, Input, Select} from "antd"
-import {useAdminDispatch} from "../../../../../store/admin/store"
+import {useAdminDispatch} from "../../../../../store"
 import {SubCategory} from "../../../../types/Category"
 import {useForm} from "antd/es/form/Form"
 import {editPrintCategory} from "admin/store/admin/print-category/editPrintCategory"

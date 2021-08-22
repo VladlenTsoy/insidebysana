@@ -1,5 +1,5 @@
 import {createSlice, createEntityAdapter} from "@reduxjs/toolkit"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {fetchPaymentMethods} from "./fetchPaymentMethods"
 import {PaymentMethod} from "../../../lib/types/payment/PaymentMethod"
 
@@ -34,6 +34,6 @@ const paymentMethodSlice = createSlice({
 
 export const {
     selectAll: selectAllPaymentMethods
-} = paymentMethodAdapter.getSelectors<AdminState>(state => state.paymentMethod)
+} = paymentMethodAdapter.getSelectors<StoreState>(state => state.paymentMethod)
 
 export default paymentMethodSlice.reducer

@@ -1,6 +1,6 @@
 import React from "react"
 import {Draggable, Droppable} from "react-beautiful-dnd"
-import Order from "../order/Order"
+import OrderCard from "admin/features/order/order-card/OrderCard"
 import {useSelectByStatusId} from "../../../../../../store/admin/order/orderSelectors"
 import {Status} from "../../../../../../lib/types/Status"
 import {PushpinFilled, SettingOutlined, PlusOutlined, LoadingOutlined} from "@ant-design/icons"
@@ -48,8 +48,8 @@ const StatusColumn: React.FC<StatusColumnProps> = ({status, index}) => {
                                         </Button>
                                     </EditorOrderAction>
                                 )}
-                                {orders.map((task: any, key: number) => (
-                                    <Order task={task} index={key} key={key} />
+                                {orders.map((order, key: number) => (
+                                    <OrderCard order={order} index={key} key={key} />
                                 ))}
                                 {provided.placeholder}
                             </div>

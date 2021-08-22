@@ -1,7 +1,7 @@
 import {createEntityAdapter, createSlice} from "@reduxjs/toolkit"
 import {fetchImages} from "./fetchImages"
 import {uploadImage} from "./uploadImage"
-import {AdminState} from "../store"
+import {StoreState} from "../../../store"
 import {deleteImage} from "./deleteImage"
 import {ProductColorImage} from "../../../lib/types/ProductColorImage"
 
@@ -44,6 +44,6 @@ const productColorImageSlice = createSlice({
     }
 })
 
-export const {selectAll: selectAllImages} = productColorImageAdapter.getSelectors<AdminState>(state => state.productColorImage)
+export const {selectAll: selectAllImages} = productColorImageAdapter.getSelectors<StoreState>(state => state.productColorImage)
 
 export default productColorImageSlice.reducer

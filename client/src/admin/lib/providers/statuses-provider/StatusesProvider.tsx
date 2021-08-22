@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {useAdminDispatch} from "../../../store/admin/store"
+import {useAdminDispatch} from "../../../store"
 import {useLoadingStatuses} from "../../../store/admin/status/statusSelectors"
 import {fetchStatuses} from "../../../store/admin/status/fetchStatuses"
 import {Loader} from "../../ui"

@@ -1,6 +1,6 @@
 import {User} from "../../../lib/types/User"
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {AdminThunkProps} from "../store"
+import {AdminThunkProps} from "../../../store"
 import {apiRequest} from "../../../utils/api"
 import {message} from "../../../lib/ui"
 

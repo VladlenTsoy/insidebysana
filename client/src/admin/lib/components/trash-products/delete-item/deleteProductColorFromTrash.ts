@@ -1,6 +1,6 @@
 import {ProductColor} from "../../../types/product/ProductColor"
 import {createAsyncThunk} from "@reduxjs/toolkit"
-import {AdminThunkProps} from "../../../../store/admin/store"
+import {AdminThunkProps} from "../../../../store"
 import {apiRequest} from "../../../../utils/api"
 import {message} from "../../../ui"
 

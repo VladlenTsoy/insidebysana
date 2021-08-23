@@ -8,10 +8,14 @@ export default fetchBaseQuery({
     prepareHeaders: (headers, {getState}) => {
         // By default, if we have a token in the store, let's use that for authenticated requests
         try {
-            const token = (getState() as any).auth.token
+            const token = (getState() as any).auth?.token
+            // TODO - изменить на auth
+            const userToken = (getState() as any).user?.token
+
             if (token) headers.set("Authorization", `Bearer ${token}`)
+            else if (userToken) headers.set("Authorization", `Bearer ${userToken}`)
         } catch (e) {
-            // console.error(e)
+            console.error(e)
         }
         return headers
     }

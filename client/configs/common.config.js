@@ -38,7 +38,7 @@ const cracoLessOptions = {
                 "@error-color": "#fb2b76",
                 "@border-width-base": "1px",
                 "@border-radius-base": "10px",
-                "@border-color-base": "#f5f6f8",
+                // "@border-color-base": "#f5f6f8",
                 "@black": "#161938",
                 "@text-color-secondary": "#9babc5"
             }

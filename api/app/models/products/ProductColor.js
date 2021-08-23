@@ -86,7 +86,7 @@ class ProductColor extends Model {
              * @param search
              */
             search(builder, search, isHide = false, ids = []) {
-                if (search.trim() !== "") {
+                if (search && search.trim() !== "") {
                     builder.whereRaw(
                         `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
                     )

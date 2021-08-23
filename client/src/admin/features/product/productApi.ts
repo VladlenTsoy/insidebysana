@@ -6,12 +6,13 @@ export const productApi = createApi({
     baseQuery,
     tagTypes: ["product"],
     endpoints: build => ({
-        getAllProducts: build.query<any[], void>({
-            query: () => ({
-                url: `user/admin/products`,
-                method: "POST"
+        getAllProducts: build.mutation<any, any>({
+            query: body => ({
+                url: `user/admin/product-colors/table`,
+                method: "POST",
+                body
             }),
-            providesTags: ["product"]
+            invalidatesTags: ["product"]
         }),
         createProduct: build.mutation<any, Partial<any>>({
             query: body => ({
@@ -24,4 +25,4 @@ export const productApi = createApi({
     })
 })
 
-export const {useGetAllProductsQuery} = productApi
+export const {useGetAllProductsMutation} = productApi

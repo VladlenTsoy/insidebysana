@@ -11,7 +11,9 @@ const Banner: React.FC = () => {
 
     return (
         <CarouselProvider
-            naturalSlideHeight={window.innerHeight}
+            naturalSlideHeight={
+                window.innerWidth > 768 ? window.innerHeight : 350
+            }
             naturalSlideWidth={window.innerWidth}
             totalSlides={banners.length}
             infinite

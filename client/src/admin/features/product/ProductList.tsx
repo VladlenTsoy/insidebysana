@@ -1,15 +1,16 @@
 import React, {useEffect} from "react"
-import {Button, Image, Input, Table, Tag} from "antd"
+import {Button, Image, Input, Table, Tag, Tooltip} from "antd"
 import {useGetAllProductsMutation} from "./productApi"
 import ImageBlock from "components/blocks/image-block/ImageBlock"
-// import {formatDate} from "utils/formatDate"
-import PriceBlock from "components/blocks/price-block/PriceBlock"
 import MenuButton from "admin/lib/components/menu-button/MenuButton"
 import DropdownMenu from "admin/pages/user/admin/pages/products/container/dropdown-menu/DropdownMenu"
 import "./ProductList.less"
 import {useState} from "react"
-import {FilterOutlined, SearchOutlined} from "@ant-design/icons"
+import {ClockCircleOutlined, FilterOutlined, SearchOutlined} from "@ant-design/icons"
 import {useSelectAllSizes} from "admin/store/common/size/sizeSelectors"
+import {formatPrice} from "utils/formatPrice"
+import {formatDate} from "utils/formatDate"
+import {useHistory, useLocation} from "react-router-dom"
 
 const ProductImagesView: React.FC<any> = ({image, product}) => {
     const [visible, setVisible] = useState(false)
@@ -33,50 +34,73 @@ const ProductImagesView: React.FC<any> = ({image, product}) => {
 }
 
 const ProductList: React.FC = () => {
+    const location = useLocation()
+    const history = useHistory()
     const sizes = useSelectAllSizes()
     const [fetchProductColors, {isLoading, data}] = useGetAllProductsMutation()
     const [params, setParams] = useState({
         search: "",
         categoryId: 0,
         sorter: {field: "created_at", order: "descend"},
-        pagination: {current: 1, pageSize: 10}
+        pagination: {current: 1, pageSize: 50}
     })
 
     const onChangeHandler = (pagination: any, filters: any, sorter: any) => {
-        setParams(prevState => ({
-            ...prevState,
-            pagination,
-            sorter: sorter.field ? {field: sorter.field, order: sorter.order} : prevState.sorter
-        }))
+        history.push({
+            search: `?current=${pagination.current}&pageSize=${pagination.pageSize}`
+        })
     }
 
     useEffect(() => {
+        const query = new URLSearchParams(location.search)
+        //
+        const search = query.get("search")
+        const categoryId = query.get("categoryId") ? Number(query.get("categoryId")) : null
+        const current = query.get("current") ? Number(query.get("current")) : null
+        const pageSize = query.get("pageSize") ? Number(query.get("pageSize")) : null
+        //
+        setParams(prevState => ({
+            ...prevState,
+            search: search || prevState.search,
+            categoryId: categoryId || prevState.categoryId,
+            pagination: {
+                current: current || prevState.pagination.current,
+                pageSize: pageSize || prevState.pagination.pageSize
+            }
+        }))
+    }, [location])
+
+    useEffect(() => {
+        console.log(params)
+
         fetchProductColors(params)
     }, [fetchProductColors, params])
 
     const columns = [
         {
-            // title: "ID",
-            dataIndex: "id"
+            width: "60px",
+            dataIndex: "id",
+            render: (id: number) => `PC${id}`
         },
         {
-            // title: "Фото",
+            width: "61px",
             dataIndex: ["url_thumbnail"],
             render: (image: string, record: any) => <ProductImagesView image={image} product={record} />
         },
         {
-            // title: "Название",
             dataIndex: ["details", "title"],
             render: (title: any, record: any) => (
                 <div className="title-block">
-                    <div className="title">{title}</div>
+                    <div className="title">
+                        {title}
+                        {record.is_new && <div className="is-new">new</div>}
+                    </div>
                     <div className="color-hex-block">
                         <div className="color-hex-circle" style={{background: record.color.hex}} />
                         {record.color.title}
                     </div>
                 </div>
-            ),
-            sorter: true
+            )
         },
         {
             render: (_: any, record: any) => (
@@ -87,6 +111,7 @@ const ProductList: React.FC = () => {
                             const selectSize = sizes.find((size: any) => size.id === Number(key))
                             return (
                                 <div
+                                    key={key}
                                     className={`size-block ${
                                         size.qty <= 0 ? "danger" : size.qty <= size.min_qty ? "warning" : ""
                                     }`}
@@ -111,13 +136,34 @@ const ProductList: React.FC = () => {
             )
         },
         {
-            // title: "Цена",
             dataIndex: ["details", "price"],
-            sorter: true,
-            render: (val: number, record: any) => <PriceBlock discount={record.discount} price={val} />
+            render: (price: number, record: any) => (
+                <div className="price-block">
+                    {record.discount ? (
+                        <>
+                            <Tooltip
+                                title={
+                                    record.discount.end_at ? `До ${formatDate(record.discount.end_at)}` : null
+                                }
+                            >
+                                <div className="discount">
+                                    {record.discount.end_at && <ClockCircleOutlined />}
+                                    <div>{record.discount.discount}%</div>
+                                </div>
+                            </Tooltip>
+                            <span className="price">{formatPrice(price, record.discount)}</span>
+                            <span className="extra">сум</span>
+                        </>
+                    ) : (
+                        <>
+                            <span className="price">{formatPrice(price)}</span>
+                            <span className="extra">сум</span>
+                        </>
+                    )}
+                </div>
+            )
         },
         {
-            // title: "Теги",
             dataIndex: "tags",
             render: (tags: any[], record: any) => (
                 <div className="column-tags">
@@ -130,14 +176,19 @@ const ProductList: React.FC = () => {
             )
         },
         {
-            // title: "Статус",
             width: "130px",
-            ellipsis: true,
             render: (_: any) => (
                 <>
-                    <div className="status success">Published</div>
+                    <div className="status success">Размещён</div>
+                    {/* <div className="status danger">В архиве</div>
+                    <div className="status processing">В проекте</div>
+                    <div className="status warning">Закончился</div> */}
                 </>
             )
+        },
+        {
+            width: "56px",
+            render: (_: undefined, record: any) => <MenuButton overlay={DropdownMenu(record)} size="large" />
         }
     ]
 
@@ -148,11 +199,11 @@ const ProductList: React.FC = () => {
                     <Button size="large" icon={<FilterOutlined />}>
                         Фильтрация
                     </Button>
-                    <Input.Search
+                    <Input
                         prefix={<SearchOutlined />}
                         placeholder="Введите название"
                         allowClear
-                        enterButton="Поиск"
+                        // enterButton="Поиск"
                         size="large"
                         // onSearch={onSearchHandler}
                     />

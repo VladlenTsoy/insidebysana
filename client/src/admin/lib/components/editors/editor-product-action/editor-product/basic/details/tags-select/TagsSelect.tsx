@@ -12,8 +12,7 @@ const TagsSelect = () => {
     const dispatch = useAdminDispatch()
 
     const filterOptionHandler = (inputValue: any, option: any) => {
-        if(option.label)
-        return option.label.includes(inputValue)
+        return option?.label.search(new RegExp(inputValue, "i")) >= 0
     }
 
     useEffect(() => {
@@ -29,6 +28,7 @@ const TagsSelect = () => {
                 mode="tags"
                 loading={loading}
                 style={{width: "100%"}}
+                placeholder="Добавить тег"
                 filterOption={filterOptionHandler}
             >
                 {tags.map(tag => (

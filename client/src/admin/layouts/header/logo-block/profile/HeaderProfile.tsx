@@ -1,7 +1,7 @@
 import React from "react"
 import {Link} from "react-router-dom"
 import {Avatar} from "admin/lib/ui"
-import {useUser} from "../../../../../hooks/use-user"
+import {useUser} from "../../../../hooks/use-user"
 import './HeaderProfile.less'
 
 interface HeaderProfileProps {

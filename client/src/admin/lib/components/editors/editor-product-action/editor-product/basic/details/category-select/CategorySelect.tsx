@@ -12,7 +12,7 @@ const CategorySelect = () => {
             name="category_id"
             rules={[{required: true, message: "Выберите категорию!"}]}
         >
-            <Select showSearch optionFilterProp="label">
+            <Select showSearch optionFilterProp="label" placeholder="Выберите категорию">
                 {categories.map(category => (
                     <OptGroup key={category.id} label={category.title}>
                         {category.sub_categories?.map(sub => (

@@ -3,9 +3,9 @@ import {Layout as AntdLayout, Menu, Button} from "antd"
 import {NavigationItemProps} from "./header/navigation/Navigation"
 // import Footer from "./footer/Footer"
 import {Link, useHistory, useLocation} from "react-router-dom"
-import {useScreenWindow} from "../../hooks/use-screen-window.effect"
+import {useScreenWindow} from "../hooks/use-screen-window.effect"
 import "./Layout.less"
-import {useCommonDispatch} from "../../store/common/store"
+import {useCommonDispatch} from "../store/common/store"
 import {changeTitle} from "admin/store/common/app/appSlice"
 import {
     CrownOutlined,
@@ -43,6 +43,7 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
     const dispatch = useCommonDispatch()
     const [collapsed, setCollapsed] = useState(true)
     const location = useLocation()
+    const pathnameArray = location.pathname.split("/")
 
     const onCollapsedHandler = () => setCollapsed(prevState => !prevState)
 
@@ -71,25 +72,25 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                 <Menu
                     theme="dark"
                     mode="inline"
-                    defaultSelectedKeys={[location.pathname]}
+                    defaultSelectedKeys={[pathnameArray[1]]}
                     className="site-layout-menu"
                 >
-                    <Menu.Item key="/" icon={<HomeOutlined />}>
+                    <Menu.Item key="" icon={<HomeOutlined />}>
                         <Link to="/">Главная</Link>
                     </Menu.Item>
-                    <Menu.Item key="/orders" icon={<DollarOutlined />}>
+                    <Menu.Item key="orders" icon={<DollarOutlined />}>
                         <Link to="/orders">Сделки</Link>
                     </Menu.Item>
-                    <Menu.Item key="/products" icon={<SkinOutlined />}>
-                        <Link to="/products">Одежда</Link>
+                    <Menu.Item key="products" icon={<SkinOutlined />}>
+                        <Link to="/products/all">Одежда</Link>
                     </Menu.Item>
-                    <Menu.Item key="/clients" icon={<TeamOutlined />}>
+                    <Menu.Item key="clients" icon={<TeamOutlined />}>
                         <Link to="clients">Клиенты</Link>
                     </Menu.Item>
-                    <Menu.Item key="/staff" icon={<CrownOutlined />}>
+                    <Menu.Item key="staff" icon={<CrownOutlined />}>
                         <Link to="staff">Сотрудники</Link>
                     </Menu.Item>
-                    <Menu.SubMenu key="/settings" icon={<SettingOutlined />} title="Настройки">
+                    <Menu.SubMenu key="settings" icon={<SettingOutlined />} title="Настройки">
                         <Menu.Item key="/users" icon={<CrownOutlined />}>
                             Пользователи
                         </Menu.Item>

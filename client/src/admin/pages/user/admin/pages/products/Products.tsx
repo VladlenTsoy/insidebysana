@@ -1,43 +1,46 @@
-import React, {useEffect, useState} from "react"
+import React from "react"
 import "./Products.less"
-import {fetchProductColors} from "../../../../../store/admin/product-color/fetchProductColors"
-import {useAdminDispatch} from "../../../../../store"
-import Container from "./container/Container"
-import Header from "./header/Header"
-import {Tabs} from "antd"
+import {Button, Tabs} from "antd"
 import ProductList from "admin/features/product/ProductList"
+import {Link, useHistory, useParams} from "react-router-dom"
+import {PlusOutlined} from "@ant-design/icons"
 
 const {TabPane} = Tabs
 
 const Products: React.FC = () => {
-    const [isMiniColumns, setMiniColumns] = useState<boolean>(true)
-    const dispatch = useAdminDispatch()
+    const params = useParams<{status: string}>()
+    const history = useHistory()
 
-    useEffect(() => {
-        const promise = dispatch(fetchProductColors())
-        return () => {
-            promise.abort()
-        }
-    }, [dispatch])
+    const onChangeHandler = (status: any) => {
+        history.push({pathname: `/products/${status}`})
+    }
 
     return (
-        <>
-            <Tabs defaultActiveKey="all" size="large">
-                <TabPane tab="Все продукты" key="all">
-                    <Header setMiniColumns={setMiniColumns} isMiniColumns={isMiniColumns} />
-                    <Container isMiniColumns={isMiniColumns} />
-                </TabPane>
-                <TabPane tab="Опубликовано" key="published">
-                    <ProductList />
-                </TabPane>
-                <TabPane tab="Закончились" key="ending">
-                    Content of Tab Pane 3
-                </TabPane>
-                <TabPane tab="Архив" key="archive">
-                    Content of Tab Pane 2
-                </TabPane>
-            </Tabs>
-        </>
+        <Tabs
+            defaultActiveKey={params.status || `all`}
+            size="large"
+            className="tabs-container-products"
+            onChange={onChangeHandler}
+            tabBarExtraContent={
+                <Link to="/products/create">
+                    <Button type="primary" size="large" icon={<PlusOutlined />}>
+                        Добавить
+                    </Button>
+                </Link>
+            }
+        >
+            <TabPane tab={`Все продукты`} key="all"></TabPane>
+            <TabPane tab={`В проекте`} key="draft"></TabPane>
+            <TabPane tab={`Опубликованные`} key="published">
+                <ProductList />
+            </TabPane>
+            <TabPane tab="Закончились" key="ending">
+                Content of Tab Pane 3
+            </TabPane>
+            <TabPane tab="Архив" key="archive">
+                Content of Tab Pane 2
+            </TabPane>
+        </Tabs>
     )
 }
 

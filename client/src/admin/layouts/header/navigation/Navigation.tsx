@@ -1,7 +1,7 @@
 import React from "react"
 import {Link, useLocation} from "react-router-dom"
 import {Tooltip} from "antd"
-import {useScreenWindow} from "../../../../hooks/use-screen-window.effect"
+import {useScreenWindow} from "../../../hooks/use-screen-window.effect"
 import './Navigation.less'
 
 export interface NavigationItemProps {

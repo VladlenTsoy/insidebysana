@@ -29,6 +29,10 @@ import productColorImage from "./store/admin/product-color-image/productColorIma
 import trashProductColor from "admin/lib/components/trash-products/trashProductColorSlice"
 import homeProduct from "./pages/user/admin/pages/settings/home/homeProductSlice"
 import {productApi} from "admin/features/product/productApi"
+import {categoryApi} from "admin/features/category/categoryApi"
+import {colorApi} from "admin/features/color/colorApi"
+import {sizeApi} from "admin/features/size/sizeApi"
+import {tagApi} from "admin/features/tag/tagApi"
 
 export type StoreState = ReturnType<typeof adminReducer>
 
@@ -63,7 +67,11 @@ export const adminReducer = combineReducers({
     printProduct,
     homeProduct,
     lookbookCategory,
-    [productApi.reducerPath]: productApi.reducer
+    [productApi.reducerPath]: productApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
+    [colorApi.reducerPath]: colorApi.reducer,
+    [sizeApi.reducerPath]: sizeApi.reducer,
+    [tagApi.reducerPath]: tagApi.reducer
 })
 
 export type AppDispatch = typeof store.dispatch
@@ -79,5 +87,12 @@ export const useAdminDispatch = () => useDispatch<any>()
 
 export const store = configureStore({
     reducer: adminReducer,
-    middleware: [...getDefaultMiddleware({immutableCheck: false}).concat(productApi.middleware)]
+    middleware: [
+        ...getDefaultMiddleware({immutableCheck: false})
+            .concat(productApi.middleware)
+            .concat(categoryApi.middleware)
+            .concat(colorApi.middleware)
+            .concat(sizeApi.middleware)
+            .concat(tagApi.middleware)
+    ]
 })

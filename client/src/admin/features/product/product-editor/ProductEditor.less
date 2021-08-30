@@ -1,0 +1,241 @@
+.create-product-page {
+    // max-width: 1200px;
+    // margin: 0 auto;
+
+    .header {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .back {
+            font-size: 26px;
+            color: @primary-color;
+            padding: 0.5rem;
+            padding-left: 0;
+            cursor: pointer;
+        }
+
+        .action {
+            margin-left: auto;
+        }
+    }
+
+    .container {
+        // max-width: 1200px;
+        // margin: 0 auto;
+        width: 100%;
+        background-color: @component-background;
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .photos {
+            .ant-upload.ant-upload-select-picture-card {
+                width: 150px;
+                height: 190px;
+                margin-right: 16px;
+                margin-bottom: 16px;
+                background-color: @white;
+                border: 2px dashed #d7dce0;
+                border-radius: 3px;
+                cursor: pointer;
+                transition: border-color 0.3s;
+
+                .anticon {
+                    height: 30px;
+                    width: 30px;
+                    background: #07ca63;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #fff;
+                    border-radius: 50%;
+                    font-size: 16px;
+                }
+            }
+
+            .ant-upload-list-picture-card-container {
+                width: 150px;
+                height: 190px;
+                margin-right: 16px;
+                margin-bottom: 16px;
+
+                .ant-upload-list-item {
+                    // border: 0;
+                    padding: 0;
+                    // background-color: red;
+
+                    .ant-upload-list-item-actions {
+                        .anticon {
+                            font-size: 25px;
+                            width: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .left-block {
+        position: sticky;
+        padding-top: 1rem;
+        top: 0;
+
+        .color-menu {
+            > .menu-item {
+                font-size: @font-size-lg;
+                padding: 0.75rem 0;
+                font-weight: 500;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+
+                &:first-child {
+                    padding-top: 0;
+                }
+
+                &:hover {
+                    color: @primary-color;
+                }
+
+                &.active {
+                    color: @primary-color;
+                    font-weight: 500;
+                    padding-bottom: 0.25rem;
+                }
+
+                &:not(:first-child) {
+                    border-top: 1px solid @divider-color;
+                }
+            }
+        }
+
+        .menu {
+            margin: 0 0 0.5rem 1rem;
+
+            label.menu-item {
+                display: block;
+                color: @text-color-secondary;
+                padding: 0.25rem 0;
+                font-size: @font-size-base;
+                cursor: pointer;
+                transition: all 0.3s ease-in-out;
+
+                &:hover {
+                    color: @black;
+                }
+
+                &.active {
+                    color: @black;
+                }
+            }
+        }
+    }
+
+    .properties {
+        .title-action-block {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+
+            .ant-form-item {
+                width: 100%;
+            }
+
+            .ant-btn {
+                margin-bottom: 24px;
+            }
+        }
+    }
+
+    .ant-typography {
+        font-weight: 500;
+        margin-top: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #f1f4f5;
+        margin: 3em 0 2rem;
+        padding: 0;
+    }
+
+    .progress {
+        position: sticky;
+        top: 0;
+        background-color: @layout-header-background;
+        border-radius: @border-radius-base;
+        color: @white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+    }
+
+    .ant-form-vertical .ant-form-item-label,
+    .ant-col-24.ant-form-item-label,
+    .ant-col-xl-24.ant-form-item-label {
+        padding: 0 0 4px;
+
+        label {
+            height: 30px;
+        }
+    }
+
+    .ant-select-multiple .ant-select-selection-item {
+        overflow: visible;
+        background-color: fade(@blue-color, 20%);
+        color: @blue-color;
+        margin-inline-end: 14px;
+
+        .ant-select-selection-item-content {
+            margin-right: 12px;
+        }
+
+        .ant-select-selection-item-remove {
+            cursor: pointer;
+            background: @error-color;
+            position: absolute;
+            right: 0;
+            border-radius: 50%;
+            color: @white;
+            height: 20px;
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            right: -10px;
+            overflow: visible;
+            border: 2px solid @white;
+            transform: translateY(25%);
+
+            > .anticon {
+                line-height: 0;
+                vertical-align: middle;
+            }
+        }
+    }
+}
+
+h1 {
+    background: linear-gradient(90deg, #1d2330, #1b4c3f 25%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.ant-btn.blue {
+    background-color: @blue-color;
+    border-color: @blue-color;
+}
+
+.ant-btn > span {
+    text-shadow: none;
+}

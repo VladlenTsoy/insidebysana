@@ -27,20 +27,26 @@ const cracoLessOptions = {
         lessOptions: {
             javascriptEnabled: true,
             modifyVars: {
+                // f7fafb
                 ...getThemeVariables(),
-                "max-width": "100%",
+                "max-width": "1200px",
                 "@box-shadow": "0 5px 20px rgba(146, 153, 184, 0.1)",
                 "@font-family":
                     "-apple-system, Montserrat, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'",
-                "@primary-color": "#2f45c5",
-                "@success-color": "#13cd3c",
-                "@warning-color": "#ff6370",
-                "@error-color": "#fb2b76",
+                "@primary-color": "#07ca63",
+                "@success-color": "#07ca63",
+                "@blue-color": "#6391fe",
+                // "@warning-color": "#ff6370",
+                "@error-color": "#f76160",
+                "@checkbox-color": "#6391fe",
+                "@radio-dot-color": "#6391fe",
                 "@border-width-base": "1px",
-                "@border-radius-base": "10px",
-                // "@border-color-base": "#f5f6f8",
-                "@black": "#161938",
-                "@text-color-secondary": "#9babc5"
+                "@border-radius-base": "3px",
+                "@border-color-base": "#d7dce0",
+                "@black": "#1a222e",
+                "@text-color-secondary": "#c2c7cf",
+                "@layout-body-background": "#f8f9fb",
+                "@layout-header-background": "#1f2532"
             }
         }
     }

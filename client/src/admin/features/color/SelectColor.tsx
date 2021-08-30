@@ -1,8 +1,8 @@
 import React from "react"
 import {Form, Select} from "antd"
-import {useSelectAllColors} from "admin/store/admin/color/colorSelectors"
 import {Color} from "admin/lib/types/Color"
 import "./SelectColor.less"
+import {useGetAllColorsQuery} from "./colorApi"
 
 const {Option} = Select
 
@@ -11,29 +11,30 @@ interface SelectColorProps {
 }
 
 const SelectColor: React.FC<SelectColorProps> = ({onSelectColorHandler}) => {
-    const colors = useSelectAllColors()
+    const {isLoading, data: colors} = useGetAllColorsQuery()
 
     return (
         <Form.Item label="Цвет" name="color_id" rules={[{required: true, message: "Выберите цвет"}]}>
             <Select
                 showSearch
-                size="large"
-                style={{width: "100%"}}
+                loading={isLoading}
+                // optionFilterProp="label"
                 placeholder="Выберите цвет"
-                optionFilterProp="children"
+                // optionFilterProp="children"
                 onSelect={onSelectColorHandler}
                 filterOption={(input: any, option: any) =>
                     option["data-title"].toLowerCase().indexOf(input.toLowerCase()) >= 0
                 }
             >
-                {colors.map(color => (
-                    <Option value={color.id} data-title={color.title} key={color.id}>
-                        <div className="option-color">
-                            <div className="color" style={{background: color.hex}} />
-                            {color.title}
-                        </div>
-                    </Option>
-                ))}
+                {colors &&
+                    colors.map(color => (
+                        <Option value={color.id} data-title={color.title} key={color.id}>
+                            <div className="option-color">
+                                <div className="color" style={{background: color.hex}} />
+                                {color.title}
+                            </div>
+                        </Option>
+                    ))}
             </Select>
         </Form.Item>
     )

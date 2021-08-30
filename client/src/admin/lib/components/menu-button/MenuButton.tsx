@@ -1,6 +1,6 @@
 import React from "react"
 import {Button, ButtonProps, Dropdown, DropDownProps} from "antd"
-import {EllipsisOutlined} from "@ant-design/icons"
+import {MoreOutlined} from "@ant-design/icons"
 
 interface MenuButtonProps {
     size?: ButtonProps["size"]
@@ -10,7 +10,7 @@ interface MenuButtonProps {
 const MenuButton: React.FC<MenuButtonProps> = ({size = "middle", overlay}) => {
     return (
         <Dropdown overlay={overlay} placement="bottomLeft" arrow>
-            <Button size={size} icon={<EllipsisOutlined />} shape="circle" />
+            <Button size={size} icon={<MoreOutlined />} shape="circle" type="text" />
         </Dropdown>
     )
 }

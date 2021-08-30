@@ -1,8 +1,8 @@
 import React, {useState} from "react"
 import {CaretDownOutlined, PoweroffOutlined} from "@ant-design/icons"
 import {Dropdown, Menu, Drawer} from "antd"
-import {useUser} from "../../../../../hooks/use-user"
-import {useScreenWindow} from "../../../../../hooks/use-screen-window.effect"
+import {useUser} from "../../../../hooks/use-user"
+import {useScreenWindow} from "../../../../hooks/use-screen-window.effect"
 import './AccountMenu.less'
 
 // const AccountMenuDrawStyled = styled(Drawer)`

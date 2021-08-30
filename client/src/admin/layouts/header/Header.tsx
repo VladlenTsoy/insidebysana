@@ -2,7 +2,7 @@ import React from "react"
 import Navigation, {NavigationItemProps} from "./navigation/Navigation"
 import Sidebars from "./sidebars/Sidebars"
 import LogoBlock from "./logo-block/LogoBlock"
-import {useScreenWindow} from "../../../hooks/use-screen-window.effect"
+import {useScreenWindow} from "../../hooks/use-screen-window.effect"
 import './Header.less'
 
 interface HeaderProps {

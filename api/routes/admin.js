@@ -82,6 +82,8 @@ router.post("/orders-archive", OrderController.GetArchiveByDates)
 //
 router.get("/order/:id", OrderController.GetById)
 
+// Вывод всех активных категорий
+router.get("/categories", CategoryController.GetByActive)
 // Создание категории
 router.post("/category", CategoryController.Create)
 // Редактирование категории

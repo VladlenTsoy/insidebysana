@@ -1,5 +1,5 @@
 import React, {useEffect} from "react"
-import {Layout as AntdLayout, Menu, Button} from "antd"
+import {Layout as AntdLayout, Menu, Button, BackTop} from "antd"
 import {NavigationItemProps} from "./header/navigation/Navigation"
 // import Footer from "./footer/Footer"
 import {Link, useHistory, useLocation} from "react-router-dom"
@@ -15,7 +15,8 @@ import {
     MenuUnfoldOutlined,
     SettingOutlined,
     SkinOutlined,
-    TeamOutlined
+    TeamOutlined,
+    UpOutlined
 } from "@ant-design/icons"
 import {useState} from "react"
 
@@ -68,34 +69,36 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                 trigger={null}
                 collapsedWidth={isBreakpoint ? 0 : 80}
             >
-                <div className="logo"></div>
-                <Menu
-                    theme="dark"
-                    mode="inline"
-                    defaultSelectedKeys={[pathnameArray[1]]}
-                    className="site-layout-menu"
-                >
-                    <Menu.Item key="" icon={<HomeOutlined />}>
-                        <Link to="/">Главная</Link>
-                    </Menu.Item>
-                    <Menu.Item key="orders" icon={<DollarOutlined />}>
-                        <Link to="/orders">Сделки</Link>
-                    </Menu.Item>
-                    <Menu.Item key="products" icon={<SkinOutlined />}>
-                        <Link to="/products/all">Одежда</Link>
-                    </Menu.Item>
-                    <Menu.Item key="clients" icon={<TeamOutlined />}>
-                        <Link to="clients">Клиенты</Link>
-                    </Menu.Item>
-                    <Menu.Item key="staff" icon={<CrownOutlined />}>
-                        <Link to="staff">Сотрудники</Link>
-                    </Menu.Item>
-                    <Menu.SubMenu key="settings" icon={<SettingOutlined />} title="Настройки">
-                        <Menu.Item key="/users" icon={<CrownOutlined />}>
-                            Пользователи
+                <div className="logo-menu-sticky">
+                    <div className="logo"></div>
+                    <Menu
+                        theme="dark"
+                        mode="inline"
+                        defaultSelectedKeys={[pathnameArray[1]]}
+                        className="site-layout-menu"
+                    >
+                        <Menu.Item key="" icon={<HomeOutlined />}>
+                            <Link to="/">Главная</Link>
                         </Menu.Item>
-                    </Menu.SubMenu>
-                </Menu>
+                        <Menu.Item key="orders" icon={<DollarOutlined />}>
+                            <Link to="/orders">Сделки</Link>
+                        </Menu.Item>
+                        <Menu.Item key="products" icon={<SkinOutlined />}>
+                            <Link to="/products/all">Одежда</Link>
+                        </Menu.Item>
+                        <Menu.Item key="clients" icon={<TeamOutlined />}>
+                            <Link to="clients">Клиенты</Link>
+                        </Menu.Item>
+                        <Menu.Item key="staff" icon={<CrownOutlined />}>
+                            <Link to="staff">Сотрудники</Link>
+                        </Menu.Item>
+                        <Menu.SubMenu key="settings" icon={<SettingOutlined />} title="Настройки">
+                            <Menu.Item key="/users" icon={<CrownOutlined />}>
+                                Пользователи
+                            </Menu.Item>
+                        </Menu.SubMenu>
+                    </Menu>
+                </div>
             </Sider>
             <AntdLayout className="site-layout">
                 <Header className="site-layout-header">
@@ -107,7 +110,12 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                         shape: "circle"
                     })}
                 </Header>
-                <Content className="site-layout-content">{children}</Content>
+                <Content className="site-layout-content">
+                    {children}
+                    <BackTop>
+                        <Button type="primary" shape="circle" size="large" icon={<UpOutlined />} />
+                    </BackTop>
+                </Content>
             </AntdLayout>
         </AntdLayout>
     )

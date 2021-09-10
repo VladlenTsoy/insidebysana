@@ -1,10 +1,10 @@
 .layout {
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    // overflow: hidden;
 
     .logo {
         height: 32px;
-        margin: 16px;
+        margin: 0 16px 16px;
         background: rgba(255, 255, 255, 0.3);
     }
 
@@ -31,6 +31,12 @@
         text-transform: uppercase;
         letter-spacing: 1px;
     }
+}
+
+.logo-menu-sticky {
+    position: sticky;
+    top: 0;
+    padding-top: 1rem;
 }
 
 .ant-tooltip a {

@@ -1,4 +1,5 @@
 import React from "react"
+import {Link} from "react-scroll"
 
 const LeftSidebar: React.FC = () => {
     const menuClickHandler = (e: any) => {
@@ -12,24 +13,81 @@ const LeftSidebar: React.FC = () => {
                 <div className="color-menu">
                     <div className="menu-item active">Выберите цвет</div>
                     <nav className="menu" onClick={menuClickHandler}>
-                        <label htmlFor="basic" className="menu-item active">
+                        <Link
+                            activeClass="active"
+                            className="menu-item"
+                            to="basic"
+                            spy
+                            hashSpy
+                            smooth
+                            offset={-20}
+                            duration={300}
+                        >
                             Основная информация
-                        </label>
-                        <label htmlFor="properties" className="menu-item">
+                        </Link>
+                        <Link
+                            className="menu-item"
+                            to="properties"
+                            activeClass="active"
+                            spy
+                            hashSpy
+                            isDynamic
+                            smooth
+                            offset={-20}
+                            duration={300}
+                        >
                             Свойства
-                        </label>
-                        <label htmlFor="price-qty" className="menu-item">
+                        </Link>
+                        <Link
+                            className="menu-item"
+                            to="price-qty"
+                            activeClass="active"
+                            spy
+                            hashSpy
+                            smooth
+                            offset={-20}
+                            duration={300}
+                        >
                             Cтоимость & Количество
-                        </label>
-                        <label htmlFor="photos" className="menu-item">
+                        </Link>
+                        <Link
+                            className="menu-item"
+                            to="photos"
+                            activeClass="active"
+                            spy
+                            hashSpy
+                            isDynamic
+                            smooth
+                            offset={-20}
+                            duration={300}
+                        >
                             Фотографии
-                        </label>
-                        <label htmlFor="measurements" className="menu-item">
+                        </Link>
+                        <Link
+                            className="menu-item"
+                            to="measurements"
+                            activeClass="active"
+                            spy
+                            hashSpy
+                            isDynamic
+                            smooth
+                            offset={-20}
+                            duration={300}
+                        >
                             Обмеры
-                        </label>
-                        <label htmlFor="status-publishing" className="menu-item">
+                        </Link>
+                        <Link
+                            className="menu-item"
+                            to="status-publishing"
+                            activeClass="active"
+                            spy
+                            hashSpy
+                            smooth
+                            offset={-20}
+                            duration={300}
+                        >
                             Статус & Публикация
-                        </label>
+                        </Link>
                     </nav>
                     <div className="menu-item">Черный</div>
                     <div className="menu-item">Синий</div>

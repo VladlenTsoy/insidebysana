@@ -262,5 +262,7 @@ router.post("/home-product", HomeProductController.Create)
 router.patch("/home-product/:id", HomeProductController.Edit)
 // Удалить продукт с дом. страницы
 router.delete("/home-product/:id", HomeProductController.Delete)
+// Выбрать свободные позиции на главной странице
+router.get("/home-position/free", HomeProductController.GetFree)
 
 module.exports = router

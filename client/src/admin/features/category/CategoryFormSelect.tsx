@@ -4,7 +4,7 @@ import {useGetAllCategoriesQuery} from "./categoryApi"
 
 const {OptGroup, Option} = Select
 
-const CategorySelect: React.FC = () => {
+const CategoryFormSelect: React.FC = () => {
     const {isLoading, data: categories} = useGetAllCategoriesQuery()
 
     return (
@@ -28,4 +28,4 @@ const CategorySelect: React.FC = () => {
         </Form.Item>
     )
 }
-export default CategorySelect
+export default CategoryFormSelect

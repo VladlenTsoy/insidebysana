@@ -4,7 +4,7 @@ export default fetchBaseQuery({
     baseUrl:
         process.env.NODE_ENV === "production"
             ? "https://api.insidebysana.uz/api"
-            : "http://localhost:8000/api",
+            : "http://localhost:9000/api",
     prepareHeaders: (headers, {getState}) => {
         // By default, if we have a token in the store, let's use that for authenticated requests
         try {

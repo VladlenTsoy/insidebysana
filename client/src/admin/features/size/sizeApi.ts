@@ -9,7 +9,7 @@ export const sizeApi = createApi({
     endpoints: build => ({
         getAllSizes: build.query<Size[], void>({
             query: body => ({
-                url: `user/admin/sizes`,
+                url: `user/sizes`,
                 method: "GET",
                 body
             }),

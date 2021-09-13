@@ -1,7 +1,4 @@
 .create-product-page {
-    // max-width: 1200px;
-    // margin: 0 auto;
-
     .header {
         max-width: 1200px;
         margin: 0 auto;
@@ -24,8 +21,6 @@
     }
 
     .container {
-        // max-width: 1200px;
-        // margin: 0 auto;
         width: 100%;
         background-color: @component-background;
 
@@ -85,7 +80,7 @@
     .left-block {
         position: sticky;
         padding-top: 1rem;
-        top: 0;
+        top: 1rem;
 
         .color-menu {
             > .menu-item {
@@ -118,7 +113,7 @@
         .menu {
             margin: 0 0 0.5rem 1rem;
 
-            label.menu-item {
+            a.menu-item {
                 display: block;
                 color: @text-color-secondary;
                 padding: 0.25rem 0;
@@ -153,7 +148,8 @@
         }
     }
 
-    .ant-typography {
+    h1.ant-typography,
+    h3.ant-typography {
         font-weight: 500;
         margin-top: 1rem;
         margin-bottom: 1.5rem;

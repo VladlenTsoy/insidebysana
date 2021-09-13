@@ -7,7 +7,7 @@ import {useGetAllColorsQuery} from "./colorApi"
 const {Option} = Select
 
 interface SelectColorProps {
-    onSelectColorHandler: (colorId: Color["id"]) => void
+    onSelectColorHandler?: (colorId: Color["id"]) => void
 }
 
 const SelectColor: React.FC<SelectColorProps> = ({onSelectColorHandler}) => {

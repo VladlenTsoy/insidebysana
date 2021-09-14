@@ -16,7 +16,7 @@ const IMAGES_FOLDER_PATH = "../../../public/images/products/"
  */
 const GetAllPaginate = async (req, res) => {
     try {
-        const {categoryId, search, pagination, sorter} = req.body
+        const {type, categoryId, search, pagination, sorter} = req.body
 
         const productColorsRef = ProductColor.query()
             .withGraphFetched(
@@ -28,7 +28,6 @@ const GetAllPaginate = async (req, res) => {
                 category(),
             ]`
             )
-            .where("product_colors.hide_id", null)
             .modify("filterSubCategory", categoryId)
             .modify("search", search)
             .select(
@@ -52,6 +51,10 @@ const GetAllPaginate = async (req, res) => {
                     .orderBy(`products.${sorter.field[1]}`, order)
             // Сортировка по столбцу
             else productColorsRef.orderBy(sorter.field, order)
+        }
+
+        if (type !== "all") {
+            productColorsRef.where("product_colors.hide_id", null)
         }
 
         const productColors = await productColorsRef.page(pagination.current - 1, pagination.pageSize)

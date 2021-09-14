@@ -4,6 +4,7 @@
         width: 100%;
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 0;
 
         .ant-tabs-tab-active {
             .ant-tabs-tab-btn {
@@ -12,9 +13,18 @@
             }
         }
     }
+
+    .ant-tabs-content-holder {
+        background: @white;
+        padding-bottom: 2rem;
+    }
 }
 
 .column-tags {
     max-width: 200px;
     white-space: normal;
+}
+
+.ant-tabs-top > .ant-tabs-nav::before {
+    border: 0;
 }

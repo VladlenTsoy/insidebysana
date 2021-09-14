@@ -1,0 +1,28 @@
+.preview-image {
+    position: relative;
+    width: 100%;
+    background: var(--secondary);
+    user-select: none;
+    display: block;
+
+    &::before {
+        content: "";
+        display: block;
+        padding-bottom: calc(100% / 0.8);
+    }
+
+    border-radius: 10px;
+    overflow: hidden;
+
+    > .imageBlock {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+
+        .loading {
+            font-size: @font-size-lg;
+        }
+    }
+}

@@ -1,9 +1,10 @@
 import React from "react"
 import "./Products.less"
 import {Button, Tabs} from "antd"
-import ProductList from "admin/features/product/ProductList"
+import ProductList from "admin/features/product/product-list/ProductList"
 import {Link, useHistory, useParams} from "react-router-dom"
-import {PlusOutlined} from "@ant-design/icons"
+import {PlusOutlined, SkinOutlined} from "@ant-design/icons"
+import HeaderPage from "admin/components/header-page/HeaderPage"
 
 const {TabPane} = Tabs
 
@@ -16,31 +17,42 @@ const Products: React.FC = () => {
     }
 
     return (
-        <Tabs
-            defaultActiveKey={params.status || `all`}
-            size="large"
-            className="tabs-container-products"
-            onChange={onChangeHandler}
-            tabBarExtraContent={
-                <Link to="/products/create">
-                    <Button type="primary" size="large" icon={<PlusOutlined />}>
-                        Добавить
-                    </Button>
-                </Link>
-            }
-        >
-            <TabPane tab={`Все продукты`} key="all"></TabPane>
-            <TabPane tab={`В проекте`} key="draft"></TabPane>
-            <TabPane tab={`Опубликованные`} key="published">
-                <ProductList />
-            </TabPane>
-            <TabPane tab="Закончились" key="ending">
-                Content of Tab Pane 3
-            </TabPane>
-            <TabPane tab="Архив" key="archive">
-                Content of Tab Pane 2
-            </TabPane>
-        </Tabs>
+        <>
+            <HeaderPage
+                title="Товары"
+                action={
+                    <Link to="/products/create">
+                        <Button type="primary" size="large" icon={<PlusOutlined />}>
+                            Добавить
+                        </Button>
+                    </Link>
+                }
+                icon={<SkinOutlined />}
+                tabs
+            />
+            <Tabs
+                defaultActiveKey={params.status || `all`}
+                size="large"
+                className="tabs-container-products"
+                onChange={onChangeHandler}
+            >
+                <TabPane tab={`Все продукты`} key="all">
+                    <ProductList type="all" />
+                </TabPane>
+                <TabPane tab={`В проекте`} key="draft">
+                    <ProductList type="draft" />
+                </TabPane>
+                <TabPane tab={`Опубликованные`} key="published">
+                    <ProductList type="published" />
+                </TabPane>
+                <TabPane tab="Закончились" key="ending">
+                    <ProductList type="ending" />
+                </TabPane>
+                <TabPane tab="Архив" key="archive">
+                    <ProductList type="archive" />
+                </TabPane>
+            </Tabs>
+        </>
     )
 }
 

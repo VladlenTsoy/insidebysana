@@ -5,10 +5,7 @@ import {Navigations, ManagerNavigations} from "./layout/navigation-items/Navigat
 import AccountItems from "./layout/account-items/AccountItems"
 import Layout from "admin/layouts/Layout"
 import {LoadingBlock} from "admin/lib/ui"
-import CategoriesProvider from "../../../lib/providers/categories-provider/CategoriesProvider"
-import ColorsProvider from "../../../lib/providers/colors-provider/ColorsProvider"
 import SizesProvider from "../../../lib/providers/sizes-provider/SizesProvider"
-import StatusesProvider from "../../../lib/providers/statuses-provider/StatusesProvider"
 import EventsProvider from "admin/lib/providers/events-provider/EventsProvider"
 import {useUser} from "admin/hooks/use-user"
 import CreateProduct from "admin/features/product/product-editor/ProductEditor"
@@ -23,35 +20,29 @@ const Staff = React.lazy(() => import("./pages/staff/Staff"))
 const Index: React.FC = () => {
     const {user} = useUser()
     return (
-        <CategoriesProvider>
-            <ColorsProvider>
-                <SizesProvider>
-                    <StatusesProvider>
-                        <EventsProvider>
-                            <Router>
-                                <Layout
-                                    sidebars={SidebarItems}
-                                    navigations={user.access === "admin" ? Navigations : ManagerNavigations}
-                                    accountMenu={AccountItems}
-                                >
-                                    <React.Suspense fallback={<LoadingBlock title="Загрузка страницы..." />}>
-                                        <Switch>
-                                            <Route exact path="/" component={Home} />
-                                            <Route path="/orders" component={Orders} />
-                                            <Route exact path="/products/create" component={CreateProduct} />
-                                            <Route path="/products/:status" component={Products} />
-                                            <Route path="/clients" component={Clients} />
-                                            <Route path="/settings" component={Settings} />
-                                            <Route path="/staff" component={Staff} />
-                                        </Switch>
-                                    </React.Suspense>
-                                </Layout>
-                            </Router>
-                        </EventsProvider>
-                    </StatusesProvider>
-                </SizesProvider>
-            </ColorsProvider>
-        </CategoriesProvider>
+        <SizesProvider>
+            <EventsProvider>
+                <Router>
+                    <Layout
+                        sidebars={SidebarItems}
+                        navigations={user.access === "admin" ? Navigations : ManagerNavigations}
+                        accountMenu={AccountItems}
+                    >
+                        <React.Suspense fallback={<LoadingBlock title="Загрузка страницы..." />}>
+                            <Switch>
+                                <Route exact path="/" component={Home} />
+                                <Route path="/orders" component={Orders} />
+                                <Route exact path="/products/create" component={CreateProduct} />
+                                <Route path="/products/:status" component={Products} />
+                                <Route path="/clients" component={Clients} />
+                                <Route path="/settings" component={Settings} />
+                                <Route path="/staff" component={Staff} />
+                            </Switch>
+                        </React.Suspense>
+                    </Layout>
+                </Router>
+            </EventsProvider>
+        </SizesProvider>
     )
 }
 

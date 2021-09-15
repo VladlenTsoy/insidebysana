@@ -80,7 +80,7 @@ const OrderCard: React.FC<OrderCardProps> = ({order, index}) => {
                                 </div>
                             </div>
                         </div>
-                        {order.delivery.price !== 0 && (
+                        {order.delivery && order.delivery.price !== 0 && (
                             <div className="delivery">
                                 <Tooltip title={order.delivery.title}>
                                     <CarOutlined />

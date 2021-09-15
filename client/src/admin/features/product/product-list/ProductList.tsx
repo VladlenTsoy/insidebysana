@@ -12,6 +12,7 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = ({type}) => {
+    let timeout: any
     const location = useLocation()
     const history = useHistory()
     const [fetchProductColors, {isLoading, data}] = useGetAllProductsMutation()
@@ -27,6 +28,11 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
         history.push({
             search: `?current=${pagination.current}&pageSize=${pagination.pageSize}`
         })
+    }
+
+    const onSearchHandler = (e: any) => {
+        clearTimeout(timeout)
+        timeout = setTimeout(() => setParams(prevState => ({...prevState, search: e.target.value})), 300)
     }
 
     useEffect(() => {
@@ -67,7 +73,7 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
                         allowClear
                         // enterButton="Поиск"
                         size="large"
-                        // onSearch={onSearchHandler}
+                        onChange={onSearchHandler}
                     />
                 </div>
                 <Table

@@ -19,6 +19,7 @@ router.get("/sizes", SizeController.GetAll)
 
 //
 router.post("/image/upload", ImageController.Upload)
-
+//
+router.delete("/image/:time", ImageController.Delete)
 
 module.exports = router

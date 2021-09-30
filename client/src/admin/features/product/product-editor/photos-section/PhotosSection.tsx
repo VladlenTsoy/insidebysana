@@ -13,7 +13,7 @@ import {
 import PhotoBlock from "./PhotoBlock"
 import AddPhotoBlock from "./AddPhotoBlock"
 import {getBase64} from "utils/getBase64"
-import {useUploadPhotoMutation} from "./photoApi"
+import {useDeletePhotoMutation, useUploadPhotoMutation} from "./photoApi"
 
 const {Title} = Typography
 
@@ -96,9 +96,18 @@ const PhotosSection: React.FC = () => {
         [uploadPhoto]
     )
 
-    const deletePhoto = useCallback((index: any) => {
-        setImageUrl(prevState => prevState.filter(image => image.id !== index))
-    }, [])
+    const [deleteImage] = useDeletePhotoMutation()
+
+    const deletePhoto = useCallback(
+        async (index: number) => {
+            setImageUrl(prevState =>
+                prevState.map(image => (image.id === index ? {...image, loading: true} : image))
+            )
+            await deleteImage({time: index})
+            setImageUrl(prevState => prevState.filter(image => image.id !== index))
+        },
+        [deleteImage]
+    )
 
     return (
         <Element name="photos" className="photos">

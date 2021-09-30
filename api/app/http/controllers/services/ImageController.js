@@ -22,9 +22,19 @@ const Upload = async (req, res) => {
         })
     } catch (e) {
         logger.error(e.stack)
-        xw
         return res.status(500).send({message: e.message})
     }
 }
 
-module.exports = {Upload}
+const Delete = async (req, res) => {
+    try {
+        const {time} = req.params
+        await ImageService.DeleteFolder(`${PATH_TO_FOLDER_IMAGES}/${time}`)
+        return res.send({status: "success"})
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+module.exports = {Upload, Delete}

@@ -3,6 +3,8 @@
     position: relative;
     display: inline-block;
     margin-bottom: 0.5rem;
+    z-index: 5;
+    background-color: @component-background;
 
     &::before {
         content: "";
@@ -25,7 +27,7 @@
         justify-content: center;
         gap: 1rem;
         cursor: pointer;
-        transition: all .2s ease-in-out;
+        transition: all 0.2s ease-in-out;
 
         &:hover {
             border-color: @primary-color;

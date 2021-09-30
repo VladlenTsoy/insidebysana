@@ -14,7 +14,7 @@ import {
 interface PhotoBlockProps {
     dragProvided: DraggableProvided
     index: number
-    image: {imageUrl: string; id: number; loading: boolean}
+    image: {imageUrl: string; id: number; loading: boolean; imagePath: string}
     nextHandler: (index: string) => void
     prevHandler: (index: string) => void
     deletePhoto: (index: number) => void

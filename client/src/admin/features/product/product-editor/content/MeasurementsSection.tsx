@@ -1,7 +1,6 @@
 import React from "react"
 import {Typography, Form, Input, Button, Divider} from "antd"
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons"
-import {Size} from "types/Size"
 import {useSelectSizeById} from "admin/store/common/size/sizeSelectors"
 import "./MeasurementsSection.less"
 import {Element} from "react-scroll"
@@ -9,16 +8,16 @@ import {Element} from "react-scroll"
 const {Title} = Typography
 
 interface TdSizeTitleProps {
-    sizeId: Size["id"]
+    sizeId: string
 }
 
 const TdSizeTitle: React.FC<TdSizeTitleProps> = ({sizeId}) => {
-    const size = useSelectSizeById(sizeId)
+    const size = useSelectSizeById(Number(sizeId))
     return <div>{size?.title}</div>
 }
 
 interface MeasurementsSectionProps {
-    selectedSizeIds: Size["id"][]
+    selectedSizeIds: string[]
 }
 
 const MeasurementsSection: React.FC<MeasurementsSectionProps> = ({selectedSizeIds}) => {

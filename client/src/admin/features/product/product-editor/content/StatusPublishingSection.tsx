@@ -1,15 +1,23 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Typography, Form, Checkbox, Select, Divider} from "antd"
 import {useGetFreeHomePositionsQuery} from "admin/features/home-position/homePositionApi"
 import {Element} from "react-scroll"
 
 const {Title} = Typography
 
-const StatusPublishingSection: React.FC = () => {
+interface StatusPublishingSectionProps {
+    clearHomePositon: () => void
+}
+
+const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = ({clearHomePositon}) => {
     const [isHome, setIsHome] = useState(false)
     const {data, isLoading} = useGetFreeHomePositionsQuery()
 
     const onChangeHandler = () => setIsHome(prevState => !prevState)
+
+    useEffect(() => {
+        if (!isHome) clearHomePositon()
+    }, [isHome, clearHomePositon])
 
     return (
         <Element name="status-publishing">
@@ -26,7 +34,7 @@ const StatusPublishingSection: React.FC = () => {
             <Title level={5} style={{marginBottom: "1.5rem"}}>
                 Дополнительно
             </Title>
-            <Form.Item>
+            <Form.Item name="is_new" valuePropName="checked">
                 <Checkbox>
                     Новинка
                     <br />
@@ -45,7 +53,7 @@ const StatusPublishingSection: React.FC = () => {
                 </Checkbox>
             </Form.Item>
             <div style={{marginLeft: "1.5rem"}}>
-                <Form.Item name="status_1" rules={[{required: isHome, message: "Выберите позицию!"}]}>
+                <Form.Item name="home_position" rules={[{required: isHome, message: "Выберите позицию!"}]}>
                     <Select
                         size="middle"
                         style={{width: "200px"}}

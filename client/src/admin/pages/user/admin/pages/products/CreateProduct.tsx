@@ -128,7 +128,7 @@ const CreateProduct: React.FC = () => {
                                 <Divider />
                                 <section id="properties">
                                     <Title level={3}>Свойства</Title>
-                                    <Form.Item name="save-properties">
+                                    <Form.Item name="save_properties">
                                         <Checkbox.Group options={propertieOptions} />
                                     </Form.Item>
                                     <Form.List name="properties">

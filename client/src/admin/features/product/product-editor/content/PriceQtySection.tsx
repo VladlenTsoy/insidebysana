@@ -29,11 +29,7 @@ const PriceQtySection: React.FC = () => {
             </Form.Item>
             <Row gutter={28}>
                 <Col xl={12} md={12} xs={24}>
-                    <Form.Item
-                        name="discount"
-                        label="Скидка (%)"
-                        rules={[{required: true, message: "Введите процент скидки!"}]}
-                    >
+                    <Form.Item name="discount" label="Скидка (%)">
                         <InputNumber min={0} max={100} style={{width: "100%"}} />
                     </Form.Item>
                 </Col>
@@ -44,9 +40,6 @@ const PriceQtySection: React.FC = () => {
                     </Form.Item>
                 </Col>
             </Row>
-            {/* {selectedSizeIds.map(selectSizeId => (
-        <SelectedSize selectSizeId={selectSizeId} key={selectSizeId} />
-    ))} */}
         </Element>
     )
 }

@@ -15,7 +15,7 @@ const PropertiesSection: React.FC = () => {
         <Element name="properties">
             <Divider />
             <Title level={3}>Свойства</Title>
-            <Form.Item name="save-properties">
+            <Form.Item name="save_properties">
                 <Checkbox.Group options={propertieOptions} />
             </Form.Item>
             <Form.List name="properties">

@@ -5,7 +5,7 @@ import "./ProductEditor.less"
 import BaseSection from "./BaseSection"
 import PropertiesSection from "./PropertiesSection"
 import PriceQtySection from "./PriceQtySection"
-import PhotosSection from "./PhotosSection"
+import PhotosSection from "./photos-section/PhotosSection"
 import StatusPublishingSection from "./StatusPublishingSection"
 import MeasurementsSection from "./MeasurementsSection"
 import {Size} from "types/Size"
@@ -19,12 +19,16 @@ const CreateProduct: React.FC = () => {
         setSelectedSizeIds(sizesIds)
     }, [])
 
+    const onFinishHandler = (values: any) => {
+        console.log(values)
+    }
+
     return (
         <div className="create-product-page">
             <HeaderPage
                 title="Добавить товар"
                 action={
-                    <Button type="primary" size="large">
+                    <Button type="primary" size="large" form="editor-product" htmlType="submit">
                         Сохранить
                     </Button>
                 }
@@ -39,9 +43,9 @@ const CreateProduct: React.FC = () => {
                             layout="vertical"
                             size="large"
                             // form={form}
-                            // onFinish={onFinishHandler}
+                            onFinish={onFinishHandler}
                             // initialValues={basicValues}
-                            id="editor-product-basic"
+                            id="editor-product"
                         >
                             <BaseSection onSelectSizesHandler={onSelectSizesHandler} />
                             <PropertiesSection />

@@ -34,6 +34,7 @@ import {colorApi} from "admin/features/color/colorApi"
 import {sizeApi} from "admin/features/size/sizeApi"
 import {tagApi} from "admin/features/tag/tagApi"
 import {homePositionApi} from "admin/features/home-position/homePositionApi"
+import {photoApi} from "./features/product/product-editor/photos-section/photoApi"
 
 export type StoreState = ReturnType<typeof adminReducer>
 
@@ -73,7 +74,8 @@ export const adminReducer = combineReducers({
     [colorApi.reducerPath]: colorApi.reducer,
     [sizeApi.reducerPath]: sizeApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
-    [homePositionApi.reducerPath]: homePositionApi.reducer
+    [homePositionApi.reducerPath]: homePositionApi.reducer,
+    [photoApi.reducerPath]: photoApi.reducer
 })
 
 export type AppDispatch = typeof store.dispatch
@@ -97,5 +99,6 @@ export const store = configureStore({
             .concat(sizeApi.middleware)
             .concat(tagApi.middleware)
             .concat(homePositionApi.middleware)
+            .concat(photoApi.middleware)
     ]
 })

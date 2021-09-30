@@ -1,0 +1,54 @@
+.add-photo-block {
+    width: 150px;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+
+    &::before {
+        content: "";
+        display: block;
+        padding-bottom: 125%;
+    }
+
+    .add-photo-content {
+        position: absolute;
+        height: 100%;
+        border-radius: @border-radius-base;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border: 2px dashed @border-color-base;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1rem;
+        cursor: pointer;
+        transition: all .2s ease-in-out;
+
+        &:hover {
+            border-color: @primary-color;
+        }
+
+        .add-icon {
+            background: @primary-color;
+            color: @white;
+            display: flex;
+            align-items: center;
+            justify-self: center;
+            padding: 0.75rem;
+            font-size: @font-size-lg + 10px;
+            border-radius: 50%;
+        }
+
+        .add-photo-text {
+            color: @primary-color;
+            font-size: @font-size-lg;
+        }
+
+        .add-photo-input {
+            display: none;
+        }
+    }
+}

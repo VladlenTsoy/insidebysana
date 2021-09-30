@@ -45,7 +45,7 @@ const StatusPublishingSection: React.FC = () => {
                 </Checkbox>
             </Form.Item>
             <div style={{marginLeft: "1.5rem"}}>
-                <Form.Item name="status_1" rules={[{required: !isHome, message: "Выберите позицию!"}]}>
+                <Form.Item name="status_1" rules={[{required: isHome, message: "Выберите позицию!"}]}>
                     <Select
                         size="middle"
                         style={{width: "200px"}}

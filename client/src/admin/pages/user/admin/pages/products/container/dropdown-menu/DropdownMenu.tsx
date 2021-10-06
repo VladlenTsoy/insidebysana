@@ -11,7 +11,7 @@ const DropdownMenu = (productColor: ProductColor) => {
     return (
         <Menu>
             <Menu.Item key="edit">
-                <EditorProductAction title="Редактировать" productId={productColor.details.id}>
+                <EditorProductAction title="Редактировать" productId={productColor.id}>
                     <span>
                         <EditOutlined /> Редактировать
                     </span>

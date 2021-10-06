@@ -11,7 +11,6 @@ const {HomeProduct} = require("models/products/HomeProduct")
 const {ProductColorImage} = require("models/products/ProductColorImage")
 
 const PATH_TO_FOLDER_TMP = "../../../public/images/tmp"
-const PATH_TO_TMP = "images/tmp"
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/product-colors"
 const PATH_TO_IMAGE = "images/product-colors"
 

@@ -19,23 +19,18 @@ const GetAllPaginate = async (req, res) => {
         const {type, categoryId, search, pagination, sorter} = req.body
 
         const productColorsRef = ProductColor.query()
-            .withGraphFetched(
-                `[
-                details(),
-                tags(),
-                color(),
-                discount(),
-                category(),
-            ]`
-            )
+            .withGraphFetched(`[details, tags, color, discount, category]`)
+            // .join("tags", raw(`JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`))
             .modify("filterSubCategory", categoryId)
             .modify("search", search)
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
                 "product_colors.created_at",
-                "sizes",
-                "is_new"
+                "product_colors.sizes",
+                "product_colors.is_new",
+                "product_colors.title",
+                "product_colors.status"
             )
 
         const order = sorter.order === "ascend" ? "asc" : "desc"

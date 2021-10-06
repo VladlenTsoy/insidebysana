@@ -21,7 +21,7 @@ export const columns = [
         render: (image: string, record: any) => <PreviewImage image={image} product={record} />
     },
     {
-        dataIndex: ["details", "title"],
+        dataIndex: ["title"],
         render: (title: any, record: any) => <Details title={title} product={record} />
     },
     {
@@ -57,22 +57,24 @@ export const columns = [
         dataIndex: "tags",
         render: (tags: any[], record: any) => (
             <div className="column-tags">
-                {tags.map(tag => (
-                    <Tag color="blue" key={`${record.id}-${tag.tag_id}`}>
-                        {tag.title.toUpperCase()}
-                    </Tag>
-                ))}
+                {tags &&
+                    tags.map(tag => (
+                        <Tag color="blue" key={`${record.id}-${tag.tag_id}`}>
+                            {tag.title.toUpperCase()}
+                        </Tag>
+                    ))}
             </div>
         )
     },
     {
+        dataIndex: "status",
         width: "130px",
-        render: (_: any) => (
+        render: (status: "draft" | "published" | "archive" | "ending") => (
             <>
-                <div className="status success">Размещён</div>
-                {/* <div className="status danger">В архиве</div>
-                <div className="status processing">В проекте</div>
-                <div className="status warning">Закончился</div> */}
+                {status === "published" && <div className="status success">Размещён</div>}
+                {status === "archive" && <div className="status danger">В архиве</div>}
+                {status === "draft" && <div className="status processing">В проекте</div>}
+                {status === "ending" && <div className="status warning">Закончился</div>}
             </>
         )
     },

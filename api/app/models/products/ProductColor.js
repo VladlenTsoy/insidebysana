@@ -1,6 +1,6 @@
 const Model = require("../../../config/knex.config")
 const moment = require("moment")
-const {raw} = require("objection")
+const {raw, ref} = require("objection")
 
 class ProductColor extends Model {
     static tableName = "product_colors"
@@ -166,10 +166,11 @@ class ProductColor extends Model {
         const {Color} = require("../settings/Color")
         const {Category} = require("../settings/Category")
         const {ProductDiscount} = require("./ProductDiscount")
+        const {Tag} = require("../settings/Tag")
 
         return {
             details: {
-                filter: query => query.select("products.id", "products.title", "products.price"),
+                filter: query => query.select("products.id", "products.price"),
                 relation: Model.HasOneRelation,
                 modelClass: Product,
                 join: {
@@ -256,13 +257,13 @@ class ProductColor extends Model {
                 filter: query =>
                     query
                         .select("tags.id as tag_id", "tags.title")
-                        .join("tags", raw(`JSON_SEARCH(products.tags_id, 'all', tags.id) > 1`))
+                        .join("tags", raw(`JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`))
                         .select("tags.id", "tags.title"),
                 relation: Model.HasManyRelation,
-                modelClass: Product,
+                modelClass: ProductColor,
                 join: {
-                    from: "product_colors.product_id",
-                    to: `products.id`
+                    from: "product_colors.id",
+                    to: "product_colors.id"
                 }
             },
             images: {

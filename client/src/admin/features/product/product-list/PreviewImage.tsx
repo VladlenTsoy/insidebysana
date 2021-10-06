@@ -15,7 +15,7 @@ const PreviewImage: React.FC<PreviewImageProps> = ({image, product}) => {
         <>
             <div style={{width: "45px"}} onClick={() => setVisible(prevState => !prevState)}>
                 <div className="preview-image">
-                    <ImageBlock image={image} title={product.details.title} />
+                    <ImageBlock image={image} title={product.title} />
                 </div>
             </div>
             <div style={{display: "none"}}>

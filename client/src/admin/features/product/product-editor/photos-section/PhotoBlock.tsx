@@ -10,14 +10,15 @@ import {
     LoadingOutlined,
     StarFilled
 } from "@ant-design/icons"
+import {TemporaryImageType} from "../ProductEditor"
 
 interface PhotoBlockProps {
     dragProvided: DraggableProvided
     index: number
-    image: {imageUrl: string; id: number; loading: boolean; imagePath: string}
+    image: TemporaryImageType
     nextHandler: (index: string) => void
     prevHandler: (index: string) => void
-    deletePhoto: (index: number) => void
+    deletePhoto: (id: number) => void
 }
 
 const PhotoBlock: React.FC<PhotoBlockProps> = ({

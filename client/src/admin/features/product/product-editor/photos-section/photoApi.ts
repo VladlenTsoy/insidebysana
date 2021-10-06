@@ -15,7 +15,7 @@ interface AddReturnType {
 }
 
 interface RemoveAgrsProps {
-    time: number
+    pathToImage: string
 }
 
 interface RemoveReturnType {
@@ -37,8 +37,9 @@ export const photoApi = createApi({
         }),
         deletePhoto: builder.mutation<RemoveReturnType, RemoveAgrsProps>({
             query: body => ({
-                url: `user/image/${body.time}`,
-                method: "DELETE"
+                url: `user/image/delete`,
+                method: "POST",
+                body
             }),
             invalidatesTags: ["photo"]
         })

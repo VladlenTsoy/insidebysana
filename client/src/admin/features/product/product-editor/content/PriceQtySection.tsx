@@ -1,10 +1,15 @@
 import React from "react"
 import {Col, Row, Typography, Form, InputNumber, DatePicker, Divider} from "antd"
 import {Element} from "react-scroll"
+import SelectedSize from "admin/pages/user/admin/pages/products/SelectedSize"
 
 const {Title} = Typography
 
-const PriceQtySection: React.FC = () => {
+interface PriceQtySectionProps {
+    selectedSizeIds: string[]
+}
+
+const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizeIds}) => {
     return (
         <Element name="price-qty">
             <Divider />
@@ -39,6 +44,11 @@ const PriceQtySection: React.FC = () => {
                         <DatePicker format="DD-MM-YYYY" style={{width: "100%"}} showToday={false} />
                     </Form.Item>
                 </Col>
+            </Row>
+            <Row>
+                {selectedSizeIds.map(selectSizeId => (
+                    <SelectedSize selectSizeId={selectSizeId} key={selectSizeId} />
+                ))}
             </Row>
         </Element>
     )

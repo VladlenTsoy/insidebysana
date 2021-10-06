@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from "react"
+import React, {Dispatch, SetStateAction, useCallback, useEffect, useRef} from "react"
 import {Divider, Typography} from "antd"
 import {Element} from "react-scroll"
 import "./PhotosSection.less"
@@ -14,12 +14,17 @@ import PhotoBlock from "./PhotoBlock"
 import AddPhotoBlock from "./AddPhotoBlock"
 import {getBase64} from "utils/getBase64"
 import {useDeletePhotoMutation, useUploadPhotoMutation} from "./photoApi"
+import {TemporaryImageType} from "../ProductEditor"
 
 const {Title} = Typography
 
-const PhotosSection: React.FC = () => {
+interface PhotosSectionProps {
+    imageUrls: TemporaryImageType[]
+    setImageUrl: Dispatch<SetStateAction<TemporaryImageType[]>>
+}
+
+const PhotosSection: React.FC<PhotosSectionProps> = ({imageUrls, setImageUrl}) => {
     const sensorAPIRef = useRef<SensorAPI | null>(null)
-    const [imageUrls, setImageUrl] = useState<any[]>([])
 
     function lift(quoteId: string): any {
         const api = sensorAPIRef.current
@@ -79,7 +84,7 @@ const PhotosSection: React.FC = () => {
                 })
             )
         }
-    }, [data])
+    }, [data, setImageUrl])
 
     const addPhoto = useCallback(
         (e: any) => {
@@ -93,20 +98,21 @@ const PhotosSection: React.FC = () => {
                 })
             }
         },
-        [uploadPhoto]
+        [uploadPhoto, setImageUrl]
     )
 
     const [deleteImage] = useDeletePhotoMutation()
 
     const deletePhoto = useCallback(
-        async (index: number) => {
+        async (id: number) => {
             setImageUrl(prevState =>
-                prevState.map(image => (image.id === index ? {...image, loading: true} : image))
+                prevState.map(image => (image.id === id ? {...image, loading: true} : image))
             )
-            await deleteImage({time: index})
-            setImageUrl(prevState => prevState.filter(image => image.id !== index))
+            const findImage = imageUrls.find(image => image.id === id)
+            if (findImage && findImage.imagePath) await deleteImage({pathToImage: findImage.imagePath})
+            setImageUrl(prevState => prevState.filter(image => image.id !== id))
         },
-        [deleteImage]
+        [deleteImage, setImageUrl, imageUrls]
     )
 
     return (

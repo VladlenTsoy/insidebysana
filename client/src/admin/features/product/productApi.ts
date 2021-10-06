@@ -16,7 +16,7 @@ export const productApi = createApi({
         }),
         createProduct: build.mutation<any, Partial<any>>({
             query: body => ({
-                url: `user/admin//product`,
+                url: `user/admin/new/product`,
                 method: "POST",
                 body
             }),
@@ -25,4 +25,4 @@ export const productApi = createApi({
     })
 })
 
-export const {useGetAllProductsMutation} = productApi
+export const {useGetAllProductsMutation, useCreateProductMutation} = productApi

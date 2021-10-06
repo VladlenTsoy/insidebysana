@@ -18,6 +18,17 @@ const DeleteFolder = async customPath => {
     }
 }
 
+const MoveFile = async ({oldPath, newPath, folderPath}) => {
+    // Путь к папке
+    const fullFolderPath = path.join(__dirname, folderPath)
+    // Создание папки
+    if (!fs.existsSync(fullFolderPath)) fs.mkdirSync(fullFolderPath)
+    const fullOldPath = path.join(__dirname, oldPath)
+    const fullNewPath = path.join(__dirname, newPath)
+    await fs.rename(fullOldPath, fullNewPath, () => {})
+    return newPath
+}
+
 /**
  * Сохранение изображения
  * @param {*} config
@@ -59,7 +70,7 @@ const UploadImage = async ({
         // Сохранение
         await image.writeAsync(path.join(fullFolderPath, imageName))
 
-        return [imagePath]
+        return [imagePath, imageName]
     } catch (e) {
         logger.error(e.stack)
     }
@@ -109,6 +120,7 @@ const DeleteImage = async filePath => {
 }
 
 module.exports = {
+    MoveFile,
     UploadImage,
     DeleteFolder,
     DeleteImagesExceptCurrent,

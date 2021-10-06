@@ -106,6 +106,8 @@ router.patch("/size/:id/display", SizeController.Display)
 router.post("/product-colors", ProductColorController.GetBySearch)
 // Создание продукта
 router.post("/product", ProductController.Create)
+// НОВИНКА Создание продукта
+router.post("/new/product", ProductController.NewCreate)
 // Вывод всех продуктов
 router.post("/product-colors/table", ProductColorController.GetAllPaginate)
 // Вывод цветов из корзины

@@ -4,12 +4,18 @@ const ImageService = require("services/image/ImageService")
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/tmp"
 const PATH_TO_IMAGE = "images/tmp"
 
+/**
+ * Загрузка временных картинок
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 const Upload = async (req, res) => {
     try {
         const {image, time} = req.body
-        const [imagePath] = await ImageService.UploadImage({
-            folderPath: `${PATH_TO_FOLDER_IMAGES}/${time}`,
-            imagePatch: `${PATH_TO_IMAGE}/${time}`,
+        const [imagePath, imageName] = await ImageService.UploadImage({
+            folderPath: `${PATH_TO_FOLDER_IMAGES}`,
+            imagePatch: `${PATH_TO_IMAGE}`,
             fileImage: image,
             nameFile: time
         })
@@ -17,6 +23,7 @@ const Upload = async (req, res) => {
             loading: false,
             imageUrl: `${process.env.APP_URL}/${imagePath}`,
             imagePath,
+            imageName,
             id: time,
             time
         })
@@ -26,10 +33,16 @@ const Upload = async (req, res) => {
     }
 }
 
+/**
+ * Удаление временной картинки
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 const Delete = async (req, res) => {
     try {
-        const {time} = req.params
-        await ImageService.DeleteFolder(`${PATH_TO_FOLDER_IMAGES}/${time}`)
+        const {pathToImage} = req.body
+        await ImageService.DeleteImage(pathToImage)
         return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)

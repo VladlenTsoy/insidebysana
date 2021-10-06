@@ -11,8 +11,10 @@ import MeasurementsSection from "./content/MeasurementsSection"
 import HeaderPage from "admin/components/header-page/HeaderPage"
 import ContainerPage from "admin/components/container-page/ContainerPage"
 import {Moment} from "moment"
+import {useCreateProductMutation} from "../productApi"
+import {useHistory} from "react-router"
 
-interface FormData {
+export interface FormData {
     category_id: number
     color_id: number
     sizes?: string[]
@@ -33,10 +35,21 @@ interface FormData {
     tags_id?: string[]
 }
 
+export interface TemporaryImageType {
+    id: number
+    imageUrl: string
+    loading: boolean
+    imagePath?: string
+    imageName?: string
+}
+
 const CreateProduct: React.FC = () => {
     const [basicValues] = useState({status: "draft"})
     const [selectedSizeIds, setSelectedSizeIds] = useState<string[]>([])
+    const [imageUrls, setImageUrl] = useState<TemporaryImageType[]>([])
+    const [createProduct, {isLoading}] = useCreateProductMutation()
     const [form] = Form.useForm()
+    const history = useHistory()
 
     const onSelectSizesHandler = useCallback((sizesIds: string[]) => {
         setSelectedSizeIds(sizesIds)
@@ -46,8 +59,13 @@ const CreateProduct: React.FC = () => {
         form.setFieldsValue({home_position: undefined})
     }, [form])
 
-    const onFinishHandler = (values: FormData) => {
-        console.log(values)
+    const onFinishHandler = async (values: FormData) => {
+        const pathToImages = imageUrls.map(image => image.imageName)
+        await createProduct({
+            ...values,
+            images: pathToImages
+        })
+        history.push("/products/draft")
     }
 
     return (
@@ -55,7 +73,13 @@ const CreateProduct: React.FC = () => {
             <HeaderPage
                 title="Добавить товар"
                 action={
-                    <Button type="primary" size="large" form="editor-product" htmlType="submit">
+                    <Button
+                        type="primary"
+                        size="large"
+                        form="editor-product"
+                        htmlType="submit"
+                        loading={isLoading}
+                    >
                         Сохранить
                     </Button>
                 }
@@ -76,8 +100,8 @@ const CreateProduct: React.FC = () => {
                         >
                             <BaseSection onSelectSizesHandler={onSelectSizesHandler} />
                             <PropertiesSection />
-                            <PriceQtySection />
-                            <PhotosSection />
+                            <PriceQtySection selectedSizeIds={selectedSizeIds} />
+                            <PhotosSection imageUrls={imageUrls} setImageUrl={setImageUrl} />
                             <MeasurementsSection selectedSizeIds={selectedSizeIds} />
                             <StatusPublishingSection clearHomePositon={clearHomePositon} />
                         </Form>

@@ -5,7 +5,7 @@ const {raw} = require("objection")
 class ProductColor extends Model {
     static tableName = "product_colors"
     static virtualAttributes = ["url_thumbnail", "url_images"]
-    static jsonAttributes = ["sizes"]
+    static jsonAttributes = ["sizes", "tags_id"]
     static hidden = ["thumbnail"]
 
     static get jsonSchema() {

@@ -10,6 +10,7 @@ api/public/images/print-category/*
 api/public/images/print-images/*
 api/public/images/print-products/*
 api/public/images/tmp/*
+api/public/images/product-colors/*
 api/logs/*
 .vscode/
 .eslintcache

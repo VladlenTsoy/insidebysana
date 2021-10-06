@@ -8,6 +8,7 @@ const ImageService = require("services/image/ImageService")
 const {body, validationResult} = require("express-validator")
 const {logger} = require("config/logger.config")
 const {HomeProduct} = require("models/products/HomeProduct")
+const {ProductColorImage} = require("models/products/ProductColorImage")
 
 const PATH_TO_FOLDER_TMP = "../../../public/images/tmp"
 const PATH_TO_TMP = "images/tmp"
@@ -118,12 +119,29 @@ const NewCreate = async (req, res) => {
             const updatedPathToImages = await Promise.all(
                 data.images.map(async pathToImage => {
                     return await ImageService.MoveFile({
+                        nameImage: pathToImage,
                         oldPath: `${PATH_TO_FOLDER_TMP}/${pathToImage}`,
                         newPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}/${pathToImage}`,
                         folderPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}`
                     })
                 })
             )
+            if (updatedPathToImages) {
+                await Promise.all(
+                    updatedPathToImages.map(async (imageName, key) => {
+                        if (key === 0) {
+                            await ProductColor.query()
+                                .findOne({id: productColor.id})
+                                .update({thumbnail: `${PATH_TO_IMAGE}/${productColor.id}/${imageName}`})
+                        }
+                        await ProductColorImage.query().insert({
+                            product_color_id: productColor.id,
+                            image: `${PATH_TO_IMAGE}/${productColor.id}/${imageName}`,
+                            thumbnail: key === 0 ? "0" : "1"
+                        })
+                    })
+                )
+            }
         }
         // Сохранение или обновление обьемов
         if (data.measurements)

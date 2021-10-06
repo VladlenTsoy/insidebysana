@@ -18,7 +18,7 @@ const DeleteFolder = async customPath => {
     }
 }
 
-const MoveFile = async ({oldPath, newPath, folderPath}) => {
+const MoveFile = async ({oldPath, newPath, folderPath, nameImage}) => {
     // Путь к папке
     const fullFolderPath = path.join(__dirname, folderPath)
     // Создание папки
@@ -26,7 +26,7 @@ const MoveFile = async ({oldPath, newPath, folderPath}) => {
     const fullOldPath = path.join(__dirname, oldPath)
     const fullNewPath = path.join(__dirname, newPath)
     await fs.rename(fullOldPath, fullNewPath, () => {})
-    return newPath
+    return nameImage
 }
 
 /**

@@ -65,7 +65,7 @@ const CreateProduct: React.FC = () => {
             ...values,
             images: pathToImages
         })
-        history.push("/products/draft")
+        history.push(`/products/${values.status}`)
     }
 
     return (

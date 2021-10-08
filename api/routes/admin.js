@@ -108,6 +108,8 @@ router.post("/product-colors", ProductColorController.GetBySearch)
 router.post("/product", ProductController.Create)
 // НОВИНКА Создание продукта
 router.post("/new/product", ProductController.NewCreate)
+// НОВИНКА Вывод продукта по id
+router.get("/new/product/:id", ProductController.NewGetById)
 // Вывод всех продуктов
 router.post("/product-colors/table", ProductColorController.GetAllPaginate)
 // Вывод цветов из корзины
@@ -265,6 +267,6 @@ router.patch("/home-product/:id", HomeProductController.Edit)
 // Удалить продукт с дом. страницы
 router.delete("/home-product/:id", HomeProductController.Delete)
 // Выбрать свободные позиции на главной странице
-router.get("/home-position/free", HomeProductController.GetFree)
+router.get("/home-position/free/:position", HomeProductController.GetFree)
 
 module.exports = router

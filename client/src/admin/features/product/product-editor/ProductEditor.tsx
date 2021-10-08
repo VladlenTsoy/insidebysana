@@ -1,5 +1,5 @@
 import {Col, Row, Form, Button} from "antd"
-import React, {useCallback, useState} from "react"
+import React, {useCallback, useEffect, useState} from "react"
 import LeftSidebar from "./left-sidebar/LeftSidebar"
 import "./ProductEditor.less"
 import BaseSection from "./content/BaseSection"
@@ -12,7 +12,8 @@ import HeaderPage from "admin/components/header-page/HeaderPage"
 import ContainerPage from "admin/components/container-page/ContainerPage"
 import {Moment} from "moment"
 import {useCreateProductMutation} from "../productApi"
-import {useHistory} from "react-router"
+import {useHistory, useParams} from "react-router"
+import {useGetProductByIdQuery} from "../productApi"
 
 export interface FormData {
     category_id: number
@@ -44,12 +45,16 @@ export interface TemporaryImageType {
 }
 
 const CreateProduct: React.FC = () => {
-    const [basicValues] = useState({status: "draft"})
+    const [basicValues, setBasicValues] = useState({status: "draft"})
     const [selectedSizeIds, setSelectedSizeIds] = useState<string[]>([])
     const [imageUrls, setImageUrl] = useState<TemporaryImageType[]>([])
     const [createProduct, {isLoading}] = useCreateProductMutation()
     const [form] = Form.useForm()
     const history = useHistory()
+    const params = useParams<{id: string}>()
+    const {data, isLoading: fetchLoading} = useGetProductByIdQuery(params?.id, {skip: !params?.id})
+
+    // console.log(params, data)
 
     const onSelectSizesHandler = useCallback((sizesIds: string[]) => {
         setSelectedSizeIds(sizesIds)
@@ -67,6 +72,15 @@ const CreateProduct: React.FC = () => {
         })
         history.push(`/products/${values.status}`)
     }
+
+    useEffect(() => {
+        if (data) {
+            setBasicValues(data)
+            setSelectedSizeIds(data.sizes)
+        }
+    }, [data])
+
+    if (fetchLoading) return <></>
 
     return (
         <div className="create-product-page">
@@ -95,7 +109,7 @@ const CreateProduct: React.FC = () => {
                             size="large"
                             form={form}
                             onFinish={onFinishHandler}
-                            initialValues={basicValues}
+                            initialValues={data || basicValues}
                             id="editor-product"
                         >
                             <BaseSection onSelectSizesHandler={onSelectSizesHandler} />
@@ -103,7 +117,10 @@ const CreateProduct: React.FC = () => {
                             <PriceQtySection selectedSizeIds={selectedSizeIds} />
                             <PhotosSection imageUrls={imageUrls} setImageUrl={setImageUrl} />
                             <MeasurementsSection selectedSizeIds={selectedSizeIds} />
-                            <StatusPublishingSection clearHomePositon={clearHomePositon} />
+                            <StatusPublishingSection
+                                clearHomePositon={clearHomePositon}
+                                homePosition={data?.home_position}
+                            />
                         </Form>
                     </Col>
                     <Col span={5}></Col>

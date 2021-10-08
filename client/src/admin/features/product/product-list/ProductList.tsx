@@ -55,8 +55,6 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
     }, [location])
 
     useEffect(() => {
-        console.log(params)
-
         fetchProductColors(params)
     }, [fetchProductColors, params])
 

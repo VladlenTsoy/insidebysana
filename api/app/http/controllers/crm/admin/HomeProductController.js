@@ -115,9 +115,12 @@ const Delete = async (req, res) => {
 
 const GetFree = async (req, res) => {
     try {
+        const {position} = req.params
         const positions = await HomeProduct.query().pluck("position")
         const allPositions = Array.from({length: 24}, (_, i) => i + 1)
-        const freePositions = allPositions.filter(position => !positions.includes(position))
+        const freePositions = allPositions.filter(
+            _position => (position !== 0 && _position === Number(position)) || !positions.includes(_position)
+        )
 
         return res.send(freePositions)
     } catch (e) {

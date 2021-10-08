@@ -10,7 +10,6 @@ import CategoriesProvider from "../../../lib/providers/categories-provider/Categ
 import SizesProvider from "../../../lib/providers/sizes-provider/SizesProvider"
 import EventsProvider from "admin/lib/providers/events-provider/EventsProvider"
 import {useUser} from "admin/hooks/use-user"
-import CreateProduct from "admin/features/product/product-editor/ProductEditor"
 
 const Home = React.lazy(() => import("./pages/home/Home"))
 const Orders = React.lazy(() => import("./pages/orders/Orders"))
@@ -18,6 +17,7 @@ const Products = React.lazy(() => import("./pages/products/Products"))
 const Clients = React.lazy(() => import("./pages/clients/Clients"))
 const Settings = React.lazy(() => import("./pages/settings/Settings"))
 const Staff = React.lazy(() => import("./pages/staff/Staff"))
+const CreateProduct = React.lazy(() => import("admin/features/product/product-editor/ProductEditor"))
 
 const Index: React.FC = () => {
     const {user} = useUser()
@@ -37,6 +37,7 @@ const Index: React.FC = () => {
                                         <Route exact path="/" component={Home} />
                                         <Route path="/orders" component={Orders} />
                                         <Route exact path="/products/create" component={CreateProduct} />
+                                        <Route exact path="/products/edit/:id" component={CreateProduct} />
                                         <Route path="/products/:status" component={Products} />
                                         <Route path="/clients" component={Clients} />
                                         <Route path="/settings" component={Settings} />

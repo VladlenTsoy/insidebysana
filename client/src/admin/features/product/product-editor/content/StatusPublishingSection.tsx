@@ -7,11 +7,15 @@ const {Title} = Typography
 
 interface StatusPublishingSectionProps {
     clearHomePositon: () => void
+    homePosition?: number
 }
 
-const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = ({clearHomePositon}) => {
-    const [isHome, setIsHome] = useState(false)
-    const {data, isLoading} = useGetFreeHomePositionsQuery()
+const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = ({
+    clearHomePositon,
+    homePosition
+}) => {
+    const [isHome, setIsHome] = useState(!!homePosition || false)
+    const {data, isLoading} = useGetFreeHomePositionsQuery(homePosition || 0)
 
     const onChangeHandler = () => setIsHome(prevState => !prevState)
 
@@ -44,7 +48,7 @@ const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = ({clearH
                 </Checkbox>
             </Form.Item>
             <Form.Item style={{marginBottom: ".5rem"}}>
-                <Checkbox onChange={onChangeHandler}>
+                <Checkbox onChange={onChangeHandler} defaultChecked={isHome}>
                     На главной
                     <br />
                     <Typography.Text type="secondary">

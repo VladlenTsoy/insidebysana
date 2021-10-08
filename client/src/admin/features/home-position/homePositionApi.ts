@@ -21,11 +21,10 @@ export const homePositionApi = createApi({
             }),
             providesTags: ["homePosition"]
         }),
-        getFreeHomePositions: build.query<number[], void>({
-            query: body => ({
-                url: `user/admin/home-position/free`,
-                method: "GET",
-                body
+        getFreeHomePositions: build.query<number[], number>({
+            query: position => ({
+                url: `user/admin/home-position/free/${position}`,
+                method: "GET"
             })
         })
     })

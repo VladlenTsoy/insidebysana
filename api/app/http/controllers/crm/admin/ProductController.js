@@ -108,7 +108,8 @@ const NewCreate = async (req, res) => {
             product_id: productRef.id,
             color_id: data.color_id,
             thumbnail: null,
-            sizes: data.props,
+            sizes: data.sizes,
+            sizes_props: data.props,
             status: data.status,
             tags_id: tagsId,
             is_new: data.is_new
@@ -177,6 +178,35 @@ const GetById = async (req, res) => {
     }
 }
 
+const NewGetById = async (req, res) => {
+    try {
+        const {id} = req.params
+        const product = await ProductColor.query()
+            .findById(id)
+            .join("products", "products.id", "product_colors.product_id")
+            .join("home_products", "home_products.product_color_id", "product_colors.product_id")
+            .withGraphFetched(`[measurements]`)
+            .select(
+                "product_colors.id",
+                "product_colors.title",
+                "product_colors.color_id",
+                "product_colors.tags_id",
+                "product_colors.status",
+                "product_colors.is_new",
+                "product_colors.sizes",
+                "product_colors.sizes_props as props",
+                "products.category_id",
+                "products.properties",
+                "products.price",
+                "home_products.position as home_position"
+            )
+        return res.send(product)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
 const EditValidate = [
     body("basic").not().isEmpty().withMessage("Введите основные!"),
     body("colors").not().isEmpty().withMessage("Введите цвета!")
@@ -230,4 +260,4 @@ const EditById = async (req, res) => {
     }
 }
 
-module.exports = {CreateValidate, Create, GetById, EditValidate, EditById, NewCreate}
+module.exports = {CreateValidate, Create, GetById, EditValidate, EditById, NewCreate, NewGetById}

@@ -5,7 +5,7 @@ const {raw, ref} = require("objection")
 class ProductColor extends Model {
     static tableName = "product_colors"
     static virtualAttributes = ["url_thumbnail", "url_images"]
-    static jsonAttributes = ["sizes", "tags_id"]
+    static jsonAttributes = ["sizes", "tags_id", "sizes_props"]
     static hidden = ["thumbnail"]
 
     static get jsonSchema() {
@@ -17,7 +17,8 @@ class ProductColor extends Model {
                 product_id: {type: "number"},
                 color_id: {type: "number"},
                 thumbnail: {type: ["string", null]},
-                sizes: {
+                sizes: {type: ["array"]},
+                sizes_props: {
                     type: "object",
                     properties: {
                         type: {
@@ -166,7 +167,7 @@ class ProductColor extends Model {
         const {Color} = require("../settings/Color")
         const {Category} = require("../settings/Category")
         const {ProductDiscount} = require("./ProductDiscount")
-        const {Tag} = require("../settings/Tag")
+        const {ProductMeasurement} = require("./ProductMeasurement")
 
         return {
             details: {
@@ -191,25 +192,25 @@ class ProductColor extends Model {
                     to: "categories.id"
                 }
             },
-            sizes_props: {
-                filter: query =>
-                    query
-                        .join(
-                            `sizes`,
-                            raw(`JSON_EXTRACT(product_colors.sizes,concat('$."',sizes.id,'".qty')) > 0`)
-                        )
-                        .select(
-                            "sizes.id as size_id",
-                            "sizes.title",
-                            raw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) as qty`)
-                        ),
-                relation: Model.HasManyRelation,
-                modelClass: ProductColor,
-                join: {
-                    from: "product_colors.id",
-                    to: "product_colors.id"
-                }
-            },
+            // sizes_props: {
+            //     filter: query =>
+            //         query
+            //             .join(
+            //                 `sizes`,
+            //                 raw(`JSON_EXTRACT(product_colors.sizes,concat('$."',sizes.id,'".qty')) > 0`)
+            //             )
+            //             .select(
+            //                 "sizes.id as size_id",
+            //                 "sizes.title",
+            //                 raw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) as qty`)
+            //             ),
+            //     relation: Model.HasManyRelation,
+            //     modelClass: ProductColor,
+            //     join: {
+            //         from: "product_colors.id",
+            //         to: "product_colors.id"
+            //     }
+            // },
             colors: {
                 filter: query =>
                     query
@@ -273,6 +274,14 @@ class ProductColor extends Model {
                 join: {
                     from: "product_colors.id",
                     to: `product_color_images.product_color_id`
+                }
+            },
+            measurements: {
+                relation: Model.HasManyRelation,
+                modelClass: ProductMeasurement,
+                join: {
+                    from: "product_colors.product_id",
+                    to: `product_measurements.product_id`
                 }
             }
         }

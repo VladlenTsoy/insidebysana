@@ -21,8 +21,15 @@ export const productApi = createApi({
                 body
             }),
             invalidatesTags: ["product"]
+        }),
+        getProductById: build.query<any, string>({
+            query: id => ({
+                url: `user/admin/new/product/${id}`,
+                method: "get"
+            }),
+            providesTags: ["product"]
         })
     })
 })
 
-export const {useGetAllProductsMutation, useCreateProductMutation} = productApi
+export const {useGetAllProductsMutation, useCreateProductMutation, useGetProductByIdQuery} = productApi

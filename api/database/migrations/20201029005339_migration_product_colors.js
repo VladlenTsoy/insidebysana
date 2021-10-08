@@ -4,6 +4,7 @@ exports.up = function (knex) {
         table.integer("product_id").notNullable()
         table.integer("color_id").notNullable()
         table.string("thumbnail")
+        table.jsonb("sizes_props").notNullable()
         table.jsonb("sizes").notNullable()
         table.integer("hide_id")
         table.boolean("is_new")

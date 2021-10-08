@@ -29,6 +29,12 @@ const MoveFile = async ({oldPath, newPath, folderPath, nameImage}) => {
     return nameImage
 }
 
+function getFilesizeInBytes(filename) {
+    var stats = fs.statSync(filename)
+    var fileSizeInBytes = stats.size
+    return fileSizeInBytes
+}
+
 /**
  * Сохранение изображения
  * @param {*} config
@@ -69,8 +75,11 @@ const UploadImage = async ({
         if (image.getWidth() > width) await image.resize(width, Jimp.AUTO)
         // Сохранение
         await image.writeAsync(path.join(fullFolderPath, imageName))
+        // Узнать размер
+        const sizeBytes = getFilesizeInBytes(path.join(fullFolderPath, imageName))
+        const sizeKilobytes = Math.ceil(sizeBytes / 1000)
 
-        return [imagePath, imageName]
+        return [imagePath, imageName, sizeKilobytes]
     } catch (e) {
         logger.error(e.stack)
     }

@@ -13,7 +13,7 @@ const PATH_TO_IMAGE = "images/tmp"
 const Upload = async (req, res) => {
     try {
         const {image, time} = req.body
-        const [imagePath, imageName] = await ImageService.UploadImage({
+        const [imagePath, imageName, size] = await ImageService.UploadImage({
             folderPath: `${PATH_TO_FOLDER_IMAGES}`,
             imagePatch: `${PATH_TO_IMAGE}`,
             fileImage: image,
@@ -25,7 +25,8 @@ const Upload = async (req, res) => {
             imagePath,
             imageName,
             id: time,
-            time
+            time,
+            size
         })
     } catch (e) {
         logger.error(e.stack)

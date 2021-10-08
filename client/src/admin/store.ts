@@ -34,17 +34,15 @@ import {colorApi} from "admin/features/color/colorApi"
 import {sizeApi} from "admin/features/size/sizeApi"
 import {tagApi} from "admin/features/tag/tagApi"
 import {homePositionApi} from "admin/features/home-position/homePositionApi"
-import {photoApi} from "./features/product/product-editor/photos-section/photoApi"
+import {photoApi} from "./features/photos-section/photoApi"
 
 export type StoreState = ReturnType<typeof adminReducer>
 
 export const adminReducer = combineReducers({
-    // common
     app,
     user,
     category,
     size,
-    // Admin
     color,
     additionalService,
     tag,

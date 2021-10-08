@@ -268,7 +268,7 @@ class ProductColor extends Model {
                 }
             },
             images: {
-                filter: query => query.select("id", "image"),
+                filter: query => query.orderBy("position", "desc").select("id", "name", "path", "size"),
                 relation: Model.HasManyRelation,
                 modelClass: ProductColorImage,
                 join: {

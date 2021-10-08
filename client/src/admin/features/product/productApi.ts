@@ -22,6 +22,14 @@ export const productApi = createApi({
             }),
             invalidatesTags: ["product"]
         }),
+        editProduct: build.mutation<any, Partial<any>>({
+            query: body => ({
+                url: `user/admin/new/edit/${body.id}`,
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ["product"]
+        }),
         getProductById: build.query<any, string>({
             query: id => ({
                 url: `user/admin/new/product/${id}`,
@@ -32,4 +40,4 @@ export const productApi = createApi({
     })
 })
 
-export const {useGetAllProductsMutation, useCreateProductMutation, useGetProductByIdQuery} = productApi
+export const {useGetAllProductsMutation, useCreateProductMutation, useGetProductByIdQuery, useEditProductMutation} = productApi

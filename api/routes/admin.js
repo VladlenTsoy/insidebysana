@@ -105,7 +105,7 @@ router.patch("/size/:id/display", SizeController.Display)
 // Поиск продукта
 router.post("/product-colors", ProductColorController.GetBySearch)
 // Создание продукта
-router.post("/product", ProductController.Create)
+// router.post("/product", ProductController.Create)
 // НОВИНКА Создание продукта
 router.post("/new/product", ProductController.NewCreate)
 // НОВИНКА Вывод продукта по id
@@ -115,7 +115,7 @@ router.post("/product-colors/table", ProductColorController.GetAllPaginate)
 // Вывод цветов из корзины
 router.post("/product-colors/trash/table", ProductColorController.GetFromTrash)
 // Вывод продукта для редактирования по ID
-router.get("/product/:id", ProductController.CreateValidate, ProductController.GetById)
+// router.get("/product/:id", ProductController.CreateValidate, ProductController.GetById)
 // Редактировать продукт
 router.post("/product/:id", ProductController.EditValidate, ProductController.EditById)
 // Изменить скидку

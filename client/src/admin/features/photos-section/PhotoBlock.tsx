@@ -10,7 +10,7 @@ import {
     LoadingOutlined,
     StarFilled
 } from "@ant-design/icons"
-import {TemporaryImageType} from "../ProductEditor"
+import {TemporaryImageType} from "../product/product-editor/ProductEditor"
 
 interface PhotoBlockProps {
     dragProvided: DraggableProvided

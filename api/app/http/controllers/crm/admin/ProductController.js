@@ -38,58 +38,58 @@ const _getById = async id => {
     }
 }
 
-const CreateValidate = [
-    body("basic").not().isEmpty().withMessage("Введите основные!"),
-    body("colors").not().isEmpty().withMessage("Введите цвета!")
-]
+// const CreateValidate = [
+//     body("basic").not().isEmpty().withMessage("Введите основные!"),
+//     body("colors").not().isEmpty().withMessage("Введите цвета!")
+// ]
 
-/**
- * Создание продукта
- * @param req
- * @param res
- * @return {Promise<*>}
- * @constructor
- */
-const Create = async (req, res) => {
-    // Ошибка валидации
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) return res.status(422).json({errors: errors.array()})
+// /**
+//  * Создание продукта
+//  * @param req
+//  * @param res
+//  * @return {Promise<*>}
+//  * @constructor
+//  */
+// const Create = async (req, res) => {
+//     // Ошибка валидации
+//     const errors = validationResult(req)
+//     if (!errors.isEmpty()) return res.status(422).json({errors: errors.array()})
 
-    try {
-        const {basic, colors, measurements} = req.body
+//     try {
+//         const {basic, colors, measurements} = req.body
 
-        // Найти или создать тег по названию
-        const tagsId = await ProductTagService.FindOrCreate(basic.tags_id)
+//         // Найти или создать тег по названию
+//         const tagsId = await ProductTagService.FindOrCreate(basic.tags_id)
 
-        const data = {
-            category_id: basic.category_id,
-            title: basic.title,
-            price: basic.price,
-            tags_id: tagsId,
-            properties: basic.properties || []
-        }
+//         const data = {
+//             category_id: basic.category_id,
+//             title: basic.title,
+//             price: basic.price,
+//             tags_id: tagsId,
+//             properties: basic.properties || []
+//         }
 
-        // Создание продукта
-        const productRef = await Product.query().insertAndFetch(data)
+//         // Создание продукта
+//         const productRef = await Product.query().insertAndFetch(data)
 
-        // Сохранение или обновление цветов
-        await ProductColorService.CreateOrUpdate(colors, productRef.id)
+//         // Сохранение или обновление цветов
+//         await ProductColorService.CreateOrUpdate(colors, productRef.id)
 
-        // Сохранение или обновление обьемов
-        if (measurements) await ProductMeasurementService.CreateOrUpdate(measurements, productRef.id)
+//         // Сохранение или обновление обьемов
+//         if (measurements) await ProductMeasurementService.CreateOrUpdate(measurements, productRef.id)
 
-        // Вывод продуктов цветов по продукту
-        const productColors = await ProductColorService.FindProductColorsByProductId(productRef.id)
+//         // Вывод продуктов цветов по продукту
+//         const productColors = await ProductColorService.FindProductColorsByProductId(productRef.id)
 
-        // Вывод продукта
-        const product = await _getById(productRef.id)
+//         // Вывод продукта
+//         const product = await _getById(productRef.id)
 
-        return res.send({productColors, product})
-    } catch (e) {
-        logger.error(e.stack)
-        return res.status(500).send({message: e.message})
-    }
-}
+//         return res.send({productColors, product})
+//     } catch (e) {
+//         logger.error(e.stack)
+//         return res.status(500).send({message: e.message})
+//     }
+// }
 
 const NewCreate = async (req, res) => {
     try {
@@ -117,27 +117,29 @@ const NewCreate = async (req, res) => {
         // Сохранение картинок
         if (data.images && data.images.length) {
             const updatedPathToImages = await Promise.all(
-                data.images.map(async pathToImage => {
-                    return await ImageService.MoveFile({
-                        nameImage: pathToImage,
-                        oldPath: `${PATH_TO_FOLDER_TMP}/${pathToImage}`,
-                        newPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}/${pathToImage}`,
+                data.images.map(async image => {
+                    await ImageService.MoveFile({
+                        nameImage: image.name,
+                        oldPath: `${PATH_TO_FOLDER_TMP}/${image.name}`,
+                        newPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}/${image.name}`,
                         folderPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}`
                     })
                 })
             )
             if (updatedPathToImages) {
                 await Promise.all(
-                    updatedPathToImages.map(async (imageName, key) => {
+                    data.images.map(async (image, key) => {
                         if (key === 0) {
                             await ProductColor.query()
                                 .findOne({id: productColor.id})
-                                .update({thumbnail: `${PATH_TO_IMAGE}/${productColor.id}/${imageName}`})
+                                .update({thumbnail: `${PATH_TO_IMAGE}/${productColor.id}/${image.name}`})
                         }
                         await ProductColorImage.query().insert({
                             product_color_id: productColor.id,
-                            image: `${PATH_TO_IMAGE}/${productColor.id}/${imageName}`,
-                            thumbnail: key === 0 ? "0" : "1"
+                            name: image.name,
+                            path: `${PATH_TO_IMAGE}/${productColor.id}/${image.name}`,
+                            size: image.size,
+                            position: key
                         })
                     })
                 )
@@ -185,7 +187,7 @@ const NewGetById = async (req, res) => {
             .findById(id)
             .join("products", "products.id", "product_colors.product_id")
             .join("home_products", "home_products.product_color_id", "product_colors.product_id")
-            .withGraphFetched(`[measurements]`)
+            .withGraphFetched(`[measurements, images]`)
             .select(
                 "product_colors.id",
                 "product_colors.title",
@@ -260,4 +262,4 @@ const EditById = async (req, res) => {
     }
 }
 
-module.exports = {CreateValidate, Create, GetById, EditValidate, EditById, NewCreate, NewGetById}
+module.exports = {GetById, EditValidate, EditById, NewCreate, NewGetById}

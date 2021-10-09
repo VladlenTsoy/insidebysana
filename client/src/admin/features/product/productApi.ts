@@ -9,7 +9,7 @@ export const productApi = createApi({
         getAllProducts: build.mutation<any, any>({
             query: body => ({
                 url: `user/admin/product-colors/table`,
-                method: "POST",
+                method: "post",
                 body
             }),
             invalidatesTags: ["product"]
@@ -17,15 +17,15 @@ export const productApi = createApi({
         createProduct: build.mutation<any, Partial<any>>({
             query: body => ({
                 url: `user/admin/new/product`,
-                method: "POST",
+                method: "post",
                 body
             }),
             invalidatesTags: ["product"]
         }),
         editProduct: build.mutation<any, Partial<any>>({
             query: body => ({
-                url: `user/admin/new/edit/${body.id}`,
-                method: "POST",
+                url: `user/admin/new/product/edit/${body.id}`,
+                method: "post",
                 body
             }),
             invalidatesTags: ["product"]
@@ -40,4 +40,9 @@ export const productApi = createApi({
     })
 })
 
-export const {useGetAllProductsMutation, useCreateProductMutation, useGetProductByIdQuery, useEditProductMutation} = productApi
+export const {
+    useGetAllProductsMutation,
+    useCreateProductMutation,
+    useGetProductByIdQuery,
+    useEditProductMutation
+} = productApi

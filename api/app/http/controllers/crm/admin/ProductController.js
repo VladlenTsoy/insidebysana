@@ -162,23 +162,23 @@ const NewCreate = async (req, res) => {
     }
 }
 
-/**
- * Вывод продукта по Id
- * @param req
- * @param res
- * @return {Promise<*>}
- * @constructor
- */
-const GetById = async (req, res) => {
-    try {
-        const {id} = req.params
-        const product = await _getById(id)
-        return res.send(product)
-    } catch (e) {
-        logger.error(e.stack)
-        return res.status(500).send({message: e.message})
-    }
-}
+// /**
+//  * Вывод продукта по Id
+//  * @param req
+//  * @param res
+//  * @return {Promise<*>}
+//  * @constructor
+//  */
+// const GetById = async (req, res) => {
+//     try {
+//         const {id} = req.params
+//         const product = await _getById(id)
+//         return res.send(product)
+//     } catch (e) {
+//         logger.error(e.stack)
+//         return res.status(500).send({message: e.message})
+//     }
+// }
 
 const NewGetById = async (req, res) => {
     try {
@@ -209,10 +209,10 @@ const NewGetById = async (req, res) => {
     }
 }
 
-const EditValidate = [
-    body("basic").not().isEmpty().withMessage("Введите основные!"),
-    body("colors").not().isEmpty().withMessage("Введите цвета!")
-]
+// const EditValidate = [
+//     body("basic").not().isEmpty().withMessage("Введите основные!"),
+//     body("colors").not().isEmpty().withMessage("Введите цвета!")
+// ]
 
 /**
  *
@@ -221,45 +221,120 @@ const EditValidate = [
  * @return {Promise<*>}
  * @constructor
  */
-const EditById = async (req, res) => {
-    // Ошибка валидации
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) return res.status(422).json({errors: errors.array()})
+// const EditById = async (req, res) => {
+//     // Ошибка валидации
+//     const errors = validationResult(req)
+//     if (!errors.isEmpty()) return res.status(422).json({errors: errors.array()})
 
+//     try {
+//         const {id} = req.params
+//         const {basic, colors, measurements} = req.body
+
+//         // Найти или создать тег по названию
+//         const tagsId = await ProductTagService.FindOrCreate(basic.tags_id)
+
+//         const data = {
+//             category_id: basic.category_id,
+//             title: basic.title,
+//             price: basic.price,
+//             tags_id: tagsId,
+//             properties: basic.properties || []
+//         }
+
+//         // Создание продукта
+//         const productRef = await Product.query().updateAndFetchById(id, data)
+
+//         // Сохранение или обновление цветов
+//         await ProductColorService.CreateOrUpdate(colors, productRef.id)
+
+//         // Сохранение или обновление обьемов
+//         if (measurements) await ProductMeasurementService.CreateOrUpdate(measurements, productRef.id)
+
+//         // Вывод продуктов цветов по продукту
+//         const productColors = await ProductColorService.FindProductColorsByProductId(productRef.id)
+
+//         // Вывод продукта
+//         const product = await _getById(productRef.id)
+
+//         return res.send({productColors, product})
+//     } catch (e) {
+//         return res.status(500).send({message: e.message})
+//     }
+// }
+
+const NewEditById = async (req, res) => {
     try {
         const {id} = req.params
-        const {basic, colors, measurements} = req.body
-
+        const data = req.body
         // Найти или создать тег по названию
-        const tagsId = await ProductTagService.FindOrCreate(basic.tags_id)
-
-        const data = {
-            category_id: basic.category_id,
-            title: basic.title,
-            price: basic.price,
+        const tagsId = await ProductTagService.FindOrCreate(data.tags_id)
+        // Обновление цвета
+        const productColor = await ProductColor.query().patchAndFetchById(id, {
+            title: data.title,
+            color_id: data.color_id,
+            thumbnail: null,
+            sizes: data.sizes,
+            sizes_props: data.props,
+            status: data.status,
             tags_id: tagsId,
-            properties: basic.properties || []
+            is_new: data.is_new
+        })
+        // Обновление продукта
+        const productRef = await Product.query().patchAndFetchById(productColor.product_id, {
+            category_id: data.category_id,
+            price: data.price,
+            properties: data.properties || []
+        })
+        // Сохранение картинок
+        if (data.images && data.images.length) {
+            const updatedPathToImages = await Promise.all(
+                data.images.map(async image => {
+                    if (!image.isSaved)
+                        await ImageService.MoveFile({
+                            nameImage: image.name,
+                            oldPath: `${PATH_TO_FOLDER_TMP}/${image.name}`,
+                            newPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}/${image.name}`,
+                            folderPath: `${PATH_TO_FOLDER_IMAGES}/${productColor.id}`
+                        })
+                })
+            )
+            if (updatedPathToImages) {
+                await Promise.all(
+                    data.images.map(async (image, key) => {
+                        if (key === 0) {
+                            await ProductColor.query()
+                                .findById(productColor.id)
+                                .update({thumbnail: `${PATH_TO_IMAGE}/${productColor.id}/${image.name}`})
+                        }
+                        if (image.isSaved)
+                            await ProductColorImage.query().findById(image.id).update({position: key})
+                        else
+                            await ProductColorImage.query().insert({
+                                product_color_id: productColor.id,
+                                name: image.name,
+                                path: `${PATH_TO_IMAGE}/${productColor.id}/${image.name}`,
+                                size: image.size,
+                                position: key
+                            })
+                    })
+                )
+            }
         }
-
-        // Создание продукта
-        const productRef = await Product.query().updateAndFetchById(id, data)
-
-        // Сохранение или обновление цветов
-        await ProductColorService.CreateOrUpdate(colors, productRef.id)
-
         // Сохранение или обновление обьемов
-        if (measurements) await ProductMeasurementService.CreateOrUpdate(measurements, productRef.id)
+        if (data.measurements)
+            await ProductMeasurementService.CreateOrUpdate(data.measurements, productRef.id)
+        // Позиция на главной странице
+        if (data.home_position)
+            await HomeProduct.query().findOne({product_color_id: productColor.id}).update({
+                position: data.home_position
+            })
+        else await HomeProduct.query().findOne({product_color_id: productColor.id}).delete()
 
-        // Вывод продуктов цветов по продукту
-        const productColors = await ProductColorService.FindProductColorsByProductId(productRef.id)
-
-        // Вывод продукта
-        const product = await _getById(productRef.id)
-
-        return res.send({productColors, product})
+        return res.send(productColor)
     } catch (e) {
+        logger.error(e.stack)
         return res.status(500).send({message: e.message})
     }
 }
 
-module.exports = {GetById, EditValidate, EditById, NewCreate, NewGetById}
+module.exports = {NewCreate, NewGetById, NewEditById}

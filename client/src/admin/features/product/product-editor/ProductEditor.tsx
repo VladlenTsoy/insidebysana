@@ -68,6 +68,7 @@ const CreateProduct: React.FC = () => {
 
     const onFinishHandler = async (values: FormData) => {
         const images = imageUrls.map(image => ({
+            id: image.id,
             name: image.imageName,
             path: image.imagePath,
             size: image.imageSize,

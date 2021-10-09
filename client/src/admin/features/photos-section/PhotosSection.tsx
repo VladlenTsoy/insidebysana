@@ -106,7 +106,12 @@ const PhotosSection: React.FC<PhotosSectionProps> = ({imageUrls, setImageUrl}) =
                 prevState.map(image => (image.id === id ? {...image, loading: true} : image))
             )
             const findImage = imageUrls.find(image => image.id === id)
-            if (findImage && findImage.imagePath) await deletePhoto({pathToImage: findImage.imagePath})
+            if (findImage && findImage.imagePath)
+                await deletePhoto(
+                    findImage.isSaved
+                        ? {pathToImage: findImage.imagePath, id: id}
+                        : {pathToImage: findImage.imagePath}
+                )
             setImageUrl(prevState => prevState.filter(image => image.id !== id))
         },
         [deletePhoto, setImageUrl, imageUrls]

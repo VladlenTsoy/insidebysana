@@ -15,6 +15,7 @@ interface AddReturnType {
 }
 
 interface RemoveAgrsProps {
+    id?: number
     pathToImage: string
 }
 

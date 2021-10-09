@@ -46,7 +46,7 @@ const UploadImage = async ({
     fileImage,
     nameFile = "image",
     width = 1400,
-    quality = 75
+    quality = 80
 }) => {
     try {
         // Путь к папке

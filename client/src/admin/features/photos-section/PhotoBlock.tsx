@@ -11,6 +11,7 @@ import {
     StarFilled
 } from "@ant-design/icons"
 import {TemporaryImageType} from "../product/product-editor/ProductEditor"
+import {bytesToSize} from "utils/bytesToSize"
 
 interface PhotoBlockProps {
     dragProvided: DraggableProvided
@@ -45,6 +46,11 @@ const PhotoBlock: React.FC<PhotoBlockProps> = ({
                 {image.loading && (
                     <div className="photo-loading">
                         <LoadingOutlined />
+                    </div>
+                )}
+                {image?.imageSize && (
+                    <div className={cn("photo-size", {warning: image.imageSize > 500})}>
+                        {bytesToSize(image.imageSize * 1000)}
                     </div>
                 )}
                 <div className="close" onClick={() => deletePhoto(image.id)}>

@@ -44,7 +44,7 @@ export interface TemporaryImageType {
     isSaved?: boolean
     imagePath?: string
     imageName?: string
-    size?: number
+    imageSize?: number
 }
 
 const CreateProduct: React.FC = () => {
@@ -70,13 +70,14 @@ const CreateProduct: React.FC = () => {
         const images = imageUrls.map(image => ({
             name: image.imageName,
             path: image.imagePath,
-            size: image.size,
+            size: image.imageSize,
             isSaved: image.isSaved
         }))
         if (data) {
             await updateProduct({
                 ...values,
-                images: images
+                images: images,
+                id: data.id
             })
             history.goBack()
         } else {

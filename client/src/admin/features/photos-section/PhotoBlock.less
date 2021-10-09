@@ -91,6 +91,23 @@
             }
         }
 
+        .photo-size {
+            display: flex;
+            align-items: center;
+            padding: 0.25rem;
+            position: absolute;
+            z-index: 4;
+            top: 0.25rem;
+            right: 0.25rem;
+            font-size: @font-size-sm;
+            background: @component-background;
+            border-radius: @border-radius-base;
+
+            &.warning {
+                background: @error-color;
+            }
+        }
+
         .close {
             position: absolute;
             top: 0.25rem;
@@ -122,7 +139,7 @@
             height: 100%;
             object-fit: contain;
             overflow: hidden;
-            transition: .5s filter linear;
+            transition: 0.5s filter linear;
         }
 
         .wrapper-actions {

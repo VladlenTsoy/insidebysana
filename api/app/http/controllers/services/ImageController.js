@@ -1,5 +1,6 @@
 const {logger} = require("config/logger.config")
 const ImageService = require("services/image/ImageService")
+const {ProductColorImage} = require("models/products/ProductColorImage")
 
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/tmp"
 const PATH_TO_IMAGE = "images/tmp"
@@ -26,7 +27,7 @@ const Upload = async (req, res) => {
             imageName,
             id: time,
             time,
-            size
+            imageSize: size
         })
     } catch (e) {
         logger.error(e.stack)
@@ -42,7 +43,8 @@ const Upload = async (req, res) => {
  */
 const Delete = async (req, res) => {
     try {
-        const {pathToImage} = req.body
+        const {pathToImage, id} = req.body
+        if (id) await ProductColorImage.query().deleteById(id)
         await ImageService.DeleteImage(pathToImage)
         return res.send({status: "success"})
     } catch (e) {

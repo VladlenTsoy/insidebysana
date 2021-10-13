@@ -116,6 +116,8 @@ router.post("/new/product/edit/:id", ProductController.NewEditById)
 router.post("/product-colors/table", ProductColorController.GetAllPaginate)
 // Вывод цветов из корзины
 router.post("/product-colors/trash/table", ProductColorController.GetFromTrash)
+// Вывод картинок продуктов
+router.get("/product-color/:id/images", ProductColorController.GetImagesById)
 // Вывод продукта для редактирования по ID
 // router.get("/product/:id", ProductController.CreateValidate, ProductController.GetById)
 // Редактировать продукт
@@ -151,7 +153,7 @@ router.post(
 // Удаление картинки
 router.delete("/product-color-image/:id", ProductColorImageController.Delete)
 // Вывод картинок по ProductColorId
-router.get("/product-color/:productColorId/images", ProductColorImageController.GetByProductColorId)
+// router.get("/product-color/:productColorId/images", ProductColorImageController.GetByProductColorId)
 
 // Вывод клинентов по поиску
 router.post("/clients", ClientController.GetBySearch)

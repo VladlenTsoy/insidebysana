@@ -88,24 +88,9 @@ class ProductColor extends Model {
              */
             search(builder, search, isHide = false, ids = []) {
                 if (search && search.trim() !== "") {
-                    builder.whereRaw(
-                        `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
-                    )
-                    if (isHide) builder.whereNotNull("hide_id")
-                    else builder.where("hide_id", null).whereNotIn("id", ids)
-                    if (ids) builder.whereNotIn("id", ids)
-
-                    builder.orWhereRaw(
-                        `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
-                    )
-                    if (isHide) builder.whereNotNull("hide_id")
-                    else builder.where("hide_id", null).whereNotIn("id", ids)
-                    if (ids) builder.whereNotIn("id", ids)
-
-                    builder.orWhere("product_colors.id", "LIKE", `%${search}%`)
-                    if (isHide) builder.whereNotNull("hide_id")
-                    else builder.where("hide_id", null)
-                    if (ids) builder.whereNotIn("id", ids)
+                    builder
+                        .whereRaw(`product_colors.title LIKE '%${search}%'`)
+                        .orWhere("product_colors.id", "LIKE", `%${search}%`)
                 }
             },
 
@@ -119,7 +104,7 @@ class ProductColor extends Model {
                     builder.where(_builder =>
                         sizes.map(size =>
                             _builder.orWhereRaw(
-                                `JSON_SEARCH(JSON_KEYS(sizes), 'all', ${String(size)}) IS NOT null`
+                                `JSON_SEARCH(JSON_KEYS(sizes_props), 'all', ${String(size)}) IS NOT null`
                             )
                         )
                     )

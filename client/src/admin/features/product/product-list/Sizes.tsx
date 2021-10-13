@@ -10,8 +10,8 @@ const Sizes: React.FC<SizesProps> = ({product}) => {
 
     return (
         <div className="sizes-block">
-            {Object.keys(product.sizes).map((key: any) => {
-                const size = product.sizes[key]
+            {Object.keys(product.sizes_props).map((key: any) => {
+                const size = product.sizes_props[key]
                 const selectSize = sizes.find((size: any) => size.id === Number(key))
                 return (
                     <div

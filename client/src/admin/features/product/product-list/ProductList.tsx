@@ -1,14 +1,23 @@
-import React, {useEffect} from "react"
-import {Button, Input, Table} from "antd"
+import React, {useCallback, useEffect} from "react"
+import {Table} from "antd"
 import {useGetAllProductsMutation} from "../productApi"
 import {useState} from "react"
-import {FilterOutlined, SearchOutlined} from "@ant-design/icons"
 import {useHistory, useLocation} from "react-router-dom"
 import "./ProductList.less"
 import {columns} from "./Columns"
+import Header from "./header/Header"
 
 interface ProductListProps {
     type: "all" | "draft" | "published" | "ending" | "archive"
+}
+
+interface ParamsProps {
+    type: ProductListProps["type"]
+    search: string
+    categoryIds: string[]
+    sizeIds: string[]
+    sorter: {field: string; order: "acscend" | "descend"}
+    pagination: {current: number; pageSize: number}
 }
 
 const ProductList: React.FC<ProductListProps> = ({type}) => {
@@ -16,10 +25,11 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
     const location = useLocation()
     const history = useHistory()
     const [fetchProductColors, {isLoading, data}] = useGetAllProductsMutation()
-    const [params, setParams] = useState({
+    const [params, setParams] = useState<ParamsProps>({
         type,
         search: "",
-        categoryId: 0,
+        categoryIds: [],
+        sizeIds: [],
         sorter: {field: "created_at", order: "descend"},
         pagination: {current: 1, pageSize: 50}
     })
@@ -35,18 +45,42 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
         timeout = setTimeout(() => setParams(prevState => ({...prevState, search: e.target.value})), 300)
     }
 
+    const onCategoryIdsHandler = useCallback((categoryId: string) => {
+        setParams(prevState => {
+            if (prevState.categoryIds.includes(categoryId))
+                return {
+                    ...prevState,
+                    categoryIds: prevState.categoryIds.filter(_categoryId => _categoryId !== categoryId)
+                }
+            return {...prevState, categoryIds: [...prevState.categoryIds, categoryId]}
+        })
+    }, [])
+
+    const onsizeIdsHandler = useCallback((sizeId: string) => {
+        setParams(prevState => {
+            if (prevState.sizeIds.includes(sizeId))
+                return {
+                    ...prevState,
+                    sizeIds: prevState.sizeIds.filter(_sizeId => _sizeId !== sizeId)
+                }
+            return {...prevState, sizeIds: [...prevState.sizeIds, sizeId]}
+        })
+    }, [])
+
     useEffect(() => {
         const query = new URLSearchParams(location.search)
         //
         const search = query.get("search")
-        const categoryId = query.get("categoryId") ? Number(query.get("categoryId")) : null
+        const categoryIds = query.get("categoryIds") ? JSON.parse(query.get("categoryIds") || "") : null
+        const sizeIds = query.get("sizeIds") ? JSON.parse(query.get("sizeIds") || "") : null
         const current = query.get("current") ? Number(query.get("current")) : null
         const pageSize = query.get("pageSize") ? Number(query.get("pageSize")) : null
         //
         setParams(prevState => ({
             ...prevState,
             search: search || prevState.search,
-            categoryId: categoryId || prevState.categoryId,
+            categoryIds: categoryIds || prevState.categoryIds,
+            sizeIds: sizeIds || prevState.sizeIds,
             pagination: {
                 current: current || prevState.pagination.current,
                 pageSize: pageSize || prevState.pagination.pageSize
@@ -61,19 +95,13 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
     return (
         <>
             <div className="product-list-container">
-                <div className="header">
-                    <Button size="large" icon={<FilterOutlined />}>
-                        Фильтрация
-                    </Button>
-                    <Input
-                        prefix={<SearchOutlined />}
-                        placeholder="Введите название"
-                        allowClear
-                        // enterButton="Поиск"
-                        size="large"
-                        onChange={onSearchHandler}
-                    />
-                </div>
+                <Header
+                    onSearch={onSearchHandler}
+                    categoryIds={params.categoryIds}
+                    sizeIds={params.sizeIds}
+                    onCategories={onCategoryIdsHandler}
+                    onSizes={onsizeIdsHandler}
+                />
                 <Table
                     size="small"
                     loading={isLoading}

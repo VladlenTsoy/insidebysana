@@ -1,6 +1,10 @@
 import {createApi} from "@reduxjs/toolkit/query/react"
 import baseQuery from "utils/apiConfig"
 
+interface GetPhotoByProductColorIdReturnType {
+    url: string
+}
+
 interface AddAgrsProps {
     image: any
     time: number
@@ -26,8 +30,11 @@ interface RemoveReturnType {
 export const photoApi = createApi({
     reducerPath: "photoApi",
     baseQuery,
-    tagTypes: ["photo"],
+    tagTypes: ["photo", "product_photo"],
     endpoints: builder => ({
+        getPhotoByProductColorId: builder.query<GetPhotoByProductColorIdReturnType[], number>({
+            query: productColorId => `user/admin/product-color/${productColorId}/images`
+        }),
         uploadPhoto: builder.mutation<AddReturnType, AddAgrsProps>({
             query: body => ({
                 url: `user/image/upload`,
@@ -47,4 +54,4 @@ export const photoApi = createApi({
     })
 })
 
-export const {useUploadPhotoMutation, useDeletePhotoMutation} = photoApi
+export const {useUploadPhotoMutation, useDeletePhotoMutation, useGetPhotoByProductColorIdQuery} = photoApi

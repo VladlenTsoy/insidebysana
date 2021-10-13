@@ -1,0 +1,57 @@
+import {Tag} from "antd"
+import React from "react"
+import {Category, SubCategory} from "types/Category"
+import {Size} from "types/Size"
+
+interface FilterTagsProps {
+    sizes?: Size[]
+    categories?: Category[]
+    categoryIds: string[]
+    sizeIds: string[]
+    isLoadingCategories: boolean
+    isLoadingSizes: boolean
+}
+
+const FilterTags: React.FC<FilterTagsProps> = ({
+    categoryIds,
+    categories,
+    sizeIds,
+    sizes,
+    isLoadingCategories,
+    isLoadingSizes
+}) => {
+    return (
+        <>
+            <div className="filter-selections">
+                {categoryIds.map(categoryId => {
+                    const isFind = categories
+                        ?.reduce<SubCategory[]>(
+                            (acc, category) => [...acc, ...(category.sub_categories || [])],
+                            []
+                        )
+                        ?.find(category => category.id === Number(categoryId))
+                    if (isFind)
+                        return (
+                            <Tag closable onClose={() => null} key={`size-${categoryId}`}>
+                                <b>Категория:</b>
+                                {isFind.title}
+                            </Tag>
+                        )
+                    return null
+                })}
+                {sizeIds.map(sizeId => {
+                    const isFind = sizes?.find(size => size.id === Number(sizeId))
+                    if (isFind)
+                        return (
+                            <Tag closable onClose={() => null} key={`size-${sizeId}`}>
+                                <b>Размер:</b>
+                                {isFind.title}
+                            </Tag>
+                        )
+                    return null
+                })}
+            </div>
+        </>
+    )
+}
+export default FilterTags

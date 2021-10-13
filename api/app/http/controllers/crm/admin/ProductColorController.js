@@ -1,4 +1,5 @@
 const {ProductColor} = require("models/products/ProductColor")
+const {ProductColorImage} = require("models/products/ProductColorImage")
 const {Product} = require("models/products/Product")
 const ImageService = require("services/image/ImageService")
 const {raw} = require("objection")
@@ -16,18 +17,19 @@ const IMAGES_FOLDER_PATH = "../../../public/images/products/"
  */
 const GetAllPaginate = async (req, res) => {
     try {
-        const {type, categoryId, search, pagination, sorter} = req.body
+        const {type, categoryIds, sizeIds, search, pagination, sorter} = req.body
 
         const productColorsRef = ProductColor.query()
             .withGraphFetched(`[details, tags, color, discount, category]`)
             // .join("tags", raw(`JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`))
-            .modify("filterSubCategory", categoryId)
+            .modify("filterSubCategoryIn", categoryIds)
+            .modify("filterSizes", sizeIds)
             .modify("search", search)
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
                 "product_colors.created_at",
-                "product_colors.sizes",
+                "product_colors.sizes_props",
                 "product_colors.is_new",
                 "product_colors.title",
                 "product_colors.status"
@@ -49,7 +51,7 @@ const GetAllPaginate = async (req, res) => {
         }
 
         if (type !== "all") {
-            productColorsRef.where("product_colors.hide_id", null)
+            productColorsRef.where("product_colors.hide_id", null).where("product_colors.status", type)
         }
 
         const productColors = await productColorsRef.page(pagination.current - 1, pagination.pageSize)
@@ -198,4 +200,18 @@ const UpdateIsNew = async (req, res) => {
     }
 }
 
-module.exports = {GetAllPaginate, Hide, GetBySearch, GetFromTrash, Delete, Return, UpdateIsNew}
+const GetImagesById = async (req, res) => {
+    try {
+        const {id} = req.params
+        const images = await ProductColorImage.query()
+            .where("product_color_id", id)
+            .orderBy("position", "asc")
+            .select("id", "path")
+        return res.send(images)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
+module.exports = {GetAllPaginate, Hide, GetBySearch, GetFromTrash, Delete, Return, UpdateIsNew, GetImagesById}

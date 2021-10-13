@@ -1,13 +1,12 @@
 import React from "react"
-import {Tag, Tooltip} from "antd"
+import {Button, Tooltip} from "antd"
 import PreviewImage from "./PreviewImage"
 import Details from "./Details"
 import Sizes from "./Sizes"
-import MenuButton from "admin/lib/components/menu-button/MenuButton"
-import DropdownMenu from "admin/pages/user/admin/pages/products/container/dropdown-menu/DropdownMenu"
 import {formatDate} from "utils/formatDate"
 import {formatPrice} from "utils/formatPrice"
-import {ClockCircleOutlined} from "@ant-design/icons"
+import {ClockCircleOutlined, EditOutlined} from "@ant-design/icons"
+import {Link} from "react-router-dom"
 
 export const columns = [
     {
@@ -53,19 +52,19 @@ export const columns = [
             </div>
         )
     },
-    {
-        dataIndex: "tags",
-        render: (tags: any[], record: any) => (
-            <div className="column-tags">
-                {tags &&
-                    tags.map(tag => (
-                        <Tag color="blue" key={`${record.id}-${tag.tag_id}`}>
-                            {tag.title.toUpperCase()}
-                        </Tag>
-                    ))}
-            </div>
-        )
-    },
+    // {
+    //     dataIndex: "tags",
+    //     render: (tags: any[], record: any) => (
+    //         <div className="column-tags">
+    //             {tags &&
+    //                 tags.map(tag => (
+    //                     <Tag color="blue" key={`${record.id}-${tag.tag_id}`}>
+    //                         {tag.title.toUpperCase()}
+    //                     </Tag>
+    //                 ))}
+    //         </div>
+    //     )
+    // },
     {
         dataIndex: "status",
         width: "130px",
@@ -73,13 +72,17 @@ export const columns = [
             <>
                 {status === "published" && <div className="status success">Размещён</div>}
                 {status === "archive" && <div className="status danger">В архиве</div>}
-                {status === "draft" && <div className="status processing">В проекте</div>}
+                {status === "draft" && <div className="status draft">В проекте</div>}
                 {status === "ending" && <div className="status warning">Закончился</div>}
             </>
         )
     },
     {
         width: "56px",
-        render: (_: undefined, record: any) => <MenuButton overlay={DropdownMenu(record)} size="large" />
+        render: (_: undefined, record: any) => (
+            <Link to={`/products/edit/${record.id}`}>
+                <Button type="text" icon={<EditOutlined />} shape="circle" size="large" />
+            </Link>
+        )
     }
 ]

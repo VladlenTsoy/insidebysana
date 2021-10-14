@@ -22,8 +22,8 @@ const MotionCheckAnimation: React.FC = ({children}) => {
 interface FilterButtonProps {
     sizes?: Size[]
     categories?: Category[]
-    onCategories: (categoryId: string) => void
-    onSizes: (sizeId: string) => void
+    onCategories: (categoryId?: string) => void
+    onSizes: (sizeId?: string) => void
     categoryIds: string[]
     sizeIds: string[]
     isLoadingCategories: boolean
@@ -41,21 +41,11 @@ const FilterButton: React.FC<FilterButtonProps> = ({
     isLoadingSizes
 }) => {
     const [visible, setVisible] = useState(false)
-
-    const changeCategoryHandler = (categoryId: number) => {
-        onCategories(String(categoryId))
-    }
-    const changeSizeHandler = (sizeId: number) => {
-        onSizes(String(sizeId))
-    }
-
-    const onClickHandler = () => {
-        setVisible(true)
-    }
-
-    const close = () => {
-        setVisible(false)
-    }
+    const changeCategoryHandler = (categoryId?: number) =>
+        onCategories(categoryId ? String(categoryId) : undefined)
+    const changeSizeHandler = (sizeId?: number) => onSizes(sizeId ? String(sizeId) : undefined)
+    const onClickHandler = () => setVisible(true)
+    const close = () => setVisible(false)
 
     return (
         <>
@@ -79,19 +69,19 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                             <div className="filter-list categories-list">
                                 <div
                                     className={`filter-item filter-item-all ${
-                                        categoryIds.includes("0") && "filter-item-active"
+                                        categoryIds.length <= 0 && "filter-item-active"
                                     }`}
-                                    onClick={() => changeCategoryHandler(0)}
+                                    onClick={() => changeCategoryHandler()}
                                 >
                                     <AnimatePresence>
-                                        {categoryIds.includes("0") && (
+                                        {categoryIds.length <= 0 && (
                                             <MotionCheckAnimation>
                                                 <CheckOutlined />
                                             </MotionCheckAnimation>
                                         )}
                                         <motion.span
                                             animate={
-                                                categoryIds.includes("0")
+                                                categoryIds.length <= 0
                                                     ? {x: 20, width: "calc(100% - 20px)"}
                                                     : {x: 0, width: "100%"}
                                             }
@@ -145,19 +135,19 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                             <div className="filter-list sizes-list">
                                 <div
                                     className={`filter-item filter-item-all ${
-                                        sizeIds.includes(String("0")) && "filter-item-active"
+                                        sizeIds.length <= 0 && "filter-item-active"
                                     }`}
-                                    onClick={() => changeSizeHandler(0)}
+                                    onClick={() => changeSizeHandler()}
                                 >
                                     <AnimatePresence>
-                                        {sizeIds.includes(String("0")) && (
+                                        {sizeIds.length <= 0 && (
                                             <MotionCheckAnimation>
                                                 <CheckOutlined />
                                             </MotionCheckAnimation>
                                         )}
                                         <motion.span
                                             animate={
-                                                sizeIds.includes(String("0"))
+                                                sizeIds.length <= 0
                                                     ? {x: 20, width: "calc(100% - 20px)"}
                                                     : {x: 0, width: "100%"}
                                             }

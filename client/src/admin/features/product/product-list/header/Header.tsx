@@ -8,8 +8,8 @@ import {useGetAllCategoriesQuery} from "admin/features/category/categoryApi"
 
 interface HeaderProps {
     onSearch: (e: any) => void
-    onCategories: (categoryId: string) => void
-    onSizes: (sizeId: string) => void
+    onCategories: (categoryId?: string) => void
+    onSizes: (sizeId?: string) => void
     categoryIds: string[]
     sizeIds: string[]
 }
@@ -41,6 +41,8 @@ const Header: React.FC<HeaderProps> = ({categoryIds, sizeIds, onSearch, onCatego
                     sizeIds={sizeIds}
                     isLoadingSizes={isLoadingSizes}
                     isLoadingCategories={isLoadingCategories}
+                    onCategories={onCategories}
+                    onSizes={onSizes}
                 />
                 <Sorter />
             </div>

@@ -45,27 +45,55 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
         timeout = setTimeout(() => setParams(prevState => ({...prevState, search: e.target.value})), 300)
     }
 
-    const onCategoryIdsHandler = useCallback((categoryId: string) => {
-        setParams(prevState => {
-            if (prevState.categoryIds.includes(categoryId))
-                return {
-                    ...prevState,
-                    categoryIds: prevState.categoryIds.filter(_categoryId => _categoryId !== categoryId)
-                }
-            return {...prevState, categoryIds: [...prevState.categoryIds, categoryId]}
-        })
-    }, [])
+    const onCategoryIdsHandler = useCallback(
+        (categoryId?: string) => {
+            setParams(prevState => {
+                let prms = prevState
+                if (categoryId) {
+                    prms = {...prevState, categoryIds: [...prevState.categoryIds, categoryId]}
+                    if (prevState.categoryIds.includes(categoryId))
+                        prms = {
+                            ...prevState,
+                            categoryIds: prevState.categoryIds.filter(
+                                _categoryId => _categoryId !== categoryId
+                            )
+                        }
+                    history.push({
+                        search: `?current=${prms.pagination.current}&pageSize=${
+                            prms.pagination.pageSize
+                        }&categoryIds=${JSON.stringify(prms.categoryIds)}&sizeIds=${JSON.stringify(
+                            prms.sizeIds
+                        )}`
+                    })
+                } else prms = {...prevState, categoryIds: []}
+                return prms
+            })
+        },
+        [history]
+    )
 
-    const onsizeIdsHandler = useCallback((sizeId: string) => {
-        setParams(prevState => {
-            if (prevState.sizeIds.includes(sizeId))
-                return {
-                    ...prevState,
-                    sizeIds: prevState.sizeIds.filter(_sizeId => _sizeId !== sizeId)
-                }
-            return {...prevState, sizeIds: [...prevState.sizeIds, sizeId]}
-        })
-    }, [])
+    const onSizeIdsHandler = useCallback(
+        (sizeId?: string) => {
+            setParams(prevState => {
+                let a = prevState
+                if (sizeId) {
+                    a = {...prevState, sizeIds: [...prevState.sizeIds, sizeId]}
+                    if (prevState.sizeIds.includes(sizeId))
+                        a = {
+                            ...prevState,
+                            sizeIds: prevState.sizeIds.filter(_sizeId => _sizeId !== sizeId)
+                        }
+                    history.push({
+                        search: `?current=${a.pagination.current}&pageSize=${
+                            a.pagination.pageSize
+                        }&categoryIds=${JSON.stringify(a.categoryIds)}&sizeIds=${JSON.stringify(a.sizeIds)}`
+                    })
+                } else a = {...prevState, sizeIds: []}
+                return a
+            })
+        },
+        [history]
+    )
 
     useEffect(() => {
         const query = new URLSearchParams(location.search)
@@ -100,7 +128,7 @@ const ProductList: React.FC<ProductListProps> = ({type}) => {
                     categoryIds={params.categoryIds}
                     sizeIds={params.sizeIds}
                     onCategories={onCategoryIdsHandler}
-                    onSizes={onsizeIdsHandler}
+                    onSizes={onSizeIdsHandler}
                 />
                 <Table
                     size="small"

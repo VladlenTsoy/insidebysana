@@ -10,6 +10,8 @@ interface FilterTagsProps {
     sizeIds: string[]
     isLoadingCategories: boolean
     isLoadingSizes: boolean
+    onCategories: (categoryId: string) => void
+    onSizes: (sizeId: string) => void
 }
 
 const FilterTags: React.FC<FilterTagsProps> = ({
@@ -18,7 +20,9 @@ const FilterTags: React.FC<FilterTagsProps> = ({
     sizeIds,
     sizes,
     isLoadingCategories,
-    isLoadingSizes
+    isLoadingSizes,
+    onCategories,
+    onSizes
 }) => {
     return (
         <>
@@ -32,7 +36,7 @@ const FilterTags: React.FC<FilterTagsProps> = ({
                         ?.find(category => category.id === Number(categoryId))
                     if (isFind)
                         return (
-                            <Tag closable onClose={() => null} key={`size-${categoryId}`}>
+                            <Tag closable onClose={() => onCategories(categoryId)} key={`size-${categoryId}`}>
                                 <b>Категория:</b>
                                 {isFind.title}
                             </Tag>
@@ -43,7 +47,7 @@ const FilterTags: React.FC<FilterTagsProps> = ({
                     const isFind = sizes?.find(size => size.id === Number(sizeId))
                     if (isFind)
                         return (
-                            <Tag closable onClose={() => null} key={`size-${sizeId}`}>
+                            <Tag closable onClose={() => onSizes(sizeId)} key={`size-${sizeId}`}>
                                 <b>Размер:</b>
                                 {isFind.title}
                             </Tag>

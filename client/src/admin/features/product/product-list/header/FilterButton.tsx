@@ -22,10 +22,10 @@ const MotionCheckAnimation: React.FC = ({children}) => {
 interface FilterButtonProps {
     sizes?: Size[]
     categories?: Category[]
-    onCategories: (categoryId?: string) => void
-    onSizes: (sizeId?: string) => void
-    categoryIds: string[]
-    sizeIds: string[]
+    onCategories: (categoryId?: number) => void
+    onSizes: (sizeId?: number) => void
+    categoryIds: number[]
+    sizeIds: number[]
     isLoadingCategories: boolean
     isLoadingSizes: boolean
 }
@@ -42,8 +42,12 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 }) => {
     const [visible, setVisible] = useState(false)
     const changeCategoryHandler = (categoryId?: number) =>
-        onCategories(categoryId ? String(categoryId) : undefined)
-    const changeSizeHandler = (sizeId?: number) => onSizes(sizeId ? String(sizeId) : undefined)
+        onCategories(categoryId ? (categoryId) : undefined)
+    const changeSizeHandler = (sizeId?: number) => onSizes(sizeId ? (sizeId) : undefined)
+    const resetHandler = () => {
+        onCategories(undefined)
+        onSizes(undefined)
+    }
     const onClickHandler = () => setVisible(true)
     const close = () => setVisible(false)
 
@@ -96,7 +100,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                                         <span className="title-group"> {category.title}</span>
                                         <div>
                                             {category.sub_categories?.map(sub => {
-                                                const isFind = categoryIds.includes(String(sub.id))
+                                                const isFind = categoryIds.includes((sub.id))
                                                 return (
                                                     <div
                                                         className={`filter-item ${
@@ -158,7 +162,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                                     </AnimatePresence>
                                 </div>
                                 {sizes?.map(size => {
-                                    const isFind = sizeIds.includes(String(size.id))
+                                    const isFind = sizeIds.includes((size.id))
                                     return (
                                         <div
                                             className={`filter-item ${isFind && "filter-item-active"}`}
@@ -187,7 +191,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                         </div>
                     )}
                     <div className="filter-actions">
-                        <Button block size="large">
+                        <Button block size="large" onClick={resetHandler}>
                             Сбросить
                         </Button>
                         <Button type="primary" block size="large">

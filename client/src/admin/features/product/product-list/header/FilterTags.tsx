@@ -6,12 +6,12 @@ import {Size} from "types/Size"
 interface FilterTagsProps {
     sizes?: Size[]
     categories?: Category[]
-    categoryIds: string[]
-    sizeIds: string[]
+    categoryIds: number[]
+    sizeIds: number[]
     isLoadingCategories: boolean
     isLoadingSizes: boolean
-    onCategories: (categoryId: string) => void
-    onSizes: (sizeId: string) => void
+    onCategories: (categoryId: number) => void
+    onSizes: (sizeId: number) => void
 }
 
 const FilterTags: React.FC<FilterTagsProps> = ({

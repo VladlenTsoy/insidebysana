@@ -2,19 +2,19 @@ import FilterButton from "./FilterButton"
 import React from "react"
 import Search from "./Search"
 import FilterTags from "./FilterTags"
-import Sorter from "./Sorter"
 import {useGetAllSizesQuery} from "admin/features/size/sizeApi"
 import {useGetAllCategoriesQuery} from "admin/features/category/categoryApi"
 
 interface HeaderProps {
     onSearch: (e: any) => void
-    onCategories: (categoryId?: string) => void
-    onSizes: (sizeId?: string) => void
-    categoryIds: string[]
-    sizeIds: string[]
+    onCategories: (categoryId?: number) => void
+    onSizes: (sizeId?: number) => void
+    categoryIds: number[]
+    sizeIds: number[]
+    search: string
 }
 
-const Header: React.FC<HeaderProps> = ({categoryIds, sizeIds, onSearch, onCategories, onSizes}) => {
+const Header: React.FC<HeaderProps> = ({search, categoryIds, sizeIds, onSearch, onCategories, onSizes}) => {
     const {data: sizes, isLoading: isLoadingSizes} = useGetAllSizesQuery()
     const {data: categories, isLoading: isLoadingCategories} = useGetAllCategoriesQuery()
 
@@ -31,21 +31,23 @@ const Header: React.FC<HeaderProps> = ({categoryIds, sizeIds, onSearch, onCatego
                     isLoadingSizes={isLoadingSizes}
                     isLoadingCategories={isLoadingCategories}
                 />
-                <Search onSearch={onSearch} />
+                <Search search={search} onSearch={onSearch} />
             </div>
-            <div className="filter-sorter">
-                <FilterTags
-                    sizes={sizes}
-                    categories={categories}
-                    categoryIds={categoryIds}
-                    sizeIds={sizeIds}
-                    isLoadingSizes={isLoadingSizes}
-                    isLoadingCategories={isLoadingCategories}
-                    onCategories={onCategories}
-                    onSizes={onSizes}
-                />
-                <Sorter />
-            </div>
+            {!!(categoryIds.length || sizeIds.length) && (
+                <div className="filter-sorter">
+                    <FilterTags
+                        sizes={sizes}
+                        categories={categories}
+                        categoryIds={categoryIds}
+                        sizeIds={sizeIds}
+                        isLoadingSizes={isLoadingSizes}
+                        isLoadingCategories={isLoadingCategories}
+                        onCategories={onCategories}
+                        onSizes={onSizes}
+                    />
+                    {/* <Sorter /> */}
+                </div>
+            )}
         </>
     )
 }

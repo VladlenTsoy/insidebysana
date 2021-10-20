@@ -102,6 +102,12 @@ router.patch("/size/:id/hide", SizeController.Hide)
 //
 router.patch("/size/:id/display", SizeController.Display)
 
+// Вывод всех используемых категорий
+router.get("/filter/categories", CategoryController.GetByFilter)
+// Вывод всех используемых размеров
+router.get("/filter/sizes", SizeController.GetByFilter)
+
+
 // Поиск продукта
 router.post("/product-colors", ProductColorController.GetBySearch)
 // Создание продукта

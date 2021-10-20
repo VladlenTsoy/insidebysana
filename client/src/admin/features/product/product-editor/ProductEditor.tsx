@@ -62,7 +62,7 @@ const CreateProduct: React.FC = () => {
         setSelectedSizeIds(sizesIds)
     }, [])
 
-    const clearHomePositon = useCallback(() => {
+    const clearHomePosition = useCallback(() => {
         form.setFieldsValue({home_position: undefined})
     }, [form])
 
@@ -111,7 +111,7 @@ const CreateProduct: React.FC = () => {
     return (
         <div className="create-product-page">
             <HeaderPage
-                title="Добавить товар"
+                title={params.id ? `Изменить товар` : `Добавить товар`}
                 action={
                     <Button
                         type="primary"
@@ -147,12 +147,12 @@ const CreateProduct: React.FC = () => {
                                 <PhotosSection imageUrls={imageUrls} setImageUrl={setImageUrl} />
                                 <MeasurementsSection selectedSizeIds={selectedSizeIds} />
                                 <StatusPublishingSection
-                                    clearHomePositon={clearHomePositon}
+                                    clearHomePositon={clearHomePosition}
                                     homePosition={data?.home_position}
                                 />
                             </Form>
                         </Col>
-                        <Col span={5}></Col>
+                        <Col span={5}/>
                     </Row>
                 )}
             </ContainerPage>

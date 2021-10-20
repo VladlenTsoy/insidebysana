@@ -2,8 +2,9 @@ import FilterButton from "./FilterButton"
 import React from "react"
 import Search from "./Search"
 import FilterTags from "./FilterTags"
-import {useGetAllSizesQuery} from "admin/features/size/sizeApi"
-import {useGetAllCategoriesQuery} from "admin/features/category/categoryApi"
+import {useGetFilterSizesQuery} from "admin/features/size/sizeApi"
+import {useGetFilterCategoriesQuery} from "admin/features/category/categoryApi"
+import styles from "./Header.module.less"
 
 interface HeaderProps {
     onSearch: (e: any) => void
@@ -15,12 +16,12 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({search, categoryIds, sizeIds, onSearch, onCategories, onSizes}) => {
-    const {data: sizes, isLoading: isLoadingSizes} = useGetAllSizesQuery()
-    const {data: categories, isLoading: isLoadingCategories} = useGetAllCategoriesQuery()
+    const {data: sizes, isLoading: isLoadingSizes} = useGetFilterSizesQuery()
+    const {data: categories, isLoading: isLoadingCategories} = useGetFilterCategoriesQuery()
 
     return (
         <>
-            <div className="header">
+            <div className={styles.header}>
                 <FilterButton
                     sizes={sizes}
                     categories={categories}

@@ -21,7 +21,8 @@ const Search: React.FC<SearchProps> = ({search, onSearch}) => {
             placeholder="Введите название"
             allowClear
             size="large"
-            value={value || search}
+            value={value}
+            defaultValue={search}
             onChange={onSearchHandler}
         />
     )

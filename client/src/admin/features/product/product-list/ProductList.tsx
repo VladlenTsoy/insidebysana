@@ -132,21 +132,22 @@ const SelectParams: React.FC = () => {
         const current = query.get("current") ? Number(query.get("current")) : null
         const pageSize = query.get("pageSize") ? Number(query.get("pageSize")) : null
         //
-        setParams(prevState => ({
-            ...prevState,
+        setParams({
             type: status,
-            search: search || prevState.search,
-            categoryIds: categoryIds || prevState.categoryIds,
-            sizeIds: sizeIds || prevState.sizeIds,
+            search: search || "",
+            categoryIds: categoryIds,
+            sizeIds: sizeIds,
+            sorter: {field: "created_at", order: "descend"},
             pagination: {
-                current: current || prevState.pagination.current,
-                pageSize: pageSize || prevState.pagination.pageSize
+                current: current || 1,
+                pageSize: pageSize || 50
             }
-        }))
-    },[])
+        })
+    }, [])
 
     useEffect(() => {
         history.listen(checkParams)
+        checkParams(history.location)
     }, [history])
 
     return <ProductListMemo params={params} updateParams={updateParams} />

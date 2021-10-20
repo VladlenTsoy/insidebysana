@@ -38,6 +38,7 @@ const Index: React.FC = () => {
                                         <Route path="/orders" component={Orders} />
                                         <Route exact path="/products/create" component={CreateProduct} />
                                         <Route exact path="/products/edit/:id" component={CreateProduct} />
+                                        <Route exact path="/products/edit/:id/:color" component={CreateProduct} />
                                         <Route path="/products/:status" component={Products} />
                                         <Route path="/clients" component={Clients} />
                                         <Route path="/settings" component={Settings} />

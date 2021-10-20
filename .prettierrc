@@ -7,7 +7,6 @@
   "arrowParens": "avoid",
   "jsxBracketSameLine": false,
   "useTabs": false,
-  "singleQuote": true,
   "parser": "flow"
 }
 

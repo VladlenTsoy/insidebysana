@@ -1,6 +1,6 @@
 const Model = require("../../../config/knex.config")
 const moment = require("moment")
-const {raw, ref} = require("objection")
+const {raw} = require("objection")
 
 class ProductColor extends Model {
     static tableName = "product_colors"
@@ -86,7 +86,7 @@ class ProductColor extends Model {
              * @param builder
              * @param search
              */
-            search(builder, search, isHide = false, ids = []) {
+            search(builder, search) {
                 if (search && search.trim() !== "") {
                     builder
                         .whereRaw(`product_colors.title LIKE '%${search}%'`)

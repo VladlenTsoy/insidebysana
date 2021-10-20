@@ -1,10 +1,17 @@
 import React from "react"
 import {Link} from "react-scroll"
+import {Button} from "antd"
+import {PlusOutlined} from "@ant-design/icons"
+import {Link as RouteLink, useParams} from "react-router-dom"
 
 const LeftSidebar: React.FC = () => {
+    const params = useParams<{id: string, color: string}>()
+
     const menuClickHandler = (e: any) => {
         e.preventDefault()
-        document.getElementById(e.target.htmlFor)?.scrollIntoView({behavior: "smooth", block: "center"})
+        document
+            .getElementById(e.target.htmlFor)
+            ?.scrollIntoView({behavior: "smooth", block: "center"})
     }
 
     return (
@@ -89,8 +96,22 @@ const LeftSidebar: React.FC = () => {
                             Статус & Публикация
                         </Link>
                     </nav>
-                    <div className="menu-item">Черный</div>
-                    <div className="menu-item">Синий</div>
+                    {/*<div className="menu-item">Черный</div>*/}
+                    {/*<div className="menu-item">Синий</div>*/}
+                    {params.id && !params.color && (
+                        <div className="menu-item">
+                            <RouteLink to={`/products/edit/${params.id}/color`}>
+                                <Button
+                                    type="dashed"
+                                    icon={<PlusOutlined />}
+                                    size="large"
+                                    block
+                                >
+                                    Добавить цвет
+                                </Button>
+                            </RouteLink>
+                        </div>
+                    )}
                 </div>
             </div>
         </>

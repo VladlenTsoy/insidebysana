@@ -24,7 +24,8 @@ const GetAllPaginate = async (req, res) => {
             // .join("tags", raw(`JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`))
             .modify("filterSubCategoryIn", categoryIds)
             .modify("filterSizes", sizeIds)
-            .modify("search", search)
+            // .modify("search", search)
+            .whereRaw(`product_colors.title LIKE '%${search}%'`)
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",

@@ -1,0 +1,82 @@
+.drawer {
+    :global {
+        .ant-drawer-body {
+            padding: 0;
+            user-select: none;
+        }
+    }
+}
+
+.filter {
+    flex: 1 1;
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+    height: 100%;
+
+    .filterContainer {
+        display: grid;
+        grid-template-columns: 250px 1fr;
+        overflow: hidden;
+        height: 100%;
+        // gap: 0.5rem;
+
+        .filterList {
+            height: 100%;
+            overflow-y: auto;
+
+            &.categories {
+                width: 250px;
+            }
+
+            &.sizes {
+                width: 100%;
+            }
+
+            &:first-child {
+                border-right: 1px solid @divider-color;
+            }
+
+            .filterGroup {
+                padding: 0.5rem;
+                border-bottom: 1px solid @divider-color;
+
+                .titleGroup {
+                    color: @text-color-secondary;
+                    font-size: @font-size-sm;
+                }
+            }
+
+            .filterItem {
+                padding: 0.75rem 1rem;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                cursor: pointer;
+                display: flex;
+
+                &.filterItemAll {
+                    border-bottom: 1px solid @divider-color;
+                }
+
+                &.filterItemActive {
+                    font-weight: bold;
+                }
+
+                :global {
+                    .anticon {
+                        width: 0;
+                        color: @primary-color;
+                    }
+                }
+            }
+        }
+    }
+
+    .filterActions {
+        display: flex;
+        gap: 1rem;
+        padding: 1rem;
+        border-top: 1px solid @divider-color;
+    }
+}

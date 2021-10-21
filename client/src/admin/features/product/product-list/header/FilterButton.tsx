@@ -5,6 +5,8 @@ import {AnimatePresence, motion} from "framer-motion"
 import React, {useState} from "react"
 import {Size} from "types/Size"
 import {Category} from "admin/lib/types/Category"
+import styles from "./FilterButton.module.less"
+import cn from "classnames"
 
 const MotionCheckAnimation: React.FC = ({children}) => {
     return (
@@ -31,15 +33,15 @@ interface FilterButtonProps {
 }
 
 const FilterButton: React.FC<FilterButtonProps> = ({
-    onCategories,
-    onSizes,
-    categoryIds,
-    sizeIds,
-    categories,
-    sizes,
-    isLoadingCategories,
-    isLoadingSizes
-}) => {
+                                                       onCategories,
+                                                       onSizes,
+                                                       categoryIds,
+                                                       sizeIds,
+                                                       categories,
+                                                       sizes,
+                                                       isLoadingCategories,
+                                                       isLoadingSizes
+                                                   }) => {
     const [visible, setVisible] = useState(false)
     const changeCategoryHandler = (categoryId?: number) =>
         onCategories(categoryId ? (categoryId) : undefined)
@@ -59,22 +61,23 @@ const FilterButton: React.FC<FilterButtonProps> = ({
             <Drawer
                 visible={visible}
                 onClose={close}
+                className={styles.drawer}
                 getContainer=".site-layout-content"
                 placement="left"
                 style={{position: "absolute"}}
                 width="370"
                 closeIcon={false}
             >
-                <div className="filter">
+                <div className={styles.filter}>
                     {isLoadingCategories || isLoadingSizes ? (
                         <LoadingBlock />
                     ) : (
-                        <div className="filter-container">
-                            <div className="filter-list categories-list">
+                        <div className={styles.filterContainer}>
+                            <div className={cn(styles.filterList, styles.categories)}>
                                 <div
-                                    className={`filter-item filter-item-all ${
-                                        categoryIds.length <= 0 && "filter-item-active"
-                                    }`}
+                                    className={
+                                        cn(styles.filterItem, styles.filterItemAll, {[styles.filterItemActive]: categoryIds.length <= 0})
+                                    }
                                     onClick={() => changeCategoryHandler()}
                                 >
                                     <AnimatePresence>
@@ -96,16 +99,16 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                                     </AnimatePresence>
                                 </div>
                                 {categories?.map(category => (
-                                    <div className="filter-group" key={category.id}>
-                                        <span className="title-group"> {category.title}</span>
+                                    <div className={styles.filterGroup} key={category.id}>
+                                        <span className={styles.titleGroup}> {category.title}</span>
                                         <div>
                                             {category.sub_categories?.map(sub => {
                                                 const isFind = categoryIds.includes((sub.id))
                                                 return (
                                                     <div
-                                                        className={`filter-item ${
-                                                            isFind && "filter-item-active"
-                                                        }`}
+                                                        className={
+                                                            cn(styles.filterItem, {[styles.filterItemActive]: isFind})
+                                                        }
                                                         key={sub.id}
                                                         onClick={() => changeCategoryHandler(sub.id)}
                                                     >
@@ -119,9 +122,9 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                                                                 animate={
                                                                     isFind
                                                                         ? {
-                                                                              x: 20,
-                                                                              width: "calc(100% - 20px)"
-                                                                          }
+                                                                            x: 20,
+                                                                            width: "calc(100% - 20px)"
+                                                                        }
                                                                         : {x: 0, width: "100%"}
                                                                 }
                                                                 key="title"
@@ -136,11 +139,11 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                                     </div>
                                 ))}
                             </div>
-                            <div className="filter-list sizes-list">
+                            <div className={cn(styles.filterList, styles.sizes)}>
                                 <div
-                                    className={`filter-item filter-item-all ${
-                                        sizeIds.length <= 0 && "filter-item-active"
-                                    }`}
+                                    className={
+                                        cn(styles.filterItem, styles.filterItemAll, {[styles.filterItemActive]: sizeIds.length <= 0})
+                                    }
                                     onClick={() => changeSizeHandler()}
                                 >
                                     <AnimatePresence>
@@ -165,7 +168,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                                     const isFind = sizeIds.includes((size.id))
                                     return (
                                         <div
-                                            className={`filter-item ${isFind && "filter-item-active"}`}
+                                            className={cn(styles.filterItem, {[styles.filterItemActive]: isFind})}
                                             key={size.id}
                                             onClick={() => changeSizeHandler(size.id)}
                                         >
@@ -190,7 +193,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
                             </div>
                         </div>
                     )}
-                    <div className="filter-actions">
+                    <div className={styles.filterActions}>
                         <Button block size="large" onClick={resetHandler}>
                             Сбросить
                         </Button>

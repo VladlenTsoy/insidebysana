@@ -34,8 +34,8 @@ const Header: React.FC<HeaderProps> = ({search, categoryIds, sizeIds, onSearch, 
                 />
                 <Search search={search} onSearch={onSearch} />
             </div>
-            {!!(categoryIds.length || sizeIds.length) && (
-                <div className="filter-sorter">
+            {!!(categoryIds?.length || sizeIds?.length) && (
+                <div className={styles.filterSorter}>
                     <FilterTags
                         sizes={sizes}
                         categories={categories}
@@ -46,7 +46,6 @@ const Header: React.FC<HeaderProps> = ({search, categoryIds, sizeIds, onSearch, 
                         onCategories={onCategories}
                         onSizes={onSizes}
                     />
-                    {/* <Sorter /> */}
                 </div>
             )}
         </>

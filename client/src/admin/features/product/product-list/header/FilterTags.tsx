@@ -2,6 +2,7 @@ import {Tag} from "antd"
 import React from "react"
 import {Category, SubCategory} from "types/Category"
 import {Size} from "types/Size"
+import styles from "./FilterTags.module.less"
 
 interface FilterTagsProps {
     sizes?: Size[]
@@ -26,7 +27,7 @@ const FilterTags: React.FC<FilterTagsProps> = ({
 }) => {
     return (
         <>
-            <div className="filter-selections">
+            <div className={styles.filterSelections}>
                 {categoryIds.map(categoryId => {
                     const isFind = categories
                         ?.reduce<SubCategory[]>(
@@ -36,7 +37,7 @@ const FilterTags: React.FC<FilterTagsProps> = ({
                         ?.find(category => category.id === Number(categoryId))
                     if (isFind)
                         return (
-                            <Tag closable onClose={() => onCategories(categoryId)} key={`size-${categoryId}`}>
+                            <Tag className={styles.tag} closable onClose={() => onCategories(categoryId)} key={`size-${categoryId}`}>
                                 <b>Категория:</b>
                                 {isFind.title}
                             </Tag>
@@ -47,7 +48,7 @@ const FilterTags: React.FC<FilterTagsProps> = ({
                     const isFind = sizes?.find(size => size.id === Number(sizeId))
                     if (isFind)
                         return (
-                            <Tag closable onClose={() => onSizes(sizeId)} key={`size-${sizeId}`}>
+                            <Tag className={styles.tag} closable onClose={() => onSizes(sizeId)} key={`size-${sizeId}`}>
                                 <b>Размер:</b>
                                 {isFind.title}
                             </Tag>

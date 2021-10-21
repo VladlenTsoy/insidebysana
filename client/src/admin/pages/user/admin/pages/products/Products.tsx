@@ -1,5 +1,4 @@
 import React from "react"
-import "./Products.less"
 import {Button} from "antd"
 import ProductList from "admin/features/product/product-list/ProductList"
 import {Link, useHistory, useLocation, useParams} from "react-router-dom"

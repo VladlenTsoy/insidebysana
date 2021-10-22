@@ -3,9 +3,7 @@ import {Draggable, Droppable} from "react-beautiful-dnd"
 import OrderCard from "admin/features/order/order-card/OrderCard"
 import {useSelectByStatusId} from "../../../../../../store/admin/order/orderSelectors"
 import {Status} from "../../../../../../lib/types/Status"
-import {PushpinFilled, SettingOutlined, PlusOutlined, LoadingOutlined} from "@ant-design/icons"
-import EditorOrderAction from "../../../../../../lib/components/editors/editor-order-action/EditorOrderAction"
-import {Button} from "antd"
+import {LoadingOutlined, PushpinFilled, SettingOutlined} from "@ant-design/icons"
 import EditorStatusAction from "../../../../../../lib/components/editors/editor-status-action/EditorStatusAction"
 
 interface StatusColumnProps {

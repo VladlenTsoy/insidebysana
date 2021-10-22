@@ -1,4 +1,4 @@
-.preview-image {
+.previewImage {
     position: relative;
     width: 100%;
     background: var(--secondary);
@@ -14,15 +14,17 @@
     border-radius: 10px;
     overflow: hidden;
 
-    > .imageBlock {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
+    :global {
+        .imageBlock {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
 
-        .loading {
-            font-size: @font-size-lg;
+            .loading {
+                font-size: @font-size-lg;
+            }
         }
     }
 }

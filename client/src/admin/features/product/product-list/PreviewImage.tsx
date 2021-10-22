@@ -1,7 +1,7 @@
 import React, {useState} from "react"
 import ImageBlock from "components/blocks/image-block/ImageBlock"
 import {Image} from "antd"
-import "./PreviewImage.less"
+import styles from "./PreviewImage.module.less"
 import {useGetPhotoByProductColorIdQuery} from "admin/features/photos-section/photoApi"
 
 interface PreviewImageProps {
@@ -16,7 +16,7 @@ const PreviewImage: React.FC<PreviewImageProps> = ({image, product}) => {
     return (
         <>
             <div style={{width: "45px"}} onClick={() => setVisible(prevState => !prevState)}>
-                <div className="preview-image">
+                <div className={styles.previewImage}>
                     <ImageBlock image={image} title={product.title} />
                 </div>
             </div>

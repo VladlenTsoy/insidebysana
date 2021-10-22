@@ -1,0 +1,33 @@
+.sizes {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+
+    .size {
+        border-radius: 5px;
+        padding: 0.25rem 0.75rem;
+
+        b {
+            margin-right: 0.5rem;
+            font-weight: 400;
+            border-radius: 5px;
+        }
+
+        span {
+            font-weight: 500;
+
+            &.warning {
+                color: #ffaf73;
+            }
+
+            &.danger {
+                color: #ff6b64;
+            }
+        }
+
+        &:not(:last-child) {
+            padding-right: 0.5rem;
+        }
+    }
+}

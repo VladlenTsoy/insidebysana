@@ -4,7 +4,7 @@ const {raw} = require("objection")
 
 class ProductColor extends Model {
     static tableName = "product_colors"
-    static virtualAttributes = ["url_thumbnail", "url_images"]
+    static virtualAttributes = ["url_thumbnail"]
     static jsonAttributes = ["sizes", "tags_id", "sizes_props"]
     static hidden = ["thumbnail"]
 
@@ -49,7 +49,11 @@ class ProductColor extends Model {
              * @param categoryId
              */
             filterCategory(builder, categoryId) {
-                if (categoryId && categoryId.match(/^\d+/) && Number(categoryId) !== 0)
+                if (
+                    categoryId &&
+                    categoryId.match(/^\d+/) &&
+                    Number(categoryId) !== 0
+                )
                     builder.whereRaw(
                         `product_id IN (SELECT id FROM products WHERE category_id IN (SELECT id FROM categories WHERE category_id = ${categoryId}))`
                     )
@@ -104,7 +108,9 @@ class ProductColor extends Model {
                     builder.where(_builder =>
                         sizes.map(size =>
                             _builder.orWhereRaw(
-                                `JSON_SEARCH(JSON_KEYS(sizes_props), 'all', ${String(size)}) IS NOT null`
+                                `JSON_SEARCH(JSON_KEYS(sizes_props), 'all', ${String(
+                                    size
+                                )}) IS NOT null`
                             )
                         )
                     )
@@ -119,7 +125,9 @@ class ProductColor extends Model {
                 if (tags && tags.length)
                     builder
                         .join("tags", raw(`tags.id IN (${tags.join(", ")})`))
-                        .whereRaw(`JSON_SEARCH(products.tags_id, 'all', tags.id) > 1`)
+                        .whereRaw(
+                            `JSON_SEARCH(products.tags_id, 'all', tags.id) > 1`
+                        )
             },
 
             /**
@@ -129,7 +137,9 @@ class ProductColor extends Model {
              */
             filterColors(builder, colors) {
                 if (colors && colors.length)
-                    builder.where(_builder => colors.map(color => _builder.orWhere({color_id: color})))
+                    builder.where(_builder =>
+                        colors.map(color => _builder.orWhere({color_id: color}))
+                    )
             },
 
             /**
@@ -165,7 +175,8 @@ class ProductColor extends Model {
                 }
             },
             category: {
-                filter: query => query.select("categories.id", "categories.title"),
+                filter: query =>
+                    query.select("categories.id", "categories.title"),
                 relation: Model.HasOneThroughRelation,
                 modelClass: Category,
                 join: {
@@ -177,31 +188,17 @@ class ProductColor extends Model {
                     to: "categories.id"
                 }
             },
-            // sizes_props: {
-            //     filter: query =>
-            //         query
-            //             .join(
-            //                 `sizes`,
-            //                 raw(`JSON_EXTRACT(product_colors.sizes,concat('$."',sizes.id,'".qty')) > 0`)
-            //             )
-            //             .select(
-            //                 "sizes.id as size_id",
-            //                 "sizes.title",
-            //                 raw(`JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) as qty`)
-            //             ),
-            //     relation: Model.HasManyRelation,
-            //     modelClass: ProductColor,
-            //     join: {
-            //         from: "product_colors.id",
-            //         to: "product_colors.id"
-            //     }
-            // },
             colors: {
                 filter: query =>
                     query
                         .where("product_colors.thumbnail", "IS NOT", null)
                         .where("product_colors.hide_id", null)
-                        .select("colors.id", "colors.title", "colors.hex", "product_colors.id as product_id"),
+                        .select(
+                            "colors.id",
+                            "colors.title",
+                            "colors.hex",
+                            "product_colors.id as product_id"
+                        ),
                 relation: Model.ManyToManyRelation,
                 modelClass: Color,
                 join: {
@@ -214,7 +211,8 @@ class ProductColor extends Model {
                 }
             },
             color: {
-                filter: query => query.select("colors.id", "colors.title", "colors.hex"),
+                filter: query =>
+                    query.select("colors.id", "colors.title", "colors.hex"),
                 relation: Model.HasOneRelation,
                 modelClass: Color,
                 join: {
@@ -227,11 +225,18 @@ class ProductColor extends Model {
                     query
                         .where(builder => {
                             builder
-                                .where("product_discounts.end_at", ">=", new Date())
+                                .where(
+                                    "product_discounts.end_at",
+                                    ">=",
+                                    new Date()
+                                )
                                 .orWhere("product_discounts.end_at", null)
                         })
                         .andWhere("product_discounts.discount", "!=", 0)
-                        .select("product_discounts.discount", "product_discounts.end_at"),
+                        .select(
+                            "product_discounts.discount",
+                            "product_discounts.end_at"
+                        ),
                 relation: Model.HasOneRelation,
                 modelClass: ProductDiscount,
                 join: {
@@ -243,7 +248,12 @@ class ProductColor extends Model {
                 filter: query =>
                     query
                         .select("tags.id as tag_id", "tags.title")
-                        .join("tags", raw(`JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`))
+                        .join(
+                            "tags",
+                            raw(
+                                `JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`
+                            )
+                        )
                         .select("tags.id", "tags.title"),
                 relation: Model.HasManyRelation,
                 modelClass: ProductColor,
@@ -253,7 +263,10 @@ class ProductColor extends Model {
                 }
             },
             images: {
-                filter: query => query.orderBy("position", "asc").select("id", "name", "path", "size"),
+                filter: query =>
+                    query
+                        .orderBy("position", "asc")
+                        .select("id", "name", "path", "size"),
                 relation: Model.HasManyRelation,
                 modelClass: ProductColorImage,
                 join: {

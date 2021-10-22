@@ -17,14 +17,19 @@ const IMAGES_FOLDER_PATH = "../../../public/images/products/"
  */
 const GetAllPaginate = async (req, res) => {
     try {
-        const {type, categoryIds, sizeIds, search, pagination, sorter} = req.body
+        const {
+            type,
+            categoryIds,
+            sizeIds,
+            search,
+            pagination,
+            sorter
+        } = req.body
 
         const productColorsRef = ProductColor.query()
             .withGraphFetched(`[details, tags, color, discount, category]`)
-            // .join("tags", raw(`JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`))
             .modify("filterSubCategoryIn", categoryIds)
             .modify("filterSizes", sizeIds)
-            // .modify("search", search)
             .whereRaw(`product_colors.title LIKE '%${search}%'`)
             .select(
                 "product_colors.id",
@@ -41,21 +46,33 @@ const GetAllPaginate = async (req, res) => {
         // Сортировка по кол-ву размеров в цвете JSON
         if (sorter.field) {
             if (sorter.field.includes("sizes"))
-                productColorsRef.orderBy(raw(`JSON_EXTRACT(sizes, '$."${sorter.field[1]}".qty')`), order)
+                productColorsRef.orderBy(
+                    raw(`JSON_EXTRACT(sizes, '$."${sorter.field[1]}".qty')`),
+                    order
+                )
             // Сортировка
             else if (sorter.field.includes("details"))
                 productColorsRef
-                    .join("products", "products.id", "product_colors.product_id")
+                    .join(
+                        "products",
+                        "products.id",
+                        "product_colors.product_id"
+                    )
                     .orderBy(`products.${sorter.field[1]}`, order)
             // Сортировка по столбцу
             else productColorsRef.orderBy(sorter.field, order)
         }
 
         if (type !== "all") {
-            productColorsRef.where("product_colors.hide_id", null).where("product_colors.status", type)
+            productColorsRef
+                .where("product_colors.hide_id", null)
+                .where("product_colors.status", type)
         }
 
-        const productColors = await productColorsRef.page(pagination.current - 1, pagination.pageSize)
+        const productColors = await productColorsRef.page(
+            pagination.current - 1,
+            pagination.pageSize
+        )
 
         return res.send(productColors)
     } catch (e) {
@@ -76,7 +93,9 @@ const Hide = async (req, res) => {
         const {productColorId} = req.params
         const user = req.user
 
-        await ProductColor.query().updateAndFetchById(productColorId, {hide_id: user.id})
+        await ProductColor.query().updateAndFetchById(productColorId, {
+            hide_id: user.id
+        })
 
         return res.send(productColorId)
     } catch (e) {
@@ -105,7 +124,12 @@ const GetFromTrash = async (req, res) => {
             ]`
             )
             .where("product_colors.hide_id", "IS NOT", null)
-            .select("product_colors.id", "product_colors.thumbnail", "product_colors.created_at", "sizes")
+            .select(
+                "product_colors.id",
+                "product_colors.thumbnail",
+                "product_colors.created_at",
+                "sizes"
+            )
 
         return res.send(productColors)
     } catch (e) {
@@ -157,15 +181,21 @@ const Delete = async (req, res) => {
         const productColor = await ProductColor.query().findById(productColorId)
         if (productColor) {
             // Проверяем остальные цвета
-            const productColors = await ProductColor.query().where({product_id: productColor.product_id})
+            const productColors = await ProductColor.query().where({
+                product_id: productColor.product_id
+            })
             if (!(productColors && productColors.length > 1))
                 // Удаляем товар
-                await Product.query().where({id: productColor.product_id}).delete()
+                await Product.query()
+                    .where({id: productColor.product_id})
+                    .delete()
 
             // Удаляем цвет товара
             await ProductColor.query().deleteById(productColorId)
             // Удаляем папку с картинками
-            await ImageService.DeleteFolder(`${IMAGES_FOLDER_PATH}${productColor.id}`)
+            await ImageService.DeleteFolder(
+                `${IMAGES_FOLDER_PATH}${productColor.id}`
+            )
         }
         // Если товар ненайден
         else return res.status(500).send({message: "Товар не найден!"})
@@ -180,7 +210,9 @@ const Delete = async (req, res) => {
 const Return = async (req, res) => {
     try {
         const {productColorId} = req.params
-        await ProductColor.query().findById(productColorId).update({hide_id: null})
+        await ProductColor.query()
+            .findById(productColorId)
+            .update({hide_id: null})
         return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
@@ -193,7 +225,9 @@ const UpdateIsNew = async (req, res) => {
         const {productColorId} = req.params
         const {isNew} = req.body
 
-        await ProductColor.query().findById(productColorId).update({is_new: isNew})
+        await ProductColor.query()
+            .findById(productColorId)
+            .update({is_new: isNew})
         return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
@@ -215,4 +249,13 @@ const GetImagesById = async (req, res) => {
     }
 }
 
-module.exports = {GetAllPaginate, Hide, GetBySearch, GetFromTrash, Delete, Return, UpdateIsNew, GetImagesById}
+module.exports = {
+    GetAllPaginate,
+    Hide,
+    GetBySearch,
+    GetFromTrash,
+    Delete,
+    Return,
+    UpdateIsNew,
+    GetImagesById
+}

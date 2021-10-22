@@ -36,7 +36,7 @@ const ClientMore: React.FC<ClientMoreProps> = ({clientId}) => {
                     tab={
                         <>
                             <DollarCircleOutlined />
-                            Сделки
+                            Заказы
                         </>
                     }
                     key="1"

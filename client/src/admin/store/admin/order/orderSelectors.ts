@@ -15,6 +15,6 @@ export const useSelectByStatusId = (statusId: number) =>
         })
     })
 
-// Вывод сделки по Id
+// Вывод Заказы по Id
 export const useSelectOrderById = (id: Order["id"] | undefined) =>
     useSelector((state: StoreState) => getOrderById(state, id || 0))

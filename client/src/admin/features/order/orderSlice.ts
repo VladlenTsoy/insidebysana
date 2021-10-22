@@ -48,7 +48,7 @@ const orderSlice = createSlice({
             const {orderId, paymentState} = action.payload
             orderAdapter.updateOne(state, {id: orderId, changes: {payment_state: paymentState}})
         })
-        // Вывод сделки
+        // Вывод Заказы
         builder.addCase(fetchOrders.pending, state => {
             state.loading = true
         })

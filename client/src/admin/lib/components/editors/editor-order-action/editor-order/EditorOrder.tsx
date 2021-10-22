@@ -12,8 +12,8 @@ import {SelectAdditionalService} from "admin/lib/components/blocks/add-additiona
 import {editOrder} from "admin/store/admin/order/editOrder"
 
 interface EditorOrderProps {
-    setLoadingFinish: Dispatch<SetStateAction<boolean>>
-    close: any
+    setLoadingFinish?: Dispatch<SetStateAction<boolean>>
+    close?: any
     order?: {
         id: number
         processing?: boolean
@@ -28,7 +28,7 @@ interface EditorOrderProps {
     }
 }
 
-const EditorOrder: React.FC<EditorOrderProps> = ({close, setLoadingFinish, order}) => {
+const EditorOrder: React.FC<EditorOrderProps> = ({order}) => {
     const dispatch = useDispatch()
     const [processing, setProcessing] = useState(order?.processing || false)
     const [totalPrice, setTotalPrice] = useState(0)
@@ -67,7 +67,7 @@ const EditorOrder: React.FC<EditorOrderProps> = ({close, setLoadingFinish, order
                 price: product.details.price
             }))
 
-            setLoadingFinish(true)
+            // setLoadingFinish(true)
             if (order) {
                 await dispatch(
                     editOrder({
@@ -102,8 +102,8 @@ const EditorOrder: React.FC<EditorOrderProps> = ({close, setLoadingFinish, order
                     })
                 )
             }
-            setLoadingFinish(false)
-            close()
+            // setLoadingFinish(false)
+            // close()
         },
         [
             additionalServices,
@@ -111,12 +111,10 @@ const EditorOrder: React.FC<EditorOrderProps> = ({close, setLoadingFinish, order
             processing,
             address,
             client,
-            close,
             delivery,
             discount,
             dispatch,
             products,
-            setLoadingFinish,
             totalPrice,
             payments
         ]
@@ -126,8 +124,8 @@ const EditorOrder: React.FC<EditorOrderProps> = ({close, setLoadingFinish, order
         let total = products.reduce((accumulator, {product, qty}) => {
             const price = product.discount
                 ? (product.details.price - (product.details.price / 100) * product.discount.discount).toFixed(
-                      0
-                  )
+                    0
+                )
                 : product.details.price
             return accumulator + Number(price) * qty
         }, 0)

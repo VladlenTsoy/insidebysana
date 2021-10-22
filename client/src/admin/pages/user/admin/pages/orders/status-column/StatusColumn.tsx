@@ -36,18 +36,18 @@ const StatusColumn: React.FC<StatusColumnProps> = ({status, index}) => {
                     <Droppable droppableId={`drop-${status.id}`} type="order">
                         {provided => (
                             <div className="tasks" ref={provided.innerRef} {...provided.droppableProps}>
-                                {status.id === 1 && (
-                                    <EditorOrderAction>
-                                        <Button
-                                            size="large"
-                                            icon={<PlusOutlined />}
-                                            block
-                                            style={{marginBottom: "1rem"}}
-                                        >
-                                            Создать заказ
-                                        </Button>
-                                    </EditorOrderAction>
-                                )}
+                                {/*{status.id === 1 && (*/}
+                                {/*    <EditorOrderAction>*/}
+                                {/*        <Button*/}
+                                {/*            size="large"*/}
+                                {/*            icon={<PlusOutlined />}*/}
+                                {/*            block*/}
+                                {/*            style={{marginBottom: "1rem"}}*/}
+                                {/*        >*/}
+                                {/*            Создать заказ*/}
+                                {/*        </Button>*/}
+                                {/*    </EditorOrderAction>*/}
+                                {/*)}*/}
                                 {orders.map((order, key: number) => (
                                     <OrderCard order={order} index={key} key={key} />
                                 ))}

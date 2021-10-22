@@ -8,19 +8,29 @@ import cn from "classnames"
 interface HeaderPageProps {
     title: string
     linkBack?: string
-    action: React.ReactFragment
+    action?: React.ReactFragment
     icon?: React.ReactFragment
     tabs?: boolean
+    full?: boolean
 }
 
 const {Title} = Typography
 
-const HeaderPage: React.FC<HeaderPageProps> = ({title, linkBack, action, icon, tabs}) => {
+const HeaderPage: React.FC<HeaderPageProps> = (
+    {
+        title,
+        linkBack,
+        action,
+        icon,
+        tabs,
+        full
+    }
+) => {
     const history = useHistory()
     const onClickBackHandler = () => (linkBack ? history.push(linkBack) : history.goBack())
 
     return (
-        <div className={cn(styles.headerPage, {[styles.tabs]: tabs})}>
+        <div className={cn(styles.headerPage, {[styles.tabs]: tabs, [styles.full]: full})}>
             {icon ? (
                 <div className={styles.back}>{icon}</div>
             ) : (
@@ -29,7 +39,7 @@ const HeaderPage: React.FC<HeaderPageProps> = ({title, linkBack, action, icon, t
                 </div>
             )}
             <Title level={1}>{title}</Title>
-            <div className={styles.action}>{action}</div>
+            {action && <div className={styles.action}>{action}</div>}
         </div>
     )
 }

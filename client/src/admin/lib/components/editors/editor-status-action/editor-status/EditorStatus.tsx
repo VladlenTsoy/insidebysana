@@ -100,7 +100,7 @@ const EditorStatus: React.FC<EditorStatusProps> = ({setLoading, close, status}) 
                                             rules={[{required: true, message: "Введите сообщение"}]}
                                         >
                                             <Mentions autoSize={{minRows: 2, maxRows: 6}} split="" prefix="{">
-                                                <Mentions.Option value="orderId}">Id сделки</Mentions.Option>
+                                                <Mentions.Option value="orderId}">Id Заказы</Mentions.Option>
                                                 <Mentions.Option value="amount}">Сумма</Mentions.Option>
                                             </Mentions>
                                         </Form.Item>

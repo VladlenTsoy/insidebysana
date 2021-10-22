@@ -24,7 +24,7 @@ const {Header, Sider, Content} = AntdLayout
 
 const Titles: any = {
     "/": "Главная",
-    "/orders": "Сделки",
+    "/orders": "Заказы",
     "/products": "Продукты",
     "/clients": "Клиенты",
     "/settings": "Настройки",
@@ -81,7 +81,7 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                             <Link to="/">Главная</Link>
                         </Menu.Item>
                         <Menu.Item key="orders" icon={<DollarOutlined />}>
-                            <Link to="/orders">Сделки</Link>
+                            <Link to="/orders">Заказы</Link>
                         </Menu.Item>
                         <Menu.Item key="products" icon={<SkinOutlined />}>
                             <Link to="/products/all">Одежда</Link>

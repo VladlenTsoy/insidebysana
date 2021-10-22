@@ -20,7 +20,7 @@ export const changePaymentStateOrder = createAsyncThunk<ReturnedType, AgrProps, 
         const response = await apiRequest("patch", `admin/order/${orderId}/payment-state`, {
             data: {paymentState}
         })
-        response && message({type: "success", content: "Вы успешно изменили статус платежа сделки!"})
+        response && message({type: "success", content: "Вы успешно изменили статус платежа Заказы!"})
         return {orderId, paymentState}
     }
 )

@@ -6,11 +6,11 @@ import EditorOrder from "./editor-order/EditorOrder"
 
 interface EditorOrderFetchByIdProps {
     orderId?: number
-    setLoadingFinish: Dispatch<SetStateAction<boolean>>
-    close: any
+    setLoadingFinish?: Dispatch<SetStateAction<boolean>>
+    close?: any
 }
 
-const EditorOrderFetchById: React.FC<EditorOrderFetchByIdProps> = ({orderId, setLoadingFinish, close}) => {
+const EditorOrderFetchById: React.FC<EditorOrderFetchByIdProps> = ({orderId}) => {
     const [order, setOrder] = useState<any>()
     const [loading, setLoading] = useState(false)
 
@@ -32,6 +32,6 @@ const EditorOrderFetchById: React.FC<EditorOrderFetchByIdProps> = ({orderId, set
 
     if (orderId && !order) return <Empty />
 
-    return <EditorOrder setLoadingFinish={setLoadingFinish} close={close} order={order} />
+    return <EditorOrder order={order} />
 }
 export default EditorOrderFetchById

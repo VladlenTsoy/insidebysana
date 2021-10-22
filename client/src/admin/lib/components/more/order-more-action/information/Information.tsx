@@ -43,7 +43,7 @@ const Information: React.FC<InformationProps> = ({orderId}) => {
                     title="Информация о сделке"
                     size="small"
                 >
-                    <Descriptions.Item label="ID сделки">{order.id}</Descriptions.Item>
+                    <Descriptions.Item label="ID Заказы">{order.id}</Descriptions.Item>
                     <Descriptions.Item label="Создана">
                         {formatDate(order.created_at, "HH:mm DD-MMM", "HH:mm DD-MM-YYYY")}
                     </Descriptions.Item>

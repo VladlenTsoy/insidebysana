@@ -48,15 +48,15 @@ export interface TemporaryImageType {
 }
 
 const CreateProduct: React.FC = () => {
-    const [basicValues, setBasicValues] = useState({status: "draft"})
+    const [basicValues, setBasicValues] = useState<any>({status: "draft"})
     const [selectedSizeIds, setSelectedSizeIds] = useState<string[]>([])
     const [imageUrls, setImageUrl] = useState<TemporaryImageType[]>([])
     const [createProduct, {isLoading: isCreateLoading}] = useCreateProductMutation()
     const [updateProduct, {isLoading: isUpdateLoading}] = useEditProductMutation()
     const [form] = Form.useForm()
     const history = useHistory()
-    const params = useParams<{id: string}>()
-    const {data, isLoading: isFetchLoading} = useGetProductByIdQuery(params?.id, {skip: !params?.id})
+    const params = useParams<{id: string, color?: string}>()
+    const {data, isFetching} = useGetProductByIdQuery(params?.id, {skip: !params?.id})
 
     const onSelectSizesHandler = useCallback((sizesIds: string[]) => {
         setSelectedSizeIds(sizesIds)
@@ -75,41 +75,72 @@ const CreateProduct: React.FC = () => {
             isSaved: image.isSaved
         }))
         if (data) {
-            await updateProduct({
-                ...values,
-                images: images,
-                id: data.id
-            })
-            history.goBack()
+            if (params.color) {
+                await createProduct({
+                    ...values,
+                    images: images,
+                    product_id: data.product_id
+                })
+                history.push(`/products/${values.status}`)
+            } else {
+                await updateProduct({
+                    ...values,
+                    images: images,
+                    id: data.id
+                })
+                history.goBack()
+            }
         } else {
             await createProduct({
                 ...values,
                 images: images
             })
-            history.push(`/products/${values.status}`)
+            history.push(`/products/${values.status}`, {})
         }
     }
 
     useEffect(() => {
         if (data) {
-            setBasicValues(data)
-            setSelectedSizeIds(data.sizes)
-            setImageUrl(
-                data.images.map((image: any) => ({
-                    id: image.id,
-                    imageUrl: image.url,
-                    imagePath: image.path,
-                    imageName: image.name,
-                    imageSize: image.size,
-                    isSaved: true,
-                    loading: false
-                }))
-            )
+            if (params.color) {
+                setBasicValues({
+                    status: "draft",
+                    colors: data.colors,
+                    category_id: data.category_id,
+                    properties: data.properties,
+                    price: data.price
+                })
+                setImageUrl([])
+                setSelectedSizeIds([])
+            } else {
+                setBasicValues(data)
+                setSelectedSizeIds(data.sizes)
+                setImageUrl(
+                    data.images.map((image: any) => ({
+                        id: image.id,
+                        imageUrl: image.url,
+                        imagePath: image.path,
+                        imageName: image.name,
+                        imageSize: image.size,
+                        isSaved: true,
+                        loading: false
+                    }))
+                )
+            }
+            setTimeout(() => form.resetFields(), 0)
         }
-    }, [data])
+    }, [data, params, form])
+
+    const initValues = data ? params.color ? {
+        ...basicValues,
+        colors: data.colors,
+        category_id: data.category_id,
+        properties: data.properties,
+        price: data.price
+    } : data : basicValues
 
     return (
-        <div className="create-product-page">
+        <div className="create-product-page"
+             key={params.id ? params?.color ? `edit-product-color-${params.id}` : `edit-product-${params.id}` : "create-product"}>
             <HeaderPage
                 title={params.id ? `Изменить товар` : `Добавить товар`}
                 action={
@@ -125,12 +156,12 @@ const CreateProduct: React.FC = () => {
                 }
             />
             <ContainerPage>
-                {isFetchLoading ? (
+                {isFetching ? (
                     <LoadingBlock />
                 ) : (
                     <Row gutter={28}>
                         <Col span={5}>
-                            <LeftSidebar />
+                            <LeftSidebar colors={initValues.colors} />
                         </Col>
                         <Col span={14}>
                             <Form
@@ -138,7 +169,7 @@ const CreateProduct: React.FC = () => {
                                 size="large"
                                 form={form}
                                 onFinish={onFinishHandler}
-                                initialValues={data || basicValues}
+                                initialValues={initValues}
                                 id="editor-product"
                             >
                                 <BaseSection onSelectSizesHandler={onSelectSizesHandler} />
@@ -148,11 +179,11 @@ const CreateProduct: React.FC = () => {
                                 <MeasurementsSection selectedSizeIds={selectedSizeIds} />
                                 <StatusPublishingSection
                                     clearHomePositon={clearHomePosition}
-                                    homePosition={data?.home_position}
+                                    homePosition={initValues?.home_position}
                                 />
                             </Form>
                         </Col>
-                        <Col span={5}/>
+                        <Col span={5} />
                     </Row>
                 )}
             </ContainerPage>

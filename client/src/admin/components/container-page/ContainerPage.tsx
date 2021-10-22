@@ -1,10 +1,10 @@
 import React from "react"
-import "./ContainerPage.less"
+import styles from "./ContainerPage.module.less"
 
 const ContainerPage: React.FC = ({children}) => {
     return (
-        <div className="container-page">
-            <div className="content">{children}</div>
+        <div className={styles.containerPage}>
+            <div className={styles.content}>{children}</div>
         </div>
     )
 }

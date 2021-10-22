@@ -2,7 +2,8 @@ import React from "react"
 import {Typography} from "antd"
 import {useHistory} from "react-router"
 import {ArrowLeftOutlined} from "@ant-design/icons"
-import "./HeaderPage.less"
+import styles from "./HeaderPage.module.less"
+import cn from "classnames"
 
 interface HeaderPageProps {
     title: string
@@ -16,20 +17,19 @@ const {Title} = Typography
 
 const HeaderPage: React.FC<HeaderPageProps> = ({title, linkBack, action, icon, tabs}) => {
     const history = useHistory()
-
     const onClickBackHandler = () => (linkBack ? history.push(linkBack) : history.goBack())
 
     return (
-        <div className={`header-page ${tabs ? "tabs" : ""}`}>
+        <div className={cn(styles.headerPage, {[styles.tabs]: tabs})}>
             {icon ? (
-                <div className="back">{icon}</div>
+                <div className={styles.back}>{icon}</div>
             ) : (
-                <div className="back" onClick={onClickBackHandler}>
+                <div className={styles.back} onClick={onClickBackHandler}>
                     <ArrowLeftOutlined />
                 </div>
             )}
             <Title level={1}>{title}</Title>
-            <div className="action">{action}</div>
+            <div className={styles.action}>{action}</div>
         </div>
     )
 }

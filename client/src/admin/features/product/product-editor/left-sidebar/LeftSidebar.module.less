@@ -1,0 +1,67 @@
+.content {
+    position: sticky;
+    padding-top: 1rem;
+    top: 1rem;
+
+    .colorMenu {
+        > .menuItem {
+            font-size: @font-size-lg;
+            padding: 0.75rem 0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:first-child {
+                padding-top: 0;
+            }
+
+            &:hover {
+                color: @primary-color;
+            }
+
+            &.active {
+                color: @primary-color;
+                font-weight: 500;
+                padding-bottom: 0.25rem;
+            }
+
+            &:not(:first-child) {
+                border-top: 1px solid @divider-color;
+            }
+        }
+    }
+
+    .menu {
+        margin: 0 0 0.5rem 1rem;
+
+        a.menuItem {
+            display: block;
+            color: @text-color-secondary;
+            padding: 0.25rem 0;
+            font-size: @font-size-base;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                color: @black;
+            }
+
+            &.active {
+                color: @black;
+            }
+        }
+    }
+
+    a.menuItem {
+        display: block;
+        color: @black;
+        padding: 0.25rem 0;
+        font-size: @font-size-base;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+            color: @black;
+        }
+    }
+}

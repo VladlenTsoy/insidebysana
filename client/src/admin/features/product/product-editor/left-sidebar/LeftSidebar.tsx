@@ -3,8 +3,14 @@ import {Link} from "react-scroll"
 import {Button} from "antd"
 import {PlusOutlined} from "@ant-design/icons"
 import {Link as RouteLink, useParams} from "react-router-dom"
+import styles from "./LeftSidebar.module.less"
+import cn from "classnames"
 
-const LeftSidebar: React.FC = () => {
+interface LeftSidebarProps {
+    colors?: {id: number, title: string, hex: string, product_id: number}[];
+}
+
+const LeftSidebar: React.FC<LeftSidebarProps> = ({colors}) => {
     const params = useParams<{id: string, color: string}>()
 
     const menuClickHandler = (e: any) => {
@@ -16,13 +22,15 @@ const LeftSidebar: React.FC = () => {
 
     return (
         <>
-            <div className="left-block">
-                <div className="color-menu">
-                    <div className="menu-item active">Выберите цвет</div>
-                    <nav className="menu" onClick={menuClickHandler}>
+            <div className={styles.content}>
+                <div className={styles.colorMenu}>
+                    <div className={cn(styles.menuItem, styles.active)}>
+                        Выберите цвет
+                    </div>
+                    <nav className={styles.menu} onClick={menuClickHandler}>
                         <Link
-                            activeClass="active"
-                            className="menu-item"
+                            activeClass={styles.active}
+                            className={styles.menuItem}
                             to="basic"
                             spy
                             hashSpy
@@ -33,9 +41,9 @@ const LeftSidebar: React.FC = () => {
                             Основная информация
                         </Link>
                         <Link
-                            className="menu-item"
+                            className={styles.menuItem}
                             to="properties"
-                            activeClass="active"
+                            activeClass={styles.active}
                             spy
                             hashSpy
                             isDynamic
@@ -46,9 +54,9 @@ const LeftSidebar: React.FC = () => {
                             Свойства
                         </Link>
                         <Link
-                            className="menu-item"
+                            className={styles.menuItem}
                             to="price-qty"
-                            activeClass="active"
+                            activeClass={styles.active}
                             spy
                             hashSpy
                             smooth
@@ -58,9 +66,9 @@ const LeftSidebar: React.FC = () => {
                             Cтоимость & Количество
                         </Link>
                         <Link
-                            className="menu-item"
+                            className={styles.menuItem}
                             to="photos"
-                            activeClass="active"
+                            activeClass={styles.active}
                             spy
                             hashSpy
                             isDynamic
@@ -71,9 +79,9 @@ const LeftSidebar: React.FC = () => {
                             Фотографии
                         </Link>
                         <Link
-                            className="menu-item"
+                            className={styles.menuItem}
                             to="measurements"
-                            activeClass="active"
+                            activeClass={styles.active}
                             spy
                             hashSpy
                             isDynamic
@@ -84,9 +92,9 @@ const LeftSidebar: React.FC = () => {
                             Обмеры
                         </Link>
                         <Link
-                            className="menu-item"
+                            className={styles.menuItem}
                             to="status-publishing"
-                            activeClass="active"
+                            activeClass={styles.active}
                             spy
                             hashSpy
                             smooth
@@ -96,10 +104,20 @@ const LeftSidebar: React.FC = () => {
                             Статус & Публикация
                         </Link>
                     </nav>
-                    {/*<div className="menu-item">Черный</div>*/}
-                    {/*<div className="menu-item">Синий</div>*/}
+                    {colors && colors.map(
+                        color =>
+                            color.product_id !== Number(params.id) && (
+                                <RouteLink
+                                    key={color.id}
+                                    to={`/products/edit/${color.product_id}`}
+                                    className={styles.menuItem}
+                                >
+                                    #{color.product_id} {color.title}
+                                </RouteLink>
+                            )
+                    )}
                     {params.id && !params.color && (
-                        <div className="menu-item">
+                        <div className={styles.menuItem}>
                             <RouteLink to={`/products/edit/${params.id}/color`}>
                                 <Button
                                     type="dashed"

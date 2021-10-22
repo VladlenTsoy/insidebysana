@@ -32,16 +32,18 @@ interface FilterButtonProps {
     isLoadingSizes: boolean
 }
 
-const FilterButton: React.FC<FilterButtonProps> = ({
-                                                       onCategories,
-                                                       onSizes,
-                                                       categoryIds,
-                                                       sizeIds,
-                                                       categories,
-                                                       sizes,
-                                                       isLoadingCategories,
-                                                       isLoadingSizes
-                                                   }) => {
+const FilterButton: React.FC<FilterButtonProps> = (
+    {
+        onCategories,
+        onSizes,
+        categoryIds,
+        sizeIds,
+        categories,
+        sizes,
+        isLoadingCategories,
+        isLoadingSizes
+    }
+) => {
     const [visible, setVisible] = useState(false)
     const changeCategoryHandler = (categoryId?: number) =>
         onCategories(categoryId ? (categoryId) : undefined)

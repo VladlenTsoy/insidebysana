@@ -38,15 +38,7 @@ const Index: React.FC = () => {
                 <SizesProvider>
                     <EventsProvider>
                         <Router>
-                            <Layout
-                                sidebars={SidebarItems}
-                                navigations={
-                                    user.access === "admin"
-                                        ? Navigations
-                                        : ManagerNavigations
-                                }
-                                accountMenu={AccountItems}
-                            >
+                            <Layout>
                                 <React.Suspense
                                     fallback={
                                         <LoadingBlock title="Загрузка страницы..." />

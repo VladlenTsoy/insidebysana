@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react"
 import {BackTop, Button, Layout as AntdLayout, Menu} from "antd"
 import {NavigationItemProps} from "./header/navigation/Navigation"
-// import Footer from "./footer/Footer"
 import {Link, useHistory, useLocation} from "react-router-dom"
 import {useScreenWindow} from "../hooks/use-screen-window.effect"
-import "./Layout.less"
+import styles from "./Layout.module.less"
 import {useCommonDispatch} from "../store/common/store"
 import {changeTitle} from "admin/store/common/app/appSlice"
 import {
@@ -31,13 +30,7 @@ const Titles: any = {
     "/profile": "Профиль"
 }
 
-interface FacebookLayout {
-    navigations: NavigationItemProps[]
-    sidebars: React.ReactFragment[]
-    accountMenu: React.ReactFragment[]
-}
-
-const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, accountMenu}) => {
+const Layout: React.FC = ({children}) => {
     const [, isBreakpoint] = useScreenWindow({breakpoint: "lg"})
     const history = useHistory()
     const dispatch = useCommonDispatch()
@@ -50,9 +43,11 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
     useEffect(() => {
         if (history.listen) {
             const unListen = history.listen((location: any) => {
-                if (Titles[location.pathname]) dispatch(changeTitle(Titles[location.pathname]))
+                if (Titles[location.pathname])
+                    dispatch(changeTitle(Titles[location.pathname]))
             })
-            if (Titles[history.location.pathname]) dispatch(changeTitle(Titles[history.location.pathname]))
+            if (Titles[history.location.pathname])
+                dispatch(changeTitle(Titles[history.location.pathname]))
             return () => {
                 unListen()
             }
@@ -60,7 +55,7 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
     }, [history, dispatch])
 
     return (
-        <AntdLayout className="layout">
+        <AntdLayout className={styles.layout}>
             <Sider
                 collapsible
                 collapsed={collapsed}
@@ -68,13 +63,13 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                 trigger={null}
                 collapsedWidth={isBreakpoint ? 0 : 80}
             >
-                <div className="logo-menu-sticky">
-                    <div className="logo"></div>
+                <div className={styles.logoMenuSticky}>
+                    <div className={styles.logo} />
                     <Menu
                         theme="dark"
                         mode="inline"
                         defaultSelectedKeys={[pathnameArray[1]]}
-                        className="site-layout-menu"
+                        className={styles.siteLayoutMenu}
                     >
                         <Menu.Item key="" icon={<HomeOutlined />}>
                             <Link to="/">Главная</Link>
@@ -91,7 +86,11 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                         <Menu.Item key="staff" icon={<CrownOutlined />}>
                             <Link to="/staff">Сотрудники</Link>
                         </Menu.Item>
-                        <Menu.SubMenu key="settings" icon={<SettingOutlined />} title="Настройки">
+                        <Menu.SubMenu
+                            key="settings"
+                            icon={<SettingOutlined />}
+                            title="Настройки"
+                        >
                             <Menu.Item key="/users" icon={<CrownOutlined />}>
                                 Пользователи
                             </Menu.Item>
@@ -99,34 +98,34 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                     </Menu>
                 </div>
             </Sider>
-            <AntdLayout className="site-layout">
-                <Header className="site-layout-header">
+            <AntdLayout className={styles.siteLayout}>
+                <Header className={styles.siteLayoutHeader}>
                     {React.createElement(Button, {
                         className: "trigger",
                         onClick: onCollapsedHandler,
-                        icon: collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />,
+                        icon: collapsed ? (
+                            <MenuUnfoldOutlined />
+                        ) : (
+                            <MenuFoldOutlined />
+                        ),
                         size: "large",
                         shape: "circle"
                     })}
                 </Header>
-                <Content className="site-layout-content">
+                <Content className={styles.siteLayoutContent} id="site-layout-content">
                     {children}
                     <BackTop>
-                        <Button type="primary" shape="circle" size="large" icon={<UpOutlined />} />
+                        <Button
+                            type="primary"
+                            shape="circle"
+                            size="large"
+                            icon={<UpOutlined />}
+                        />
                     </BackTop>
                 </Content>
             </AntdLayout>
         </AntdLayout>
     )
-
-    // return (
-    //     <div className="layout">
-    //         <Header navigations={navigations} sidebars={sidebars} accountMenu={accountMenu} />
-    //         <div id="container" className="draw-container layout-draw-container" />
-    //         <div className={`layout-container`}>{children}</div>
-    //         {isBreakpoint && <Footer navigations={navigations} />}
-    //     </div>
-    // )
 }
 
 export default Layout

@@ -86,10 +86,10 @@ const Layout: React.FC<FacebookLayout> = ({children, navigations, sidebars, acco
                             <Link to="/products/all">Одежда</Link>
                         </Menu.Item>
                         <Menu.Item key="clients" icon={<TeamOutlined />}>
-                            <Link to="clients">Клиенты</Link>
+                            <Link to="/clients">Клиенты</Link>
                         </Menu.Item>
                         <Menu.Item key="staff" icon={<CrownOutlined />}>
-                            <Link to="staff">Сотрудники</Link>
+                            <Link to="/staff">Сотрудники</Link>
                         </Menu.Item>
                         <Menu.SubMenu key="settings" icon={<SettingOutlined />} title="Настройки">
                             <Menu.Item key="/users" icon={<CrownOutlined />}>

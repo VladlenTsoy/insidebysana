@@ -5,8 +5,7 @@ const {Category} = require("models/settings/Category")
 const {Color} = require("models/settings/Color")
 const {logger} = require("config/logger.config")
 const {body, validationResult} = require("express-validator")
-const {HomeProduct} = require("models/products/HomeProduct")
-const {uniq} = require("lodash")
+const {ProductHomePosition} = require("models/products/ProductHomePosition")
 
 const _getFilters = async ({colorIds, categoryId, sizeIds, subCategoryIds, price}) => {
     const response = {
@@ -150,7 +149,7 @@ const GetById = async (req, res) => {
                 "products.price"
             )
 
-        const productColors = await ProductColor.query()
+        product.colors = await ProductColor.query()
             .join("colors", "colors.id", "product_colors.color_id")
             .where("product_colors.product_id", product.product_id)
             .where("product_colors.thumbnail", "IS NOT", null)
@@ -159,8 +158,6 @@ const GetById = async (req, res) => {
                 `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
             )
             .select("colors.id", "colors.title", "colors.hex", "product_colors.id as product_id")
-
-        product.colors = productColors
 
         return res.send(product)
     } catch (e) {
@@ -221,7 +218,7 @@ const GetByProductId = async (req, res) => {
  */
 const GetNew = async (req, res) => {
     try {
-        const homeProducts = await HomeProduct.query().orderBy("position", "desc")
+        const homeProducts = await ProductHomePosition.query().orderBy("position", "desc")
         const ids = homeProducts.map(product => product.product_color_id)
 
         const products = await ProductColor.query()

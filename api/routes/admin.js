@@ -113,11 +113,11 @@ router.post("/product-colors", ProductColorController.GetBySearch)
 // Создание продукта
 // router.post("/product", ProductController.Create)
 // НОВИНКА Создание продукта
-router.post("/new/product", ProductController.NewCreate)
+router.post("/new/product", ProductController.Create)
 // НОВИНКА Вывод продукта по id
-router.get("/new/product/:id", ProductController.NewGetById)
+router.get("/new/product/:id", ProductController.GetById)
 // Новинка редактировать продукта по id
-router.post("/new/product/edit/:id", ProductController.NewEditById)
+router.post("/new/product/edit/:id", ProductController.EditById)
 // Вывод всех продуктов
 router.post("/product-colors/table", ProductColorController.GetAllPaginate)
 // Вывод цветов из корзины

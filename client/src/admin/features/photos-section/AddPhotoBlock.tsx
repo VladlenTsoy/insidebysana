@@ -1,24 +1,24 @@
 import React from "react"
 import {PlusOutlined} from "@ant-design/icons"
-import "./AddPhotoBlock.less"
+import styles from "./AddPhotoBlock.module.less"
 
 interface AddPhotoBlockProps {
-    addPhoto: any
+    addPhoto: any;
 }
 
 const AddPhotoBlock: React.FC<AddPhotoBlockProps> = ({addPhoto}) => {
     return (
-        <label className="add-photo-block" htmlFor="add-photo">
-            <div className="add-photo-content">
-                <div className="add-icon">
+        <label className={styles.addPhoto} htmlFor="add-photo">
+            <div className={styles.content}>
+                <div className={styles.addPhotoIcon}>
                     <PlusOutlined />
                 </div>
-                <div className="add-photo-text">Добавить</div>
+                <div className={styles.addPhotoText}>Добавить</div>
                 <input
                     type="file"
                     onChange={addPhoto}
                     id="add-photo"
-                    className="add-photo-input"
+                    className={styles.addPhotoInput}
                     accept="image/x-png,image/gif,image/jpeg"
                 />
             </div>

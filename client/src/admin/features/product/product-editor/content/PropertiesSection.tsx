@@ -2,11 +2,12 @@ import React from "react"
 import {Typography, Form, Input, Button, Checkbox, Divider} from "antd"
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons"
 import {Element} from "react-scroll"
+import styles from "./PropertiesSection.module.less"
 
 const {Title} = Typography
 
 const PropertiesSection: React.FC = () => {
-    const propertieOptions: any = [
+    const propertyOptions: any = [
         {label: "Доставка", value: "Apple"},
         {label: "Возврат товара", value: "Pear"}
     ]
@@ -16,14 +17,17 @@ const PropertiesSection: React.FC = () => {
             <Divider />
             <Title level={3}>Свойства</Title>
             <Form.Item name="save_properties">
-                <Checkbox.Group options={propertieOptions} />
+                <Checkbox.Group options={propertyOptions} />
             </Form.Item>
             <Form.List name="properties">
                 {(fields, {add, remove}) => (
                     <div>
                         {fields.map(field => (
-                            <div className="properties" key={`property-${field.key}`}>
-                                <div className="title-action-block">
+                            <div
+                                className={styles.properties}
+                                key={`property-${field.key}`}
+                            >
+                                <div className={styles.title}>
                                     <Form.Item
                                         label="Название"
                                         name={[field.name, "title"]}

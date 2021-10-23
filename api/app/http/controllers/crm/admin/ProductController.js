@@ -1,18 +1,17 @@
 const {Product} = require("models/products/Product")
 const {ProductColor} = require("models/products/ProductColor")
-const {ProductMeasurement} = require("models/products/ProductMeasurement")
 const ProductMeasurementService = require("services/product/ProductMeasurementService")
 const ProductTagService = require("services/product/ProductTagService")
 const ImageService = require("services/image/ImageService")
 const {logger} = require("config/logger.config")
-const {HomeProduct} = require("models/products/HomeProduct")
-const {ProductColorImage} = require("models/products/ProductColorImage")
+const {ProductHomePosition} = require("models/products/ProductHomePosition")
+const {ProductSize} = require("models/products/ProductSize")
 
 const PATH_TO_FOLDER_TMP = "../../../public/images/tmp"
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/product-colors"
 const PATH_TO_IMAGE = "images/product-colors"
 
-const NewCreate = async (req, res) => {
+const Create = async (req, res) => {
     try {
         const data = req.body
         let productId = data?.product_id
@@ -39,6 +38,19 @@ const NewCreate = async (req, res) => {
             tags_id: tagsId,
             is_new: data.is_new
         })
+        // Создание размеров
+        await Promise.all(
+            Object.keys(data.props).map(async key => {
+                const values = data.props[key]
+                await ProductSize.query().insert({
+                    product_color_id: productColor.id,
+                    size_id: key,
+                    qty: values.qty,
+                    min_qty: values.min_qty,
+                    cost_price: values.cost_price
+                })
+            })
+        )
         // Сохранение картинок
         if (data.images && data.images.length) {
             const updatedPathToImages = await Promise.all(
@@ -80,7 +92,7 @@ const NewCreate = async (req, res) => {
             )
         // Позиция на главной странице
         if (data.home_position)
-            await HomeProduct.query().insert({
+            await ProductHomePosition.query().insert({
                 product_color_id: productColor.id,
                 position: data.home_position
             })
@@ -92,7 +104,7 @@ const NewCreate = async (req, res) => {
     }
 }
 
-const NewGetById = async (req, res) => {
+const GetById = async (req, res) => {
     try {
         const {id} = req.params
         const product = await ProductColor.query()
@@ -126,7 +138,7 @@ const NewGetById = async (req, res) => {
     }
 }
 
-const NewEditById = async (req, res) => {
+const EditById = async (req, res) => {
     try {
         const {id} = req.params
         const data = req.body
@@ -144,14 +156,11 @@ const NewEditById = async (req, res) => {
             is_new: data.is_new
         })
         // Обновление продукта
-        await Product.query().patchAndFetchById(
-            productColor.product_id,
-            {
-                category_id: data.category_id,
-                price: data.price,
-                properties: data.properties || []
-            }
-        )
+        await Product.query().patchAndFetchById(productColor.product_id, {
+            category_id: data.category_id,
+            price: data.price,
+            properties: data.properties || []
+        })
         // Сохранение картинок
         if (data.images && data.images.length) {
             const updatedPathToImages = await Promise.all(
@@ -199,13 +208,13 @@ const NewEditById = async (req, res) => {
             )
         // Позиция на главной странице
         if (data.home_position)
-            await HomeProduct.query()
+            await ProductHomePosition.query()
                 .findOne({product_color_id: productColor.id})
                 .update({
                     position: data.home_position
                 })
         else
-            await HomeProduct.query()
+            await ProductHomePosition.query()
                 .findOne({product_color_id: productColor.id})
                 .delete()
 
@@ -216,4 +225,4 @@ const NewEditById = async (req, res) => {
     }
 }
 
-module.exports = {NewCreate, NewGetById, NewEditById}
+module.exports = {Create, GetById, EditById}

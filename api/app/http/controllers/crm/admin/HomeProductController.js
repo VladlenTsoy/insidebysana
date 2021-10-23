@@ -1,4 +1,4 @@
-const {HomeProduct} = require("models/products/HomeProduct")
+const {ProductHomePosition} = require("models/products/ProductHomePosition")
 const {ProductColor} = require("models/products/ProductColor")
 const {logger} = require("config/logger.config")
 
@@ -8,7 +8,7 @@ const {logger} = require("config/logger.config")
  */
 const GetAll = async (req, res) => {
     try {
-        const homeProducts = await HomeProduct.query().orderBy("position", "desc")
+        const homeProducts = await ProductHomePosition.query().orderBy("position", "desc")
         const ids = homeProducts.map(product => product.product_color_id)
 
         const products = await ProductColor.query()
@@ -42,7 +42,7 @@ const GetAll = async (req, res) => {
 const Create = async (req, res) => {
     try {
         const {product_color_id, position} = req.body
-        await HomeProduct.query().insert({product_color_id, position})
+        await ProductHomePosition.query().insert({product_color_id, position})
         const product = await ProductColor.query()
             .join("products", "products.id", "product_colors.product_id")
             .join("colors", "colors.id", "product_colors.color_id")
@@ -74,7 +74,7 @@ const Edit = async (req, res) => {
     try {
         const {id} = req.params
         const {product_color_id, position} = req.body
-        await HomeProduct.query().updateAndFetchById(id, {product_color_id, position})
+        await ProductHomePosition.query().updateAndFetchById(id, {product_color_id, position})
         const product = await ProductColor.query()
             .join("products", "products.id", "product_colors.product_id")
             .join("colors", "colors.id", "product_colors.color_id")
@@ -105,7 +105,7 @@ const Edit = async (req, res) => {
 const Delete = async (req, res) => {
     try {
         const {id} = req.params
-        await HomeProduct.query().deleteById(id)
+        await ProductHomePosition.query().deleteById(id)
         return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
@@ -116,7 +116,7 @@ const Delete = async (req, res) => {
 const GetFree = async (req, res) => {
     try {
         const {position} = req.params
-        const positions = await HomeProduct.query().pluck("position")
+        const positions = await ProductHomePosition.query().pluck("position")
         const allPositions = Array.from({length: 24}, (_, i) => i + 1)
         const freePositions = allPositions.filter(
             _position => (position !== 0 && _position === Number(position)) || !positions.includes(_position)

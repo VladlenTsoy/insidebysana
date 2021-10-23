@@ -1,6 +1,6 @@
 import React from "react"
 import {DraggableProvided} from "react-beautiful-dnd"
-import "./PhotoBlock.less"
+import styles from "./PhotoBlock.module.less"
 import {Button} from "antd"
 import cn from "classnames"
 import {
@@ -22,43 +22,45 @@ interface PhotoBlockProps {
     deletePhoto: (id: number) => void
 }
 
-const PhotoBlock: React.FC<PhotoBlockProps> = ({
-    dragProvided,
-    index,
-    nextHandler,
-    prevHandler,
-    image,
-    deletePhoto
-}) => {
+const PhotoBlock: React.FC<PhotoBlockProps> = (
+    {
+        dragProvided,
+        index,
+        nextHandler,
+        prevHandler,
+        image,
+        deletePhoto
+    }
+) => {
     return (
         <div
-            className="draggable-photo"
+            className={styles.draggablePhoto}
             ref={dragProvided.innerRef}
             {...dragProvided.draggableProps}
             {...dragProvided.dragHandleProps}
         >
-            <div className={cn("photo-block", {loading: image.loading})}>
+            <div className={cn(styles.photoBlock, {[styles.loading]: image.loading})}>
                 {index === 0 && (
-                    <div className="info">
+                    <div className={styles.info}>
                         <StarFilled />
                     </div>
                 )}
                 {image.loading && (
-                    <div className="photo-loading">
+                    <div className={styles.photoLoading}>
                         <LoadingOutlined />
                     </div>
                 )}
                 {image?.imageSize && (
-                    <div className={cn("photo-size", {warning: image.imageSize > 500})}>
+                    <div className={cn(styles.photoSize, {[styles.warning]: image.imageSize > 500})}>
                         {bytesToSize(image.imageSize * 1000)}
                     </div>
                 )}
-                <div className="close" onClick={() => deletePhoto(image.id)}>
+                <div className={styles.close} onClick={() => deletePhoto(image.id)}>
                     <DeleteOutlined />
                 </div>
-                <img src={image.imageUrl} alt={`${image.id}`} className="photo-img" />
-                <div className="wrapper-actions">
-                    <div className="actions">
+                <img src={image.imageUrl} alt={`${image.id}`} className={styles.photoImg} />
+                <div className={styles.wrapperActions}>
+                    <div className={styles.actions}>
                         <Button onClick={() => prevHandler(`${image.id}`)} shape="circle">
                             <ArrowLeftOutlined />
                         </Button>

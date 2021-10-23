@@ -26,7 +26,6 @@ const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizeIds}) => {
             >
                 <InputNumber
                     style={{width: "100%"}}
-                    type="number"
                     min={0}
                     keyboard={false}
                     placeholder="Введите отображаемую стоимость"

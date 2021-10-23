@@ -2,7 +2,7 @@ import React from "react"
 import {Typography, Form, Input, Button, Divider} from "antd"
 import {MinusCircleOutlined, PlusOutlined} from "@ant-design/icons"
 import {useSelectSizeById} from "admin/store/common/size/sizeSelectors"
-import "./MeasurementsSection.less"
+import styles from "./MeasurementsSection.module.less"
 import {Element} from "react-scroll"
 
 const {Title} = Typography
@@ -25,15 +25,15 @@ const MeasurementsSection: React.FC<MeasurementsSectionProps> = ({selectedSizeId
         <Element name="measurements">
             <Divider />
             <Title level={3}>Обмеры</Title>
-            <div className="measurements">
+            <div className={styles.measurements}>
                 <Form.List name="measurements">
                     {(fields, {add, remove}) => (
                         <>
-                            <div className="measurements-container">
-                                <table className="table-measurements">
+                            <div className={styles.container}>
+                                <table className={styles.table}>
                                     <thead>
                                         <tr>
-                                            <th className="left">Размеры</th>
+                                            <th className={styles.left}>Размеры</th>
                                             {selectedSizeIds.map(sizeId => (
                                                 <th key={`tr-size-${sizeId}`}>
                                                     <TdSizeTitle sizeId={sizeId} />
@@ -45,7 +45,7 @@ const MeasurementsSection: React.FC<MeasurementsSectionProps> = ({selectedSizeId
                                         {fields.map(field => (
                                             <tr key={`tr-size-${field.key}`}>
                                                 <td key={`td-title-${field.key}`}>
-                                                    <div className="title">
+                                                    <div className={styles.title}>
                                                         <Form.Item
                                                             hidden
                                                             {...field}
@@ -104,7 +104,7 @@ const MeasurementsSection: React.FC<MeasurementsSectionProps> = ({selectedSizeId
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="action">
+                            <div className={styles.action}>
                                 <Button
                                     type="dashed"
                                     icon={<PlusOutlined />}

@@ -6,22 +6,24 @@ import {Element} from "react-scroll"
 const {Title} = Typography
 
 interface StatusPublishingSectionProps {
-    clearHomePositon: () => void
+    clearHomePosition: () => void
     homePosition?: number
 }
 
-const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = ({
-    clearHomePositon,
-    homePosition
-}) => {
+const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = (
+    {
+        clearHomePosition,
+        homePosition
+    }
+) => {
     const [isHome, setIsHome] = useState(!!homePosition || false)
     const {data, isLoading} = useGetFreeHomePositionsQuery(homePosition || 0)
 
     const onChangeHandler = () => setIsHome(prevState => !prevState)
 
     useEffect(() => {
-        if (!isHome) clearHomePositon()
-    }, [isHome, clearHomePositon])
+        if (!isHome) clearHomePosition()
+    }, [isHome, clearHomePosition])
 
     return (
         <Element name="status-publishing">
@@ -66,11 +68,11 @@ const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = ({
                         placeholder="Выберите позицию"
                     >
                         {data &&
-                            data.map(postition => (
-                                <Select.Option value={postition} key={postition}>
-                                    {postition} позиция
-                                </Select.Option>
-                            ))}
+                        data.map(position => (
+                            <Select.Option value={position} key={position}>
+                                {position} позиция
+                            </Select.Option>
+                        ))}
                     </Select>
                 </Form.Item>
             </div>

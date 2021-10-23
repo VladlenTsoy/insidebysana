@@ -1,8 +1,8 @@
 const Model = require("../../../config/knex.config")
 const moment = require("moment")
 
-class HomeProduct extends Model {
-    static tableName = "home_products"
+class ProductSize extends Model {
+    static tableName = "product_sizes"
 
     $beforeInsert() {
         this.created_at = moment().format("YYYY-MM-DD HH:mm:ss")
@@ -14,4 +14,4 @@ class HomeProduct extends Model {
     }
 }
 
-module.exports = {HomeProduct}
+module.exports = {ProductSize}

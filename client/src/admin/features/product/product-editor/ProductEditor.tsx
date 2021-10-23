@@ -1,13 +1,12 @@
 import {Col, Row, Form, Button} from "antd"
 import React, {useCallback, useEffect, useState} from "react"
 import LeftSidebar from "./left-sidebar/LeftSidebar"
-import "./ProductEditor.less"
 import BaseSection from "./content/BaseSection"
 import PropertiesSection from "./content/PropertiesSection"
 import PriceQtySection from "./content/PriceQtySection"
 import PhotosSection from "../../photos-section/PhotosSection"
 import StatusPublishingSection from "./content/StatusPublishingSection"
-import MeasurementsSection from "./content/MeasurementsSection"
+import MeasurementsSectionModule from "./content/MeasurementsSection"
 import HeaderPage from "admin/components/header-page/HeaderPage"
 import ContainerPage from "admin/components/container-page/ContainerPage"
 import {Moment} from "moment"
@@ -139,8 +138,8 @@ const CreateProduct: React.FC = () => {
     } : data : basicValues
 
     return (
-        <div className="create-product-page"
-             key={params.id ? params?.color ? `edit-product-color-${params.id}` : `edit-product-${params.id}` : "create-product"}>
+        <div
+            key={params.id ? params?.color ? `edit-product-color-${params.id}` : `edit-product-${params.id}` : "create-product"}>
             <HeaderPage
                 title={params.id ? `Изменить товар` : `Добавить товар`}
                 action={
@@ -176,9 +175,9 @@ const CreateProduct: React.FC = () => {
                                 <PropertiesSection />
                                 <PriceQtySection selectedSizeIds={selectedSizeIds} />
                                 <PhotosSection imageUrls={imageUrls} setImageUrl={setImageUrl} />
-                                <MeasurementsSection selectedSizeIds={selectedSizeIds} />
+                                <MeasurementsSectionModule selectedSizeIds={selectedSizeIds} />
                                 <StatusPublishingSection
-                                    clearHomePositon={clearHomePosition}
+                                    clearHomePosition={clearHomePosition}
                                     homePosition={initValues?.home_position}
                                 />
                             </Form>

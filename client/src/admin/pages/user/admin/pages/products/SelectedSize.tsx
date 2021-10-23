@@ -29,7 +29,6 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     ]}
                 >
                     <InputNumber
-                        type="number"
                         min={0}
                         keyboard={false}
                         placeholder={`Количество ${size?.title}`}
@@ -49,7 +48,6 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     ]}
                 >
                     <InputNumber
-                        type="number"
                         min={0}
                         keyboard={false}
                         placeholder={`Себестоимость ${size?.title}`}
@@ -69,7 +67,6 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     ]}
                 >
                     <InputNumber
-                        type="number"
                         min={0}
                         keyboard={false}
                         placeholder={`Мин. остаток ${size?.title}`}

@@ -72,3 +72,73 @@ h1 {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
+///
+h1.ant-typography,
+h3.ant-typography {
+    font-weight: 500;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #f1f4f5;
+    margin: 3em 0 2rem;
+    padding: 0;
+}
+
+.ant-form-vertical .ant-form-item-label,
+.ant-col-24.ant-form-item-label,
+.ant-col-xl-24.ant-form-item-label {
+    padding: 0 0 4px;
+
+    label {
+        height: 30px;
+    }
+}
+
+.ant-select-multiple .ant-select-selection-item {
+    overflow: visible;
+    background-color: fade(@blue-color, 20%);
+    color: @blue-color;
+    margin-inline-end: 14px;
+
+    .ant-select-selection-item-content {
+        margin-right: 12px;
+    }
+
+    .ant-select-selection-item-remove {
+        cursor: pointer;
+        background: @error-color;
+        position: absolute;
+        border-radius: 50%;
+        color: @white;
+        height: 20px;
+        width: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: -10px;
+        overflow: visible;
+        border: 2px solid @white;
+        transform: translateY(25%);
+
+        > .anticon {
+            line-height: 0;
+            vertical-align: middle;
+        }
+    }
+}
+
+.ant-btn.blue {
+    background-color: @blue-color;
+    border-color: @blue-color;
+}
+
+.ant-btn > span {
+    text-shadow: none;
+}

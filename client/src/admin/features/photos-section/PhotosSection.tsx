@@ -1,7 +1,7 @@
 import React, {Dispatch, SetStateAction, useCallback, useEffect, useRef} from "react"
 import {Divider, Typography} from "antd"
 import {Element} from "react-scroll"
-import "./PhotosSection.less"
+import styles from "./PhotosSection.module.less"
 import {
     DragDropContext,
     Droppable,
@@ -35,7 +35,8 @@ const PhotosSection: React.FC<PhotosSectionProps> = ({imageUrls, setImageUrl}) =
     const lift = (quoteId: string): any => {
         const api = sensorAPIRef.current
         if (!api) return null
-        const preDrag = api.tryGetLock(quoteId, () => {})
+        const preDrag = api.tryGetLock(quoteId, () => {
+        })
 
         if (!preDrag) return null
         return preDrag.snapLift()
@@ -132,14 +133,14 @@ const PhotosSection: React.FC<PhotosSectionProps> = ({imageUrls, setImageUrl}) =
         <Element name="photos" className="photos">
             <Divider />
             <Title level={3}>Фотографии</Title>
-            <div className="drag-drop-photos">
+            <div className={styles.dragDropPhotos}>
                 <DragDropContext onDragEnd={onDragEnd} sensors={[api => (sensorAPIRef.current = api)]}>
                     <Droppable droppableId="list" direction="horizontal">
                         {provided => (
                             <div
                                 ref={provided.innerRef}
                                 {...provided.droppableProps}
-                                className="droppable-photos"
+                                className={styles.droppablePhotos}
                             >
                                 {imageUrls.map((image, key) => (
                                     <Draggable draggableId={`${image.id}`} key={image.id} index={key}>

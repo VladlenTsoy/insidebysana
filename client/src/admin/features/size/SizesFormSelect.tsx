@@ -5,14 +5,18 @@ import {useGetAllSizesQuery} from "./sizeApi"
 const {Option} = Select
 
 interface SizesFormSelectProps {
-    onChange?: (e: any) => void
+    onChange?: (e: any) => void;
 }
 
 const SizesFormSelect: React.FC<SizesFormSelectProps> = ({onChange}) => {
     const {data, isLoading} = useGetAllSizesQuery()
 
     return (
-        <Form.Item label="Размеры" name="sizes" rules={[{required: true, message: "Выберите размер!"}]}>
+        <Form.Item
+            label="Размеры"
+            name="sizes"
+            rules={[{required: true, message: "Выберите размер!"}]}
+        >
             <Select
                 showSearch
                 mode="multiple"
@@ -23,7 +27,11 @@ const SizesFormSelect: React.FC<SizesFormSelectProps> = ({onChange}) => {
             >
                 {data &&
                     data.map(size => (
-                        <Option value={String(size.id)} key={`tag-${size.id}`} label={size.title}>
+                        <Option
+                            value={String(size.id)}
+                            key={`tag-${size.id}`}
+                            label={size.title}
+                        >
                             {size.title}
                         </Option>
                     ))}
@@ -31,4 +39,4 @@ const SizesFormSelect: React.FC<SizesFormSelectProps> = ({onChange}) => {
         </Form.Item>
     )
 }
-export default SizesFormSelect
+export default React.memo<SizesFormSelectProps>(SizesFormSelect)

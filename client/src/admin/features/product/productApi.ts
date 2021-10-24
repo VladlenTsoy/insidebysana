@@ -1,12 +1,13 @@
 import {createApi} from "@reduxjs/toolkit/query/react"
 import baseQuery from "utils/apiConfig"
+import {CreateDataParams, EditDataParams, SelectProductsFilterParams} from "../../types/Product"
 
 export const productApi = createApi({
     reducerPath: "productApi",
     baseQuery,
     tagTypes: ["product"],
     endpoints: build => ({
-        getAllProducts: build.mutation<any, any>({
+        getAllProducts: build.mutation<any, SelectProductsFilterParams>({
             query: body => ({
                 url: `user/admin/product-colors/table`,
                 method: "post",
@@ -14,17 +15,17 @@ export const productApi = createApi({
             }),
             invalidatesTags: ["product"]
         }),
-        createProduct: build.mutation<any, Partial<any>>({
+        createProduct: build.mutation<{status: string}, Partial<CreateDataParams>>({
             query: body => ({
-                url: `user/admin/new/product`,
+                url: `user/admin/product`,
                 method: "post",
                 body
             }),
             invalidatesTags: ["product"]
         }),
-        editProduct: build.mutation<any, Partial<any>>({
+        editProduct: build.mutation<{status: string}, Partial<EditDataParams>>({
             query: body => ({
-                url: `user/admin/new/product/edit/${body.id}`,
+                url: `user/admin/product/edit/${body.id}`,
                 method: "post",
                 body
             }),
@@ -32,7 +33,7 @@ export const productApi = createApi({
         }),
         getProductById: build.query<any, string>({
             query: id => ({
-                url: `user/admin/new/product/${id}`,
+                url: `user/admin/product/${id}`,
                 method: "get"
             }),
             providesTags: ["product"]

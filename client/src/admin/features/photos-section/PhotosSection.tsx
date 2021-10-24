@@ -14,7 +14,7 @@ import PhotoBlock from "./PhotoBlock"
 import AddPhotoBlock from "./AddPhotoBlock"
 import {getBase64} from "utils/getBase64"
 import {useDeletePhotoMutation, useUploadPhotoMutation} from "./photoApi"
-import {TemporaryImageType} from "../product/product-editor/ProductEditor"
+import {TemporaryImageType} from "../../types/Product"
 
 const {Title} = Typography
 

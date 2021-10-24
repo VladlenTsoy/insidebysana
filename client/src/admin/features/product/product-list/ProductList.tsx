@@ -6,17 +6,6 @@ import {columns} from "./Columns"
 import Header from "./header/Header"
 import {useGetParams} from "../useGetParams"
 
-type StatusType = "all" | "draft" | "published" | "ending" | "archive"
-
-export interface ParamsProps {
-    type: StatusType | string
-    search: string
-    categoryIds: number[]
-    sizeIds: number[]
-    sorter: {field: string; order: "ascend" | "descend"}
-    pagination: {current: number; pageSize: number}
-}
-
 const ProductList: React.FC = () => {
     const {params, updateParams} = useGetParams()
     const [fetchProductColors, {isLoading, data}] = useGetAllProductsMutation()

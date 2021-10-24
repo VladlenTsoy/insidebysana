@@ -27,7 +27,7 @@ const GetAllPaginate = async (req, res) => {
         } = req.body
 
         const productColorsRef = ProductColor.query()
-            .withGraphFetched(`[details, tags, color, discount, category]`)
+            .withGraphFetched(`[details, tags, color, discount, category, test_sizes]`)
             .modify("filterSubCategoryIn", categoryIds)
             .modify("filterSizes", sizeIds)
             .whereRaw(`product_colors.title LIKE '%${search}%'`)
@@ -41,6 +41,7 @@ const GetAllPaginate = async (req, res) => {
                 "product_colors.status"
             )
 
+        // Сортировка
         const order = sorter.order === "ascend" ? "asc" : "desc"
 
         // Сортировка по кол-ву размеров в цвете JSON
@@ -63,9 +64,9 @@ const GetAllPaginate = async (req, res) => {
             else productColorsRef.orderBy(sorter.field, order)
         }
 
+        // Условия
         if (type !== "all") {
             productColorsRef
-                .where("product_colors.hide_id", null)
                 .where("product_colors.status", type)
         }
 
@@ -73,63 +74,6 @@ const GetAllPaginate = async (req, res) => {
             pagination.current - 1,
             pagination.pageSize
         )
-
-        return res.send(productColors)
-    } catch (e) {
-        logger.error(e.stack)
-        return res.status(500).send({message: e.message})
-    }
-}
-
-/**
- *
- * @param req
- * @param res
- * @return {Promise<*>}
- * @constructor
- */
-const Hide = async (req, res) => {
-    try {
-        const {productColorId} = req.params
-        const user = req.user
-
-        await ProductColor.query().updateAndFetchById(productColorId, {
-            hide_id: user.id
-        })
-
-        return res.send(productColorId)
-    } catch (e) {
-        logger.error(e.stack)
-        return res.status(500).send({message: e.message})
-    }
-}
-
-/**
- * Вывод продуктов из корзины
- * @param req
- * @param res
- * @returns {Promise<*>}
- * @constructor
- */
-const GetFromTrash = async (req, res) => {
-    try {
-        const productColors = await ProductColor.query()
-            .withGraphFetched(
-                `[
-                details(),
-                tags(),
-                color(),
-                discount(),
-                category(),
-            ]`
-            )
-            .where("product_colors.hide_id", "IS NOT", null)
-            .select(
-                "product_colors.id",
-                "product_colors.thumbnail",
-                "product_colors.created_at",
-                "sizes"
-            )
 
         return res.send(productColors)
     } catch (e) {
@@ -207,34 +151,6 @@ const Delete = async (req, res) => {
     }
 }
 
-const Return = async (req, res) => {
-    try {
-        const {productColorId} = req.params
-        await ProductColor.query()
-            .findById(productColorId)
-            .update({hide_id: null})
-        return res.send({status: "success"})
-    } catch (e) {
-        logger.error(e.stack)
-        return res.status(500).send({message: e.message})
-    }
-}
-
-const UpdateIsNew = async (req, res) => {
-    try {
-        const {productColorId} = req.params
-        const {isNew} = req.body
-
-        await ProductColor.query()
-            .findById(productColorId)
-            .update({is_new: isNew})
-        return res.send({status: "success"})
-    } catch (e) {
-        logger.error(e.stack)
-        return res.status(500).send({message: e.message})
-    }
-}
-
 const GetImagesById = async (req, res) => {
     try {
         const {id} = req.params
@@ -251,11 +167,7 @@ const GetImagesById = async (req, res) => {
 
 module.exports = {
     GetAllPaginate,
-    Hide,
     GetBySearch,
-    GetFromTrash,
     Delete,
-    Return,
-    UpdateIsNew,
     GetImagesById
 }

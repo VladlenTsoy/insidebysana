@@ -1,6 +1,6 @@
 import {useHistory} from "react-router-dom"
 import {useCallback, useEffect, useState} from "react"
-import {ParamsProps} from "./product-list/ProductList"
+import {SelectProductsFilterParams} from "../../types/Product"
 
 const PAGE_CURRENT = 1
 const PAGE_SIZE = 50
@@ -35,7 +35,7 @@ export const useGetParams = () => {
         current,
         pageSize
     } = selectParams(history.location)
-    const [params, setParams] = useState<ParamsProps>({
+    const [params, setParams] = useState<SelectProductsFilterParams>({
         type: status,
         search: search,
         categoryIds: categoryIds,

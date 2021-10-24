@@ -5,9 +5,7 @@ const StatusController = require("controllers/crm/admin/StatusController")
 const OrderController = require("controllers/crm/admin/OrderController")
 const CategoryController = require("controllers/crm/admin/settings/CategoryController")
 const ProductController = require("controllers/crm/admin/ProductController")
-const ProductDiscountController = require("controllers/crm/admin/ProductDiscountController")
 const ProductColorController = require("controllers/crm/admin/ProductColorController")
-const ProductColorPrintController = require("controllers/crm/admin/ProductColorPrintController")
 const ProductColorImageController = require("controllers/crm/admin/ProductColorImageController")
 const ClientController = require("controllers/crm/admin/ClientController")
 const SourceController = require("controllers/crm/admin/settings/SourceController")
@@ -106,60 +104,6 @@ router.patch("/size/:id/display", SizeController.Display)
 router.get("/filter/categories", CategoryController.GetByFilter)
 // Вывод всех используемых размеров
 router.get("/filter/sizes", SizeController.GetByFilter)
-
-
-// Поиск продукта
-router.post("/product-colors", ProductColorController.GetBySearch)
-// Создание продукта
-// router.post("/product", ProductController.Create)
-// НОВИНКА Создание продукта
-router.post("/new/product", ProductController.Create)
-// НОВИНКА Вывод продукта по id
-router.get("/new/product/:id", ProductController.GetById)
-// Новинка редактировать продукта по id
-router.post("/new/product/edit/:id", ProductController.EditById)
-// Вывод всех продуктов
-router.post("/product-colors/table", ProductColorController.GetAllPaginate)
-// Вывод цветов из корзины
-router.post("/product-colors/trash/table", ProductColorController.GetFromTrash)
-// Вывод картинок продуктов
-router.get("/product-color/:id/images", ProductColorController.GetImagesById)
-// Вывод продукта для редактирования по ID
-// router.get("/product/:id", ProductController.CreateValidate, ProductController.GetById)
-// Редактировать продукт
-// router.post("/product/:id", ProductController.EditValidate, ProductController.EditById)
-// Изменить скидку
-router.post("/product/:productColorId/discount", ProductDiscountController.Update)
-// Скрыть товар
-router.delete("/product/:productColorId/hide", ProductColorController.Hide)
-// Изменить статус новинки
-router.patch("/product/:productColorId/is-new", ProductColorController.UpdateIsNew)
-// Удаление товара
-router.delete("/product/:productColorId", ProductColorController.Delete)
-// Вернуть продукт
-router.post("/product/:productColorId/return", ProductColorController.Return)
-
-// Загрузка картинок для печати
-router.post(
-    "/product-color/:productColorId/print/upload",
-    upload.single("image"),
-    ProductColorPrintController.Upload
-)
-// Удаление картинки для печати
-router.delete("/product-color-print/:id", ProductColorPrintController.Delete)
-// Вывод картинок для печати по ProductColorId
-router.get("/product-color/:productColorId/prints", ProductColorPrintController.GetByProductColorId)
-
-// Загрузка картинок
-router.post(
-    "/product-color/:productColorId/image/upload",
-    upload.single("image"),
-    ProductColorImageController.Upload
-)
-// Удаление картинки
-router.delete("/product-color-image/:id", ProductColorImageController.Delete)
-// Вывод картинок по ProductColorId
-// router.get("/product-color/:productColorId/images", ProductColorImageController.GetByProductColorId)
 
 // Вывод клинентов по поиску
 router.post("/clients", ClientController.GetBySearch)
@@ -278,5 +222,35 @@ router.patch("/home-product/:id", HomeProductController.Edit)
 router.delete("/home-product/:id", HomeProductController.Delete)
 // Выбрать свободные позиции на главной странице
 router.get("/home-position/free/:position", HomeProductController.GetFree)
+
+
+
+/*** NEW ***/
+
+// Поиск продукта
+router.post("/product-colors", ProductColorController.GetBySearch)
+// Создание продукта
+router.post("/product", ProductController.Create)
+// Вывод продукта по id
+router.get("/product/:id", ProductController.GetById)
+// редактировать продукта по id
+router.post("/product/edit/:id", ProductController.EditById)
+// Вывод всех продуктов
+router.post("/product-colors/table", ProductColorController.GetAllPaginate)
+// Удаление товара
+router.delete("/product/:productColorId", ProductColorController.Delete)
+// Вывод картинок продуктов
+router.get("/product-color/:id/images", ProductColorController.GetImagesById)
+// Загрузка картинок
+router.post(
+    "/product-color/:productColorId/image/upload",
+    upload.single("image"),
+    ProductColorImageController.Upload
+)
+// Удаление картинки
+router.delete("/product-color-image/:id", ProductColorImageController.Delete)
+
+
+
 
 module.exports = router

@@ -1,4 +1,3 @@
-import {useSelectAllSizes} from "admin/store/common/size/sizeSelectors"
 import React from "react"
 import styles from "./Sizes.module.less"
 import cn from "classnames"
@@ -8,24 +7,18 @@ interface SizesProps {
 }
 
 const Sizes: React.FC<SizesProps> = ({product}) => {
-    const sizes = useSelectAllSizes()
-
     return (
         <div className={styles.sizes}>
-            {Object.keys(product.sizes_props).map((key: any) => {
-                const size = product.sizes_props[key]
-                const selectSize = sizes.find(
-                    (size: any) => size.id === Number(key)
-                )
+            {product.test_sizes.map((size: any) => {
                 return (
                     <div
-                        key={key}
+                        key={size.id}
                         className={cn(styles.size, {
                             [styles.danger]: size.qty <= 0,
                             [styles.warning]: size.qty <= size.min_qty
                         })}
                     >
-                        <b>{selectSize?.title}</b>
+                        <b>{size.title}</b>
                         <span
                             className={cn(styles.size, {
                                 [styles.danger]: size.qty <= 0,

@@ -8,35 +8,6 @@ class ProductColor extends Model {
     static jsonAttributes = ["sizes", "tags_id", "sizes_props"]
     static hidden = ["thumbnail"]
 
-    static get jsonSchema() {
-        return {
-            type: "object",
-            // required: ['product_id', 'color_id', 'images', 'sizes'],
-            properties: {
-                id: {type: "integer"},
-                product_id: {type: "number"},
-                color_id: {type: "number"},
-                thumbnail: {type: ["string", null]},
-                sizes: {type: ["array"]},
-                sizes_props: {
-                    type: "object",
-                    properties: {
-                        type: {
-                            type: "string"
-                        },
-                        value: {
-                            qty: {type: "number"},
-                            min_qty: {type: "number"},
-                            cost_price: {type: "number"}
-                        }
-                    }
-                },
-                created_at: {type: "string"},
-                updated_at: {type: "string"}
-            }
-        }
-    }
-
     url_thumbnail() {
         if (this.thumbnail) return `${process.env.APP_URL}/${this.thumbnail}`
     }
@@ -163,6 +134,7 @@ class ProductColor extends Model {
         const {Category} = require("../settings/Category")
         const {ProductDiscount} = require("./ProductDiscount")
         const {ProductMeasurement} = require("./ProductMeasurement")
+        const {ProductSize} = require("./ProductSize")
 
         return {
             details: {
@@ -190,15 +162,12 @@ class ProductColor extends Model {
             },
             colors: {
                 filter: query =>
-                    query
-                        .where("product_colors.thumbnail", "IS NOT", null)
-                        .where("product_colors.hide_id", null)
-                        .select(
-                            "colors.id",
-                            "colors.title",
-                            "colors.hex",
-                            "product_colors.id as product_id"
-                        ),
+                    query.select(
+                        "colors.id",
+                        "colors.title",
+                        "colors.hex",
+                        "product_colors.id as product_id"
+                    ),
                 relation: Model.ManyToManyRelation,
                 modelClass: Color,
                 join: {
@@ -218,6 +187,25 @@ class ProductColor extends Model {
                 join: {
                     from: "product_colors.color_id",
                     to: "colors.id"
+                }
+            },
+            test_sizes: {
+                filter: query =>
+                    query
+                        .join("sizes", "sizes.id", "product_sizes.size_id")
+                        .select(
+                            "sizes.title",
+                            "product_sizes.id",
+                            "product_sizes.size_id",
+                            "product_sizes.qty",
+                            "product_sizes.min_qty",
+                            "product_sizes.cost_price"
+                        ).groupBy("id"),
+                relation: Model.HasManyRelation,
+                modelClass: ProductSize,
+                join: {
+                    from: "product_colors.id",
+                    to: "product_sizes.product_color_id"
                 }
             },
             discount: {

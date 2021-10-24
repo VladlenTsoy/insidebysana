@@ -1,19 +1,23 @@
 import React from "react"
 import {Row, Col, Divider, Form, InputNumber} from "antd"
-import {useSelectSizeById} from "../../../../../store/common/size/sizeSelectors"
+import {useGetAllSizesQuery} from "../../../../../features/size/sizeApi"
 
 interface SelectedSizeProps {
-    selectSizeId: string
+    selectSizeId: string;
 }
 
 const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
+    const {data} = useGetAllSizesQuery()
     const sizeIndex = String(selectSizeId)
-    const size = useSelectSizeById(Number(selectSizeId))
+    const size = data && data.find(val => val.id === Number(selectSizeId))
 
     return (
         <Row gutter={28}>
             <Col span={24}>
-                <Divider style={{margin: 0, marginBottom: "0.5rem"}} orientation="left">
+                <Divider
+                    style={{margin: 0, marginBottom: "0.5rem"}}
+                    orientation="left"
+                >
                     {size?.title}
                 </Divider>
             </Col>

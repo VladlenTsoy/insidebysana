@@ -14,16 +14,16 @@ const GetAll = async (req, res) => {
         const products = await ProductColor.query()
             .join("products", "products.id", "product_colors.product_id")
             .join("colors", "colors.id", "product_colors.color_id")
-            .join("home_products", "home_products.product_color_id", "product_colors.id")
-            .whereRaw(`product_colors.id IN (SELECT home_products.product_color_id FROM home_products)`)
+            .join("product_home_positions", "product_home_positions.product_color_id", "product_colors.id")
+            .whereRaw(`product_colors.id IN (SELECT product_home_positions.product_color_id FROM product_home_positions)`)
             .orderByRaw(`FIELD(product_colors.id, ${ids.reverse().join(",")})`)
             .select(
-                "home_products.id",
-                "home_products.product_color_id",
+                "product_home_positions.id",
+                "product_home_positions.product_color_id",
                 "product_colors.thumbnail",
                 "products.title",
                 "products.price",
-                "home_products.position",
+                "product_home_positions.position",
                 "colors.title as color_title"
             )
         return res.send(products)
@@ -46,15 +46,15 @@ const Create = async (req, res) => {
         const product = await ProductColor.query()
             .join("products", "products.id", "product_colors.product_id")
             .join("colors", "colors.id", "product_colors.color_id")
-            .join("home_products", "home_products.product_color_id", "product_colors.id")
+            .join("product_home_positions", "product_home_positions.product_color_id", "product_colors.id")
             .findOne("product_colors.id", product_color_id)
             .select(
-                "home_products.id",
-                "home_products.product_color_id",
+                "product_home_positions.id",
+                "product_home_positions.product_color_id",
                 "product_colors.thumbnail",
                 "products.title",
                 "products.price",
-                "home_products.position",
+                "product_home_positions.position",
                 "colors.title as color_title"
             )
         return res.send(product)
@@ -78,15 +78,15 @@ const Edit = async (req, res) => {
         const product = await ProductColor.query()
             .join("products", "products.id", "product_colors.product_id")
             .join("colors", "colors.id", "product_colors.color_id")
-            .join("home_products", "home_products.product_color_id", "product_colors.id")
+            .join("product_home_positions", "product_home_positions.product_color_id", "product_colors.id")
             .findOne("product_colors.id", product_color_id)
             .select(
-                "home_products.id",
-                "home_products.product_color_id",
+                "product_home_positions.id",
+                "product_home_positions.product_color_id",
                 "product_colors.thumbnail",
                 "products.title",
                 "products.price",
-                "home_products.position",
+                "product_home_positions.position",
                 "colors.title as color_title"
             )
         return res.send(product)

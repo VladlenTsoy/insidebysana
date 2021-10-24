@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react"
 import {BackTop, Button, Layout as AntdLayout, Menu} from "antd"
-import {NavigationItemProps} from "./header/navigation/Navigation"
 import {Link, useHistory, useLocation} from "react-router-dom"
 import {useScreenWindow} from "../hooks/use-screen-window.effect"
 import styles from "./Layout.module.less"

@@ -6,6 +6,7 @@ const ImageService = require("services/image/ImageService")
 const {logger} = require("config/logger.config")
 const {ProductHomePosition} = require("models/products/ProductHomePosition")
 const {ProductSize} = require("models/products/ProductSize")
+const {ProductColorImage} = require("models/products/ProductColorImage")
 
 const PATH_TO_FOLDER_TMP = "../../../public/images/tmp"
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/product-colors"
@@ -22,7 +23,7 @@ const Create = async (req, res) => {
                 price: data.price,
                 properties: data.properties || []
             })
-            productId = productRef.od
+            productId = productRef.id
         }
         // Найти или создать тег по названию
         const tagsId = await ProductTagService.FindOrCreate(data.tags_id)
@@ -97,7 +98,7 @@ const Create = async (req, res) => {
                 position: data.home_position
             })
 
-        return res.send(productColor)
+        return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
         return res.status(500).send({message: e.message})
@@ -111,8 +112,8 @@ const GetById = async (req, res) => {
             .findById(id)
             .join("products", "products.id", "product_colors.product_id")
             .leftJoin(
-                "home_products",
-                "home_products.product_color_id",
+                "product_home_positions",
+                "product_home_positions.product_color_id",
                 "product_colors.id"
             )
             .withGraphFetched(`[measurements, images, colors]`)
@@ -129,7 +130,7 @@ const GetById = async (req, res) => {
                 "products.properties",
                 "product_colors.product_id",
                 "products.price",
-                "home_products.position as home_position"
+                "product_home_positions.position as home_position"
             )
         return res.send(product)
     } catch (e) {
@@ -218,7 +219,7 @@ const EditById = async (req, res) => {
                 .findOne({product_color_id: productColor.id})
                 .delete()
 
-        return res.send(productColor)
+        return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
         return res.status(500).send({message: e.message})

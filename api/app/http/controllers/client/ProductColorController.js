@@ -231,7 +231,7 @@ const GetNew = async (req, res) => {
             .join("products", "products.id", "product_colors.product_id")
             .where("product_colors.hide_id", null)
             .where("product_colors.thumbnail", "IS NOT", null)
-            .whereRaw(`product_colors.id IN (SELECT home_products.product_color_id FROM home_products)`)
+            .whereRaw(`product_colors.id IN (SELECT product_home_positions.product_color_id FROM product_home_positions)`)
             .whereRaw(
                 `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
             )

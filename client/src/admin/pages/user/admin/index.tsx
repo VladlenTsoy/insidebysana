@@ -3,7 +3,6 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom"
 import Layout from "admin/layouts/Layout"
 import {LoadingBlock} from "admin/lib/ui"
 import EventsProvider from "admin/lib/providers/events-provider/EventsProvider"
-import {useUser} from "admin/hooks/use-user"
 
 const Home = React.lazy(() => import("./pages/home/Home"))
 const Orders = React.lazy(() => import("./pages/orders/Orders"))
@@ -22,7 +21,6 @@ const CreateProduct = React.lazy(
 )
 
 const Index: React.FC = () => {
-    const {user} = useUser()
     return (
         <EventsProvider>
             <Router>

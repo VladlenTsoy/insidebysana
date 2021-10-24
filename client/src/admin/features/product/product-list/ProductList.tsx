@@ -20,18 +20,20 @@ const ProductList: React.FC = () => {
     }
 
     const onCategoryIdsHandler = useCallback(
-        (categoryId?: number) =>
-            updateParams("categoryIds", categoryId),
+        (categoryId?: number) => updateParams("categoryIds", categoryId),
         [updateParams]
     )
 
-    const onSizeIdsHandler = useCallback((sizeId?: number) =>
-            updateParams("sizeIds", sizeId),
+    const onSizeIdsHandler = useCallback(
+        (sizeId?: number) => updateParams("sizeIds", sizeId),
         [updateParams]
     )
 
     useEffect(() => {
-        fetchProductColors(params)
+        const promise = fetchProductColors(params)
+        return () => {
+            promise.abort()
+        }
     }, [fetchProductColors, params])
 
     return (
@@ -54,7 +56,11 @@ const ProductList: React.FC = () => {
                     dataSource={data ? data.results : []}
                     columns={columns}
                     onChange={onChangeHandler}
-                    pagination={{...params.pagination, total: data?.total || 0, size: "default"}}
+                    pagination={{
+                        ...params.pagination,
+                        total: data?.total || 0,
+                        size: "default"
+                    }}
                     rowClassName="row-product"
                 />
             </div>

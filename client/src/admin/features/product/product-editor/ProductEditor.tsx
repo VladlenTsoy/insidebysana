@@ -30,6 +30,9 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
     >([])
     const [images, setImages] = useState<TemporaryImageType[]>([])
     const params = useParams<{id: string, color?: string}>()
+    const [isHomePosition, setIsHomePosition] = useState<boolean>(
+        product?.home_position && !params.color
+    )
     const history = useHistory()
     const [
         createProduct,
@@ -46,6 +49,12 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
             e.map(val => ({title: val.label, id: Number(val.value)}))
         )
     }, [])
+
+    //
+    const toggleIsHomePosition = useCallback(
+        () => setIsHomePosition(prevState => !prevState),
+        []
+    )
 
     // Очистить позицию
     const clearHomePosition = useCallback(
@@ -80,6 +89,7 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
         if (product) {
             form.resetFields()
             if (params.color) {
+                setIsHomePosition(false)
                 setImages([])
                 setSelectedSizes([])
                 form.setFieldsValue({
@@ -91,6 +101,7 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                 })
             } else {
                 form.setFieldsValue(product)
+                setIsHomePosition(!!product.home_position)
                 setSelectedSizes(
                     Object.values(product.size_props).map((size: any) => ({
                         id: size.size_id,
@@ -155,8 +166,10 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                                 selectedSizes={selectedSizes}
                             />
                             <StatusPublishingSection
-                                clearHomePosition={clearHomePosition}
                                 homePosition={product?.home_position}
+                                clearHomePosition={clearHomePosition}
+                                isHomePosition={isHomePosition}
+                                toggleIsHomePosition={toggleIsHomePosition}
                             />
                         </Form>
                     </Col>

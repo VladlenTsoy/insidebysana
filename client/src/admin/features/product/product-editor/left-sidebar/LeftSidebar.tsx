@@ -104,18 +104,21 @@ const LeftSidebar: React.FC<LeftSidebarProps> = ({colors}) => {
                             Статус & Публикация
                         </Link>
                     </nav>
-                    {colors && colors.map(
-                        color =>
-                            color.product_id !== Number(params.id) && (
-                                <RouteLink
-                                    key={color.id}
-                                    to={`/products/edit/${color.product_id}`}
-                                    className={styles.menuItem}
-                                >
-                                    #{color.product_id} {color.title}
-                                </RouteLink>
-                            )
-                    )}
+                    {!params?.color &&
+                        colors &&
+                        colors.map(
+                            color =>
+                                color.product_id !== Number(params.id) && (
+                                    <RouteLink
+                                        replace
+                                        key={color.id}
+                                        to={`/products/edit/${color.product_id}`}
+                                        className={styles.menuItem}
+                                    >
+                                        #{color.product_id} {color.title}
+                                    </RouteLink>
+                                )
+                        )}
                     {params.id && !params.color && (
                         <div className={styles.menuItem}>
                             <RouteLink to={`/products/edit/${params.id}/color`}>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect} from "react"
 import {Typography, Form, Checkbox, Select, Divider} from "antd"
 import {useGetFreeHomePositionsQuery} from "admin/features/home-position/homePositionApi"
 import {Element} from "react-scroll"
@@ -8,22 +8,23 @@ const {Title} = Typography
 interface StatusPublishingSectionProps {
     clearHomePosition: () => void
     homePosition?: number
+    isHomePosition: boolean
+    toggleIsHomePosition: () => void
 }
 
 const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = (
     {
         clearHomePosition,
-        homePosition
+        homePosition,
+        isHomePosition,
+        toggleIsHomePosition
     }
 ) => {
-    const [isHome, setIsHome] = useState(!!homePosition || false)
     const {data, isLoading} = useGetFreeHomePositionsQuery(homePosition || 0)
 
-    const onChangeHandler = () => setIsHome(prevState => !prevState)
-
     useEffect(() => {
-        if (!isHome) clearHomePosition()
-    }, [isHome, clearHomePosition])
+        if (!homePosition) clearHomePosition()
+    }, [homePosition, clearHomePosition])
 
     return (
         <Element name="status-publishing">
@@ -49,21 +50,21 @@ const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = (
                     </Typography.Text>
                 </Checkbox>
             </Form.Item>
-            <Form.Item style={{marginBottom: ".5rem"}}>
-                <Checkbox onChange={onChangeHandler} defaultChecked={isHome}>
+            <div style={{marginBottom: 24}}>
+                <Checkbox onChange={toggleIsHomePosition} checked={isHomePosition}>
                     На главной
                     <br />
                     <Typography.Text type="secondary">
                         Отображать продукт на главной странице под указанной позицией.
                     </Typography.Text>
                 </Checkbox>
-            </Form.Item>
+            </div>
             <div style={{marginLeft: "1.5rem"}}>
-                <Form.Item name="home_position" rules={[{required: isHome, message: "Выберите позицию!"}]}>
+                <Form.Item name="home_position" rules={[{required: isHomePosition, message: "Выберите позицию!"}]}>
                     <Select
                         size="middle"
                         style={{width: "200px"}}
-                        disabled={!isHome}
+                        disabled={!isHomePosition}
                         loading={isLoading}
                         placeholder="Выберите позицию"
                     >

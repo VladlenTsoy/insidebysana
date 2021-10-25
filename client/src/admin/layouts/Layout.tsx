@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import {BackTop, Button, Layout as AntdLayout, Menu} from "antd"
+import {Button, Layout as AntdLayout, Menu} from "antd"
 import {Link, useHistory, useLocation} from "react-router-dom"
 import {useScreenWindow} from "../hooks/use-screen-window.effect"
 import styles from "./Layout.module.less"
@@ -13,8 +13,7 @@ import {
     MenuUnfoldOutlined,
     SettingOutlined,
     SkinOutlined,
-    TeamOutlined,
-    UpOutlined
+    TeamOutlined
 } from "@ant-design/icons"
 
 const {Header, Sider, Content} = AntdLayout
@@ -111,16 +110,19 @@ const Layout: React.FC = ({children}) => {
                         shape: "circle"
                     })}
                 </Header>
-                <Content className={styles.siteLayoutContent} id="site-layout-content">
+                <Content
+                    className={styles.siteLayoutContent}
+                    id="site-layout-content"
+                >
                     {children}
-                    <BackTop>
-                        <Button
-                            type="primary"
-                            shape="circle"
-                            size="large"
-                            icon={<UpOutlined />}
-                        />
-                    </BackTop>
+                    {/*<BackTop>*/}
+                    {/*    <Button*/}
+                    {/*        type="primary"*/}
+                    {/*        shape="circle"*/}
+                    {/*        size="large"*/}
+                    {/*        icon={<UpOutlined />}*/}
+                    {/*    />*/}
+                    {/*</BackTop>*/}
                 </Content>
             </AntdLayout>
         </AntdLayout>

@@ -5,14 +5,14 @@ export type StatusTypes = "draft" | "published" | "archive" | "ending"
 export interface ProductFormData {
     category_id: number
     color_id: number
-    sizes?: string[]
     title: string
     price: number
     discount?: number
     end_at?: Moment
     home_position?: number
     is_new?: boolean
-    props: {[id: number]: {qty: number, cost_price: number, min_qty: number}}
+    sizes?: number[]
+    size_props: {[id: number]: {qty: number, cost_price: number, min_qty: number}}
     measurements?: {
         id?: undefined | number
         title: string

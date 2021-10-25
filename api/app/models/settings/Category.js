@@ -14,11 +14,10 @@ class Category extends Model {
                             SELECT category_id FROM products 
                             WHERE id IN (
                                 SELECT product_colors.product_id FROM product_colors 
-                                WHERE exists(
-                                    SELECT id FROM sizes 
-                                    WHERE JSON_EXTRACT(product_colors.sizes_props, concat('$."',sizes.id,'".qty')) > 0
+                                WHERE id IN (
+                                    SELECT product_sizes.product_color_id FROM product_sizes 
+                                    WHERE product_sizes.qty > 0
                                 )
-                                AND hide_id IS NULL
                             )
                         )
                     )`
@@ -30,11 +29,10 @@ class Category extends Model {
                         SELECT category_id FROM products 
                         WHERE id IN (
                             SELECT product_colors.product_id FROM product_colors 
-                            WHERE exists(
-                                SELECT id FROM sizes 
-                                WHERE JSON_EXTRACT(product_colors.sizes_props, concat('$."',sizes.id,'".qty')) > 0
+                            WHERE id IN (
+                                SELECT product_sizes.product_color_id FROM product_sizes 
+                                WHERE product_sizes.qty > 0
                             )
-                            AND hide_id IS NULL
                         )
                     )`
                 )

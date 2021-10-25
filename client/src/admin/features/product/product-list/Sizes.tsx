@@ -9,7 +9,7 @@ interface SizesProps {
 const Sizes: React.FC<SizesProps> = ({product}) => {
     return (
         <div className={styles.sizes}>
-            {product.test_sizes.map((size: any) => {
+            {product.sizes.map((size: any) => {
                 return (
                     <div
                         key={size.id}

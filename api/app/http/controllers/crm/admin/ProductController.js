@@ -1,5 +1,8 @@
 const {Product} = require("models/products/Product")
-const {ProductColor} = require("models/products/ProductColor")
+const {
+    ProductColor,
+    ProductColorSelectEdit
+} = require("models/products/ProductColor")
 const ProductMeasurementService = require("services/product/ProductMeasurementService")
 const ProductTagService = require("services/product/ProductTagService")
 const ImageService = require("services/image/ImageService")
@@ -33,24 +36,22 @@ const Create = async (req, res) => {
             product_id: productId,
             color_id: data.color_id,
             thumbnail: null,
-            sizes: data.sizes,
-            sizes_props: data.props,
             status: data.status,
             tags_id: tagsId,
             is_new: data.is_new
         })
         // Создание размеров
         await Promise.all(
-            Object.keys(data.props).map(async key => {
-                const values = data.props[key]
-                await ProductSize.query().insert({
-                    product_color_id: productColor.id,
-                    size_id: key,
-                    qty: values.qty,
-                    min_qty: values.min_qty,
-                    cost_price: values.cost_price
-                })
-            })
+            data.sizes.map(
+                async size =>
+                    await ProductSize.query().insert({
+                        product_color_id: productColor.id,
+                        size_id: size.size_id,
+                        qty: size.qty,
+                        min_qty: size.min_qty,
+                        cost_price: size.cost_price
+                    })
+            )
         )
         // Сохранение картинок
         if (data.images && data.images.length) {
@@ -108,7 +109,7 @@ const Create = async (req, res) => {
 const GetById = async (req, res) => {
     try {
         const {id} = req.params
-        const product = await ProductColor.query()
+        const product = await ProductColorSelectEdit.query()
             .findById(id)
             .join("products", "products.id", "product_colors.product_id")
             .leftJoin(
@@ -116,7 +117,7 @@ const GetById = async (req, res) => {
                 "product_home_positions.product_color_id",
                 "product_colors.id"
             )
-            .withGraphFetched(`[measurements, images, colors]`)
+            .withGraphFetched(`[measurements, images, colors, sizes]`)
             .select(
                 "product_colors.id",
                 "product_colors.title",
@@ -124,8 +125,6 @@ const GetById = async (req, res) => {
                 "product_colors.tags_id",
                 "product_colors.status",
                 "product_colors.is_new",
-                "product_colors.sizes",
-                "product_colors.sizes_props as props",
                 "products.category_id",
                 "products.properties",
                 "product_colors.product_id",
@@ -150,12 +149,28 @@ const EditById = async (req, res) => {
             title: data.title,
             color_id: data.color_id,
             thumbnail: null,
-            sizes: data.sizes,
-            sizes_props: data.props,
             status: data.status,
             tags_id: tagsId,
             is_new: data.is_new
         })
+        // Обновление размеров
+        await Promise.all(
+            data.sizes.map(async size =>
+                size.id
+                    ? await ProductSize.query().findById(size.id).update({
+                          qty: size.qty,
+                          min_qty: size.min_qty,
+                          cost_price: size.cost_price
+                      })
+                    : await ProductSize.query().insert({
+                          product_color_id: productColor.id,
+                          size_id: size.size_id,
+                          qty: size.qty,
+                          min_qty: size.min_qty,
+                          cost_price: size.cost_price
+                      })
+            )
+        )
         // Обновление продукта
         await Product.query().patchAndFetchById(productColor.product_id, {
             category_id: data.category_id,

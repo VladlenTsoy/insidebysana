@@ -26,12 +26,13 @@ export const updateDataForEditor: UpdateDataForEditorType = (
         size: image.imageSize,
         isSaved: image.isSaved
     }))
-    formValues.sizes = Object.keys(values.props).map(key => ({
+    formValues.sizes = Object.keys(values.size_props).map(key => ({
         size_id: Number(key),
-        ...values.props[Number(key)]
+        ...values.size_props[Number(key)]
     }))
     if (id) formValues.id = Number(id)
     if (productId) formValues.product_id = productId
-    delete formValues.props
-    return {...formValues, image: formImages}
+    delete formValues.size_ids
+    delete formValues.size_props
+    return {...formValues, images: formImages}
 }

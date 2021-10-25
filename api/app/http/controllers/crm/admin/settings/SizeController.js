@@ -1,10 +1,9 @@
-const {Size} = require('models/settings/Size')
-const {logger} = require('config/logger.config')
-const {ProductColor} = require('models/products/ProductColor')
-const {raw} = require('objection')
+const {Size} = require("models/settings/Size")
+const {logger} = require("config/logger.config")
+const {ProductColor} = require("models/products/ProductColor")
 
 /**
- *
+ * Создать цвет
  * @param req
  * @param res
  * @returns {Promise<*>}
@@ -23,7 +22,7 @@ const Create = async (req, res) => {
 }
 
 /**
- * Редакьтровать цвет
+ * Редактировать цвет
  * @param req
  * @param res
  * @returns {Promise<*>}
@@ -57,19 +56,26 @@ const Delete = async (req, res) => {
 
         if (productColors.length)
             return res.status(500).send({
-                status: 'warning',
-                message: 'Невозможно удалить! Данный размер используют!'
+                status: "warning",
+                message: "Невозможно удалить! Данный размер используют!"
             })
         //
         else await Size.query().deleteById(id)
 
-        return res.send({status: 'success'})
+        return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
         return res.status(500).send({message: e.message})
     }
 }
 
+/**
+ * Скрыть цвет
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ * @constructor
+ */
 const Hide = async (req, res) => {
     try {
         const {id} = req.params
@@ -84,6 +90,13 @@ const Hide = async (req, res) => {
     }
 }
 
+/**
+ * Отобразить цвет
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ * @constructor
+ */
 const Display = async (req, res) => {
     try {
         const {id} = req.params
@@ -95,24 +108,20 @@ const Display = async (req, res) => {
     }
 }
 
+/**
+ * Вывод размеров для фильтрация
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ * @constructor
+ */
 const GetByFilter = async (req, res) => {
     try {
-        const productSizesId = await ProductColor.query()
-            .whereRaw(
-                `exists(
-                    SELECT id FROM sizes 
-                    WHERE JSON_EXTRACT(product_colors.sizes_props, concat('$."',sizes.id,'".qty')) > 0
-                )`
-            )
-            .select(raw('JSON_KEYS(`sizes_props`) as ids'))
-
-        const ids = productSizesId.reduce(
-            (acc, row) => [...acc, ...row.ids],
-            []
-        )
         const sizes = await Size.query()
-            .whereIn('id', ids)
-            .select('id', 'title')
+            .whereRaw(
+                `id IN (SELECT product_sizes.size_id FROM product_sizes WHERE product_sizes.qty > 0)`
+            )
+            .select("id", "title")
         return res.send(sizes)
     } catch (e) {
         logger.error(e.stack)

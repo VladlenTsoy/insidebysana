@@ -1,15 +1,12 @@
 import React from "react"
 import {Row, Col, Divider, Form, InputNumber} from "antd"
-import {useGetAllSizesQuery} from "../../../../../features/size/sizeApi"
 
 interface SelectedSizeProps {
-    selectSizeId: string;
+    selectSize: {id: number, title: string};
 }
 
-const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
-    const {data} = useGetAllSizesQuery()
-    const sizeIndex = String(selectSizeId)
-    const size = data && data.find(val => val.id === Number(selectSizeId))
+const SelectedSize: React.FC<SelectedSizeProps> = ({selectSize}) => {
+    const sizeIndex = String(selectSize.id)
 
     return (
         <Row gutter={28}>
@@ -18,13 +15,16 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     style={{margin: 0, marginBottom: "0.5rem"}}
                     orientation="left"
                 >
-                    {size?.title}
+                    {selectSize.title}
                 </Divider>
             </Col>
             <Col xl={8}>
+                <Form.Item name={["size_props", sizeIndex, "id"]} hidden>
+                    <InputNumber />
+                </Form.Item>
                 <Form.Item
                     label="Количество"
-                    name={["props", sizeIndex, "qty"]}
+                    name={["size_props", sizeIndex, "qty"]}
                     rules={[
                         {
                             required: true,
@@ -35,7 +35,7 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     <InputNumber
                         min={0}
                         keyboard={false}
-                        placeholder={`Количество ${size?.title}`}
+                        placeholder={`Количество ${selectSize.title}`}
                         style={{width: "100%"}}
                     />
                 </Form.Item>
@@ -43,7 +43,7 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
             <Col xl={8}>
                 <Form.Item
                     label="Себестоимость"
-                    name={["props", sizeIndex, "cost_price"]}
+                    name={["size_props", sizeIndex, "cost_price"]}
                     rules={[
                         {
                             required: true,
@@ -54,7 +54,7 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     <InputNumber
                         min={0}
                         keyboard={false}
-                        placeholder={`Себестоимость ${size?.title}`}
+                        placeholder={`Себестоимость ${selectSize.title}`}
                         style={{width: "100%"}}
                     />
                 </Form.Item>
@@ -62,7 +62,7 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
             <Col xl={8}>
                 <Form.Item
                     label="Мин. остаток"
-                    name={["props", sizeIndex, "min_qty"]}
+                    name={["size_props", sizeIndex, "min_qty"]}
                     rules={[
                         {
                             required: true,
@@ -73,7 +73,7 @@ const SelectedSize: React.FC<SelectedSizeProps> = ({selectSizeId}) => {
                     <InputNumber
                         min={0}
                         keyboard={false}
-                        placeholder={`Мин. остаток ${size?.title}`}
+                        placeholder={`Мин. остаток ${selectSize.title}`}
                         style={{width: "100%"}}
                     />
                 </Form.Item>

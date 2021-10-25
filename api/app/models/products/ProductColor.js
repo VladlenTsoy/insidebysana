@@ -4,7 +4,7 @@ const {raw} = require("objection")
 
 class ProductColor extends Model {
     static tableName = "product_colors"
-    static virtualAttributes = ["url_thumbnail"]
+    static virtualAttributes = ["url_thumbnail", "b_sizes", "b_props"]
     static jsonAttributes = ["sizes", "tags_id", "sizes_props"]
     static hidden = ["thumbnail"]
 
@@ -189,7 +189,7 @@ class ProductColor extends Model {
                     to: "colors.id"
                 }
             },
-            test_sizes: {
+            sizes: {
                 filter: query =>
                     query
                         .join("sizes", "sizes.id", "product_sizes.size_id")
@@ -200,7 +200,8 @@ class ProductColor extends Model {
                             "product_sizes.qty",
                             "product_sizes.min_qty",
                             "product_sizes.cost_price"
-                        ).groupBy("id"),
+                        )
+                        .groupBy("id"),
                 relation: Model.HasManyRelation,
                 modelClass: ProductSize,
                 join: {
@@ -263,6 +264,7 @@ class ProductColor extends Model {
                 }
             },
             measurements: {
+                filter: query => query.select("id", "title", "product_id", "descriptions"),
                 relation: Model.HasManyRelation,
                 modelClass: ProductMeasurement,
                 join: {
@@ -283,4 +285,21 @@ class ProductColor extends Model {
     }
 }
 
-module.exports = {ProductColor}
+class ProductColorSelectEdit extends ProductColor {
+    static virtualAttributes = ["size_ids", "size_props"]
+    static hidden = ["sizes"]
+
+    size_ids() {
+        if (this.sizes) return this.sizes.map(size => size.size_id)
+    }
+
+    size_props() {
+        if (this.sizes)
+            return this.sizes.reduce(
+                (acc, size) => ({...acc, [size.size_id]: size}),
+                {}
+            )
+    }
+}
+
+module.exports = {ProductColor, ProductColorSelectEdit}

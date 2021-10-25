@@ -2,7 +2,6 @@ const {ProductColor} = require("models/products/ProductColor")
 const {ProductColorImage} = require("models/products/ProductColorImage")
 const {Product} = require("models/products/Product")
 const ImageService = require("services/image/ImageService")
-const {raw} = require("objection")
 const {logger} = require("config/logger.config")
 
 // Ссылка на папку с картинками
@@ -25,9 +24,10 @@ const GetAllPaginate = async (req, res) => {
             pagination,
             sorter
         } = req.body
-
         const productColorsRef = ProductColor.query()
-            .withGraphFetched(`[details, tags, color, discount, category, test_sizes]`)
+            .withGraphFetched(
+                `[details, tags, color, discount, category, sizes]`
+            )
             .modify("filterSubCategoryIn", categoryIds)
             .modify("filterSizes", sizeIds)
             .whereRaw(`product_colors.title LIKE '%${search}%'`)
@@ -35,41 +35,18 @@ const GetAllPaginate = async (req, res) => {
                 "product_colors.id",
                 "product_colors.thumbnail",
                 "product_colors.created_at",
-                "product_colors.sizes_props",
                 "product_colors.is_new",
                 "product_colors.title",
                 "product_colors.status"
             )
-
         // Сортировка
         const order = sorter.order === "ascend" ? "asc" : "desc"
-
         // Сортировка по кол-ву размеров в цвете JSON
-        if (sorter.field) {
-            if (sorter.field.includes("sizes"))
-                productColorsRef.orderBy(
-                    raw(`JSON_EXTRACT(sizes, '$."${sorter.field[1]}".qty')`),
-                    order
-                )
-            // Сортировка
-            else if (sorter.field.includes("details"))
-                productColorsRef
-                    .join(
-                        "products",
-                        "products.id",
-                        "product_colors.product_id"
-                    )
-                    .orderBy(`products.${sorter.field[1]}`, order)
-            // Сортировка по столбцу
-            else productColorsRef.orderBy(sorter.field, order)
-        }
-
+        if (sorter.field) productColorsRef.orderBy(sorter.field, order)
         // Условия
-        if (type !== "all") {
-            productColorsRef
-                .where("product_colors.status", type)
-        }
-
+        if (type !== "all")
+            productColorsRef.where("product_colors.status", type)
+        // Пагинация
         const productColors = await productColorsRef.page(
             pagination.current - 1,
             pagination.pageSize
@@ -92,18 +69,10 @@ const GetAllPaginate = async (req, res) => {
 const GetBySearch = async (req, res) => {
     try {
         const {search} = req.body
-
         const products = await ProductColor.query()
             .select("id", "thumbnail", "product_id", "sizes")
-            .withGraphFetched(
-                `[
-                details(),
-                discount(),
-                color
-            ]`
-            )
+            .withGraphFetched(`[details, discount, color]`)
             .modify("search", search)
-
         return res.send(products)
     } catch (e) {
         logger.error(e.stack)
@@ -141,9 +110,8 @@ const Delete = async (req, res) => {
                 `${IMAGES_FOLDER_PATH}${productColor.id}`
             )
         }
-        // Если товар ненайден
+        // Если товар не найден
         else return res.status(500).send({message: "Товар не найден!"})
-
         return res.send({status: "success"})
     } catch (e) {
         logger.error(e.stack)
@@ -151,6 +119,13 @@ const Delete = async (req, res) => {
     }
 }
 
+/**
+ * Вывод картинок по id продукта
+ * @param req
+ * @param res
+ * @returns {Promise<*>}
+ * @constructor
+ */
 const GetImagesById = async (req, res) => {
     try {
         const {id} = req.params

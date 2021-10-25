@@ -14,7 +14,7 @@ const SizesFormSelect: React.FC<SizesFormSelectProps> = ({onChange}) => {
     return (
         <Form.Item
             label="Размеры"
-            name="sizes"
+            name="size_ids"
             rules={[{required: true, message: "Выберите размер!"}]}
         >
             <Select
@@ -28,7 +28,7 @@ const SizesFormSelect: React.FC<SizesFormSelectProps> = ({onChange}) => {
                 {data &&
                     data.map(size => (
                         <Option
-                            value={String(size.id)}
+                            value={size.id}
                             key={`tag-${size.id}`}
                             label={size.title}
                         >

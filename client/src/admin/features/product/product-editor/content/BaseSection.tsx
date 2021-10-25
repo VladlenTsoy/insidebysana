@@ -9,7 +9,7 @@ import {Element} from "react-scroll"
 const {Title} = Typography
 
 interface BaseSectionProps {
-    onSelectSizesHandler: (e: any) => void
+    onSelectSizesHandler: any;
 }
 
 const BaseSection: React.FC<BaseSectionProps> = ({onSelectSizesHandler}) => {
@@ -24,7 +24,11 @@ const BaseSection: React.FC<BaseSectionProps> = ({onSelectSizesHandler}) => {
                     <SelectColor />
                 </Col>
             </Row>
-            <Form.Item label="Название" name="title" rules={[{required: true, message: "Введите название!"}]}>
+            <Form.Item
+                label="Название"
+                name="title"
+                rules={[{required: true, message: "Введите название!"}]}
+            >
                 <Input placeholder="Введите название" />
             </Form.Item>
             <SizesFormSelect onChange={onSelectSizesHandler} />

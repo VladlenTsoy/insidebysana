@@ -25,7 +25,9 @@ interface EditorProductProps {
 
 const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
     const [form] = Form.useForm<any>()
-    const [selectedSizeIds, setSelectedSizeIds] = useState<string[]>([])
+    const [selectedSizes, setSelectedSizes] = useState<
+        {id: number, title: string}[]
+    >([])
     const [images, setImages] = useState<TemporaryImageType[]>([])
     const params = useParams<{id: string, color?: string}>()
     const history = useHistory()
@@ -39,10 +41,11 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
     ] = useEditProductMutation()
 
     // Выбрать размер
-    const onSelectSizesHandler = useCallback(
-        (sizesIds: string[]) => setSelectedSizeIds(sizesIds),
-        []
-    )
+    const onSelectSizesHandler = useCallback((sizesIds: string[], e: any[]) => {
+        setSelectedSizes(
+            e.map(val => ({title: val.label, id: Number(val.value)}))
+        )
+    }, [])
 
     // Очистить позицию
     const clearHomePosition = useCallback(
@@ -78,7 +81,7 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
             form.resetFields()
             if (params.color) {
                 setImages([])
-                setSelectedSizeIds([])
+                setSelectedSizes([])
                 form.setFieldsValue({
                     status: "draft",
                     colors: product.colors,
@@ -88,7 +91,12 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                 })
             } else {
                 form.setFieldsValue(product)
-                setSelectedSizeIds(product.sizes)
+                setSelectedSizes(
+                    Object.values(product.size_props).map((size: any) => ({
+                        id: size.size_id,
+                        title: size.title
+                    }))
+                )
                 setImages(
                     product.images.map((image: any) => ({
                         id: image.id,
@@ -138,15 +146,13 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                                 onSelectSizesHandler={onSelectSizesHandler}
                             />
                             <PropertiesSection />
-                            <PriceQtySection
-                                selectedSizeIds={selectedSizeIds}
-                            />
+                            <PriceQtySection selectedSizes={selectedSizes} />
                             <PhotosSection
                                 imageUrls={images}
                                 setImageUrl={setImages}
                             />
                             <MeasurementsSectionModule
-                                selectedSizeIds={selectedSizeIds}
+                                selectedSizes={selectedSizes}
                             />
                             <StatusPublishingSection
                                 clearHomePosition={clearHomePosition}

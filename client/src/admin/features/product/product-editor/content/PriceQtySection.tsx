@@ -1,15 +1,23 @@
 import React from "react"
-import {Col, Row, Typography, Form, InputNumber, DatePicker, Divider} from "antd"
+import {
+    Col,
+    Row,
+    Typography,
+    Form,
+    InputNumber,
+    DatePicker,
+    Divider
+} from "antd"
 import {Element} from "react-scroll"
 import SelectedSize from "admin/pages/user/admin/pages/products/SelectedSize"
 
 const {Title} = Typography
 
 interface PriceQtySectionProps {
-    selectedSizeIds: string[]
+    selectedSizes: {id: number, title: string}[];
 }
 
-const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizeIds}) => {
+const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizes}) => {
     return (
         <Element name="price-qty">
             <Divider />
@@ -34,19 +42,30 @@ const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizeIds}) => {
             <Row gutter={28}>
                 <Col xl={12} md={12} xs={24}>
                     <Form.Item name="discount" label="Скидка (%)">
-                        <InputNumber min={0} max={100} style={{width: "100%"}} />
+                        <InputNumber
+                            min={0}
+                            max={100}
+                            style={{width: "100%"}}
+                        />
                     </Form.Item>
                 </Col>
 
                 <Col xl={12} md={12} xs={24}>
                     <Form.Item name="end_at" label="До какого">
-                        <DatePicker format="DD-MM-YYYY" style={{width: "100%"}} showToday={false} />
+                        <DatePicker
+                            format="DD-MM-YYYY"
+                            style={{width: "100%"}}
+                            showToday={false}
+                        />
                     </Form.Item>
                 </Col>
             </Row>
             <Row>
-                {selectedSizeIds.map(selectSizeId => (
-                    <SelectedSize selectSizeId={selectSizeId} key={selectSizeId} />
+                {selectedSizes.map(size => (
+                    <SelectedSize
+                        selectSize={size}
+                        key={size.id}
+                    />
                 ))}
             </Row>
         </Element>

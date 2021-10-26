@@ -4,7 +4,6 @@ import {Button, Radio} from "antd"
 import {PlusOutlined, DeleteOutlined} from "@ant-design/icons"
 import {message} from "admin/lib/ui"
 import {ProductColor} from "admin/lib/types/product/ProductColor"
-import {useSelectAllSizes} from "admin/store/common/size/sizeSelectors"
 
 interface ActionButtonProps {
     addProduct: any
@@ -15,7 +14,6 @@ interface ActionButtonProps {
 
 const ActionButton: React.FC<ActionButtonProps> = ({addedProducts, addProduct, deleteProduct, product}) => {
     const [size, setSize] = useState<number | null>(null)
-    const sizes = useSelectAllSizes()
 
     const isChecked = (key: number) =>
         addedProducts.find(_product => _product.size_id === key && _product.product_color_id === product.id)
@@ -50,14 +48,14 @@ const ActionButton: React.FC<ActionButtonProps> = ({addedProducts, addProduct, d
     return (
         <div className="action-button">
             <Radio.Group size="large" onChange={onChangeHandler}>
-                {Object.keys(product.sizes).map(key => (
+                {product.sizes.map(size => (
                     <Radio.Button
-                        key={key}
-                        value={key}
-                        data-max={product.sizes[Number(key)].qty}
-                        className={isChecked(Number(key)) && "added"}
+                        key={size.id}
+                        value={size.size_id}
+                        data-max={size.qty}
+                        className={isChecked(size.size_id) && "added"}
                     >
-                        {sizes.find(size => size.id === Number(key))?.title}
+                        {size.title}
                     </Radio.Button>
                 ))}
             </Radio.Group>

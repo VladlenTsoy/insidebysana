@@ -34,12 +34,13 @@ export interface ProductColor {
         price: number
     }
     sizes: {
-        [id: number]: {
-            qty: number
-            min_qty: number
-            cost_price: number
-        }
-    }
+        id: number
+        size_id: number
+        title: string
+        qty: number
+        min_qty: number
+        cost_price: number
+    }[]
     url_thumbnail: string
     is_new: boolean
 }

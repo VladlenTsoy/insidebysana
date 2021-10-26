@@ -39,7 +39,7 @@ const columns = ({deleteProduct, updateProductQty}: any) => [
         title: "Кол-во",
         dataIndex: ["product", "sizes"],
         key: "qty",
-        render: (text: any, record: any) => <>{text[record.size_id].qty}</>
+        render: (text: any, record: any) => <>{text.find((size: any) => size.size_id === record.size_id)?.qty}</>
     },
     {
         dataIndex: ["product", "sizes"],
@@ -47,7 +47,7 @@ const columns = ({deleteProduct, updateProductQty}: any) => [
         render: (text: any, {size_id, product_color_id}: any) => (
             <InputNumber
                 size="large"
-                max={text[size_id].qty}
+                max={text.find((size:any) => size.size_id === size_id)?.qty}
                 min={1}
                 defaultValue={1}
                 onChange={value => {

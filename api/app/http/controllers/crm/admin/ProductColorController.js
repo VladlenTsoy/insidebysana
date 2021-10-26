@@ -70,8 +70,8 @@ const GetBySearch = async (req, res) => {
     try {
         const {search} = req.body
         const products = await ProductColor.query()
-            .select("id", "thumbnail", "product_id", "sizes")
-            .withGraphFetched(`[details, discount, color]`)
+            .select("id", "thumbnail", "product_id")
+            .withGraphFetched(`[details, discount, color, sizes]`)
             .modify("search", search)
         return res.send(products)
     } catch (e) {

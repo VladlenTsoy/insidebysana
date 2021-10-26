@@ -14,7 +14,7 @@ type SelectSize = number | null
 
 interface ThumbnailActionsProps {
     product: ProductCardType
-    selectSize: ProductCardType["sizes_props"][0]
+    selectSize: ProductCardType["sizes"][0]
     changeSelectSize: (size: SelectSize) => void
 }
 
@@ -24,7 +24,7 @@ const ThumbnailActions: React.FC<ThumbnailActionsProps> = ({product, selectSize,
 
     // Поиск кол-во по размеру в товаре
     const searchCartQtyBySize = useCallback(
-        (size: ProductCardType["sizes_props"][0]) => {
+        (size: ProductCardType["sizes"][0]) => {
             if (size) {
                 const findProduct = cartProducts.find(
                     cartProduct =>
@@ -129,12 +129,12 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({product}) => {
-    const [selectSize, setSelectSize] = useState<ProductCardType["sizes_props"][0] | undefined>()
+    const [selectSize, setSelectSize] = useState<ProductCardType["sizes"][0] | undefined>()
 
     // Изменить выбранный размер
     const changeSelectSize = useCallback(
         (sizeId: SelectSize) => {
-            const size = product.sizes_props.find(size => size.size_id === sizeId)
+            const size = product.sizes.find(size => size.size_id === sizeId)
             setSelectSize(size)
         },
         [product]
@@ -189,7 +189,7 @@ const ProductCard: React.FC<ProductCardProps> = ({product}) => {
             </div>
             <div className="sizes-action">
                 <Radio.Group onChange={onChangeHandler} size="large" value={selectSize?.size_id || null}>
-                    {product.sizes_props.map(
+                    {product.sizes.map(
                         size =>
                             size.qty > 0 && (
                                 <Radio.Button

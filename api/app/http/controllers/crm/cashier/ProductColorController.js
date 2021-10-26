@@ -18,18 +18,20 @@ const GetBySearch = async (req, res) => {
         }
 
         const refProductColor = ProductColor.query()
-            .withGraphFetched(`[color, discount, sizes_props]`)
+            .withGraphFetched(`[color, discount, sizes]`)
             .join("products", "products.id", "product_colors.product_id")
-            .where("product_colors.hide_id", null)
-            .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
+            .select(
+                "product_colors.id",
+                "product_colors.thumbnail",
+                "product_colors.title",
+                "products.price"
+            )
 
         // Поиск
         if (search.trim() !== "") {
             refProductColor.where(builder => {
                 builder
-                    .whereRaw(
-                        `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
-                    )
+                    .whereRaw(`product_colors.title LIKE '%${search}%'`)
                     .orWhereRaw(
                         `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
                     )
@@ -40,14 +42,18 @@ const GetBySearch = async (req, res) => {
         // Вывод по размерам
         if (sizeId && sizeId !== 0)
             refProductColor
+                // .whereRaw(
+                //     `JSON_SEARCH(JSON_KEYS(product_colors.sizes), 'all', ${String(
+                //         sizeId
+                //     )}) IS NOT null`
+                // )
                 .whereRaw(
-                    `JSON_SEARCH(JSON_KEYS(product_colors.sizes), 'all', ${String(sizeId)}) IS NOT null`
+                    `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.id = ${sizeId} AND product_sizes.qty > 0)`
                 )
-                .whereRaw(`JSON_EXTRACT(product_colors.sizes, concat('$."',${sizeId},'".qty')) > 0`)
         // TODO - лучшее решение
         else
             refProductColor.whereRaw(
-                `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+                `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
             )
 
         // По категориям
@@ -84,7 +90,12 @@ const GetBySKU = async (req, res) => {
                 .join("products", "products.id", "product_colors.product_id")
                 .where("product_colors.hide_id", null)
                 .findById(productColorId)
-                .select("product_colors.id", "product_colors.thumbnail", "products.title", "products.price")
+                .select(
+                    "product_colors.id",
+                    "product_colors.thumbnail",
+                    "products.title",
+                    "products.price"
+                )
 
             if (product)
                 return res.send({

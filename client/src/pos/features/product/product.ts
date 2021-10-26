@@ -11,7 +11,7 @@ export interface ProductCardType {
         hex: string
         title: string
     }
-    sizes_props: {
+    sizes: {
         title: string
         qty: number
         size_id: number

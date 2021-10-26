@@ -10,7 +10,7 @@ import "./CartProductItem.less"
 
 interface PlusMinusInputProps {
     productCart: CartProductItemType
-    selectSize: ProductCardType["sizes_props"][0]
+    selectSize: ProductCardType["sizes"][0]
 }
 
 const PlusMinusInput: React.FC<PlusMinusInputProps> = ({productCart, selectSize}) => {
@@ -82,7 +82,7 @@ interface ProductCartProps {
 
 const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
     const {product} = cartProduct
-    const selectSize = product.sizes_props.find(size => size.size_id === cartProduct.size_id)
+    const selectSize = product.sizes.find(size => size.size_id === cartProduct.size_id)
 
     // Дейиствие при нажатии
     const onClickHadnler = (e: any) => {

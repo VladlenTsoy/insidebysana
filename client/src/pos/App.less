@@ -33,3 +33,34 @@ input[type="number"]::-webkit-outer-spin-button {
 .ant-input-number-handler-wrap {
     display: none;
 }
+
+//
+.account-item {
+    user-select: none;
+
+    &.ant-dropdown-menu-item {
+        padding: 0.5rem 3rem 0.5rem 1rem;
+        font-size: @font-size-base;
+    }
+
+    > div > span.anticon,
+    span.anticon:first-child {
+        font-size: @font-size-xl;
+        background: @layout-body-background;
+        padding: 0.5rem;
+        border-radius: 50%;
+        margin-right: 0.75rem;
+
+        &.invert {
+            filter: invert(100%);
+        }
+    }
+
+    .ant-badge {
+        margin-right: 0.75rem;
+
+        span.anticon {
+            margin-right: 0;
+        }
+    }
+}

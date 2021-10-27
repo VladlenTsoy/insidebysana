@@ -1,12 +1,12 @@
 import React from "react"
 import Header from "./header/Header"
-import "./Layout.less"
+import styles from "./Layout.module.less"
 
 const Layout: React.FC = ({children}) => {
     return (
-        <div className="cashier">
+        <div className={styles.cashier}>
             <Header />
-            <div className="container">{children}</div>
+            <div className={styles.container}>{children}</div>
         </div>
     )
 }

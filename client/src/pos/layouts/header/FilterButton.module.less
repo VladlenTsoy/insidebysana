@@ -1,7 +1,9 @@
-.drawer-filter {
-    .ant-drawer-body {
-        padding: 0;
-        user-select: none;
+.drawerFilter {
+    :global {
+        .ant-drawer-body {
+            padding: 0;
+            user-select: none;
+        }
     }
 
     .filter {
@@ -11,22 +13,22 @@
         flex-direction: column;
         height: 100%;
 
-        .filter-container {
+        .container {
             display: grid;
             grid-template-columns: 250px 1fr;
             overflow: hidden;
             height: 100%;
             // gap: 0.5rem;
 
-            .filter-list {
+            .list {
                 height: 100%;
                 overflow-y: auto;
 
-                &.categories-list {
+                &.categories {
                     width: 250px;
                 }
 
-                &.sizes-list {
+                &.sizes {
                     width: 100%;
                 }
 
@@ -34,17 +36,17 @@
                     border-right: 1px solid @border-color-base;
                 }
 
-                .filter-group {
+                .filterGroup {
                     padding: 0.5rem;
                     border-bottom: 1px solid @border-color-base;
 
-                    .title-group {
+                    .titleGroup {
                         color: @text-color-secondary;
                         font-size: @font-size-sm;
                     }
                 }
 
-                .filter-item {
+                .filterItem {
                     padding: 0.75rem 1rem;
                     white-space: nowrap;
                     overflow: hidden;
@@ -52,23 +54,25 @@
                     cursor: pointer;
                     display: flex;
 
-                    &.filter-item-all {
+                    &.filterItemAll {
                         border-bottom: 1px solid @border-color-base;
                     }
 
-                    &.filter-item-active {
+                    &.filterItemActive {
                         font-weight: bold;
                     }
 
-                    .anticon {
-                        width: 0;
-                        color: @primary-color;
+                    :global {
+                        .anticon {
+                            width: 0;
+                            color: @primary-color;
+                        }
                     }
                 }
             }
         }
 
-        .filter-actions {
+        .filterActions {
             display: flex;
             gap: 1rem;
             padding: 1rem;

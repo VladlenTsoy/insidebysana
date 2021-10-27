@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons"
 import {Button, Menu, Dropdown, Modal} from "antd"
 import React, {useCallback, useState} from "react"
-import "./Navigation.less"
+import styles from "./Navigation.module.less"
 import {logoutUser} from "pos/auth/authApi"
 import {useDispatch} from "pos/store"
 
@@ -55,9 +55,15 @@ const Navigation: React.FC = () => {
     )
 
     return (
-        <div className="navigation">
+        <div className={styles.navigation}>
             <Button
-                icon={!fullScreen ? <FullscreenOutlined /> : <FullscreenExitOutlined />}
+                icon={
+                    !fullScreen ? (
+                        <FullscreenOutlined />
+                    ) : (
+                        <FullscreenExitOutlined />
+                    )
+                }
                 size="large"
                 onClick={requestFullScreen}
             />

@@ -9,11 +9,9 @@ class Order extends Model {
         const {Client} = require("../Client")
         const {User} = require("../User")
         const {Status} = require("./Status")
-        const {PaymentMethod} = require("../payments/PaymentMethod")
         const {Delivery} = require("../settings/Delivery")
         const {OrderAddress} = require("./OrderAddress")
         const {OrderPayment} = require("./OrderPayment")
-        const {OrderProductColor} = require("./OrderProductColor")
         const {OrderAdditionalService} = require("./OrderAdditionalService")
         const {ProductColor} = require("../products/ProductColor")
 
@@ -104,7 +102,7 @@ class Order extends Model {
                         .join("sizes", "sizes.id", "order_product_colors.size_id")
                         .join("colors", "colors.id", "product_colors.color_id")
                         .select(
-                            "products.title",
+                            "product_colors.title",
                             "product_colors.id",
                             "product_colors.thumbnail",
                             "order_product_colors.size_id",

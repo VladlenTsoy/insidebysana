@@ -12,8 +12,9 @@ import {
 import {useGetCategoriesQuery} from "./categoryApi"
 import {useGetSizeQuery} from "./sizeApi"
 import {useDispatch} from "pos/store"
-import "./FilterButton.less"
+import styles from "./FilterButton.module.less"
 import {motion, AnimatePresence} from "framer-motion"
+import cn from "classnames"
 
 const MotionCheckAnimation: React.FC = ({children}) => {
     return (
@@ -31,7 +32,10 @@ const MotionCheckAnimation: React.FC = ({children}) => {
 const FilterButton: React.FC = () => {
     const [visible, setVisible] = useState(false)
     const {data: sizes, isLoading: isLoadingSizes} = useGetSizeQuery()
-    const {data: categories, isLoading: isLoadingCategories} = useGetCategoriesQuery()
+    const {
+        data: categories,
+        isLoading: isLoadingCategories
+    } = useGetCategoriesQuery()
     const dispatch = useDispatch()
     const categoryId = useCategoryIdPos()
     const sizeId = useSizeIdPos()
@@ -58,7 +62,12 @@ const FilterButton: React.FC = () => {
 
     return (
         <>
-            <Button type="link" size="large" icon={<FilterOutlined />} onClick={openHandler}>
+            <Button
+                type="link"
+                size="large"
+                icon={<FilterOutlined />}
+                onClick={openHandler}
+            >
                 Фильтрация
             </Button>
             <Drawer
@@ -67,18 +76,23 @@ const FilterButton: React.FC = () => {
                 onClose={closeHandler}
                 placement="left"
                 width="370"
-                className="drawer-filter"
+                className={styles.drawerFilter}
             >
-                <div className="filter">
+                <div className={styles.filter}>
                     {isLoadingCategories || isLoadingSizes ? (
                         <LoadingBlock />
                     ) : (
-                        <div className="filter-container">
-                            <div className="filter-list categories-list">
+                        <div className={styles.container}>
+                            <div className={cn(styles.list, styles.categories)}>
                                 <div
-                                    className={`filter-item filter-item-all ${
-                                        categoryId === 0 && "filter-item-active"
-                                    }`}
+                                    className={cn(
+                                        styles.filterItem,
+                                        styles.filterItemAll,
+                                        {
+                                            [styles.filterItemActive]:
+                                                categoryId === 0
+                                        }
+                                    )}
                                     onClick={() => changeCategoryHandler(0)}
                                 >
                                     <AnimatePresence>
@@ -90,7 +104,11 @@ const FilterButton: React.FC = () => {
                                         <motion.span
                                             animate={
                                                 categoryId === 0
-                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                    ? {
+                                                          x: 20,
+                                                          width:
+                                                              "calc(100% - 20px)"
+                                                      }
                                                     : {x: 0, width: "100%"}
                                             }
                                             key="title"
@@ -100,45 +118,77 @@ const FilterButton: React.FC = () => {
                                     </AnimatePresence>
                                 </div>
                                 {categories?.map(category => (
-                                    <div className="filter-group" key={category.id}>
-                                        <span className="title-group"> {category.title}</span>
+                                    <div
+                                        className={styles.filterGroup}
+                                        key={category.id}
+                                    >
+                                        <span className={styles.titleGroup}>
+                                            {" "}
+                                            {category.title}
+                                        </span>
                                         <div>
-                                            {category.sub_categories?.map(sub => (
-                                                <div
-                                                    className={`filter-item ${
-                                                        categoryId === sub.id && "filter-item-active"
-                                                    }`}
-                                                    key={sub.id}
-                                                    onClick={() => changeCategoryHandler(sub.id)}
-                                                >
-                                                    <AnimatePresence>
-                                                        {categoryId === sub.id && (
-                                                            <MotionCheckAnimation>
-                                                                <CheckOutlined />
-                                                            </MotionCheckAnimation>
-                                                        )}
-                                                        <motion.span
-                                                            animate={
-                                                                categoryId === sub.id
-                                                                    ? {x: 20, width: "calc(100% - 20px)"}
-                                                                    : {x: 0, width: "100%"}
+                                            {category.sub_categories?.map(
+                                                sub => (
+                                                    <div
+                                                        className={cn(
+                                                            styles.filterItem,
+                                                            {
+                                                                [styles.filterItemActive]:
+                                                                    categoryId ===
+                                                                    sub.id
                                                             }
-                                                            key="title"
-                                                        >
-                                                            {sub.title}
-                                                        </motion.span>
-                                                    </AnimatePresence>
-                                                </div>
-                                            ))}
+                                                        )}
+                                                        key={sub.id}
+                                                        onClick={() =>
+                                                            changeCategoryHandler(
+                                                                sub.id
+                                                            )
+                                                        }
+                                                    >
+                                                        <AnimatePresence>
+                                                            {categoryId ===
+                                                                sub.id && (
+                                                                <MotionCheckAnimation>
+                                                                    <CheckOutlined />
+                                                                </MotionCheckAnimation>
+                                                            )}
+                                                            <motion.span
+                                                                animate={
+                                                                    categoryId ===
+                                                                    sub.id
+                                                                        ? {
+                                                                              x: 20,
+                                                                              width:
+                                                                                  "calc(100% - 20px)"
+                                                                          }
+                                                                        : {
+                                                                              x: 0,
+                                                                              width:
+                                                                                  "100%"
+                                                                          }
+                                                                }
+                                                                key="title"
+                                                            >
+                                                                {sub.title}
+                                                            </motion.span>
+                                                        </AnimatePresence>
+                                                    </div>
+                                                )
+                                            )}
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                            <div className="filter-list sizes-list">
+                            <div className={cn(styles.list, styles.sizes)}>
                                 <div
-                                    className={`filter-item filter-item-all ${
-                                        sizeId === 0 && "filter-item-active"
-                                    }`}
+                                    className={cn(
+                                        styles.filterItem,
+                                        styles.filterItemAll,
+                                        {
+                                            [styles.filterItemActive]:
+                                                sizeId === 0
+                                        }
+                                    )}
                                     onClick={() => changeSizeHandler(0)}
                                 >
                                     <AnimatePresence>
@@ -150,7 +200,11 @@ const FilterButton: React.FC = () => {
                                         <motion.span
                                             animate={
                                                 sizeId === 0
-                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                    ? {
+                                                          x: 20,
+                                                          width:
+                                                              "calc(100% - 20px)"
+                                                      }
                                                     : {x: 0, width: "100%"}
                                             }
                                             key="title"
@@ -161,11 +215,14 @@ const FilterButton: React.FC = () => {
                                 </div>
                                 {sizes?.map(size => (
                                     <div
-                                        className={`filter-item ${
-                                            sizeId === size.id && "filter-item-active"
-                                        }`}
+                                        className={cn(styles.filterItem, {
+                                            [styles.filterItemActive]:
+                                                sizeId === size.id
+                                        })}
                                         key={size.id}
-                                        onClick={() => changeSizeHandler(size.id)}
+                                        onClick={() =>
+                                            changeSizeHandler(size.id)
+                                        }
                                     >
                                         {sizeId === size.id && (
                                             <MotionCheckAnimation>
@@ -175,7 +232,11 @@ const FilterButton: React.FC = () => {
                                         <motion.span
                                             animate={
                                                 sizeId === size.id
-                                                    ? {x: 20, width: "calc(100% - 20px)"}
+                                                    ? {
+                                                          x: 20,
+                                                          width:
+                                                              "calc(100% - 20px)"
+                                                      }
                                                     : {x: 0, width: "100%"}
                                             }
                                             key="title"
@@ -187,11 +248,16 @@ const FilterButton: React.FC = () => {
                             </div>
                         </div>
                     )}
-                    <div className="filter-actions">
+                    <div className={styles.filterActions}>
                         <Button block size="large" onClick={resetFilterHandler}>
                             Сбросить
                         </Button>
-                        <Button type="primary" block size="large" onClick={closeHandler}>
+                        <Button
+                            type="primary"
+                            block
+                            size="large"
+                            onClick={closeHandler}
+                        >
                             Применить
                         </Button>
                     </div>

@@ -84,8 +84,8 @@ const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
     const {product} = cartProduct
     const selectSize = product.sizes.find(size => size.size_id === cartProduct.size_id)
 
-    // Дейиствие при нажатии
-    const onClickHadnler = (e: any) => {
+    // Действие при нажатии
+    const onClickHandler = (e: any) => {
         createRipple(e)
         const productCardSearch = document.querySelector(`#product-item-${cartProduct.product_color_id}`)
         if (productCardSearch) {
@@ -121,7 +121,7 @@ const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
     if (selectSize)
         return (
             <div className="cart-product-item">
-                <div className="details" onClick={onClickHadnler}>
+                <div className="details" onClick={onClickHandler}>
                     <div className="title">
                         {product.title} ({product.color.title})
                     </div>

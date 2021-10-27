@@ -1,0 +1,64 @@
+.header {
+    padding: 0 1rem;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .logo {
+        padding: 0.5rem 0;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        cursor: pointer;
+
+        .logoImg {
+            background: @secondary-background;
+            padding: 0 1rem 0 0.5rem;
+            border-radius: 60px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+
+            img {
+                height: 100%;
+                margin-right: 0.1rem;
+                //width: 100%;
+                transform: scale(1.5);
+            }
+
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+
+    .search {
+        margin-right: auto;
+
+        :global {
+            .anticon-close-circle {
+                color: @error-color;
+                font-size: @font-size-big;
+                margin-right: 7px;
+            }
+
+            .ant-input-affix-wrapper {
+                border: none;
+                border-radius: 20px;
+                width: 350px;
+                background: @secondary-background;
+
+                input {
+                    border-radius: 0;
+                }
+
+                &.ant-input-affix-wrapper-focused {
+                    .ant-input-suffix {
+                        color: @primary-color;
+                    }
+                }
+            }
+        }
+    }
+}

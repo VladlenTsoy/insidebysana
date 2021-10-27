@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import {fetchProductColorBySKU} from "../features/cart/fetchProductColorBySKU"
 import {useDispatch} from "../store"
 import CartProducts from "pos/features/cart/CartProducts"
-import "./Home.less"
+import styles from "./Home.module.less"
 import GridProducts from "../features/product/GridProducts"
 
 const Home: React.FC = () => {
@@ -29,7 +29,7 @@ const Home: React.FC = () => {
                 // Проверка на SKU
                 if (/(PC\d+S\d+)+/g.test(str) || /(ЗС\d+Ы\d+)+/g.test(str)) {
                     if (/(ЗС\d+Ы\d+)+/g.test(str))
-                        // Замена кирилицы
+                        // Замена кириллицы
                         str = str.replace("З", "P").replace("С", "C").replace("Ы", "S")
                     // Отмена события
                     event.preventDefault()
@@ -61,8 +61,8 @@ const Home: React.FC = () => {
 
     return (
         <>
-            <div className="pos-system">
-                <div className="container">
+            <div className={styles.posSystem}>
+                <div className={styles.container}>
                     <GridProducts />
                     <CartProducts />
                 </div>

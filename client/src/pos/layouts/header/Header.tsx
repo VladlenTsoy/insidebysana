@@ -5,7 +5,7 @@ import React from "react"
 import {Link, useLocation} from "react-router-dom"
 import {useDispatch} from "pos/store"
 import FilterButton from "./FilterButton"
-import "./Header.less"
+import styles from "./Header.module.less"
 import Navigation from "./Navigation"
 import logo from "assets/images/logo-2-white.svg"
 
@@ -24,9 +24,9 @@ const MenuSidebar: React.FC = () => {
     )
 
     return (
-        <div className="logo">
+        <div className={styles.logo}>
             <Dropdown overlay={menu} trigger={["click"]}>
-                <div className="logo-img">
+                <div className={styles.logoImg}>
                     <img src={logo} alt="insidebysana" />
                     <span>Меню</span>
                 </div>
@@ -47,12 +47,12 @@ const Header: React.FC = () => {
     }
 
     return (
-        <div className="header">
+        <div className={styles.header}>
             <MenuSidebar />
             <div>
                 <FilterButton />
             </div>
-            <div className="search">
+            <div className={styles.search}>
                 <Input
                     suffix={<SearchOutlined />}
                     size="large"

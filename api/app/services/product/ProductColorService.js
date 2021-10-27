@@ -1,5 +1,5 @@
 const {ProductColor} = require("models/products/ProductColor")
-const ImageService = require("services/image/ImageService")
+const {ProductSize} = require("models/products/ProductSize")
 const {logger} = require("config/logger.config")
 
 /**
@@ -21,54 +21,12 @@ const FindProductColorsByProductId = async productId => {
             ]`
             )
             .where("product_id", productId)
-            .select("product_colors.id", "product_colors.thumbnail", "product_colors.created_at", "sizes")
-    } catch (e) {
-        logger.error(e.stack)
-    }
-}
-
-/**
- * Сохранение и обновление картинок
- * @param productId
- * @param colorId
- * @param images
- * @return {Promise<unknown[][]>}
- * @constructor
- */
-const ImagesAndThumbnailSave = async (productId, colorId, images) => {
-    try {
-        let thumbnail = null
-        const imagesPath = await Promise.all(
-            images.map(async (image, key) => {
-                if (image.includes("http")) return image.replace(`${process.env.APP_URL}/`, "")
-                else {
-                    const [imagePath, thumbnailPath] = await ImageService.ProductColorBase64ToImageUpload(
-                        productId,
-                        colorId,
-                        image,
-                        key
-                    )
-                    if (thumbnailPath) thumbnail = thumbnailPath
-                    return imagePath
-                }
-            })
-        )
-
-        // Обновление картинки
-        await ProductColor.query()
-            .findById(colorId)
-            .update(
-                thumbnail
-                    ? {
-                          images: imagesPath,
-                          thumbnail: thumbnail
-                      }
-                    : {
-                          images: imagesPath
-                      }
+            .select(
+                "product_colors.id",
+                "product_colors.thumbnail",
+                "product_colors.created_at",
+                "sizes"
             )
-
-        return [imagesPath, thumbnail]
     } catch (e) {
         logger.error(e.stack)
     }
@@ -115,18 +73,16 @@ const CreateOrUpdate = async (colors, productId) => {
  */
 const MinusQtyProductColor = async (productColorId, sizeId, qty) => {
     try {
-        const productColor = await ProductColor.query().findById(productColorId)
-        const sizes = productColor.sizes
+        const productSize = await ProductSize.query().findOne({
+            product_color_id: productColorId,
+            size_id: sizeId
+        })
         const totalQty = sizes[sizeId].qty - qty
-
-        // Обновление
-        sizes[sizeId].qty = totalQty
-
         // TODO - Уведомления
-        if (sizes[sizeId].min_qty >= totalQty) console.log(1)
-
-        // Сохранение
-        await ProductColor.query().updateAndFetchById(productColorId, {sizes})
+        if (productSize.min_qty >= totalQty) console.log(1)
+        await ProductSize.query()
+            .findById(productSize.id)
+            .patch({qty: totalQty})
         // Вывод остатка
         return totalQty
     } catch (e) {
@@ -144,15 +100,14 @@ const MinusQtyProductColor = async (productColorId, sizeId, qty) => {
  */
 const PlusQtyProductColor = async (productColorId, sizeId, qty) => {
     try {
-        const productColor = await ProductColor.query().findById(productColorId)
-        const sizes = productColor.sizes
-        const totalQty = sizes[sizeId].qty + qty
-
-        // Обновление
-        sizes[sizeId].qty = totalQty
-
-        // Сохранение
-        await ProductColor.query().updateAndFetchById(productColorId, {sizes})
+        const productSize = await ProductSize.query().findOne({
+            product_color_id: productColorId,
+            size_id: sizeId
+        })
+        const totalQty = productSize.qty + qty
+        await ProductSize.query()
+            .findById(productSize.id)
+            .patch({qty: totalQty})
         // Вывод остатка
         return totalQty
     } catch (e) {
@@ -160,4 +115,9 @@ const PlusQtyProductColor = async (productColorId, sizeId, qty) => {
     }
 }
 
-module.exports = {CreateOrUpdate, FindProductColorsByProductId, MinusQtyProductColor, PlusQtyProductColor}
+module.exports = {
+    CreateOrUpdate,
+    FindProductColorsByProductId,
+    MinusQtyProductColor,
+    PlusQtyProductColor
+}

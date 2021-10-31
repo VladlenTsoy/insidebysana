@@ -52,7 +52,7 @@ const Details: React.FC<DetailsProps> = ({product}) => {
                 </div>
                 <Colors colors={product.colors} color={product.color} />
                 <Sizes
-                    sizes={product.sizes_props}
+                    sizes={product.sizes}
                     requireSize={requireSize}
                     selectSizeHandler={selectSizeHandler}
                 />

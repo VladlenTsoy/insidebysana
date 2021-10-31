@@ -5,7 +5,7 @@ const {raw} = require("objection")
 class ProductColor extends Model {
     static tableName = "product_colors"
     static virtualAttributes = ["url_thumbnail", "b_sizes", "b_props"]
-    static jsonAttributes = ["sizes", "tags_id", "sizes_props"]
+    static jsonAttributes = ["tags_id"]
     static hidden = ["thumbnail"]
 
     url_thumbnail() {
@@ -76,14 +76,11 @@ class ProductColor extends Model {
              */
             filterSizes(builder, sizes) {
                 if (sizes && sizes.length)
-                    builder.where(_builder =>
-                        sizes.map(size =>
-                            _builder.orWhereRaw(
-                                `JSON_SEARCH(JSON_KEYS(sizes_props), 'all', ${String(
-                                    size
-                                )}) IS NOT null`
-                            )
-                        )
+                    builder.whereRaw(
+                        `product_colors.id IN (
+                            SELECT product_sizes.product_color_id FROM product_sizes 
+                            WHERE product_sizes.size_id IN (${sizes.join(",")})
+                        )`
                     )
             },
 
@@ -264,7 +261,8 @@ class ProductColor extends Model {
                 }
             },
             measurements: {
-                filter: query => query.select("id", "title", "product_id", "descriptions"),
+                filter: query =>
+                    query.select("id", "title", "product_id", "descriptions"),
                 relation: Model.HasManyRelation,
                 modelClass: ProductMeasurement,
                 join: {

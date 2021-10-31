@@ -27,11 +27,13 @@ const _getFilters = async ({
         .modify("filterSubCategoryIn", subCategoryIds)
         .modify("filterColors", colorIds)
         .modify("filterPrice", price)
-        // .select("sizes")
+        .withGraphFetched("[sizes]")
+    //
     const productSizeIds = productSize.reduce(
-        (state, val) => [...state, ...Object.keys(val.sizes)],
+        (state, val) => [...state, ...val.sizes.map(size => size.size_id)],
         []
     )
+    //
     response.sizes = await Size.query()
         .whereIn("id", productSizeIds)
         .select("id", "title")
@@ -55,9 +57,10 @@ const _getFilters = async ({
         .modify("filterSubCategoryIn", subCategoryIds)
         .modify("filterSizes", sizeIds)
         .modify("filterPrice", price)
-        .where("product_colors.hide_id", null)
+        // .where("product_colors.hide_id", null)
         .select("color_id")
         .pluck("color_id")
+    //
     response.colors = await Color.query()
         .whereIn("id", productColorIds)
         .select("id", "title", "hex")
@@ -68,6 +71,7 @@ const _getFilters = async ({
         .modify("filterCategory", categoryId)
         .modify("filterSubCategoryIn", subCategoryIds)
         .modify("filterSizes", sizeIds)
+        .findOne("status", "published")
         .min("products.price as min")
         .max("products.price as max")
 
@@ -113,7 +117,7 @@ const GetPagination = async (req, res) => {
                 "product_colors.is_new"
             )
 
-        // Вывод фильров
+        // Вывод фильтров
         const filters = await _getFilters(req.body)
 
         return res.send({
@@ -139,7 +143,7 @@ const GetById = async (req, res) => {
 
         const product = await ProductColor.query()
             .findById(id)
-            .withGraphFetched(`[sizes_props, color, discount, images]`)
+            .withGraphFetched(`[sizes, color, discount, images]`)
             .join("products", "products.id", "product_colors.product_id")
             .select(
                 "product_colors.id",
@@ -333,7 +337,6 @@ const GetByRecentIds = async (req, res) => {
             .whereIn("product_colors.id", ids)
             .whereNot("product_colors.id", productColorId)
             .join("products", "products.id", "product_colors.product_id")
-            .where("product_colors.hide_id", null)
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereRaw(
                 `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
@@ -342,7 +345,7 @@ const GetByRecentIds = async (req, res) => {
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
-                "products.title",
+                "product_colors.title",
                 "products.category_id",
                 "products.price",
                 "product_colors.is_new"

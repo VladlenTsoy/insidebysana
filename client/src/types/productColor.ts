@@ -25,7 +25,7 @@ export interface ProductColor {
         title: string
         hex: string
     }[]
-    sizes_props: {
+    sizes: {
         size_id: number
         title: string
         qty: number

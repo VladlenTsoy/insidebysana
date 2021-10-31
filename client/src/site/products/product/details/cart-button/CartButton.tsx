@@ -24,7 +24,7 @@ const CartButton: React.FC<CartButtonProps> = ({product, sizeId, outputErrorSize
     const [visible, setVisible] = useState(false)
 
     const addToCartHandler = () => {
-        const size = product.sizes_props.find(size => Number(size.size_id) === Number(sizeId))
+        const size = product.sizes.find(size => Number(size.size_id) === Number(sizeId))
         if (sizeId && size) {
             dispatch(addToCart(`PC${product.id}S${sizeId}`))
             setVisible(true)

@@ -18,6 +18,7 @@ import ScrollContainer from "react-indiana-drag-scroll"
 import HeaderPage from "../../../../../components/header-page/HeaderPage"
 import ContainerPage from "../../../../../components/container-page/ContainerPage"
 import {Link} from "react-router-dom"
+import {fetchStatuses} from "../../../../../store/admin/status/fetchStatuses"
 
 const Orders = () => {
     const dispatch = useAdminDispatch()
@@ -81,9 +82,11 @@ const Orders = () => {
     }
 
     useEffect(() => {
+        const promiseStatuses = dispatch(fetchStatuses())
         const promise = dispatch(fetchOrders())
         return () => {
             promise.abort()
+            promiseStatuses.abort()
         }
     }, [dispatch])
 

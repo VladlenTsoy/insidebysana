@@ -30,11 +30,11 @@ const GetAll = async (req, res) => {
                     ]`
                         )
                         .join("products", "products.id", "product_colors.product_id")
-                        .findOne({"product_colors.hide_id": null, "product_colors.id": productColorId})
+                        .findOne({"product_colors.id": productColorId})
                         .select(
                             "product_colors.id",
                             "product_colors.thumbnail",
-                            "products.title",
+                            "product_colors.title",
                             "products.category_id",
                             "products.price"
                         )
@@ -46,7 +46,7 @@ const GetAll = async (req, res) => {
                             .join(
                                 `product_colors`,
                                 raw(
-                                    `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`
+                                    `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
                                 )
                             )
                             .findById(sizeId)
@@ -54,7 +54,7 @@ const GetAll = async (req, res) => {
                                 "sizes.id",
                                 "sizes.title",
                                 raw(
-                                    `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) as qty`
+                                    `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
                                 )
                             )
                         if (size) {

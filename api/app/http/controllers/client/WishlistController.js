@@ -13,19 +13,13 @@ const GetAll = async (req, res) => {
     try {
         const {productColorIds} = req.body
         const products = await ProductColor.query()
-            .withGraphFetched(
-                `[
-                discount(),
-                color(),                
-            ]`
-            )
+            .withGraphFetched(`[discount, color]`)
             .join("products", "products.id", "product_colors.product_id")
-            .where("product_colors.hide_id", null)
             .whereIn("product_colors.id", productColorIds)
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
-                "products.title",
+                "product_colors.title",
                 "products.category_id",
                 "products.price"
             )
@@ -62,14 +56,19 @@ const SyncAndGetAll = async (req, res) => {
                 })
 
                 if (!checkWishlist)
-                    await Wishlist.query().insert({product_color_id: productColorId, user_id: user.id})
+                    await Wishlist.query().insert({
+                        product_color_id: productColorId,
+                        user_id: user.id
+                    })
             })
         )
 
         const wishlistItems = await Wishlist.query().where({user_id: user.id})
 
         if (wishlistItems) {
-            const wishlistProductColorIds = wishlistItems.map(wishlist => wishlist.product_color_id)
+            const wishlistProductColorIds = wishlistItems.map(
+                wishlist => wishlist.product_color_id
+            )
             responseProducts = await ProductColor.query()
                 .withGraphFetched(
                     `[
@@ -88,7 +87,9 @@ const SyncAndGetAll = async (req, res) => {
                     "products.price"
                 )
 
-            responseProductColorIds = responseProducts.map(product => product.id)
+            responseProductColorIds = responseProducts.map(
+                product => product.id
+            )
         }
 
         return res.send({
@@ -106,7 +107,10 @@ const Add = async (req, res) => {
         const user = req.user
         const {productColorId} = req.body
 
-        await Wishlist.query().insert({product_color_id: productColorId, user_id: user.id})
+        await Wishlist.query().insert({
+            product_color_id: productColorId,
+            user_id: user.id
+        })
 
         return res.send({status: "success"})
     } catch (e) {
@@ -120,7 +124,9 @@ const Remove = async (req, res) => {
         const user = req.user
         const {productColorId} = req.body
 
-        await Wishlist.query().where({product_color_id: productColorId, user_id: user.id}).delete()
+        await Wishlist.query()
+            .where({product_color_id: productColorId, user_id: user.id})
+            .delete()
 
         return res.send({status: "success"})
     } catch (e) {

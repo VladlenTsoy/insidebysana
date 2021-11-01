@@ -30,6 +30,9 @@ router.get("/categories", CategoryController.GetAll)
 // Вывод новых продуктов (Главная)
 router.get("/new-products", ProductColorController.GetNew)
 
+//
+router.get("/product/ids", ProductColorController.GetIds)
+
 // Вывод цветов продукта (Каталог)
 router.post("/product-colors", ProductColorController.GetPagination)
 

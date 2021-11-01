@@ -358,6 +358,17 @@ const GetByRecentIds = async (req, res) => {
     }
 }
 
+
+const GetIds = async (req, res) => {
+    try {
+        const products = await ProductColor.query().pluck("id")
+        return res.send(products)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
 module.exports = {
     GetPagination,
     GetById,
@@ -365,5 +376,6 @@ module.exports = {
     GetNew,
     SearchValidate,
     Search,
-    GetByRecentIds
+    GetByRecentIds,
+    GetIds
 }

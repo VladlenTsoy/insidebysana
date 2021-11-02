@@ -129,8 +129,8 @@ const OrdersTableBlock: React.FC<OrdersTableBlockProps> = ({
                                 <td>
                                     {orders.reduce(
                                         (acc, order) =>
-                                            (acc += order.productColors.reduce(
-                                                (acc, product) => (acc += product.qty),
+                                            (acc + order.productColors.reduce(
+                                                (acc, product) => (acc + product.qty),
                                                 0
                                             )),
                                         0

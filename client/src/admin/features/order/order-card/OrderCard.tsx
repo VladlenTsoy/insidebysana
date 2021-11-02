@@ -23,10 +23,9 @@ import "./OrderCard.less"
 import {formatDate} from "utils/formatDate"
 // import DeleteOrder from "./DeleteOrderAction"
 import HideOrderAction from "./HideOrderAction"
-import OrderMoreAction from "admin/lib/components/more/order-more-action/OrderMoreAction"
-import EditorOrderAction from "admin/lib/components/editors/editor-order-action/EditorOrderAction"
 // import ToArchiveOrder from "./SendToArchiveOrderAction"
 import ClientMoreAction from "admin/lib/components/more/client-more-action/ClientMoreAction"
+import {Link} from "react-router-dom"
 
 interface OrderCardProps {
     order: OrderCardType
@@ -37,14 +36,14 @@ const OrderCard: React.FC<OrderCardProps> = ({order, index}) => {
     const menu = (
         <Menu>
             <Menu.Item icon={<InfoCircleOutlined />} key="more">
-                <OrderMoreAction orderId={order.id}>
+                <Link to={`/orders/more/${order.id}`}>
                     <span>Подробнее</span>
-                </OrderMoreAction>
+                </Link>
             </Menu.Item>
             <Menu.Item icon={<EditOutlined />} key="edit">
-                <EditorOrderAction orderId={order.id}>
+                <Link to={`/orders/edit/${order.id}`}>
                     <span>Редактировать</span>
-                </EditorOrderAction>
+                </Link>
             </Menu.Item>
             {/* <Menu.Item icon={<ContainerOutlined />} key="archive">
                 <ToArchiveOrder orderId={order.id} />

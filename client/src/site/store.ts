@@ -1,4 +1,4 @@
-import {configureStore, getDefaultMiddleware} from "@reduxjs/toolkit"
+import {configureStore} from "@reduxjs/toolkit"
 import {useDispatch as useDefaultDispatch} from "react-redux"
 import {bannerApi} from "./home/bannerApi"
 import {productApi} from "./products/productApi"
@@ -38,8 +38,8 @@ export const store = configureStore({
         auth,
         product
     },
-    middleware: [
-        ...getDefaultMiddleware({immutableCheck: false})
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({immutableCheck: false})
             .concat(bannerApi.middleware)
             .concat(productApi.middleware)
             .concat(categoryApi.middleware)
@@ -52,12 +52,13 @@ export const store = configureStore({
             .concat(newsletterApi.middleware)
             .concat(measurementApi.middleware)
             .concat(additionalServiceApi.middleware)
-    ]
+
 })
 
 export const useDispatch = () => useDefaultDispatch<any>()
 export type StoreState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+
 export interface ThunkProps {
     dispatch: AppDispatch
     state: StoreState

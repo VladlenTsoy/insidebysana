@@ -12,6 +12,7 @@ const OrdersArchive = React.lazy(
 const OrderEditor = React.lazy(
     () => import("admin/features/order/order-editor/OrderEditor")
 )
+const OrderMore = React.lazy(() => import("./pages/orders/order-more/OrderMore"))
 const Products = React.lazy(() => import("./pages/products/Products"))
 const Clients = React.lazy(() => import("./pages/clients/Clients"))
 const Settings = React.lazy(() => import("./pages/settings/Settings"))
@@ -31,7 +32,6 @@ const Index: React.FC = () => {
                         <Switch>
                             <Route exact path="/" component={Home} />
                             <Route exact path="/orders" component={Orders} />
-                            <Route exact path="/orders/:id" component={Orders} />
                             <Route
                                 path="/orders/archive"
                                 component={OrdersArchive}
@@ -39,6 +39,19 @@ const Index: React.FC = () => {
                             <Route
                                 path="/orders/create"
                                 component={OrderEditor}
+                            />
+                            <Route
+                                path="/orders/edit/:id"
+                                component={OrderEditor}
+                            />
+                            <Route
+                                path="/orders/more/:id"
+                                component={OrderMore}
+                            />
+                            <Route
+                                exact
+                                path="/orders/:id"
+                                component={Orders}
                             />
                             <Route
                                 exact

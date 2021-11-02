@@ -5,7 +5,7 @@ import EditorOrderDrawerFooter from "./edit-order-drawer/editor-order-drawer-foo
 import EditorOrderFetchById from "./EditorOrderFetchById"
 
 interface EditorOrderActionProps {
-    orderId?: number
+    orderId?: string
 }
 
 const EditorOrderAction: React.FC<EditorOrderActionProps> = ({children, orderId}) => {

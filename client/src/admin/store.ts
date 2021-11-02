@@ -73,7 +73,7 @@ export const adminReducer = combineReducers({
     [sizeApi.reducerPath]: sizeApi.reducer,
     [tagApi.reducerPath]: tagApi.reducer,
     [homePositionApi.reducerPath]: homePositionApi.reducer,
-    [photoApi.reducerPath]: photoApi.reducer
+    [photoApi.reducerPath]: photoApi.reducer,
 })
 
 export type AppDispatch = typeof store.dispatch

@@ -10,7 +10,7 @@ class OrderProductColor extends Model {
 
         return {
             product: {
-                filter: query => query.select("id", "thumbnail", "product_id", "sizes"),
+                filter: query => query.withGraphFetched("sizes").select("id", "thumbnail", "product_id", "title"),
                 relation: Model.HasOneRelation,
                 modelClass: ProductColor,
                 join: {
@@ -22,7 +22,7 @@ class OrderProductColor extends Model {
                 filter: query =>
                     query
                         .join("products", "products.id", "product_colors.product_id")
-                        .select("product_colors.id", "products.title", "product_colors.thumbnail"),
+                        .select("product_colors.id", "product_colors.title", "product_colors.thumbnail"),
                 relation: Model.HasOneRelation,
                 modelClass: ProductColor,
                 join: {

@@ -3,7 +3,6 @@ import "./TabAddedProducts.less"
 import {ProductColor} from "admin/lib/types/product/ProductColor"
 import {Button, InputNumber, Table} from "antd"
 import {DeleteOutlined} from "@ant-design/icons"
-import TagSize from "./tag-size/TagSize"
 import PriceBlock from "admin/lib/components/blocks/price-block/PriceBlock"
 
 const columns = ({deleteProduct, updateProductQty}: any) => [
@@ -16,18 +15,18 @@ const columns = ({deleteProduct, updateProductQty}: any) => [
         title: "Фото",
         dataIndex: ["product", "url_thumbnail"],
         key: "thumbnail",
-        render: (text: any, record: any) => <img src={text} alt={record.product.details.title} width="50px" />
+        render: (text: any, record: any) => <img src={text} alt={record.product.title} width="50px" />
     },
     {
         title: "Название",
-        dataIndex: ["product", "details", "title"],
+        dataIndex: ["product", "title"],
         key: "title"
     },
     {
         title: "Размер",
         dataIndex: ["size_id"],
         key: "size_id",
-        render: (text: number) => <TagSize sizeId={text} />
+        render: (text: number, record: any) => record.product.sizes.find((size: any) => size.size_id === text).title
     },
     {
         title: "Стоимость",
@@ -47,7 +46,7 @@ const columns = ({deleteProduct, updateProductQty}: any) => [
         render: (text: any, {size_id, product_color_id}: any) => (
             <InputNumber
                 size="large"
-                max={text.find((size:any) => size.size_id === size_id)?.qty}
+                max={text.find((size: any) => size.size_id === size_id)?.qty}
                 min={1}
                 defaultValue={1}
                 onChange={value => {

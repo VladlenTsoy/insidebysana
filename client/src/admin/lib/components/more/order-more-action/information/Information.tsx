@@ -75,7 +75,7 @@ const Information: React.FC<InformationProps> = ({orderId}) => {
                     )}
                     <Descriptions.Item label="Итог">{formatPrice(order.total_price)} сум</Descriptions.Item>
 
-                    {order.payments.map((payment: any) => (
+                    {order.payments && order.payments.map((payment: any) => (
                         <Descriptions.Item label={payment.title} key={payment.payment_id}>
                             {formatPrice(payment.price)} сум
                         </Descriptions.Item>

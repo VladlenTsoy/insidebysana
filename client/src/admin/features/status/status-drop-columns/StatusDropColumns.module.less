@@ -1,0 +1,28 @@
+.loadingBlock {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+
+    .loading {
+        width: 100%;
+    }
+}
+
+.container {
+    display: inline-block;
+    //overflow-x: auto;
+    //height: calc(100vh - calc(60px + 2.5rem));
+}
+
+.columns {
+    display: flex;
+}
+
+@keyframes ant-skeleton-loading {
+    0% {
+        background-position: 100% 50%
+    }
+    to {
+        background-position: 0 50%
+    }
+}

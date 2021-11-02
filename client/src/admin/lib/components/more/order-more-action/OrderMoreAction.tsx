@@ -33,7 +33,7 @@ const OrderMoreAction: React.FC<OrderMoreActionProps> = ({children, orderId}) =>
                 title={
                     <Space>
                         <div>Сделка #{orderId}</div>
-                        <EditorOrderAction orderId={orderId}>
+                        <EditorOrderAction orderId={String(orderId)}>
                             <Button type="primary" size="small" icon={<EditOutlined />}>
                                 Редактировать
                             </Button>

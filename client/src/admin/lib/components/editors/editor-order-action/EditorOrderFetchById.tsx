@@ -5,7 +5,7 @@ import {apiRequest} from "admin/utils/api"
 import EditorOrder from "./editor-order/EditorOrder"
 
 interface EditorOrderFetchByIdProps {
-    orderId?: number
+    orderId?: string
     setLoadingFinish?: Dispatch<SetStateAction<boolean>>
     close?: any
 }

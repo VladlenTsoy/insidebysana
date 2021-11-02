@@ -12,7 +12,9 @@ const webpackSplitChunks = {
             name(module) {
                 // получает имя, то есть node_modules/packageName/not/this/part.js
                 // или node_modules/packageName
-                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
+                const packageName = module.context.match(
+                    /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                )[1]
 
                 // имена npm-пакетов можно, не опасаясь проблем, использовать
                 // в URL, но некоторые серверы не любят символы наподобие @
@@ -46,7 +48,8 @@ const cracoLessOptions = {
                 "@black": "#1a222e",
                 "@text-color-secondary": "#c2c7cf",
                 "@layout-body-background": "#f8f9fb",
-                "@layout-header-background": "#1f2532"
+                "@layout-header-background": "#1f2532",
+                "@skeleton-color": "#f8f9fb"
             }
         }
     }
@@ -61,4 +64,8 @@ const webpackPluginsProduction = [
     new BundleAnalyzerPlugin()
 ]
 
-module.exports = {webpackSplitChunks, cracoLessOptions, webpackPluginsProduction}
+module.exports = {
+    webpackSplitChunks,
+    cracoLessOptions,
+    webpackPluginsProduction
+}

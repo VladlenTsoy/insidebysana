@@ -41,7 +41,8 @@ const Upload = async (req, res) => {
         const [imagePath] = await ImageService.UploadImage({
             folderPath: `${PATH_TO_FOLDER_IMAGES}/${productColorId}`,
             imagePatch: `${PATH_TO_IMAGE}/${productColorId}`,
-            fileImage: file
+            fileImage: file,
+            width: 700
         })
         //
         const image = await ProductColorImage.query().updateAndFetchById(imageRef.id, {

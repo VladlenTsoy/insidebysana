@@ -1,8 +1,9 @@
-const Jimp = require("jimp")
+// const Jimp = require("jimp")
 const {logger} = require("config/logger.config")
 const fs = require("fs")
 const path = require("path")
 const moment = require("moment")
+const sharp = require("sharp")
 
 /**
  * Удаление папки с картинками
@@ -30,9 +31,8 @@ const MoveFile = async ({oldPath, newPath, folderPath, nameImage}) => {
 }
 
 function getFilesizeInBytes(filename) {
-    var stats = fs.statSync(filename)
-    var fileSizeInBytes = stats.size
-    return fileSizeInBytes
+    const stats = fs.statSync(filename)
+    return stats.size
 }
 
 /**
@@ -57,26 +57,37 @@ const UploadImage = async ({
         // Картинку в буфер
         const buf =
             typeof fileImage === "string"
-                ? Buffer.from(fileImage.replace(/^data:image\/\w+;base64,/, ""), "base64")
+                ? Buffer.from(
+                      fileImage.replace(/^data:image\/\w+;base64,/, ""),
+                      "base64"
+                  )
                 : fileImage.buffer
 
         // Чтение картинки
-        const image = await Jimp.read(buf)
-        // Расширение файла
-        const ext = image.getExtension()
+        // const image = await Jimp.read(buf)
+        // // Расширение файла
+        // const ext = image.getExtension()
+        const ext = "webp"
         // Название файла
         const imageName = `${nameFile}.${moment().valueOf()}.${ext}`
         // Путь к файлу
         const imagePath = `${imagePatch}/${imageName}`
 
+        await sharp(buf)
+            .webp()
+            .resize(width)
+            .toFile(path.join(fullFolderPath, imageName))
+
         // Сжатие картинки
-        await image.quality(quality)
-        // Изменение размера картинки
-        if (image.getWidth() > width) await image.resize(width, Jimp.AUTO)
-        // Сохранение
-        await image.writeAsync(path.join(fullFolderPath, imageName))
+        // await image.quality(quality)
+        // // Изменение размера картинки
+        // if (image.getWidth() > width) await image.resize(width, Jimp.AUTO)
+        // // Сохранение
+        // await image.writeAsync(path.join(fullFolderPath, imageName))
         // Узнать размер
-        const sizeBytes = getFilesizeInBytes(path.join(fullFolderPath, imageName))
+        const sizeBytes = getFilesizeInBytes(
+            path.join(fullFolderPath, imageName)
+        )
         const sizeKilobytes = Math.ceil(sizeBytes / 1000)
 
         return [imagePath, imageName, sizeKilobytes]
@@ -95,7 +106,9 @@ const DeleteImagesExceptCurrent = async (folderPath, filePath) => {
         // Полный путь к папке
         const fullFolderPath = path.join(__dirname, folderPath)
         // Файлы в папке
-        const files = await fs.readdirSync(fullFolderPath, {withFileTypes: true})
+        const files = await fs.readdirSync(fullFolderPath, {
+            withFileTypes: true
+        })
         await Promise.all(
             await files
                 // Проверка на файл
@@ -103,7 +116,9 @@ const DeleteImagesExceptCurrent = async (folderPath, filePath) => {
                 .map(async file => {
                     // Удалить все файлы кроме переданного
                     if (!(filePath && filePath.includes(file.name)))
-                        await fs.unlinkSync(path.join(fullFolderPath, file.name))
+                        await fs.unlinkSync(
+                            path.join(fullFolderPath, file.name)
+                        )
                 })
         )
     } catch (e) {

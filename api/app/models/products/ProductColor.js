@@ -94,7 +94,7 @@ class ProductColor extends Model {
                     builder
                         .join("tags", raw(`tags.id IN (${tags.join(", ")})`))
                         .whereRaw(
-                            `JSON_SEARCH(products.tags_id, 'all', tags.id) > 1`
+                            `JSON_SEARCH(product_colors.tags_id, 'all', tags.id) > 1`
                         )
             },
 

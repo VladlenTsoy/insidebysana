@@ -1,6 +1,5 @@
 const {ProductColor} = require("models/products/ProductColor")
 const {Size} = require("models/settings/Size")
-const {Product} = require("models/products/Product")
 const {Category} = require("models/settings/Category")
 const {Color} = require("models/settings/Color")
 const {logger} = require("config/logger.config")
@@ -184,7 +183,7 @@ const GetById = async (req, res) => {
 const GetByProductId = async (req, res) => {
     try {
         const {productId} = req.params
-        const currentProduct = await Product.query().findById(productId)
+        const currentProduct = await ProductColor.query().findById(productId)
 
         if (!(currentProduct.tags_id && currentProduct.tags_id.length))
             return res.send([])
@@ -193,7 +192,7 @@ const GetByProductId = async (req, res) => {
             .withGraphFetched(`[discount, color]`)
             .join("products", "products.id", "product_colors.product_id")
             .where("product_colors.thumbnail", "IS NOT", null)
-            .whereNot("product_colors.product_id", productId)
+            .whereNot("product_colors.id", productId)
             .modify("filterTags", currentProduct.tags_id)
             .orderBy("product_colors.created_at", "desc")
             .select(

@@ -69,6 +69,7 @@ const FilterButton: React.FC<FilterButtonProps> = (
                 style={{position: "absolute"}}
                 width="370"
                 closeIcon={false}
+                zIndex={998}
             >
                 <div className={styles.filter}>
                     {isLoadingCategories || isLoadingSizes ? (

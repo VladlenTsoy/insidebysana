@@ -77,7 +77,7 @@ const MinusQtyProductColor = async (productColorId, sizeId, qty) => {
             product_color_id: productColorId,
             size_id: sizeId
         })
-        const totalQty = sizes[sizeId].qty - qty
+        const totalQty = productSize.qty - qty
         // TODO - Уведомления
         if (productSize.min_qty >= totalQty) console.log(1)
         await ProductSize.query()

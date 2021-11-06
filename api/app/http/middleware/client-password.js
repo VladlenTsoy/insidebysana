@@ -7,7 +7,6 @@ const {Client} = require("../../models/Client")
 passport.use(
     "site-access",
     new BearerStrategy(async function (token, done) {
-        console.log(1)
         if (token && jwt.decode(token)) {
             // Декодирование хэша в токен
             const {jti} = jwt.decode(token)

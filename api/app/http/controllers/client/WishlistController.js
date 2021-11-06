@@ -77,12 +77,12 @@ const SyncAndGetAll = async (req, res) => {
                 ]`
                 )
                 .join("products", "products.id", "product_colors.product_id")
-                .where("product_colors.hide_id", null)
+                // .where("product_colors.hide_id", null)
                 .whereIn("product_colors.id", wishlistProductColorIds)
                 .select(
                     "product_colors.id",
                     "product_colors.thumbnail",
-                    "products.title",
+                    "product_colors.title",
                     "products.category_id",
                     "products.price"
                 )

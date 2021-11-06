@@ -7,6 +7,7 @@ const {Client} = require("../../models/Client")
 passport.use(
     "site-access",
     new BearerStrategy(async function (token, done) {
+        console.log(1)
         if (token && jwt.decode(token)) {
             // Декодирование хэша в токен
             const {jti} = jwt.decode(token)
@@ -14,9 +15,12 @@ passport.use(
             const oauthAccess = await SiteOauthAccessToken.query().findById(jti)
             if (oauthAccess) {
                 // Поиск пользователя
-                const client = await Client.query().findById(oauthAccess.client_id)
+                const client = await Client.query().findById(
+                    oauthAccess.client_id
+                )
                 // Пользователь найден
-                if (client) return done(null, {...client, token}, {scope: "all"})
+                if (client)
+                    return done(null, {...client, token}, {scope: "all"})
             }
         }
         return done(null, false)

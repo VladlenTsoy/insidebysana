@@ -56,7 +56,7 @@ const _getFilters = async ({
         .modify("filterSubCategoryIn", subCategoryIds)
         .modify("filterSizes", sizeIds)
         .modify("filterPrice", price)
-        // .where("product_colors.hide_id", null)
+        .where("product_colors.status", "published")
         .select("color_id")
         .pluck("color_id")
     //
@@ -103,6 +103,7 @@ const GetPagination = async (req, res) => {
             .modify("filterSizes", sizeIds)
             .modify("filterColors", colorIds)
             .modify("filterPrice", price)
+            .where("product_colors.status", "published")
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereRaw(
                 `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
@@ -155,6 +156,7 @@ const GetById = async (req, res) => {
         product.colors = await ProductColor.query()
             .join("colors", "colors.id", "product_colors.color_id")
             .where("product_colors.product_id", product.product_id)
+            .where("product_colors.status", "published")
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereRaw(
                 `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
@@ -191,6 +193,7 @@ const GetByProductId = async (req, res) => {
         const products = await ProductColor.query()
             .withGraphFetched(`[discount, color]`)
             .join("products", "products.id", "product_colors.product_id")
+            .where("product_colors.status", "published")
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereNot("product_colors.id", productId)
             .modify("filterTags", currentProduct.tags_id)
@@ -229,6 +232,7 @@ const GetNew = async (req, res) => {
         const products = await ProductColor.query()
             .withGraphFetched(`[discount, color]`)
             .join("products", "products.id", "product_colors.product_id")
+            .where("product_colors.status", "published")
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereRaw(
                 `product_colors.id IN (SELECT product_home_positions.product_color_id FROM product_home_positions)`
@@ -287,23 +291,18 @@ const Search = async (req, res) => {
             .whereRaw(
                 `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
             )
-            .where("product_colors.hide_id", null)
+            .where("product_colors.status", "published")
             .where("product_colors.thumbnail", "IS NOT", null)
             .where(builder => {
                 if (search.trim() !== "")
                     builder
-                        .whereRaw(
-                            `product_colors.product_id IN (SELECT products.id FROM products WHERE products.title LIKE '%${search}%')`
-                        )
-                        .orWhereRaw(
-                            `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
-                        )
+                        .where("product_colors.title", "LIKE", `%${search}%`)
                         .orWhere("product_colors.id", "LIKE", `%${search}%`)
             })
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
-                "products.title",
+                "product_colors.title",
                 "products.category_id",
                 "products.price",
                 "product_colors.is_new"
@@ -336,6 +335,7 @@ const GetByRecentIds = async (req, res) => {
             .whereIn("product_colors.id", ids)
             .whereNot("product_colors.id", productColorId)
             .join("products", "products.id", "product_colors.product_id")
+            .where("product_colors.status", "published")
             .where("product_colors.thumbnail", "IS NOT", null)
             .whereRaw(
                 `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
@@ -356,7 +356,6 @@ const GetByRecentIds = async (req, res) => {
         return res.status(500).send({message: e.message})
     }
 }
-
 
 const GetIds = async (req, res) => {
     try {

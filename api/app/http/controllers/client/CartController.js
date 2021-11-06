@@ -29,8 +29,15 @@ const GetAll = async (req, res) => {
                         color(),                
                     ]`
                         )
-                        .join("products", "products.id", "product_colors.product_id")
-                        .findOne({"product_colors.id": productColorId})
+                        .join(
+                            "products",
+                            "products.id",
+                            "product_colors.product_id"
+                        )
+                        .findOne({
+                            "product_colors.status": "published",
+                            "product_colors.id": productColorId
+                        })
                         .select(
                             "product_colors.id",
                             "product_colors.thumbnail",
@@ -128,9 +135,13 @@ const SyncAndGetAll = async (req, res) => {
 
         await Promise.all(
             skus.map(async sku => {
-                const checkCart = await Cart.query().findOne({sku, user_id: user.id})
+                const checkCart = await Cart.query().findOne({
+                    sku,
+                    user_id: user.id
+                })
 
-                if (!checkCart) await Cart.query().insert({sku, user_id: user.id})
+                if (!checkCart)
+                    await Cart.query().insert({sku, user_id: user.id})
             })
         )
 
@@ -149,12 +160,19 @@ const SyncAndGetAll = async (req, res) => {
                         color(),                
                     ]`
                             )
-                            .join("products", "products.id", "product_colors.product_id")
-                            .findOne({"product_colors.hide_id": null, "product_colors.id": productColorId})
+                            .join(
+                                "products",
+                                "products.id",
+                                "product_colors.product_id"
+                            )
+                            .findOne({
+                                "product_colors.status": "published",
+                                "product_colors.id": productColorId
+                            })
                             .select(
                                 "product_colors.id",
                                 "product_colors.thumbnail",
-                                "products.title",
+                                "product_colors.title",
                                 "products.category_id",
                                 "products.price"
                             )
@@ -166,7 +184,7 @@ const SyncAndGetAll = async (req, res) => {
                                 .join(
                                     `product_colors`,
                                     raw(
-                                        `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0`
+                                        `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
                                     )
                                 )
                                 .findById(sizeId)
@@ -174,7 +192,7 @@ const SyncAndGetAll = async (req, res) => {
                                     "sizes.id",
                                     "sizes.title",
                                     raw(
-                                        `JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) as qty`
+                                        `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
                                     )
                                 )
                             if (size) {
@@ -198,9 +216,9 @@ const SyncAndGetAll = async (req, res) => {
 
 /**
  * Clear
- * @param {*} req 
- * @param {*} res 
- * @returns 
+ * @param {*} req
+ * @param {*} res
+ * @returns
  */
 const Clear = async (req, res) => {
     try {

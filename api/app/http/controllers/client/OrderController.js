@@ -29,8 +29,14 @@ const Create = async (req, res) => {
 
         const status = await Status.query()
             .whereNotNull("conditions")
-            .findOne(raw(`JSON_CONTAINS(conditions, '${payment_id}', '$.payments') > 0`))
-            .findOne(raw(`JSON_CONTAINS(conditions, '0', '$.payments_state') > 0`))
+            .findOne(
+                raw(
+                    `JSON_CONTAINS(conditions, '${payment_id}', '$.payments') > 0`
+                )
+            )
+            .findOne(
+                raw(`JSON_CONTAINS(conditions, '0', '$.payments_state') > 0`)
+            )
 
         const payments = [{payment_id, price: total_price}]
 
@@ -85,7 +91,11 @@ const Create = async (req, res) => {
                 }
         }
 
-        return res.send({status: "success", order_id: order.id, payment_opts: paymentOpts})
+        return res.send({
+            status: "success",
+            order_id: order.id,
+            payment_opts: paymentOpts
+        })
     } catch (e) {
         logger.error(e.stack)
         return res.status(500).send({message: e.message})
@@ -98,7 +108,11 @@ const Pay = async (req, res) => {
 
         if (Number(payment_id) === 3) {
             await OrderPayment.query().where({order_id}).delete()
-            await OrderPayment.query().insert({order_id, total_price, payment_id})
+            await OrderPayment.query().insert({
+                order_id,
+                total_price,
+                payment_id
+            })
         } else if (Number(payment_id) === 1)
             paymentOpts = {
                 method: "post",
@@ -124,7 +138,11 @@ const Pay = async (req, res) => {
                 }
             }
 
-        return res.send({status: "success", order_id: order_id, payment_opts: paymentOpts})
+        return res.send({
+            status: "success",
+            order_id: order_id,
+            payment_opts: paymentOpts
+        })
     } catch (e) {
         logger.error(e.stack)
         return res.status(500).send({message: e.message})
@@ -141,7 +159,14 @@ const GetAll = async (req, res) => {
             // payment delete
             .withGraphFetched("[delivery, address, productColors, payments]")
             .orderBy("created_at", "desc")
-            .select("created_at", "discount", "id", "payment_state", "total_price", "promo_code")
+            .select(
+                "created_at",
+                "discount",
+                "id",
+                "payment_state",
+                "total_price",
+                "promo_code"
+            )
 
         return res.send(orders)
     } catch (e) {
@@ -160,11 +185,20 @@ const GetById = async (req, res) => {
     try {
         const {id} = req.params
         const order = await Order.query()
-            .withGraphFetched("[productColors, address, payments, delivery, additionalServices]")
+            .withGraphFetched(
+                "[productColors, address, payments, delivery, additionalServices]"
+            )
             .findById(id)
-            .select("id", "created_at", "total_price", "payment_state", "promo_code")
+            .select(
+                "id",
+                "created_at",
+                "total_price",
+                "payment_state",
+                "promo_code"
+            )
 
-        if (!order) return res.status(500).send({message: "Ошибка! Заказ не найден!"})
+        if (!order)
+            return res.status(500).send({message: "Ошибка! Заказ не найден!"})
 
         const createdAt = moment(order.created_at)
         const currentTime = moment()
@@ -173,7 +207,8 @@ const GetById = async (req, res) => {
         const hours = duration.asHours()
 
         if (hours > 2) {
-            if (order.payment_state === 0) await Order.query().findById(id).update({payment_state: -1})
+            if (order.payment_state === 0)
+                await Order.query().findById(id).update({payment_state: -1})
             return res.status(500).send({
                 code: "er-order-1",
                 message: "Срок действия вашей брони, к сожалению, истёк"
@@ -187,4 +222,13 @@ const GetById = async (req, res) => {
     }
 }
 
-module.exports = {Create, GetAll, GetById, Pay}
+const GetOrderList = async (req, res) => {
+    try {
+        const orders = await Order.query().select('id')
+        return res.send(orders)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+module.exports = {Create, GetAll, GetById, Pay, GetOrderList}

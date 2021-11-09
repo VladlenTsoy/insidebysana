@@ -68,7 +68,7 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                 values,
                 images,
                 params.id,
-                product.product_id
+                product?.product_id
             )
             if (!params.id) {
                 await createProduct(updatedValues)

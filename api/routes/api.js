@@ -88,6 +88,8 @@ router.post("/order", OrderController.Create)
 router.get("/order/:id", OrderController.GetById)
 //
 router.post("/order/pay", OrderController.Pay)
+//
+router.get("/order-list", OrderController.GetOrderList)
 
 // Вывод всех стран
 router.get("/countries", CountryController.GetAll)

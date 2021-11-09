@@ -77,6 +77,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({name, onBlur, onChange, value, c
                     onBlur={onBlur}
                     placeholder="Введите телефон"
                     className={`${styled.inputPhone} ${className}`}
+                    // @ts-ignore
                     country={options[selected].abbr}
                     international
                     withCountryCallingCode

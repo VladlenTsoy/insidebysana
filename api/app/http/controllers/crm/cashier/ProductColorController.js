@@ -19,6 +19,7 @@ const GetBySearch = async (req, res) => {
 
         const refProductColor = ProductColor.query()
             .withGraphFetched(`[color, discount, sizes]`)
+            .whereNot("status", "archive")
             .join("products", "products.id", "product_colors.product_id")
             .select(
                 "product_colors.id",
@@ -41,16 +42,9 @@ const GetBySearch = async (req, res) => {
 
         // Вывод по размерам
         if (sizeId && sizeId !== 0)
-            refProductColor
-                // .whereRaw(
-                //     `JSON_SEARCH(JSON_KEYS(product_colors.sizes), 'all', ${String(
-                //         sizeId
-                //     )}) IS NOT null`
-                // )
-                .whereRaw(
-                    `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.id = ${sizeId} AND product_sizes.qty > 0)`
-                )
-        // TODO - лучшее решение
+            refProductColor.whereRaw(
+                `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.size_id = ${sizeId} AND product_sizes.qty > 0)`
+            )
         else
             refProductColor.whereRaw(
                 `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
@@ -84,7 +78,7 @@ const GetBySKU = async (req, res) => {
         if (productColorId && sizeId) {
             const product = await ProductColor.query()
                 .whereRaw(
-                    `exists(SELECT id FROM sizes WHERE JSON_EXTRACT(product_colors.sizes, concat('$."',sizes.id,'".qty')) > 0)`
+                    `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
                 )
                 .withGraphFetched(`[color, discount, sizes_props]`)
                 .join("products", "products.id", "product_colors.product_id")
@@ -93,7 +87,7 @@ const GetBySKU = async (req, res) => {
                 .select(
                     "product_colors.id",
                     "product_colors.thumbnail",
-                    "products.title",
+                    "product_colors.title",
                     "products.price"
                 )
 

@@ -43,7 +43,7 @@ class ProductColor extends Model {
             },
 
             /**
-             * Фильтр по подкатегориям
+             * Фильтр по подкатегориям ids
              * @param builder
              * @param subCategoryIds
              */

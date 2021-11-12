@@ -6,7 +6,7 @@
 
     .details {
         overflow: visible;
-        width: 100%;
+        width: 187px;
         position: relative;
 
         span.ripple {
@@ -16,7 +16,7 @@
     }
 
     .title {
-        font-size: @font-size-lg;
+        font-weight: 500;
         line-height: 1.2;
         overflow: hidden;
         min-width: 0;
@@ -24,17 +24,15 @@
     }
 
     .price-size {
-        align-items: center;
         font-size: @font-size-sm;
-        display: flex;
-        gap: 0.5rem;
 
         .price-block {
             line-height: normal;
             font-size: @font-size-base;
             color: fade(@black, 40%);
             font-weight: bold;
-            width: 100%;
+            display: inline-block;
+            margin-right: .5rem;
         }
     }
 
@@ -46,6 +44,7 @@
 .plus-minus-input {
     display: flex;
     align-items: center;
+    z-index: 12;
 
     .count {
         font-size: @font-size-big;

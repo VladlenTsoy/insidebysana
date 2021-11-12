@@ -1,9 +1,12 @@
-import {CloseOutlined, DollarOutlined, PercentageOutlined} from "@ant-design/icons"
+import {
+    CloseOutlined,
+    DollarOutlined,
+    PercentageOutlined
+} from "@ant-design/icons"
 import {Button, InputNumber, Radio} from "antd"
-import {useCartParams, setDiscount} from "pos/features/cart/cartSlice"
+import {setDiscount, useCartParams} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
-import React, {useState} from "react"
-import {useEffect} from "react"
+import React from "react"
 import {formatPrice} from "utils/formatPrice"
 import "./Discount.less"
 
@@ -15,29 +18,42 @@ const plainOptions = [
 const Discount: React.FC = () => {
     const dispatch = useDispatch()
     const {discount} = useCartParams()
-    const [typeDiscount, setTypeDiscound] = useState<"percent" | "fixed">(
-        discount ? discount.type : "percent"
-    )
-    const [valueDiscount, setValueDiscount] = useState(discount ? discount.discount : 0)
+    // const [typeDiscount, setTypeDiscount] = useState<"percent" | "fixed">(
+    //     discount ? discount.type : "percent"
+    // )
+    // const [valueDiscount, setValueDiscount] = useState(
+    //     discount.discount ? discount.discount : 0
+    // )
 
-    const onTypeChangeHandler = (e: any) => setTypeDiscound(e.target.value)
-    const onValueChangeHandler = (e: any) => setValueDiscount(e)
-    const onCLickHandler = () => {
-        dispatch(setDiscount(null))
-        setTypeDiscound("percent")
-        setValueDiscount(0)
+    const onTypeChangeHandler = (e: any) => {
+        console.log(e.target.value)
+        dispatch(
+            setDiscount({type: e.target.value})
+        )
     }
 
-    useEffect(() => {
-        if (typeDiscount === "percent" && valueDiscount > 100) setValueDiscount(100)
-        if (valueDiscount !== 0) dispatch(setDiscount({type: typeDiscount, discount: valueDiscount}))
-        else dispatch(setDiscount(null))
-    }, [dispatch, typeDiscount, valueDiscount])
+    const onValueChangeHandler = (e: any) =>
+        dispatch(setDiscount({discount: e}))
+
+    const onCLickHandler = () => {
+        dispatch(setDiscount({discount: 0, type: "percent"}))
+        dispatch(setDiscount({type: "percent", discount: 0}))
+    }
+
+    // useEffect(() => {
+    //     if (discount.type === "percent" && discount.discount > 100)
+    //         dispatch(setDiscount({type: discount.type, discount: 100}))
+    //     if (discount.discount !== 0)
+    //         dispatch(
+    //             setDiscount({type: discount.type, discount: discount.discount})
+    //         )
+    //     else dispatch(setDiscount({type: "percent", discount: 0}))
+    // }, [dispatch, discount])
 
     return (
         <div className="create-order-discount">
             <Radio.Group
-                value={typeDiscount}
+                value={discount.type}
                 options={plainOptions}
                 optionType="button"
                 buttonStyle="solid"
@@ -51,14 +67,22 @@ const Discount: React.FC = () => {
                     size="large"
                     onChange={onValueChangeHandler}
                     min={0}
-                    value={valueDiscount}
-                    {...(typeDiscount === "fixed"
+                    value={discount.discount}
+                    {...(discount.type === "fixed"
                         ? {formatter: val => formatPrice(Number(val))}
                         : {max: 100})}
                 />
-                <span className="icon">{typeDiscount === "fixed" ? "сум" : "%"}</span>
+                <span className="icon">
+                    {discount.type === "fixed" ? "сум" : "%"}
+                </span>
             </div>
-            <Button danger size="large" icon={<CloseOutlined />} shape="circle" onClick={onCLickHandler} />
+            <Button
+                danger
+                size="large"
+                icon={<CloseOutlined />}
+                shape="circle"
+                onClick={onCLickHandler}
+            />
         </div>
     )
 }

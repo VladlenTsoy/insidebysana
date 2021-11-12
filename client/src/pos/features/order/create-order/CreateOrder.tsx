@@ -1,27 +1,31 @@
 import {Client} from "types/Client"
 import React, {useCallback, useState} from "react"
 import {useCreateOrderMutation} from "pos/features/order/orderApi"
-import {useCartProductColors, useCartParams, changeCreateOrderButton} from "pos/features/cart/cartSlice"
-import {clearCart} from "pos/features/cart/cartSlice"
+import {
+    changeCreateOrderButton,
+    clearCart,
+    useCartParams,
+    useCartProductColors
+} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
 import {useGetSizeQuery} from "pos/layouts/header/sizeApi"
 import "./CreateOrder.less"
 import Header from "./Header"
 import {useCheckPrint} from "pos/features/print/CheckPrint"
-import {Button} from "antd"
+import {Button, Form} from "antd"
 import ProcessingBlock from "./create-order-form/ProcessingSwitch"
 import PriceList from "./create-order-form/PriceList"
 import Discount from "./create-order-form/Discount"
 import ClientSearch from "./create-order-form/ClientSearch"
-import Form from "antd/lib/form/Form"
 import ClientSourceList from "./create-order-form/ClientSourceList"
 import Payments from "./create-order-form/Payments"
 
 interface CreateOrderProps {
-    close: () => void
+    close: () => void;
 }
 
 const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
+    const [form] = Form.useForm()
     const [selectClient, setSelectClient] = useState<Client | null>(null)
     const products = useCartProductColors()
     const {
@@ -44,32 +48,29 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
         setSelectClient(client)
     }, [])
 
-    const onFinishHandler = async (values: any) => {
+    const clearPaymentHandler = useCallback(
+        (payments: any) => {
+            form.resetFields(["payments", payments.id])
+        },
+        [form]
+    )
+
+    const onFinishHandler = async () => {
         dispatch(changeCreateOrderButton({loading: true}))
 
-        const orderProducts = products.map(({product, product_color_id, qty, size_id}) => ({
-            discount: product?.discount,
-            id: product_color_id,
-            qty,
-            size_id,
-            price: product.price
-        }))
+        const orderProducts = products.map(
+            ({product, product_color_id, qty, size_id}) => ({
+                discount: product?.discount,
+                id: product_color_id,
+                qty,
+                size_id,
+                price: product.price
+            })
+        )
 
         const orderPayments = payments.map(payment => {
             return {...payment, price: payment.price - payChange}
         })
-
-        // console.log({
-        //     additionalServices: additionalServices,
-        //     processing: processing,
-        //     client: selectClient,
-        //     payments: payments,
-        //     discount: discount,
-        //     products: orderProducts,
-        //     total_price: totalPrice,
-        //     clientSourceId: clientSource?.id,
-        //     clientSourceComment: clientSourceComment
-        // })
 
         const response = await createOrder({
             additionalServices: additionalServices,
@@ -95,19 +96,30 @@ const CreateOrder: React.FC<CreateOrderProps> = ({close}) => {
         })
 
         dispatch(clearCart())
+        form.resetFields()
+        setSelectClient(null)
         close()
     }
 
     return (
-        <Form className="create-order" layout="vertical" size="large" onFinish={onFinishHandler}>
+        <Form
+            form={form}
+            className="create-order"
+            layout="vertical"
+            size="large"
+            onFinish={onFinishHandler}
+        >
             <Header close={close} />
             <div className="container">
                 <div className="create-order-form">
-                    <Payments />
+                    <Payments clearPaymentHandler={clearPaymentHandler} />
                 </div>
                 <div className="finish-block">
                     <div className="cart-details">
-                        <ClientSearch selectClient={selectClient} updateSelectClient={updateSelectClient} />
+                        <ClientSearch
+                            selectClient={selectClient}
+                            updateSelectClient={updateSelectClient}
+                        />
                         <ClientSourceList />
                         <div className="fixed">
                             <Discount />

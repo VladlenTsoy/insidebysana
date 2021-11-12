@@ -21,7 +21,7 @@ const CreateOrderAction: React.FC = ({children}) => {
                 visible={visible}
                 width="100%"
                 closable={false}
-                destroyOnClose
+                // destroyOnClose
             >
                 <CreateOrder close={close} />
             </Drawer>

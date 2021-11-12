@@ -4,49 +4,61 @@ import PaymeImage from "assets/images/payment/payme.svg"
 import ApelsinImage from "assets/images/payment/apelsin.png"
 import CreditCardImage from "assets/images/payment/credit-card-payment.png"
 import ClickImage from "assets/images/payment/click.png"
-import {changePriceToPayment, useCartParams} from "pos/features/cart/cartSlice"
+import {
+    addOrDeletePayment,
+    changePriceToPayment,
+    useCartParams
+} from "pos/features/cart/cartSlice"
 import {useDispatch} from "pos/store"
-import {addOrDeletePayment} from "pos/features/cart/cartSlice"
 import "./Payments.less"
 import {Button, Form, InputNumber} from "antd"
 import {PosOrderPayment} from "../PosOrderPayment"
 import {formatPrice} from "utils/formatPrice"
 import {CloseOutlined} from "@ant-design/icons"
 
-const Payments: React.FC = () => {
+const paymentMethods = [
+    {
+        label: "Наличные",
+        icon: CashImage,
+        payment_id: 3
+    },
+    {
+        label: "Карта",
+        icon: CreditCardImage,
+        payment_id: 5
+    },
+    {
+        label: "Payme",
+        icon: PaymeImage,
+        payment_id: 1
+    },
+    {
+        label: "Apelsin",
+        icon: ApelsinImage,
+        payment_id: 4
+    },
+    {
+        label: "Click",
+        icon: ClickImage,
+        payment_id: 2
+    }
+]
+
+interface PaymentsProps {
+    clearPaymentHandler: (payment: any) => void;
+}
+
+const Payments: React.FC<PaymentsProps> = ({clearPaymentHandler}) => {
     const {payments, leftToPay} = useCartParams()
     const dispatch = useDispatch()
 
-    const paymentMethods = [
-        {
-            label: "Наличные",
-            icon: CashImage,
-            payment_id: 3
-        },
-        {
-            label: "Карта",
-            icon: CreditCardImage,
-            payment_id: 5
-        },
-        {
-            label: "Payme",
-            icon: PaymeImage,
-            payment_id: 1
-        },
-        {
-            label: "Apelsin",
-            icon: ApelsinImage,
-            payment_id: 4
-        },
-        {
-            label: "Click",
-            icon: ClickImage,
-            payment_id: 2
-        }
-    ]
-
-    const onChangePayments = (payment: any) => dispatch(addOrDeletePayment({...payment, price: 0}))
-    const onChangePaymentHandler = (payment: PosOrderPayment) => dispatch(changePriceToPayment(payment))
+    const onChangePayments = (payment: any, isClose?: boolean) => {
+        isClose && clearPaymentHandler(payment)
+        dispatch(addOrDeletePayment({...payment, price: 0}))
+    }
+    
+    const onChangePaymentHandler = (payment: PosOrderPayment) =>
+        dispatch(changePriceToPayment(payment))
 
     return (
         <div className="payments-card">
@@ -54,7 +66,12 @@ const Payments: React.FC = () => {
                 {paymentMethods.map(method => (
                     <div
                         className={`payment-item ${
-                            payments.find(payment => payment.payment_id === method.payment_id) ? "active" : ""
+                            payments.find(
+                                payment =>
+                                    payment.payment_id === method.payment_id
+                            )
+                                ? "active"
+                                : ""
                         }`}
                         key={method.payment_id}
                         onClick={() => onChangePayments(method)}
@@ -83,7 +100,9 @@ const Payments: React.FC = () => {
                                         price: Number(val)
                                     })
                                 }
-                                formatter={val => (val ? formatPrice(Number(val)) : "")}
+                                formatter={val =>
+                                    val ? formatPrice(Number(val)) : ""
+                                }
                                 style={{width: "100%"}}
                             />
                         </Form.Item>
@@ -92,7 +111,7 @@ const Payments: React.FC = () => {
                                 danger
                                 icon={<CloseOutlined />}
                                 shape="circle"
-                                onClick={() => onChangePayments(payment)}
+                                onClick={() => onChangePayments(payment, true)}
                             />
                         </div>
                     </div>

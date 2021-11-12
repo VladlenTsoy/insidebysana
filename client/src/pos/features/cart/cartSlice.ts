@@ -15,7 +15,7 @@ export interface StateProps {
     discount: {
         type: "percent" | "fixed"
         discount: number
-    } | null
+    }
     additionalServices: {
         id: number
         title: string
@@ -40,7 +40,10 @@ export interface StateProps {
 
 const initialState = cartAdapter.getInitialState<StateProps>({
     totalPrice: 0,
-    discount: null,
+    discount: {
+        type: "percent",
+        discount: 0
+    },
     additionalServices: [],
     payments: [{payment_id: 3, label: "Наличные", price: 0}],
     payChange: 0,
@@ -83,7 +86,7 @@ const cartSlice = createSlice({
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
-        // Обновить кол-во доп. улуг
+        // Обновить кол-во доп. услуг
         updateQtyAdditionalService: (
             state,
             action: PayloadAction<{id: AdditionalService["id"]; qty: number}>
@@ -97,7 +100,7 @@ const cartSlice = createSlice({
             state.totalPrice = totalPrice
             state.leftToPay = leftToPay
         },
-        // Доавить в корзину
+        // Добавить в корзину
         addToCart: (state, action: PayloadAction<CartProductItemType>) => {
             cartAdapter.addOne(state, action.payload)
             // Сумма
@@ -139,7 +142,7 @@ const cartSlice = createSlice({
         // Очистить корзину
         clearCart: state => {
             cartAdapter.removeAll(state)
-            state.discount = null
+            state.discount = {discount: 0, type: "percent"}
             state.additionalServices = []
             // Сумма
             state.totalPrice = 0
@@ -153,9 +156,10 @@ const cartSlice = createSlice({
             state.payments = [{payment_id: 3, label: "Наличные", price: 0}]
         },
         // Задать скидку
-        setDiscount: (state, action: PayloadAction<StateProps["discount"]>) => {
-            if (action.payload && action.payload.discount > 0) state.discount = action.payload
-            else state.discount = null
+        setDiscount: (state, action: PayloadAction<{type?: StateProps["discount"]["type"], discount?: StateProps["discount"]["discount"]}>) => {
+            if (action.payload &&  action.payload.discount && action.payload.discount > 0) state.discount.discount = action.payload.discount
+            if (action.payload &&  action.payload.type) state.discount.type = action.payload.type
+            // else state.discount = {type: "percent", discount: 0}
             // Сумма
             const {totalPrice, leftToPay} = updateTotal(state)
             state.totalPrice = totalPrice

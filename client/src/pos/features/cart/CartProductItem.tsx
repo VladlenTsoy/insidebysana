@@ -132,9 +132,7 @@ const ProductCart: React.FC<ProductCartProps> = ({cartProduct}) => {
                         </Tag>
                     </div>
                 </div>
-                <div>
-                    <PlusMinusInput productCart={cartProduct} selectSize={selectSize} />
-                </div>
+                <PlusMinusInput productCart={cartProduct} selectSize={selectSize} />
             </div>
         )
     return null

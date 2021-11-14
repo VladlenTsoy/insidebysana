@@ -25,7 +25,7 @@ const columns = ({addProduct, deleteProduct, addedProducts}: any) => {
         },
         {
             title: "Название",
-            dataIndex: ["details", "title"],
+            dataIndex: ["title"],
             key: "title",
             render: (title: string, record: any) => `${title} (${record.color.title})`
         },

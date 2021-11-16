@@ -1,5 +1,8 @@
 import React, {useState} from "react"
 import {BellFilled} from "@ant-design/icons"
+import styles from "../../../../account-menu/AccountMenu.module.less"
+import cn from "classnames"
+import {Drawer} from "antd"
 
 const NotificationsItem = () => {
     const [visible, setVisible] = useState(false)
@@ -8,14 +11,25 @@ const NotificationsItem = () => {
     const close = () => setVisible(false)
 
     return (
-        <div>
+        <>
             <button
-                className={`layout-sidebar-button ${visible ? "active" : ""}`}
+                className={cn(styles.sidebarButton, {
+                    [styles.active]: visible
+                })}
                 onClick={visible ? close : open}
             >
                 <BellFilled />
             </button>
-        </div>
+            <Drawer
+                bodyStyle={{padding: 0}}
+                visible={visible}
+                // closable={false}
+                // mask={false}
+                onClose={close}
+            >
+
+            </Drawer>
+        </>
     )
 }
 

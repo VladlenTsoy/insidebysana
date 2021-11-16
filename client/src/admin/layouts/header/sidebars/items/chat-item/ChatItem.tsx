@@ -1,5 +1,7 @@
 import React, {useState} from "react"
 import {MessageOutlined} from "@ant-design/icons"
+import cn from "classnames"
+import styles from "../../../../account-menu/AccountMenu.module.less"
 
 const ChatItem = () => {
     const [visible, setVisible] = useState(false)
@@ -10,7 +12,9 @@ const ChatItem = () => {
     return (
         <div>
             <button
-                className={`layout-sidebar-button ${visible ? "active" : ""}`}
+                className={cn(styles.sidebarButton, {
+                    [styles.active]: visible
+                })}
                 onClick={visible ? close : open}
             >
                 <MessageOutlined />

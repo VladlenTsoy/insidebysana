@@ -3,6 +3,7 @@ import {Button, Layout as AntdLayout, Menu} from "antd"
 import {Link, useHistory, useLocation} from "react-router-dom"
 import {useScreenWindow} from "../hooks/use-screen-window.effect"
 import styles from "./Layout.module.less"
+import stylesMenu from "./account-menu/AccountMenu.module.less"
 import {useCommonDispatch} from "../store/common/store"
 import {changeTitle} from "admin/store/common/app/appSlice"
 import {
@@ -15,6 +16,7 @@ import {
     SkinOutlined,
     TeamOutlined
 } from "@ant-design/icons"
+import AccountMenu from "./account-menu/AccountMenu"
 
 const {Header, Sider, Content} = AntdLayout
 
@@ -99,7 +101,7 @@ const Layout: React.FC = ({children}) => {
             <AntdLayout className={styles.siteLayout}>
                 <Header className={styles.siteLayoutHeader}>
                     {React.createElement(Button, {
-                        className: "trigger",
+                        className: stylesMenu.sidebarButton,
                         onClick: onCollapsedHandler,
                         icon: collapsed ? (
                             <MenuUnfoldOutlined />
@@ -109,6 +111,7 @@ const Layout: React.FC = ({children}) => {
                         size: "large",
                         shape: "circle"
                     })}
+                    <AccountMenu />
                 </Header>
                 <Content
                     className={styles.siteLayoutContent}

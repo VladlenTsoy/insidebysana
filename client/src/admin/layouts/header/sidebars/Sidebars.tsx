@@ -1,5 +1,5 @@
 import React from "react"
-import AccountMenu from "./account-menu/AccountMenu"
+import AccountMenu from "../../account-menu/AccountMenu"
 import './Sidebar.less'
 
 interface SidebarsProps {

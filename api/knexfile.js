@@ -7,7 +7,7 @@ module.exports = {
             host: "141.8.192.26",
             user: "a0493480_insidebysana",
             password: "ZSUQq4Ee",
-            database: "a0493480_test_insidebysana"
+            database: "a0493480_old_insidebysana"
             // database: 'a0493480_insidebysana',
         },
         migrations: {

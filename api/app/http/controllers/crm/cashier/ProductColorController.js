@@ -80,7 +80,7 @@ const GetBySKU = async (req, res) => {
                 .whereRaw(
                     `product_colors.id IN (SELECT product_sizes.product_color_id FROM product_sizes WHERE product_sizes.qty > 0)`
                 )
-                .withGraphFetched(`[color, discount, sizes_props]`)
+                .withGraphFetched(`[color, discount, sizes]`)
                 .join("products", "products.id", "product_colors.product_id")
                 .where("product_colors.hide_id", null)
                 .findById(productColorId)

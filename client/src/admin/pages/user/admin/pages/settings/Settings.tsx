@@ -28,21 +28,21 @@ const Settings = () => {
                 <Col xxl={3} xl={5}>
                     <Menu className="settings-menu" defaultSelectedKeys={[secondPathname]}>
                         <Menu.ItemGroup title="Управление сайтом">
-                            <Menu.Item key="home">
-                                <Link to="/settings/home">Главная</Link>
-                            </Menu.Item>
+                            {/*<Menu.Item key="home">*/}
+                            {/*    <Link to="/settings/home">Главная</Link>*/}
+                            {/*</Menu.Item>*/}
                             <Menu.Item key="banners">
                                 <Link to="/settings/banners">Баннеры</Link>
                             </Menu.Item>
-                            <Menu.Item key="about-us">
-                                <Link to="/settings/about-us">О нас</Link>
-                            </Menu.Item>
+                            {/*<Menu.Item key="about-us">*/}
+                            {/*    <Link to="/settings/about-us">О нас</Link>*/}
+                            {/*</Menu.Item>*/}
                             <Menu.Item key="lookbook">
                                 <Link to="/settings/lookbook">LOOKBOOK</Link>
                             </Menu.Item>
-                            <Menu.Item key="contacts">
-                                <Link to="/settings/contacts">Контакты</Link>
-                            </Menu.Item>
+                            {/*<Menu.Item key="contacts">*/}
+                            {/*    <Link to="/settings/contacts">Контакты</Link>*/}
+                            {/*</Menu.Item>*/}
                         </Menu.ItemGroup>
                         <Menu.ItemGroup title="Основные">
                             <Menu.Item key="categories">
@@ -70,14 +70,14 @@ const Settings = () => {
                                 <Link to="/settings/additional-services">Доп. услуги</Link>
                             </Menu.Item>
                         </Menu.ItemGroup>
-                        <Menu.ItemGroup title="Оплата">
-                            <Menu.Item key="payme">
-                                <Link to="/settings/payme">Payme</Link>
-                            </Menu.Item>
-                            <Menu.Item key="click">
-                                <Link to="/settings/click">Click</Link>
-                            </Menu.Item>
-                        </Menu.ItemGroup>
+                        {/*<Menu.ItemGroup title="Оплата">*/}
+                        {/*    <Menu.Item key="payme">*/}
+                        {/*        <Link to="/settings/payme">Payme</Link>*/}
+                        {/*    </Menu.Item>*/}
+                        {/*    <Menu.Item key="click">*/}
+                        {/*        <Link to="/settings/click">Click</Link>*/}
+                        {/*    </Menu.Item>*/}
+                        {/*</Menu.ItemGroup>*/}
                         <Menu.ItemGroup title="Печать">
                             <Menu.Item key="print-categories">
                                 <Link to="/settings/print-categories">Категории</Link>
@@ -86,14 +86,14 @@ const Settings = () => {
                                 <Link to="/settings/print-images">Картинки</Link>
                             </Menu.Item>
                         </Menu.ItemGroup>
-                        <Menu.ItemGroup title="Интеграции">
-                            <Menu.Item key="facebook">
-                                <Link to="/settings/facebook">Facebook</Link>
-                            </Menu.Item>
-                            <Menu.Item key="eskiz">
-                                <Link to="/settings/eskiz">Eskiz</Link>
-                            </Menu.Item>
-                        </Menu.ItemGroup>
+                        {/*<Menu.ItemGroup title="Интеграции">*/}
+                        {/*    <Menu.Item key="facebook">*/}
+                        {/*        <Link to="/settings/facebook">Facebook</Link>*/}
+                        {/*    </Menu.Item>*/}
+                        {/*    <Menu.Item key="eskiz">*/}
+                        {/*        <Link to="/settings/eskiz">Eskiz</Link>*/}
+                        {/*    </Menu.Item>*/}
+                        {/*</Menu.ItemGroup>*/}
                     </Menu>
                 </Col>
                 <Col xxl={21} xl={19}>

@@ -86,15 +86,9 @@ const Layout: React.FC = ({children}) => {
                         <Menu.Item key="staff" icon={<CrownOutlined />}>
                             <Link to="/staff">Сотрудники</Link>
                         </Menu.Item>
-                        <Menu.SubMenu
-                            key="settings"
-                            icon={<SettingOutlined />}
-                            title="Настройки"
-                        >
-                            <Menu.Item key="/users" icon={<CrownOutlined />}>
-                                Пользователи
-                            </Menu.Item>
-                        </Menu.SubMenu>
+                        <Menu.Item key="settings" icon={<SettingOutlined />}>
+                            <Link to="/settings">Настройки</Link>
+                        </Menu.Item>
                     </Menu>
                 </div>
             </Sider>

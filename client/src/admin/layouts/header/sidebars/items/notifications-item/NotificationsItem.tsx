@@ -3,6 +3,7 @@ import {BellFilled} from "@ant-design/icons"
 import styles from "../../../../account-menu/AccountMenu.module.less"
 import cn from "classnames"
 import {Drawer} from "antd"
+import Notification from "../../../../../components/notifications/Notification"
 
 const NotificationsItem = () => {
     const [visible, setVisible] = useState(false)
@@ -21,13 +22,16 @@ const NotificationsItem = () => {
                 <BellFilled />
             </button>
             <Drawer
-                bodyStyle={{padding: 0}}
+                bodyStyle={{padding: "1rem"}}
                 visible={visible}
+                width={350}
+                // getContainer="#site-layout-content"
                 // closable={false}
-                // mask={false}
+                mask={false}
+                // style={{position: "absolute"}}
                 onClose={close}
             >
-
+                <Notification />
             </Drawer>
         </>
     )

@@ -86,7 +86,7 @@ const Create = async (req, res) => {
                 )
             }
         }
-        // Сохранение или обновление обьемов
+        // Сохранение или обновление объемов
         if (data.measurements)
             await ProductMeasurementService.CreateOrUpdate(
                 data.measurements,
@@ -216,20 +216,29 @@ const EditById = async (req, res) => {
                 )
             }
         }
-        // Сохранение или обновление обьемов
+        // Сохранение или обновление объемов
         if (data.measurements)
             await ProductMeasurementService.CreateOrUpdate(
                 data.measurements,
                 productColor.id
             )
         // Позиция на главной странице
-        if (data.home_position)
-            await ProductHomePosition.query()
-                .findOne({product_color_id: productColor.id})
-                .update({
+        if (data.home_position) {
+            const productHomePosition = await ProductHomePosition.query().findOne(
+                {product_color_id: productColor.id}
+            )
+            if (productHomePosition)
+                await ProductHomePosition.query()
+                    .findOne({product_color_id: productColor.id})
+                    .update({
+                        position: data.home_position
+                    })
+            else
+                await ProductHomePosition.query().insert({
+                    product_color_id: productColor.id,
                     position: data.home_position
                 })
-        else
+        } else
             await ProductHomePosition.query()
                 .findOne({product_color_id: productColor.id})
                 .delete()

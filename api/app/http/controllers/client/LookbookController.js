@@ -4,7 +4,9 @@ const {LookbookCategory} = require("models/settings/LookbookCategory")
 
 const GetLatest = async (req, res) => {
     try {
-        const lookbookCategory = await LookbookCategory.query().findOne({}).orderBy("created_at", "desc")
+        const lookbookCategory = await LookbookCategory.query()
+            .findOne({})
+            .orderBy("created_at", "desc")
         if (lookbookCategory)
             lookbookCategory.images = await Lookbook.query()
                 .where({category_id: lookbookCategory.id})
@@ -16,7 +18,7 @@ const GetLatest = async (req, res) => {
     }
 }
 
-const GetAll = async (req, res) => {
+const GetAllExceptId = async (req, res) => {
     try {
         const {categoryId} = req.params
         const lookbook = await LookbookCategory.query()
@@ -30,10 +32,26 @@ const GetAll = async (req, res) => {
     }
 }
 
+const GetAll = async (req, res) => {
+    try {
+        const lookbook = await LookbookCategory.query().orderBy(
+            "created_at",
+            "desc"
+        )
+
+        return res.send(lookbook)
+    } catch (e) {
+        logger.error(e.stack)
+        return res.status(500).send({message: e.message})
+    }
+}
+
 const GetByCategoryId = async (req, res) => {
     try {
         const {id} = req.params
-        const lookbookCategory = await LookbookCategory.query().findOne({id}).orderBy("created_at", "desc")
+        const lookbookCategory = await LookbookCategory.query()
+            .findOne({id})
+            .orderBy("created_at", "desc")
         if (lookbookCategory)
             lookbookCategory.images = await Lookbook.query()
                 .where({category_id: lookbookCategory.id})
@@ -45,4 +63,4 @@ const GetByCategoryId = async (req, res) => {
     }
 }
 
-module.exports = {GetLatest, GetAll, GetByCategoryId}
+module.exports = {GetLatest, GetAll, GetByCategoryId, GetAllExceptId}

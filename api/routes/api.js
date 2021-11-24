@@ -70,7 +70,9 @@ router.get("/lookbook", LookbookController.GetLatest)
 //
 router.get("/lookbook/category/:id", LookbookController.GetByCategoryId)
 //
-router.get("/lookbook-categories/:categoryId", LookbookController.GetAll)
+router.get("/lookbook-categories", LookbookController.GetAll)
+//
+router.get("/lookbook-categories/:categoryId", LookbookController.GetAllExceptId)
 // Подписаться
 router.post("/newsletter/subscribe", NewsletterController.SubscribeValidate, NewsletterController.Subscribe)
 // Промокод

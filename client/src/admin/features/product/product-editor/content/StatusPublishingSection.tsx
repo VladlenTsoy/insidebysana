@@ -23,8 +23,8 @@ const StatusPublishingSection: React.FC<StatusPublishingSectionProps> = (
     const {data, isLoading} = useGetFreeHomePositionsQuery(homePosition || 0)
 
     useEffect(() => {
-        if (!homePosition) clearHomePosition()
-    }, [homePosition, clearHomePosition])
+        if (!isHomePosition) clearHomePosition()
+    }, [isHomePosition, clearHomePosition])
 
     return (
         <Element name="status-publishing">

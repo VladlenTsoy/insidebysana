@@ -103,10 +103,14 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
             } else {
                 form.setFieldsValue({
                     ...product,
-                    discount: {
-                        discount: product.discount.discount,
-                        end_at: moment(product.discount.end_at)
-                    }
+                    discount: product.discount
+                        ? {
+                              discount: product.discount.discount,
+                              end_at: product.discount.end_at
+                                  ? moment(product.discount.end_at)
+                                  : undefined
+                          }
+                        : undefined
                 })
                 setIsHomePosition(!!product.home_position)
                 setSelectedSizes(

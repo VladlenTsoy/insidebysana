@@ -18,6 +18,7 @@ import {useHistory, useParams} from "react-router"
 import LoadingBlock from "components/blocks/loading-block/LoadingBlock"
 import {ProductFormData, TemporaryImageType} from "../../../types/Product"
 import {updateDataForEditor} from "../updateData"
+import moment from "moment"
 
 interface EditorProductProps {
     product?: any;
@@ -100,7 +101,13 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                     price: product.price
                 })
             } else {
-                form.setFieldsValue(product)
+                form.setFieldsValue({
+                    ...product,
+                    discount: {
+                        discount: product.discount.discount,
+                        end_at: moment(product.discount.end_at)
+                    }
+                })
                 setIsHomePosition(!!product.home_position)
                 setSelectedSizes(
                     Object.values(product.size_props).map((size: any) => ({

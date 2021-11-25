@@ -10,6 +10,7 @@ const {logger} = require("config/logger.config")
 const {ProductHomePosition} = require("models/products/ProductHomePosition")
 const {ProductSize} = require("models/products/ProductSize")
 const {ProductColorImage} = require("models/products/ProductColorImage")
+const {ProductDiscount} = require("models/products/ProductDiscount")
 
 const PATH_TO_FOLDER_TMP = "../../../public/images/tmp"
 const PATH_TO_FOLDER_IMAGES = "../../../public/images/product-colors"
@@ -40,6 +41,35 @@ const Create = async (req, res) => {
             tags_id: tagsId,
             is_new: data.is_new
         })
+        // Скидки
+        if (
+            data.discount &&
+            data.discount.discount &&
+            data.discount.discount !== 0
+        ) {
+            const discount = await ProductDiscount.query().findOne({
+                product_color_id: productColor.id
+            })
+            if (discount)
+                await ProductDiscount.query()
+                    .findById(discount.id)
+                    .update({
+                        discount: data.discount.discount,
+                        end_at: data.discount.end_at || null
+                    })
+            else
+                await ProductDiscount.query().insert({
+                    product_color_id: productColor.id,
+                    discount: data.discount.discount,
+                    end_at: data.discount.end_at || null
+                })
+        } else {
+            await ProductDiscount.query()
+                .findOne({
+                    product_color_id: productColor.id
+                })
+                .delete()
+        }
         // Создание размеров
         await Promise.all(
             data.sizes.map(
@@ -117,7 +147,7 @@ const GetById = async (req, res) => {
                 "product_home_positions.product_color_id",
                 "product_colors.id"
             )
-            .withGraphFetched(`[measurements, images, colors, sizes]`)
+            .withGraphFetched(`[measurements, images, colors, sizes, discount]`)
             .select(
                 "product_colors.id",
                 "product_colors.title",
@@ -153,6 +183,37 @@ const EditById = async (req, res) => {
             tags_id: tagsId,
             is_new: data.is_new
         })
+
+        // Скидки
+        if (
+            data.discount &&
+            data.discount.discount &&
+            data.discount.discount !== 0
+        ) {
+            const discount = await ProductDiscount.query().findOne({
+                product_color_id: productColor.id
+            })
+            if (discount)
+                await ProductDiscount.query()
+                    .findById(discount.id)
+                    .update({
+                        discount: data.discount.discount,
+                        end_at: data.discount.end_at || null
+                    })
+            else
+                await ProductDiscount.query().insert({
+                    product_color_id: productColor.id,
+                    discount: data.discount.discount,
+                    end_at: data.discount.end_at || null
+                })
+        } else {
+            await ProductDiscount.query()
+                .findOne({
+                    product_color_id: productColor.id
+                })
+                .delete()
+        }
+
         // Обновление размеров
         await Promise.all(
             data.sizes.map(async size =>

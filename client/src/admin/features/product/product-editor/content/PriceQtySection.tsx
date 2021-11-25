@@ -41,7 +41,7 @@ const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizes}) => {
             </Form.Item>
             <Row gutter={28}>
                 <Col xl={12} md={12} xs={24}>
-                    <Form.Item name="discount" label="Скидка (%)">
+                    <Form.Item name={["discount", "discount"]} label="Скидка (%)">
                         <InputNumber
                             min={0}
                             max={100}
@@ -51,7 +51,7 @@ const PriceQtySection: React.FC<PriceQtySectionProps> = ({selectedSizes}) => {
                 </Col>
 
                 <Col xl={12} md={12} xs={24}>
-                    <Form.Item name="end_at" label="До какого">
+                    <Form.Item name={["discount", "end_at"]} label="До какого">
                         <DatePicker
                             format="DD-MM-YYYY"
                             style={{width: "100%"}}

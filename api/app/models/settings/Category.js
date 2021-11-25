@@ -16,7 +16,7 @@ class Category extends Model {
                                 SELECT product_colors.product_id FROM product_colors 
                                 WHERE id IN (
                                     SELECT product_sizes.product_color_id FROM product_sizes 
-                                    WHERE product_sizes.qty > 0
+                                    WHERE product_sizes.qty > 0 AND status = "published" AND thumbnail IS NOT null
                                 )
                             )
                         )

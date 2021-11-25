@@ -59,6 +59,7 @@ const SelectOrderRef = () => {
 const Create = async (data, config) => {
     try {
         let {
+            type = "pos",
             additionalServices,
             status_id = 1,
             client,
@@ -96,6 +97,7 @@ const Create = async (data, config) => {
 
         // Создание сделки
         const order = await Order.query().insertAndFetch({
+            type,
             client_id,
             status_id,
             source_id,

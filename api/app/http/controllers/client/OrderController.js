@@ -4,7 +4,7 @@ const OrderService = require("services/order/OrderService")
 const {Order} = require("models/orders/Order")
 const {Status} = require("models/orders/Status")
 const moment = require("moment")
-const {OrderPayment} = require("../../../models/orders/OrderPayment")
+const {OrderPayment} = require("models/orders/OrderPayment")
 
 /**
  * Создать сделку
@@ -43,6 +43,7 @@ const Create = async (req, res) => {
         // Создание сделки
         const order = await OrderService.Create(
             {
+                type: "site",
                 additionalServices: [{...additionalService, qty: 1}],
                 payments,
                 delivery_id,
@@ -224,7 +225,7 @@ const GetById = async (req, res) => {
 
 const GetOrderList = async (req, res) => {
     try {
-        const orders = await Order.query().select('id')
+        const orders = await Order.query().select("id")
         return res.send(orders)
     } catch (e) {
         logger.error(e.stack)

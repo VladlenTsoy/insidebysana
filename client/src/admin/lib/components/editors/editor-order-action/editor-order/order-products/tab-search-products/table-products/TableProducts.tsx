@@ -70,6 +70,7 @@ const TableProducts: React.FC<ListProductsProps> = ({
             dataSource={products}
             loading={loading}
             rowKey="id"
+            scroll={{x: true}}
         />
     )
 }

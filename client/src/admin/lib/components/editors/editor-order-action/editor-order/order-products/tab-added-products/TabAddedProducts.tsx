@@ -85,6 +85,7 @@ const TabAddedProducts: React.FC<TabAddedProductsProps> = ({products, deleteProd
                 columns={columns({deleteProduct, updateProductQty})}
                 dataSource={products}
                 pagination={false}
+                scroll={{x: true}}
                 rowKey={(record: any) => record.product.id + "-" + record.size_id}
             />
         </div>

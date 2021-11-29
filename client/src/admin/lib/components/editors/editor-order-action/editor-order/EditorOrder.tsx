@@ -10,6 +10,7 @@ import {formatPrice} from "admin/utils/formatPrice"
 import {OrderAddress, OrderDiscount, OrderPayment, OrderProduct} from "admin/lib/types/Order"
 import {SelectAdditionalService} from "admin/lib/components/blocks/add-additional-service-block/AddAdditionalServiceBlock"
 import {editOrder} from "admin/store/admin/order/editOrder"
+import {useHistory} from "react-router-dom"
 
 interface EditorOrderProps {
     setLoadingFinish?: Dispatch<SetStateAction<boolean>>
@@ -30,6 +31,7 @@ interface EditorOrderProps {
 
 const EditorOrder: React.FC<EditorOrderProps> = ({order}) => {
     const dispatch = useDispatch()
+    const history = useHistory()
     const [processing, setProcessing] = useState(order?.processing || false)
     const [totalPrice, setTotalPrice] = useState(0)
     const [totalPricePayments, setTotalPricePayments] = useState(0)
@@ -102,6 +104,7 @@ const EditorOrder: React.FC<EditorOrderProps> = ({order}) => {
                     })
                 )
             }
+            history.push("/orders")
             // setLoadingFinish(false)
             // close()
         },
@@ -132,7 +135,7 @@ const EditorOrder: React.FC<EditorOrderProps> = ({order}) => {
 
         if (additionalServices)
             total += additionalServices.reduce(
-                (acc, additionalService) => (acc += additionalService.qty * additionalService.price),
+                (acc, additionalService) => (acc + additionalService.qty * additionalService.price),
                 0
             )
 
@@ -150,7 +153,7 @@ const EditorOrder: React.FC<EditorOrderProps> = ({order}) => {
 
     useEffect(() => {
         if (payments.length) {
-            setTotalPricePayments(payments.reduce((acc, payment) => (acc += payment.price), 0))
+            setTotalPricePayments(payments.reduce((acc, payment) => (acc + payment.price), 0))
         }
     }, [payments])
 

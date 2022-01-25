@@ -30,11 +30,14 @@ const GetAllPaginate = async (req, res) => {
             )
             .modify("filterSubCategoryIn", categoryIds)
             .modify("filterSizes", sizeIds)
-            .whereRaw(`product_colors.title LIKE '%${search}%'`)
-            .orWhereRaw(
-                `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
+            .where(builder =>
+                builder
+                    .whereRaw(`product_colors.title LIKE '%${search}%'`)
+                    .orWhereRaw(
+                        `product_colors.color_id IN (SELECT colors.id FROM colors WHERE colors.title LIKE '%${search}%')`
+                    )
+                    .orWhere("product_colors.id", "LIKE", `%${search}%`)
             )
-            .orWhere("product_colors.id", "LIKE", `%${search}%`)
             .select(
                 "product_colors.id",
                 "product_colors.thumbnail",
@@ -94,7 +97,7 @@ const GetBySearch = async (req, res) => {
 const Delete = async (req, res) => {
     try {
         const {productColorId} = req.params
-        //  Проверка наличии цвета
+        //  Проверка наличия цвета
         const productColor = await ProductColor.query().findById(productColorId)
         if (productColor) {
             // Проверяем остальные цвета

@@ -258,8 +258,7 @@ const EditById = async (req, res) => {
                             await ProductColor.query()
                                 .findById(productColor.id)
                                 .update({
-                                    // thumbnail: `${PATH_TO_IMAGE}/${productColor.id}/${image.name}`,
-                                    thumbnail: image.path
+                                    thumbnail: `${PATH_TO_IMAGE}/${productColor.id}/${image.name}`,
                                 })
                         }
                         if (image.isSaved)

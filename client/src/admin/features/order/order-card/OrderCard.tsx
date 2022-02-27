@@ -4,7 +4,7 @@ import {Button, Dropdown, Menu, Tooltip} from "antd"
 import {
     CalendarOutlined,
     CarOutlined,
-    CheckOutlined,
+    CheckOutlined, ContainerOutlined,
     DeleteOutlined,
     EditOutlined,
     FieldNumberOutlined,
@@ -26,6 +26,7 @@ import HideOrderAction from "./HideOrderAction"
 // import ToArchiveOrder from "./SendToArchiveOrderAction"
 import ClientMoreAction from "admin/lib/components/more/client-more-action/ClientMoreAction"
 import {Link} from "react-router-dom"
+import SendToArchiveOrder from "./SendToArchiveOrderAction"
 
 interface OrderCardProps {
     order: OrderCardType
@@ -45,9 +46,9 @@ const OrderCard: React.FC<OrderCardProps> = ({order, index}) => {
                     <span>Редактировать</span>
                 </Link>
             </Menu.Item>
-            {/* <Menu.Item icon={<ContainerOutlined />} key="archive">
-                <ToArchiveOrder orderId={order.id} />
-            </Menu.Item> */}
+            <Menu.Item icon={<ContainerOutlined />} key="archive">
+                <SendToArchiveOrder orderId={order.id} />
+            </Menu.Item>
             <Menu.Item icon={<DeleteOutlined />} key="cart" danger>
                 <HideOrderAction orderId={order.id} />
             </Menu.Item>

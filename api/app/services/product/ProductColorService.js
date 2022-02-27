@@ -79,7 +79,16 @@ const MinusQtyProductColor = async (productColorId, sizeId, qty) => {
         })
         const totalQty = productSize.qty - qty
         // TODO - Уведомления
-        if (productSize.min_qty >= totalQty) console.log(1)
+        if (productSize.min_qty >= totalQty) {
+            const isActive = await ProductSize.query().where({product_color_id: productColorId})
+                .where("qty", ">", 0)
+            //
+            if (!isActive) {
+                await ProductColor.query().findById(productColorId)
+                    .where("status", "=", "published")
+                    .update({status: "ending"})
+            }
+        }
         await ProductSize.query()
             .findById(productSize.id)
             .patch({qty: totalQty})

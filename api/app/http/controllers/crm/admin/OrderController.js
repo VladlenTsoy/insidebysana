@@ -30,10 +30,10 @@ const GetByAll = async (req, res) => {
                     "(SELECT sum(qty) FROM order_product_colors WHERE order_product_colors.order_id = orders.id) as product_color_qty"
                 )
             )
-            .where("source_id", "!=", 6)
-            .whereNull("is_archive")
-            .whereNull("delete_at")
-            .whereNotNull("status_id")
+            .where("source_id", "!=", 6)         // Кроме POS
+            .whereNull("is_archive")                   // Не в архиве
+            .whereNull("delete_at")                    // Не удаленные
+            .whereNotNull("status_id")                 // Не без статуса
 
         return res.send(orders)
     } catch (e) {

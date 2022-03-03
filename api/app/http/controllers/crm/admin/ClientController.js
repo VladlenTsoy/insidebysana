@@ -21,13 +21,12 @@ const GetAllPaginate = async (req, res) => {
         const order = sorter.order === "ascend" ? "asc" : "desc"
 
         const clients = await Client.query()
-            .withGraphFetched(
-                `[
-                source(),
-            ]`
-            )
+            .join("orders", "orders.client_id", "clients.id")
+            .select("clients.*", raw("(SUM(orders.total_price) / (SELECT SUM(`orders`.`total_price`) FROM `orders`)) * 100 as percent"))
+            .withGraphFetched(`[source]`)
             .modify("search", search)
-            .orderBy(sorter.field, order)
+            .orderBy(`${sorter.field}`, order)
+            .groupBy("clients.id")
             .page(pagination.page, pagination.pageSize)
 
         return res.send(clients)

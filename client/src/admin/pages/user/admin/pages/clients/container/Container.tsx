@@ -38,7 +38,7 @@ const columns = [
     {
         title: "Процент",
         dataIndex: "percent",
-        render: (percent: any) => percent.toFixed(1),
+        render: (percent: any) => percent ? percent.toFixed(1) : "0",
         sorter: true
     },
     {

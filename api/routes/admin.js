@@ -23,9 +23,13 @@ const PrintCategoryController = require("controllers/crm/admin/settings/print/Pr
 const PrintImageController = require("controllers/crm/admin/settings/print/PrintImageController")
 const PrintProductController = require("controllers/crm/admin/settings/print/PrintProductController")
 const HomeProductController = require("controllers/crm/admin/HomeProductController")
+const HomeController = require("controllers/crm/admin/HomeController")
 const router = express.Router()
 const multer = require("multer")
 const upload = multer()
+
+// Статистика
+router.post("/home/statistic", HomeController.GetStatistic)
 
 // Создать цвет
 router.post("/color", ColorController.CreateValidate, ColorController.Create)

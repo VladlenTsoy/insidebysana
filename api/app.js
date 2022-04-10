@@ -46,11 +46,13 @@ const clientRouter = require("./routes/client")
 const cashierRouter = require("./routes/cashier")
 const managerRouter = require("./routes/manager")
 const adminRouter = require("./routes/admin")
+const facebookRouter = require("./routes/facebook")
 
 app.use("/api/client", clientPassportMiddleware, clientRouter)
 app.use("/api/user", crmPassportMiddleware, userRouter)
 app.use("/api/user/cashier", crmPassportMiddleware, cashierRouter)
 app.use("/api/user/manager", crmPassportMiddleware, managerRouter)
 app.use("/api/user/admin", crmPassportMiddleware, adminRouter)
+app.use("/api/facebook", facebookRouter)
 
 module.exports = app

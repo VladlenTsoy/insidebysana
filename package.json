@@ -1,7 +1,11 @@
 {
-    "name": "insidebysana",
-    "version": "1.0.0",
-    "author": "Tsoy Vladlen <vladlengg@gmail.com>",
-    "private": true,
-    "license": "MIT"
+  "name": "insidebysana",
+  "version": "1.0.0",
+  "author": "Tsoy Vladlen <vladlengg@gmail.com>",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "heroku-prebuild": "cd api && npm install",
+    "start": "cd api && npm start"
+  }
 }

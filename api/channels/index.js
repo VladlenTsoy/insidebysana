@@ -15,6 +15,16 @@ module.exports = socket => {
         AdminChannels.UpdateStatusAndPositionOrder(socket, data)
     )
 
+    //
+    socket.on("check_count_new_messages", data =>
+        AdminChannels.CheckCountNewMessages(socket, data)
+    )
+
+    //
+    socket.on("read_new_message", data =>
+        AdminChannels.ReadNewMessage(socket, data)
+    )
+
     socket.on("disconnect", () => {
         console.log("user disconnected")
     })

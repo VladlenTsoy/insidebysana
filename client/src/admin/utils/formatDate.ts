@@ -18,3 +18,13 @@ export const formatDate: MomentFormatCheckYear = (
     const years = moment(date).isSame(new Date(), 'year')
     return moment(date).format(!years ? formatTwo : currentYearFormat)
 }
+
+export const formatTime: MomentFormatCheckYear = (
+    date,
+    currentYearFormat = "HH:ss",
+    formatTwo = "HH:ss DD MMM"
+) => {
+    if(!date) return "Н/Д"
+    const years = moment(date).isSame(new Date(), 'day')
+    return moment(date).format(!years ? formatTwo : currentYearFormat)
+}

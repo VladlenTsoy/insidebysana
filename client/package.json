@@ -73,6 +73,7 @@
     "react-scroll": "^1.8.4",
     "react-select": "^4.2.1",
     "react-simple-keyboard": "^3.0.49",
+    "react-textarea-autosize": "8.2.0",
     "react-transition-group": "^4.4.1",
     "react-yandex-maps": "^4.6.0",
     "recharts": "^2.1.9",

@@ -1,5 +1,6 @@
-const {raw} = require("objection")
 const {logger} = require("../config/logger.config")
+const {FacebookChatMessage} = require("../app/models/facebook-chat/FacebookChatMessage")
+const moment = require("moment")
 
 const UpdateStatusAndPositionOrder = async (socket, data) => {
     try {
@@ -18,4 +19,22 @@ const UpdateStatusAndPositionOrder = async (socket, data) => {
     }
 }
 
-module.exports = {UpdateStatusAndPositionOrder}
+const CheckCountNewMessages = async (socket) => {
+    try {
+        const count = await FacebookChatMessage.query().where({read_at: null, user_id: null})
+        socket.emit("count_new_messages", count.length)
+    } catch (e) {
+        logger.error(e.stack)
+    }
+}
+
+const ReadNewMessage = async (socket, data) => {
+    try {
+        await FacebookChatMessage.query().findById(data.id).update({read_at: moment().format("YYYY-MM-DD HH:mm:ss")})
+        await CheckCountNewMessages(socket)
+    } catch (e) {
+        logger.error(e.stack)
+    }
+}
+
+module.exports = {UpdateStatusAndPositionOrder, CheckCountNewMessages, ReadNewMessage}

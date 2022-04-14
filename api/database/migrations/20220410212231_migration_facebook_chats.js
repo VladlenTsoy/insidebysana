@@ -1,8 +1,9 @@
 exports.up = function(knex) {
     return knex.schema.createTable("facebook_chats", function(table) {
         table.increments("id").notNullable()
-        table.integer("client_id").notNullable()
-        table.bigInteger("facebook_client_id")
+        table.integer("client_id")
+        table.bigInteger("facebook_client_id").notNullable()
+        table.json("facebook_client")
         table.timestamps(true, true)
     })
 }

@@ -1,83 +1,89 @@
 
 .sidebarButton {
-    border-radius: 50%;
-    border: 0;
-    height: 45px;
-    width: 45px;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    background: @layout-body-background;
-    color: @text-color;
-    outline: none;
+  border-radius: 50%;
+  border: 0;
+  height: 45px;
+  width: 45px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  background: @layout-body-background;
+  color: @text-color;
+  outline: none;
+
+  :global {
+    .anticon {
+      font-size: 20px;
+    }
+  }
+
+  > div:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+
+  @media (max-width: 576px) {
+    height: 38px;
+    width: 38px;
 
     > div:not(:last-child) {
-        margin-right: 0.5rem;
+      margin-right: 0.25rem;
     }
-
-    @media (max-width: 576px) {
-        height: 38px;
-        width: 38px;
-
-        > div:not(:last-child) {
-            margin-right: 0.25rem;
-        }
-    }
+  }
 }
 
 .buttons {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
 .sidebarButton.active {
-    background: @primary-color;
-    color: #fff;
+  background: @primary-color;
+  color: #fff;
 }
 
 .accountItem {
-    padding: 0.5rem 3rem 0.5rem 1rem;
-    font-size: 14px;
+  padding: 0.5rem 3rem 0.5rem 1rem;
+  font-size: 14px;
 
-    :global {
-        div > span.anticon,
-        span.anticon:first-child,
-        div > span.ricon,
-        span.ricon:first-child {
-            font-size: 18px;
-            background: @layout-body-background;
-            padding: 0.5rem;
-            border-radius: 50%;
-            margin-right: 0.75rem;
+  :global {
+    div > span.anticon,
+    span.anticon:first-child,
+    div > span.ricon,
+    span.ricon:first-child {
+      font-size: 18px;
+      background: @layout-body-background;
+      padding: 0.5rem;
+      border-radius: 50%;
+      margin-right: 0.75rem;
 
-            &.invert {
-                filter: invert(100%);
-            }
-        }
-
-        .ricon {
-            line-height: 0;
-            display: inline-block;
-            //color: inherit;
-            //font-style: normal;
-            //text-align: center;
-            //text-transform: none;
-            //vertical-align: -0.125em;
-            //text-rendering: optimizeLegibility;
-            //-webkit-font-smoothing: antialiased;
-        }
-
-        .ant-badge {
-            margin-right: 0.75rem;
-
-            span.anticon,
-            span.ricon {
-                margin-right: 0;
-            }
-        }
+      &.invert {
+        filter: invert(100%);
+      }
     }
+
+    .ricon {
+      line-height: 0;
+      display: inline-block;
+      //color: inherit;
+      //font-style: normal;
+      //text-align: center;
+      //text-transform: none;
+      //vertical-align: -0.125em;
+      //text-rendering: optimizeLegibility;
+      //-webkit-font-smoothing: antialiased;
+    }
+
+    .ant-badge {
+      margin-right: 0.75rem;
+
+      span.anticon,
+      span.ricon {
+        margin-right: 0;
+      }
+    }
+  }
 }

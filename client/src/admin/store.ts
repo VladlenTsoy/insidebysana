@@ -1,4 +1,4 @@
-import {configureStore, combineReducers, getDefaultMiddleware} from "@reduxjs/toolkit"
+import {combineReducers, configureStore} from "@reduxjs/toolkit"
 import {useDispatch} from "react-redux"
 import app from "./store/common/app/appSlice"
 import user from "./store/common/user/userSlice"
@@ -36,6 +36,8 @@ import {tagApi} from "admin/features/tag/tagApi"
 import {homePositionApi} from "admin/features/home-position/homePositionApi"
 import {photoApi} from "./features/photos-section/photoApi"
 import {statisticApi} from "./pages/user/admin/pages/home/statisticApi"
+import chatMessage from "./components/facebook-chat/chatMessageSlice"
+import facebookChat from "./components/facebook-chat/facebookChatSlice"
 
 export type StoreState = ReturnType<typeof adminReducer>
 
@@ -68,6 +70,8 @@ export const adminReducer = combineReducers({
     printProduct,
     homeProduct,
     lookbookCategory,
+    facebookChat,
+    chatMessage,
     [productApi.reducerPath]: productApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [colorApi.reducerPath]: colorApi.reducer,
@@ -75,7 +79,7 @@ export const adminReducer = combineReducers({
     [tagApi.reducerPath]: tagApi.reducer,
     [homePositionApi.reducerPath]: homePositionApi.reducer,
     [photoApi.reducerPath]: photoApi.reducer,
-    [statisticApi.reducerPath]: statisticApi.reducer,
+    [statisticApi.reducerPath]: statisticApi.reducer
 })
 
 export type AppDispatch = typeof store.dispatch
@@ -91,7 +95,7 @@ export const useAdminDispatch = () => useDispatch<any>()
 
 export const store = configureStore({
     reducer: adminReducer,
-    middleware: [
+    middleware: (getDefaultMiddleware) => [
         ...getDefaultMiddleware({immutableCheck: false})
             .concat(productApi.middleware)
             .concat(categoryApi.middleware)

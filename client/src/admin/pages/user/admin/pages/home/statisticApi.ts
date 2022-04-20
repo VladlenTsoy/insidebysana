@@ -12,12 +12,16 @@ interface ResponseType {
     revenueByDay: {date: string, total: number}[]
 }
 
+export type DateValueType = "today" | "yesterday" | "7d" | "30d" | "3m" | "6m" | "12m" | "custom"
+
+export type StatisticApiProps = {type: DateValueType, dateFrom: any, dateTo: any}
+
 export const statisticApi = createApi({
     reducerPath: "statisticApi",
     baseQuery,
     tagTypes: ["statistic"],
     endpoints: build => ({
-        getStatistic: build.mutation<ResponseType, {dateFrom: any, dateTo: any}>({
+        getStatistic: build.mutation<ResponseType, StatisticApiProps>({
             query: body => ({
                 url: `user/admin/home/statistic`,
                 method: "POST",

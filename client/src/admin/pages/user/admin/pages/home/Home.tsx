@@ -1,11 +1,11 @@
-import React, {useEffect} from "react"
+import React from "react"
 import styles from "./Home.module.less"
-import {Card, Col, DatePicker, Row, Statistic} from "antd"
+import {Card, Col, Row, Statistic} from "antd"
 import {useGetStatisticMutation} from "./statisticApi"
 import moment from "moment"
 import {Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts"
+import FilterBlock from "./filter-block/FilterBlock"
 
-const {RangePicker} = DatePicker
 
 /**
  * Главная страница учителя
@@ -14,23 +14,10 @@ const {RangePicker} = DatePicker
  */
 const Home: React.FC = () => {
     const [fetch, {isLoading, data}] = useGetStatisticMutation()
-    const startOfMonth = moment().subtract(1, "months").format("YYYY-MM-DD hh:mm")
-    const endOfMonth = moment().format("YYYY-MM-DD hh:mm")
-
-    const onChangeHandler = (e: any) => {
-        fetch({dateFrom: e[0], dateTo: e[1]})
-    }
-
-    useEffect(() => {
-        fetch({dateFrom: startOfMonth, dateTo: endOfMonth})
-    }, [])
 
     return (
         <div className={styles.home}>
-            <div className={styles.datepicker}>
-                <RangePicker size="large" className={styles.rangePicker} onChange={onChangeHandler}
-                             defaultValue={[moment(startOfMonth), moment(endOfMonth)]} />
-            </div>
+            <FilterBlock fetch={fetch} />
             <div className={styles.widgets}>
                 <Row gutter={15}>
                     <Col xl={4} md={6} xs={12}>

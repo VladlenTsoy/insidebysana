@@ -109,7 +109,7 @@ router.get("/filter/categories", CategoryController.GetByFilter)
 // Вывод всех используемых размеров
 router.get("/filter/sizes", SizeController.GetByFilter)
 
-// Вывод клинентов по поиску
+// Вывод клиентов по поиску
 router.post("/clients", ClientController.GetBySearch)
 // Вывод клиентов в таблице
 router.post("/clients/table", ClientController.GetAllPaginate)
@@ -123,7 +123,7 @@ router.patch("/client/:id", ClientController.Edit)
 router.get("/client/:id/cart", ClientController.GetProductsByCart)
 // Вывод избранных клиента
 router.get("/client/:id/wishlist", ClientController.GetProductsByWishlist)
-// Выввод сделок
+// Вывод сделок
 router.get("/client/:id/orders", ClientController.GetOrdersByClientId)
 
 // Ресурсы

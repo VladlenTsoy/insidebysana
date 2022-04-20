@@ -42,6 +42,8 @@ const cracoLessOptions = {
                 "@error-color": "#f76160",
                 "@checkbox-color": "#6391fe",
                 "@radio-dot-color": "#6391fe",
+                "@radio-button-hover-color": "color(~`colorPalette('@{checkbox-color}', 5)`)",
+                "@radio-button-active-color": "color(~`colorPalette('@{checkbox-color}', 7)`)",
                 "@border-width-base": "1px",
                 "@border-radius-base": "3px",
                 "@border-color-base": "#d7dce0",

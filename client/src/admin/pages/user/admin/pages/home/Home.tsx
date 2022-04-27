@@ -88,33 +88,35 @@ const Home: React.FC = () => {
                                 />
                             </Col>
                             <Col xxl={12} xl={8} xs={24}>
-                                <Line options={{
-                                    plugins: {
-                                        legend: {
-                                            display: false
-                                        },
-                                        subtitle: {
-                                            display: false
-                                        }
-                                    },
-                                    responsive: true,
-                                    interaction: {
-                                        mode: "index" as const,
-                                        intersect: false
-                                    },
-                                    scales: {
-                                        y: {
-                                            title: {
+                                <Line
+                                    width={400}
+                                    options={{
+                                        plugins: {
+                                            legend: {
                                                 display: false
                                             },
-                                            display: false
+                                            subtitle: {
+                                                display: false
+                                            }
                                         },
-                                        x: {
-                                            display: false
+                                        responsive: true,
+                                        interaction: {
+                                            mode: "index" as const,
+                                            intersect: false
+                                        },
+                                        scales: {
+                                            y: {
+                                                title: {
+                                                    display: false
+                                                },
+                                                display: false
+                                            },
+                                            x: {
+                                                display: false
+                                            }
                                         }
-                                    }
-                                }} data={
-                                    {
+                                    }}
+                                    data={{
                                         labels: data?.revenueByDay.map((val => moment(val.date).format("M"))),
                                         datasets: [
                                             {
@@ -123,11 +125,10 @@ const Home: React.FC = () => {
                                                 data: data?.revenueByDay.map((val => val.total)),
                                                 borderColor: "#07ca63",
                                                 backgroundColor: "#07ca63"
-                                                // yAxisID: "y"
                                             }
                                         ]
-                                    }
-                                } />
+                                    }}
+                                />
                             </Col>
                         </Row>
                     </Col>
@@ -185,20 +186,22 @@ const Home: React.FC = () => {
                 <Row gutter={15}>
                     <Col span={24}>
                         <Card>
-                            <Bar data={
-                                {
-                                    labels: data?.revenueByDay.map((val => formatDate(val.date))),
+                            <Bar
+                                width={800}
+                                height={200}
+                                data={{
+                                    labels: data?.revenueByDay.map((val => formatDate(val.date, data.dateFormat, "MMM YY"))),
                                     datasets: [
                                         {
-                                            label: "Dataset 1",
+                                            label: "Заказы",
                                             data: data?.revenueByDay.map((val => val.total)),
                                             borderColor: "#07ca63",
                                             backgroundColor: "#07ca63"
-                                            // yAxisID: "y"
                                         }
                                     ]
-                                }
-                            } options={options} />
+                                }}
+                                options={options}
+                            />
                         </Card>
                     </Col>
                 </Row>

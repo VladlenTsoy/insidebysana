@@ -10,6 +10,7 @@ interface ResponseType {
     numberOfNewClients: number
     averageCheck: number
     revenueByDay: {date: string, total: number}[]
+    dateFormat: string
 }
 
 export type DateValueType = "today" | "yesterday" | "7d" | "30d" | "3m" | "6m" | "12m" | "custom"

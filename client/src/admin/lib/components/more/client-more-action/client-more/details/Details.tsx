@@ -2,10 +2,9 @@ import React from "react"
 import {formatDate} from "admin/utils/formatDate"
 import {formatPhone} from "admin/utils/formatPhone"
 import moment from "moment"
-import {Typography, Descriptions, Statistic} from "antd"
+import {Descriptions, Typography} from "antd"
 import {Client} from "admin/lib/types/Client"
 import "./Details.less"
-import {formatPrice} from "admin/utils/formatPrice"
 
 const {Text} = Typography
 
@@ -46,16 +45,6 @@ const Details: React.FC<DetailsProps> = ({client}) => {
                         {client.facebook || <Text type="secondary">Пусто</Text>}
                     </Descriptions.Item>
                 </Descriptions>
-            </div>
-            <div className="statistics">
-                <div>
-                    <Statistic title="Status" value="Pending" />
-                </div>
-                <div>
-                    <Statistic title="Status" value="Pending" />
-                </div>
-                <Statistic title="Всего" value={`${formatPrice(10000000)} сум`} />
-                <Statistic title="Status" value="Pending" />
             </div>
         </div>
     )

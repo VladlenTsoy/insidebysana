@@ -46,16 +46,16 @@ const Address: React.FC<AddressProps> = ({orderId}) => {
                         <a href={`tel:${address.phone}`}>{formatPhone(address.phone)}</a>
                     </Skeleton>
                 </Descriptions.Item>
-                <Descriptions.Item label="Страна">
-                    <Skeleton loading={loading} paragraph={false}>
-                        {address.country}
-                    </Skeleton>
-                </Descriptions.Item>
-                <Descriptions.Item label="Город">
-                    <Skeleton loading={loading} paragraph={false}>
-                        {address.city}
-                    </Skeleton>
-                </Descriptions.Item>
+                {/*<Descriptions.Item label="Страна">*/}
+                {/*    <Skeleton loading={loading} paragraph={false}>*/}
+                {/*        {address.country}*/}
+                {/*    </Skeleton>*/}
+                {/*</Descriptions.Item>*/}
+                {/*<Descriptions.Item label="Город">*/}
+                {/*    <Skeleton loading={loading} paragraph={false}>*/}
+                {/*        {address.city}*/}
+                {/*    </Skeleton>*/}
+                {/*</Descriptions.Item>*/}
                 <Descriptions.Item label="Адрес">
                     <Skeleton loading={loading} paragraph={false}>
                         {address.address}

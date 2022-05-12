@@ -10,6 +10,7 @@ import {cancelOrder} from "../../store/admin/order/cancelOrder"
 // import {editOrder} from "../../store/admin/order/editOrder"
 import {hideOrder} from "./order-card/hideOrder"
 import {sendToArchiveOrder} from "./order-card/sendToArchiveOrder"
+import {fetchOrderById} from "../../store/admin/order/fetchOrderById"
 
 export const orderAdapter = createEntityAdapter<OrderCardType>({
     sortComparer: (a, b) => (a.position > b.position ? 1 : -1)
@@ -35,10 +36,10 @@ const orderSlice = createSlice({
         }
     },
     extraReducers: builder => {
-        // builder.addCase(fetchOrderById.fulfilled, (state, action) => {
-        //     orderAdapter.addOne(state, action.payload)
-        // })
-        //
+        builder.addCase(fetchOrderById.fulfilled, (state, action) => {
+            orderAdapter.addOne(state, action.payload)
+        })
+
         builder.addCase(cancelOrder.fulfilled, (state, action) => {
             const {orderId, paymentState} = action.payload
             orderAdapter.updateOne(state, {id: orderId, changes: {payment_state: paymentState}})

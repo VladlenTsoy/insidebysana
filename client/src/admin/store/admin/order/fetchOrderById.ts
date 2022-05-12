@@ -1,9 +1,11 @@
 import {createAsyncThunk} from "@reduxjs/toolkit"
 import {AdminThunkProps} from "../../../store"
 import {apiRequest} from "../../../utils/api"
-import {Order} from "admin/lib/types/Order"
+// import {Order} from "admin/lib/types/Order"
+import {OrderCardType} from "../../../features/order/Order"
 
-type ReturnedType = Order
+// type ReturnedType = Order
+type ReturnedType = OrderCardType
 
 type ArgsProps = string | number
 

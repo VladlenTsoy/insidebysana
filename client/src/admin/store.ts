@@ -38,6 +38,7 @@ import {photoApi} from "./features/photos-section/photoApi"
 import {statisticApi} from "./pages/user/admin/pages/home/statisticApi"
 import chatMessage from "./components/facebook-chat/chatMessageSlice"
 import facebookChat from "./components/facebook-chat/facebookChatSlice"
+import {productStorageApi} from "./features/product-storage/productStorageApi"
 
 export type StoreState = ReturnType<typeof adminReducer>
 
@@ -79,7 +80,8 @@ export const adminReducer = combineReducers({
     [tagApi.reducerPath]: tagApi.reducer,
     [homePositionApi.reducerPath]: homePositionApi.reducer,
     [photoApi.reducerPath]: photoApi.reducer,
-    [statisticApi.reducerPath]: statisticApi.reducer
+    [statisticApi.reducerPath]: statisticApi.reducer,
+    [productStorageApi.reducerPath]: productStorageApi.reducer
 })
 
 export type AppDispatch = typeof store.dispatch
@@ -105,5 +107,6 @@ export const store = configureStore({
             .concat(homePositionApi.middleware)
             .concat(photoApi.middleware)
             .concat(statisticApi.middleware)
+            .concat(productStorageApi.middleware)
     ]
 })

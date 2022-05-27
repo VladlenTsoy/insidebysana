@@ -39,6 +39,7 @@ import {statisticApi} from "./pages/user/admin/pages/home/statisticApi"
 import chatMessage from "./components/facebook-chat/chatMessageSlice"
 import facebookChat from "./components/facebook-chat/facebookChatSlice"
 import {productStorageApi} from "./features/product-storage/productStorageApi"
+import productStorage from "./store/admin/product-storage/productStorageSlice"
 
 export type StoreState = ReturnType<typeof adminReducer>
 
@@ -73,6 +74,7 @@ export const adminReducer = combineReducers({
     lookbookCategory,
     facebookChat,
     chatMessage,
+    productStorage,
     [productApi.reducerPath]: productApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [colorApi.reducerPath]: colorApi.reducer,

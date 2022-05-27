@@ -17,6 +17,7 @@ const PrintCategories = React.lazy(() => import("./print-categories/PrintCategor
 const PrintImages = React.lazy(() => import("./print-images/PrintImages"))
 const AdditionalServices = React.lazy(() => import("./additional-services/AdditionalServices"))
 const Home = React.lazy(() => import("./home/Home"))
+const ProductStorages = React.lazy(() => import("./product-storages/ProductStorages"))
 
 const Settings = () => {
     const params = useLocation()
@@ -69,6 +70,9 @@ const Settings = () => {
                             <Menu.Item key="additional-services">
                                 <Link to="/settings/additional-services">Доп. услуги</Link>
                             </Menu.Item>
+                            <Menu.Item key="product-storages">
+                                <Link to="/settings/product-storages">Место хранения</Link>
+                            </Menu.Item>
                         </Menu.ItemGroup>
                         {/*<Menu.ItemGroup title="Оплата">*/}
                         {/*    <Menu.Item key="payme">*/}
@@ -118,6 +122,7 @@ const Settings = () => {
                         <Route path="/settings/print-categories" component={PrintCategories} />
                         <Route path="/settings/print-images" component={PrintImages} />
                         <Route path="/settings/additional-services" component={AdditionalServices} />
+                        <Route path="/settings/product-storages" component={ProductStorages} />
                     </React.Suspense>
                 </Col>
             </Row>

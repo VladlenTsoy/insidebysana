@@ -2,7 +2,8 @@ import React from "react"
 import {Input, Form} from "antd"
 import {useAdminDispatch} from "../../../../../../../../store"
 import {createSource} from "../../../../../../../../store/admin/source/createSource"
-import {Source} from "../../../../../../../../lib/types/Source";
+import {Source} from "../../../../../../../../lib/types/Source"
+import {editSource} from "../../../../../../../../store/admin/source/editSource"
 
 interface EditorSourceProps {
     source?: Source
@@ -15,7 +16,10 @@ const EditorSource: React.FC<EditorSourceProps> = ({setLoading, close, source}) 
 
     const onFinish = async (values: any) => {
         setLoading(true)
-        await dispatch(createSource(values))
+        if (source)
+            await dispatch(editSource({id: source.id, data: values}))
+        else
+            await dispatch(createSource(values))
         setLoading(false)
         close()
     }

@@ -26,9 +26,7 @@ interface EditorProductProps {
 
 const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
     const [form] = Form.useForm<any>()
-    const [selectedSizes, setSelectedSizes] = useState<
-        {id: number, title: string}[]
-    >([])
+    const [selectedSizes, setSelectedSizes] = useState<{id: number, title: string}[]>([])
     const [images, setImages] = useState<TemporaryImageType[]>([])
     const params = useParams<{id: string, color?: string}>()
     const [isHomePosition, setIsHomePosition] = useState<boolean>(
@@ -71,11 +69,10 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                 params.id,
                 product?.product_id
             )
-            if (!params.id) {
+            if (!params?.id) {
                 await createProduct(updatedValues)
                 history.push(`/products/${values.status}`)
-            }
-            if (params.color) {
+            } else if (params.color) {
                 await createProduct(updatedValues)
                 history.push(`/products/${values.status}`)
             } else {
@@ -105,11 +102,11 @@ const EditorProduct: React.FC<EditorProductProps> = ({product}) => {
                     ...product,
                     discount: product.discount
                         ? {
-                              discount: product.discount.discount,
-                              end_at: product.discount.end_at
-                                  ? moment(product.discount.end_at)
-                                  : undefined
-                          }
+                            discount: product.discount.discount,
+                            end_at: product.discount.end_at
+                                ? moment(product.discount.end_at)
+                                : undefined
+                        }
                         : undefined
                 })
                 setIsHomePosition(!!product.home_position)

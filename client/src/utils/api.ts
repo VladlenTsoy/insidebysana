@@ -3,10 +3,10 @@ import {message} from "antd"
 import {getCookie, removeCookie, setCookie} from "./cookie"
 
 const CancelToken = axios.CancelToken
-// const DOMAIN_API =
-//     process.env.NODE_ENV === "production" ? "https://api.insidebysana.uz/api" : "http://localhost:9000/api"
 const DOMAIN_API =
-    process.env.NODE_ENV === "production" ? "https://insidebysana-api.herokuapp.com/api" : "http://localhost:9000/api"
+    process.env.NODE_ENV === "production" ? "https://api.insidebysana.uz/api" : "http://localhost:9000/api"
+// const DOMAIN_API =
+//     process.env.NODE_ENV === "production" ? "https://insidebysana-api.herokuapp.com/api" : "http://localhost:9000/api"
 
 const isSite = process.env.REACT_APP_BUILD_TARGET === "site"
 const TOKEN_NAME = isSite ? "site_token_access" : "crm_token_access"
